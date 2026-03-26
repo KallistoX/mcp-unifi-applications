@@ -1,5 +1,7 @@
 # MCP UniFi Applications
 
+![CI](https://github.com/KallistoX/mcp-unifi-applications/actions/workflows/ci.yml/badge.svg)
+
 An MCP server that exposes [UniFi application API](https://developer.ui.com) documentation (Network, Protect, Site Manager) as queryable tools for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
 
 Includes a Playwright-based scraper that turns the JS-rendered docs SPA into structured JSON files, and a Python MCP server that serves them.
