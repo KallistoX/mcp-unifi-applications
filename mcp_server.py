@@ -383,6 +383,104 @@ def find_field(field_name: str, slug: str | None = None) -> str:
     return "\n".join(lines)
 
 
+def _resolve_path(fields: list[dict], path_parts: list[str]) -> dict | None:
+    """Walk a field tree following a dotted path like 'management[GATEWAY].dhcpV4'.
+
+    Supports:
+      - field names: 'dhcpV4'
+      - discriminator variants: 'management[GATEWAY]'
+      - dotted paths: 'management[GATEWAY].dhcpV4.gateway'
+    """
+    if not path_parts:
+        return None
+    segment = path_parts[0]
+    rest = path_parts[1:]
+
+    # Parse segment: 'fieldName' or 'fieldName[VARIANT]'
+    field_name = segment
+    variant = None
+    if "[" in segment and segment.endswith("]"):
+        field_name, variant = segment[:-1].split("[", 1)
+
+    for f in fields:
+        if f["name"].lower() != field_name.lower():
+            continue
+
+        # If a variant is requested, navigate into the discriminator
+        if variant and f.get("discriminator"):
+            for disc in f["discriminator"]:
+                if disc["value"].lower() == variant.lower():
+                    next_fields = disc.get("schema") or []
+                    if not rest:
+                        # Return a synthetic node representing this variant
+                        return {
+                            "name": f"{f['name']}[{disc['value']}]",
+                            "type": f.get("type", ""),
+                            "description": f.get("description"),
+                            "children": next_fields,
+                        }
+                    return _resolve_path(next_fields, rest)
+            return None  # variant not found
+
+        if not rest:
+            return f
+        # Continue into children
+        return _resolve_path(f.get("children") or [], rest)
+
+    return None
+
+
+@mcp.tool()
+def get_field_schema(slug: str, field_path: str) -> str:
+    """Drill into a specific field's schema within an endpoint.
+
+    Instead of fetching the full 70KB endpoint schema, use this to get just the
+    subtree you need. Paths from find_field output work directly.
+
+    Args:
+        slug: Endpoint identifier (e.g. 'network/createnetwork').
+        field_path: Dotted path to the field, with discriminator variants in brackets.
+                    Examples: 'dhcpV4', 'management[GATEWAY].dhcpV4',
+                    'management[GATEWAY].dhcpV4.gateway'.
+    """
+    ep = _endpoints.get(slug)
+    if not ep:
+        return f"Endpoint '{slug}' not found. {_suggest_slugs(slug)}"
+
+    parts = field_path.replace("].", "].").split(".")
+    parts = [p for p in parts if p]
+
+    # Search across all schema sections
+    for section_key in ("requestBody", "pathParameters", "queryParameters"):
+        result = _resolve_path(ep.get(section_key) or [], parts)
+        if result:
+            lines = [f"# {field_path} (in {section_key})"]
+            lines.extend(_summarise_fields([result], max_depth=10))
+            if result.get("discriminator"):
+                lines.append(f"\nVariants: {', '.join(d['value'] for d in result['discriminator'])}")
+            return "\n".join(lines)
+
+    for resp in ep.get("responses") or []:
+        result = _resolve_path(resp.get("fields") or [], parts)
+        if result:
+            lines = [f"# {field_path} (in response)"]
+            lines.extend(_summarise_fields([result], max_depth=10))
+            if result.get("discriminator"):
+                lines.append(f"\nVariants: {', '.join(d['value'] for d in result['discriminator'])}")
+            return "\n".join(lines)
+
+    # Try find_field as fallback to suggest the right path
+    name = parts[-1].split("[")[0]
+    hits = _find_field(ep.get("requestBody") or [], name)
+    for resp in ep.get("responses") or []:
+        hits.extend(_find_field(resp.get("fields") or [], name))
+    if hits:
+        paths = [h[0] for h in hits[:5]]
+        return f"Field path '{field_path}' not resolved. '{name}' exists at:\n" + "\n".join(f"  {p}" for p in paths)
+
+    return f"Field path '{field_path}' not found in endpoint '{slug}'."
+
+
 @mcp.tool()
 def get_endpoint_group(resource: str) -> str:
     """Get all CRUD operations for a resource (e.g. 'networks', 'firewall', 'wifi').

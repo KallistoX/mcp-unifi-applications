@@ -4,6 +4,25 @@ An MCP server that exposes [UniFi application API](https://developer.ui.com) doc
 
 Includes a Playwright-based scraper that turns the JS-rendered docs SPA into structured JSON files, and a Python MCP server that serves them.
 
+## Example
+
+> *"Can you tell me how to create a network with Go with the network API from UniFi and what options I have regarding the managed IPv4 DHCP gateway configuration?"*
+
+<p align="center">
+  <img src="screenshots/mcp_init.png" width="320" alt="MCP server connected in Claude Code">
+  <br><br>
+  <img src="screenshots/prompt.png" width="700" alt="Example prompt in Claude Code">
+</p>
+
+Claude automatically queries the MCP server — searching endpoints, fetching schemas, and drilling into discriminator variants — then responds with the full API details and a working Go example:
+
+<p align="center">
+  <img src="screenshots/response_1.png" width="700" alt="API endpoint details and DHCP configuration schema">
+  <br>
+  <img src="screenshots/response_2.png" width="700" alt="Go code example for creating a network">
+  <img src="screenshots/response_3.png" width="700" alt="Go code example continued with key points">
+</p>
+
 ## Quick Start
 
 ### 1. Scrape the docs
@@ -96,6 +115,7 @@ All three applications share the same docs SPA structure with version dropdowns,
 | `get_example` | Code examples in curl, Go, Node.js, Python, or Ansible (local/remote) |
 | `get_response_sample` | Example JSON response for an endpoint |
 | `find_field` | Search for a field name across all endpoint schemas |
+| `get_field_schema` | Drill into a specific field's subtree (e.g. `management[GATEWAY].dhcpV4`) |
 | `get_guide` | API guide pages (filtering syntax, error handling, getting started) |
 
 Tools that return multiple results accept an optional `app` parameter (`network`, `protect`, `site-manager`) to filter by application.

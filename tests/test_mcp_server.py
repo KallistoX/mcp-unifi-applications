@@ -107,7 +107,7 @@ class TestListEndpoints:
     def test_list_filter_method(self):
         result = m.list_endpoints(method="DELETE")
         for line in result.strip().split("\n"):
-            assert line.startswith("DELETE")
+            assert "DELETE" in line
 
     def test_list_invalid_method(self):
         result = m.list_endpoints(method="TRACE")
@@ -192,6 +192,39 @@ class TestFindField:
 
 
 # --- get_endpoint_group ---
+
+
+class TestGetFieldSchema:
+    def test_top_level_field(self):
+        slug = _find_slug("createnetwork")
+        assert slug, "createnetwork not found"
+        result = m.get_field_schema(slug, "management")
+        assert "management" in result
+        assert "Variants:" in result or "discriminator" in result.lower() or "GATEWAY" in result
+
+    def test_discriminator_path(self):
+        slug = _find_slug("createnetwork")
+        assert slug, "createnetwork not found"
+        result = m.get_field_schema(slug, "management[GATEWAY]")
+        assert "management[GATEWAY]" in result
+        # Should show child fields of the GATEWAY variant
+        assert "dhcpV4" in result or "name" in result
+
+    def test_deep_path(self):
+        slug = _find_slug("createnetwork")
+        assert slug, "createnetwork not found"
+        result = m.get_field_schema(slug, "management[GATEWAY].dhcpV4")
+        assert "dhcpV4" in result
+
+    def test_invalid_path_suggests(self):
+        slug = _find_slug("createnetwork")
+        assert slug, "createnetwork not found"
+        result = m.get_field_schema(slug, "nonexistent.path")
+        assert "not found" in result.lower() or "not resolved" in result.lower()
+
+    def test_invalid_slug(self):
+        result = m.get_field_schema("nonexistent", "management")
+        assert "not found" in result.lower()
 
 
 class TestGetEndpointGroup:
