@@ -1,0 +1,631 @@
+{
+  "h1": "Get SD-WAN Config Status",
+  "method": "GET",
+  "path": "/v1/sd-wan-configs/{id}/status",
+  "description": "Retrieves the status of a specific SD-WAN configuration, including deployment progress, errors, and associated hubs.",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "Unique identifier of the SD-WAN configuration",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "401",
+        "404",
+        "429",
+        "500",
+        "502"
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "required": false,
+          "type": "object",
+          "description": "Generic response data, specific schema depends on the endpoint",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": false,
+              "type": "string",
+              "description": "Unique identifier of the SD-WAN configuration",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "fingerprint",
+              "required": false,
+              "type": "string",
+              "description": "A unique identifier representing the current state of the configuration.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "updatedAt",
+              "required": false,
+              "type": "integer",
+              "description": "The timestamp of the last update to the SD-WAN configuration.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hubs",
+              "required": false,
+              "type": "Array of object",
+              "description": "List of hubs in SD-WAN configuration",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "id",
+                  "required": false,
+                  "type": "string",
+                  "description": "Unique identifier of the hub",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "hostId",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "siteId",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "name",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "primaryWanStatus",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "ip",
+                      "required": false,
+                      "type": "string",
+                      "description": "IP format: 10.0.0.1",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "latency",
+                      "required": false,
+                      "type": "number",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "internetIssues",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": "If WAN experience issues",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "wanId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "secondaryWanStatus",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "ip",
+                      "required": false,
+                      "type": "string",
+                      "description": "IP format: 10.0.0.1",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "latency",
+                      "required": false,
+                      "type": "number",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "internetIssues",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": "If WAN experience issues",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "wanId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "errors",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "warnings",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "numberOfTunnelsUsedByOtherFeatures",
+                  "required": false,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "networks",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "networkId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "errors",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "warnings",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "routes",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "routeValue",
+                      "required": false,
+                      "type": "string",
+                      "description": "subnet in CIDR format: 10.0.0.0/24",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "errors",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "warnings",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "applyStatus",
+                  "required": false,
+                  "type": "string",
+                  "description": "The current status of the hub configuration application.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "spokes",
+              "required": false,
+              "type": "Array of object",
+              "description": "A list of spokes associated with the SD-WAN config.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "id",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "hostId",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "siteId",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "name",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "primaryWanStatus",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "ip",
+                      "required": false,
+                      "type": "string",
+                      "description": "IP format: 10.0.0.1",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "latency",
+                      "required": false,
+                      "type": "number",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "internetIssues",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": "If WAN experience issues",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "wanId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "secondaryWanStatus",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "ip",
+                      "required": false,
+                      "type": "string",
+                      "description": "IP format: 10.0.0.1",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "latency",
+                      "required": false,
+                      "type": "number",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "internetIssues",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": "If WAN experience issues",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "wanId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "errors",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "warnings",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "numberOfTunnelsUsedByOtherFeatures",
+                  "required": false,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "networks",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "networkId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "errors",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": "A list of error messages related to the network, if any.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "warnings",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": "A list of warning messages related to the network, if any.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "routes",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "routeValue",
+                      "required": false,
+                      "type": "string",
+                      "description": "subnet in CIDR format: 10.0.0.0/24",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "errors",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "warnings",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "connections",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "hubId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "tunnels",
+                      "required": false,
+                      "type": "Array of object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "spokeWanId",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "hubWanId",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "status",
+                          "required": false,
+                          "type": "string",
+                          "description": "The current status of the tunnel connection.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "applyStatus",
+                  "required": false,
+                  "type": "string",
+                  "description": "The current status of the hub configuration application.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "lastGeneratedAt",
+              "required": false,
+              "type": "integer",
+              "description": "The timestamp of the last generation of the SD-WAN configuration.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "generateStatus",
+              "required": false,
+              "type": "string",
+              "description": "The status of the configuration generation process.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "errors",
+              "required": false,
+              "type": "Array of object",
+              "description": "A list of error messages related to the configuration, if any.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "warnings",
+              "required": false,
+              "type": "Array of object",
+              "description": "A list of warning messages related to the configuration, if any.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "httpStatusCode",
+          "required": false,
+          "type": "integer",
+          "description": "HTTP status code",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": "Request trace identifier",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/sd-wan-configs/{id}/status\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/sd-wan-configs/{id}/status\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/sd-wan-configs/{id}/status',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/sd-wan-configs/{id}/status\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/site-manager/v1.0.0/getsdwanconfigstatus"
+}

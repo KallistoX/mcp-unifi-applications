@@ -1,0 +1,138 @@
+{
+  "h1": "List Sites",
+  "method": "GET",
+  "path": "/v1/sites",
+  "description": "Retrieves a list of all sites (from hosts running the UniFi Network application) associated with the UI account making the API call.\n\nNote: The structure of the meta and statistics fields may vary depending on the UniFi Network version. The example provided is based on UniFi OS 4.1.13.",
+  "pathParameters": [],
+  "queryParameters": [
+    {
+      "name": "pageSize",
+      "required": false,
+      "type": "string",
+      "description": "Number of items to return per page",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "nextToken",
+      "required": false,
+      "type": "string",
+      "description": "Token for pagination to retrieve the next set of results",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "401",
+        "429",
+        "500",
+        "502"
+      ],
+      "fields": [
+        {
+          "name": "code",
+          "required": false,
+          "type": "any",
+          "description": "Error code from upstream",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "data",
+          "required": false,
+          "type": "Array of object",
+          "description": "Generic response data, specific schema depends on the endpoint",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "siteId",
+              "required": false,
+              "type": "string",
+              "description": "Unique identifier of the site",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hostId",
+              "required": false,
+              "type": "string",
+              "description": "Unique identifier of the host device managing this site",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "meta",
+              "required": false,
+              "type": "any",
+              "description": "Site metadata including name, description, timezone, and gateway MAC address. Structure may vary depending on the UniFi Network version",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "statistics",
+              "required": false,
+              "type": "any",
+              "description": "Site statistics including device counts, client counts, and network performance metrics. Structure may vary depending on the UniFi Network version",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "permission",
+              "required": false,
+              "type": "string",
+              "description": "Permission level of the current user for this site (admin, readonly, etc.)",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isOwner",
+              "required": false,
+              "type": "boolean",
+              "description": "Indicates if the current user is the owner of this site",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "httpStatusCode",
+          "required": false,
+          "type": "integer",
+          "description": "HTTP status code",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": "Request trace identifier",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "nextToken",
+          "required": false,
+          "type": "string",
+          "description": "Pagination token for fetching the next set of results",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L \"https://api.ui.com/v1/sites?pageSize=10&nextToken=602232A870250000000006C514FF00000000073DD8DB000000006369FDA2%3A1467082514\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/sites?pageSize=10&nextToken=602232A870250000000006C514FF00000000073DD8DB000000006369FDA2%3A1467082514\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/sites?pageSize=10&nextToken=602232A870250000000006C514FF00000000073DD8DB000000006369FDA2:1467082514',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/sites?pageSize=10&nextToken=602232A870250000000006C514FF00000000073DD8DB000000006369FDA2:1467082514\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/site-manager/v1.0.0/listsites"
+}

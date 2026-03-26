@@ -1,0 +1,231 @@
+{
+  "h1": "Get ISP Metrics",
+  "method": "GET",
+  "path": "/v1/isp-metrics/{type}",
+  "description": "Retrieves ISP metrics data for all sites linked to the UI account's API key. 5-minute interval metrics are available for at least 24 hours, and 1-hour interval metrics are available for at least 30 days.",
+  "pathParameters": [
+    {
+      "name": "type",
+      "required": true,
+      "type": "string",
+      "description": "Specifies whether metrics are returned using `5m` or `1h` intervals",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [
+    {
+      "name": "beginTimestamp",
+      "required": false,
+      "type": "string",
+      "description": "The earliest timestamp to retrieve data from (RFC3339 format)",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "endTimestamp",
+      "required": false,
+      "type": "string",
+      "description": "The latest timestamp to retrieve data up to (RFC3339 format)",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "duration",
+      "required": false,
+      "type": "string",
+      "description": "Specifies the time range of metrics to retrieve, starting from when the request is made. Supports `24h` for 5-minute metrics, and `7d` or `30d` for 1-hour metrics. This parameter **cannot** be used with `beginTimestamp` or `endTimestamp`.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "429",
+        "500",
+        "502"
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "required": false,
+          "type": "Array of object",
+          "description": "Generic response data, specific schema depends on the endpoint",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "metricType",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "periods",
+              "required": false,
+              "type": "Array of object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "data",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "wan",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "avgLatency",
+                          "required": false,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "download_kbps",
+                          "required": false,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "downtime",
+                          "required": false,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "ispAsn",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "ispName",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "maxLatency",
+                          "required": false,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "packetLoss",
+                          "required": false,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "upload_kbps",
+                          "required": false,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "uptime",
+                          "required": false,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "metricTime",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "version",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "hostId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "siteId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "httpStatusCode",
+          "required": false,
+          "type": "integer",
+          "description": "HTTP status code",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": "Request trace identifier",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/isp-metrics/{type}?beginTimestamp=2024-06-30T13%3A35%3A00Z&endTimestamp=2024-06-30T15%3A35%3A00Z&duration={duration}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/isp-metrics/{type}?beginTimestamp=2024-06-30T13%3A35%3A00Z&endTimestamp=2024-06-30T15%3A35%3A00Z&duration={duration}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/isp-metrics/{type}?beginTimestamp=2024-06-30T13:35:00Z&endTimestamp=2024-06-30T15:35:00Z&duration={duration}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/isp-metrics/{type}?beginTimestamp=2024-06-30T13:35:00Z&endTimestamp=2024-06-30T15:35:00Z&duration=%7Bduration%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/site-manager/v1.0.0/getispmetrics"
+}

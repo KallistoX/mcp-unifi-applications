@@ -1,0 +1,6 @@
+{
+  "h1": "Introduction",
+  "type": "guide",
+  "content": "Introduction\nEach UniFi Application has its own API endpoints running locally on each site, offering detailed analytics and control related to that specific application.\n\n\n## Authentication\n\nAn API Key serves as a unique identifier used to authenticate API requests. These keys are essential for securing access to your UniFi account and its associated devices. Each key is linked to the specific organization or UI account that generated it, ensuring secure and personalized API interactions.\n\n\n## Obtaining an API Key\n\n1. Sign in to the UniFi Site Manager at [unifi.ui.com](https://unifi.ui.com/).\n2. Navigate to the API configuration page:GA: Go to the API section.\nEA: Go to Settings → API Keys.\n3. Select \"Create New API Key\"\n4. Copy the generated key and store it securely, as it will only be displayed once.\n5. Ensure the key is properly hashed and securely stored.\n",
+  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/gettingstarted"
+}

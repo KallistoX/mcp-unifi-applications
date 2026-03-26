@@ -1,0 +1,134 @@
+{
+  "h1": "Get chime details",
+  "method": "GET",
+  "path": "/v1/chimes/{id}",
+  "description": "Get detailed information about a specific chime",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "The primary key of chime",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of chime",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the chime",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": "Connection state of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mac",
+          "required": true,
+          "type": "string",
+          "description": "The MAC address of the device",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "cameraIds",
+          "required": true,
+          "type": "Array of string",
+          "description": "The list of (doorbell-only) cameras which this chime is paired to.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "ringSettings",
+          "required": true,
+          "type": "Array of object (ringSettings)",
+          "description": "List of custom ringtone settings for (doorbell-only) cameras paired to this chime.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "cameraId",
+              "required": true,
+              "type": "string",
+              "description": "Which paired (doorbell-only) camera do these settings refer to.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "repeatTimes",
+              "required": true,
+              "type": "number",
+              "description": "How many times should the ringtone be repeated",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "ringtoneId",
+              "required": true,
+              "type": "string",
+              "description": "The ID of the ringtone that should be played when the (doorbell-only) camera is rung.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "volume",
+              "required": true,
+              "type": "number",
+              "description": "How loud should the ringtone be played. 0 being silent and 100 the loudest.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/protect/integration/v1/chimes/{id}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/chimes/{id}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/chimes/{id}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/protect/integration/v1/chimes/{id}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get chime details\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/chimes/{id}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/chimes/{id}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/chimes/{id}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/chimes/{id}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/chimes/{id}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get chime details\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/chimes/{id}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"cameraIds\": [\n    \"string\"\n  ],\n  \"ringSettings\": [\n    {\n      \"cameraId\": \"string\",\n      \"repeatTimes\": 0,\n      \"ringtoneId\": \"string\",\n      \"volume\": 0\n    }\n  ]\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1chimesid"
+}

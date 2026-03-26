@@ -1,0 +1,81 @@
+{
+  "h1": "List SD-WAN Configs",
+  "method": "GET",
+  "path": "/v1/sd-wan-configs",
+  "description": "Retrieves a list of all SD-WAN configurations associated with the UI account making the API call.",
+  "pathParameters": [],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "401",
+        "429",
+        "500",
+        "502"
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "required": false,
+          "type": "Array of object",
+          "description": "Generic response data, specific schema depends on the endpoint",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": false,
+              "type": "string",
+              "description": "Unique identifier of the SD-WAN config",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": false,
+              "type": "string",
+              "description": "Name of the SD-WAN config",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "type",
+              "required": false,
+              "type": "string",
+              "description": "Type of SD-WAN config - Currently only supports sdwan-hbsp",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "httpStatusCode",
+          "required": false,
+          "type": "integer",
+          "description": "HTTP status code",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": "Request trace identifier",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L \"https://api.ui.com/v1/sd-wan-configs\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/sd-wan-configs\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/sd-wan-configs',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/sd-wan-configs\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/site-manager/v1.0.0/listsdwanconfigs"
+}

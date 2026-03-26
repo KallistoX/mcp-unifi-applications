@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "gettingstarted",
+    "title": "Getting Started",
+    "file": "gettingstarted.json"
+  },
+  {
+    "slug": "responseformat",
+    "title": "Response Format",
+    "file": "responseformat.json"
+  },
+  {
+    "slug": "versioncontrol",
+    "title": "Version Control",
+    "file": "versioncontrol.json"
+  },
+  {
+    "slug": "listhosts",
+    "title": "List Hosts",
+    "file": "listhosts.json"
+  },
+  {
+    "slug": "gethostbyid",
+    "title": "Get Host by ID",
+    "file": "gethostbyid.json"
+  },
+  {
+    "slug": "listsites",
+    "title": "List Sites",
+    "file": "listsites.json"
+  },
+  {
+    "slug": "listdevices",
+    "title": "List Devices",
+    "file": "listdevices.json"
+  },
+  {
+    "slug": "getispmetrics",
+    "title": "Get ISP Metrics",
+    "file": "getispmetrics.json"
+  },
+  {
+    "slug": "queryispmetrics",
+    "title": "Query ISP Metrics",
+    "file": "queryispmetrics.json"
+  },
+  {
+    "slug": "listsdwanconfigs",
+    "title": "List SD-WAN Configs",
+    "file": "listsdwanconfigs.json"
+  },
+  {
+    "slug": "getsdwanconfigbyid",
+    "title": "Get SD-WAN Config by ID",
+    "file": "getsdwanconfigbyid.json"
+  },
+  {
+    "slug": "getsdwanconfigstatus",
+    "title": "Get SD-WAN Config Status",
+    "file": "getsdwanconfigstatus.json"
+  }
+]

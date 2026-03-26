@@ -1,0 +1,273 @@
+{
+  "h1": "Query ISP Metrics",
+  "method": "POST",
+  "path": "/v1/isp-metrics/{type}/query",
+  "description": "Retrieves ISP metrics data based on specific query parameters. 5-minute interval metrics are available for at least 24 hours, and 1-hour interval metrics are available for at least 30 days.\n\nNote: If the UI account lacks access to all requested sites, a 502 error is returned. If partial access is granted, the response will include status: partialSuccess.",
+  "pathParameters": [
+    {
+      "name": "type",
+      "required": true,
+      "type": "string",
+      "description": "Specifies whether metrics are returned using `5m` or `1h` intervals",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "sites",
+      "required": false,
+      "type": "Array of object",
+      "description": null,
+      "discriminator": null,
+      "children": [
+        {
+          "name": "beginTimestamp",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "hostId",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "endTimestamp",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "siteId",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "429",
+        "500",
+        "502"
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "required": false,
+          "type": "object",
+          "description": "Generic response data, specific schema depends on the endpoint",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "metrics",
+              "required": false,
+              "type": "Array of object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "metricType",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "periods",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "data",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "wan",
+                          "required": false,
+                          "type": "object",
+                          "description": null,
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "avgLatency",
+                              "required": false,
+                              "type": "integer",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "download_kbps",
+                              "required": false,
+                              "type": "integer",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "downtime",
+                              "required": false,
+                              "type": "integer",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "ispAsn",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "ispName",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "maxLatency",
+                              "required": false,
+                              "type": "integer",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "packetLoss",
+                              "required": false,
+                              "type": "integer",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "upload_kbps",
+                              "required": false,
+                              "type": "integer",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "uptime",
+                              "required": false,
+                              "type": "integer",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "metricTime",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "version",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "hostId",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "siteId",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "message",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "status",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "httpStatusCode",
+          "required": false,
+          "type": "integer",
+          "description": "HTTP status code",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": "Request trace identifier",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/isp-metrics/{type}/query\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"sites\\\": [\n    {\n      \\\"beginTimestamp\\\": \\\"2024-06-30T13:35:00Z\\\",\n      \\\"hostId\\\": \\\"900A6F00301100000000074A6BA90000000007A3387E0000000063EC9853:123456789\\\",\n      \\\"endTimestamp\\\": \\\"2024-06-30T15:35:00Z\\\",\n      \\\"siteId\\\": \\\"661900ae6aec8f548d49fd54\\\"\n    }\n  ]\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/isp-metrics/{type}/query\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"sites\": [\n    {\n      \"beginTimestamp\": \"2024-06-30T13:35:00Z\",\n      \"hostId\": \"900A6F00301100000000074A6BA90000000007A3387E0000000063EC9853:123456789\",\n      \"endTimestamp\": \"2024-06-30T15:35:00Z\",\n      \"siteId\": \"661900ae6aec8f548d49fd54\"\n    }\n  ]\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"sites\": [\n    {\n      \"beginTimestamp\": \"2024-06-30T13:35:00Z\",\n      \"hostId\": \"900A6F00301100000000074A6BA90000000007A3387E0000000063EC9853:123456789\",\n      \"endTimestamp\": \"2024-06-30T15:35:00Z\",\n      \"siteId\": \"661900ae6aec8f548d49fd54\"\n    }\n  ]\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/isp-metrics/{type}/query',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"sites\": [\n    {\n      \"beginTimestamp\": \"2024-06-30T13:35:00Z\",\n      \"hostId\": \"900A6F00301100000000074A6BA90000000007A3387E0000000063EC9853:123456789\",\n      \"endTimestamp\": \"2024-06-30T15:35:00Z\",\n      \"siteId\": \"661900ae6aec8f548d49fd54\"\n    }\n  ]\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/isp-metrics/{type}/query\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/site-manager/v1.0.0/queryispmetrics"
+}

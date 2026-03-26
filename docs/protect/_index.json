@@ -1,0 +1,212 @@
+[
+  {
+    "slug": "gettingstarted",
+    "title": "Getting Started",
+    "file": "gettingstarted.json"
+  },
+  {
+    "slug": "connectorpost",
+    "title": "Connector - POST",
+    "file": "connectorpost.json"
+  },
+  {
+    "slug": "connectorget",
+    "title": "Connector - GET",
+    "file": "connectorget.json"
+  },
+  {
+    "slug": "connectorput",
+    "title": "Connector - PUT",
+    "file": "connectorput.json"
+  },
+  {
+    "slug": "connectordelete",
+    "title": "Connector - DELETE",
+    "file": "connectordelete.json"
+  },
+  {
+    "slug": "connectorpatch",
+    "title": "Connector - PATCH",
+    "file": "connectorpatch.json"
+  },
+  {
+    "slug": "get-v1metainfo",
+    "title": "Get application information",
+    "file": "get-v1metainfo.json"
+  },
+  {
+    "slug": "get-v1viewersid",
+    "title": "Get viewer details",
+    "file": "get-v1viewersid.json"
+  },
+  {
+    "slug": "patch-v1viewersid",
+    "title": "Patch viewer settings",
+    "file": "patch-v1viewersid.json"
+  },
+  {
+    "slug": "get-v1viewers",
+    "title": "Get all viewers",
+    "file": "get-v1viewers.json"
+  },
+  {
+    "slug": "get-v1liveviewsid",
+    "title": "Get live view details",
+    "file": "get-v1liveviewsid.json"
+  },
+  {
+    "slug": "patch-v1liveviewsid",
+    "title": "Patch live view configuration",
+    "file": "patch-v1liveviewsid.json"
+  },
+  {
+    "slug": "get-v1liveviews",
+    "title": "Get all live views",
+    "file": "get-v1liveviews.json"
+  },
+  {
+    "slug": "post-v1liveviews",
+    "title": "Create live view",
+    "file": "post-v1liveviews.json"
+  },
+  {
+    "slug": "get-v1subscribedevices",
+    "title": "Get update messages about devices",
+    "file": "get-v1subscribedevices.json"
+  },
+  {
+    "slug": "get-v1subscribeevents",
+    "title": "Get Protect event messages",
+    "file": "get-v1subscribeevents.json"
+  },
+  {
+    "slug": "post-v1camerasidptzpatrolstartslot",
+    "title": "Start a camera PTZ patrol",
+    "file": "post-v1camerasidptzpatrolstartslot.json"
+  },
+  {
+    "slug": "post-v1camerasidptzpatrolstop",
+    "title": "Stop active camera PTZ patrol",
+    "file": "post-v1camerasidptzpatrolstop.json"
+  },
+  {
+    "slug": "post-v1camerasidptzgotoslot",
+    "title": "Move PTZ camera to preset",
+    "file": "post-v1camerasidptzgotoslot.json"
+  },
+  {
+    "slug": "post-v1alarm-managerwebhookid",
+    "title": "Send a webhook to the alarm manager",
+    "file": "post-v1alarm-managerwebhookid.json"
+  },
+  {
+    "slug": "get-v1lightsid",
+    "title": "Get light details",
+    "file": "get-v1lightsid.json"
+  },
+  {
+    "slug": "patch-v1lightsid",
+    "title": "Patch light settings",
+    "file": "patch-v1lightsid.json"
+  },
+  {
+    "slug": "get-v1lights",
+    "title": "Get all lights",
+    "file": "get-v1lights.json"
+  },
+  {
+    "slug": "get-v1camerasid",
+    "title": "Get camera details",
+    "file": "get-v1camerasid.json"
+  },
+  {
+    "slug": "patch-v1camerasid",
+    "title": "Patch camera settings",
+    "file": "patch-v1camerasid.json"
+  },
+  {
+    "slug": "get-v1cameras",
+    "title": "Get all cameras",
+    "file": "get-v1cameras.json"
+  },
+  {
+    "slug": "post-v1camerasidrtsps-stream",
+    "title": "Create RTSPS streams for camera",
+    "file": "post-v1camerasidrtsps-stream.json"
+  },
+  {
+    "slug": "delete-v1camerasidrtsps-stream",
+    "title": "Delete camera RTSPS stream",
+    "file": "delete-v1camerasidrtsps-stream.json"
+  },
+  {
+    "slug": "get-v1camerasidrtsps-stream",
+    "title": "Get RTSPS streams for camera",
+    "file": "get-v1camerasidrtsps-stream.json"
+  },
+  {
+    "slug": "get-v1camerasidsnapshot",
+    "title": "Get camera snapshot",
+    "file": "get-v1camerasidsnapshot.json"
+  },
+  {
+    "slug": "post-v1camerasiddisable-mic-permanently",
+    "title": "Permanently disable camera microphone",
+    "file": "post-v1camerasiddisable-mic-permanently.json"
+  },
+  {
+    "slug": "post-v1camerasidtalkback-session",
+    "title": "Create talkback session for camera",
+    "file": "post-v1camerasidtalkback-session.json"
+  },
+  {
+    "slug": "get-v1sensorsid",
+    "title": "Get sensor details",
+    "file": "get-v1sensorsid.json"
+  },
+  {
+    "slug": "patch-v1sensorsid",
+    "title": "Patch sensor settings",
+    "file": "patch-v1sensorsid.json"
+  },
+  {
+    "slug": "get-v1sensors",
+    "title": "Get all sensors",
+    "file": "get-v1sensors.json"
+  },
+  {
+    "slug": "get-v1nvrs",
+    "title": "Get NVR details",
+    "file": "get-v1nvrs.json"
+  },
+  {
+    "slug": "post-v1filesfiletype",
+    "title": "Upload device asset file",
+    "file": "post-v1filesfiletype.json"
+  },
+  {
+    "slug": "get-v1filesfiletype",
+    "title": "Get device asset files",
+    "file": "get-v1filesfiletype.json"
+  },
+  {
+    "slug": "get-v1chimesid",
+    "title": "Get chime details",
+    "file": "get-v1chimesid.json"
+  },
+  {
+    "slug": "patch-v1chimesid",
+    "title": "Patch chime settings",
+    "file": "patch-v1chimesid.json"
+  },
+  {
+    "slug": "get-v1chimes",
+    "title": "Get all chimes",
+    "file": "get-v1chimes.json"
+  },
+  {
+    "slug": "quick_start.ansible",
+    "title": "Quick Start",
+    "file": "quick_start.ansible.json"
+  }
+]

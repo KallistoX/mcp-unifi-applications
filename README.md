@@ -14,14 +14,20 @@ The scraper runs inside Docker (requires Playwright/Chromium):
 # Build the scraper image
 docker build -t unifi-scraper .
 
-# Scrape all pages (latest API version)
+# Scrape Network API docs (default, latest version)
 docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs
 
-# Scrape a specific API version
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --version v9.5.21
+# Scrape Protect API docs
+docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app protect
 
-# List available API versions
-docker run --rm unifi-scraper node scrape.mjs --list-versions
+# Scrape Site Manager API docs
+docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app site-manager
+
+# Scrape a specific API version
+docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app network --version v9.5.21
+
+# List available API versions for an app
+docker run --rm unifi-scraper node scrape.mjs --app protect --list-versions
 
 # Scrape specific pages only
 docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs createnetwork filtering
@@ -30,7 +36,7 @@ docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs createnetwo
 docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --force
 ```
 
-Pre-scraped docs for v10.1.84 are included in `docs/`.
+Pre-scraped docs for Network API v10.1.84 are included in `docs/network/`.
 
 ### 2. Install the MCP server
 
@@ -49,8 +55,8 @@ pip install .
   "mcpServers": {
     "unifi-docs": {
       "type": "stdio",
-      "command": "/path/to/unifi-docs-scraper/.venv/bin/python",
-      "args": ["/path/to/unifi-docs-scraper/mcp_server.py"]
+      "command": "/path/to/mcp-unifi-applications/.venv/bin/python",
+      "args": ["/path/to/mcp-unifi-applications/mcp_server.py"]
     }
   }
 }
@@ -62,19 +68,29 @@ pip install .
 {
   "mcpServers": {
     "unifi-docs": {
-      "command": "/path/to/unifi-docs-scraper/.venv/bin/python",
-      "args": ["/path/to/unifi-docs-scraper/mcp_server.py"]
+      "command": "/path/to/mcp-unifi-applications/.venv/bin/python",
+      "args": ["/path/to/mcp-unifi-applications/mcp_server.py"]
     }
   }
 }
 ```
 
+## Supported Applications
+
+| Application | URL | Local/Remote | Notes |
+|---|---|---|---|
+| Network | `developer.ui.com/network` | Both | Default app |
+| Protect | `developer.ui.com/protect` | Both | |
+| Site Manager | `developer.ui.com/site-manager` | Remote only | No local/remote switch |
+
+All three applications share the same docs SPA structure with version dropdowns, endpoint pages, and guide pages.
+
 ## Available Tools
 
 | Tool | Description |
 |---|---|
-| `list_endpoints` | List all API endpoints, optionally filtered by HTTP method |
-| `search_endpoints` | Fuzzy search by name, path, method, or description |
+| `list_endpoints` | List all API endpoints, optionally filtered by HTTP method or app |
+| `search_endpoints` | Fuzzy search by name, path, method, or description (filterable by app) |
 | `get_endpoint` | Full schema for an endpoint (summary or raw JSON) |
 | `get_endpoint_group` | All CRUD operations for a resource (e.g. "networks") |
 | `get_example` | Code examples in curl, Go, Node.js, Python, or Ansible (local/remote) |
@@ -82,12 +98,21 @@ pip install .
 | `find_field` | Search for a field name across all endpoint schemas |
 | `get_guide` | API guide pages (filtering syntax, error handling, getting started) |
 
+Tools that return multiple results accept an optional `app` parameter (`network`, `protect`, `site-manager`) to filter by application.
+
+## Environment Variables
+
+| Variable | Default | Description |
+|---|---|---|
+| `DOCS_DIR` | `./docs` (relative to `mcp_server.py`) | Directory containing scraped JSON docs. Expects app subdirectories (`network/`, `protect/`, `site-manager/`). |
+
 ## Scraper CLI
 
 ```
 node scrape.mjs [options] [slug...]
 
 Options:
+  --app <name>      Application: network (default), protect, site-manager.
   --version <ver>   API version to scrape (e.g. v10.1.84). Default: latest.
   --list-versions   Print available versions and exit.
   --force           Re-scrape even if output file exists.
@@ -99,21 +124,22 @@ Arguments:
 The slug is the last path segment of the docs URL:
 `https://developer.ui.com/network/v10.1.84/createnetwork` -> `createnetwork`
 
+Output is written to `<output>/<app>/` (e.g. `docs/network/`, `docs/protect/`).
+
 The full scan is resumable - already-scraped pages are skipped. Use `--force` to re-scrape.
 
 ## Project Structure
 
 ```
-unifi-docs-scraper/
+mcp-unifi-applications/
 ├── scrape.mjs          # Playwright scraper (runs in Docker)
 ├── mcp_server.py       # MCP server (Python, stdio transport)
 ├── Dockerfile          # Scraper container image
 ├── pyproject.toml      # Python project config
 ├── docs/               # Scraped JSON output
-│   ├── _index.json     # Index of all scraped pages
-│   ├── createnetwork.json
-│   ├── filtering.json
-│   └── ...
+│   ├── network/        # Network API docs
+│   ├── protect/        # Protect API docs
+│   └── site-manager/   # Site Manager API docs
 └── tests/
     └── test_mcp_server.py
 ```

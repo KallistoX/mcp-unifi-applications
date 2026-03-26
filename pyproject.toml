@@ -21,7 +21,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/dbussemas/mcp-unifi-applications"
+Repository = "https://github.com/KallistoX/mcp-unifi-applications"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]

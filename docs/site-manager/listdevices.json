@@ -1,0 +1,276 @@
+{
+  "h1": "List Devices",
+  "method": "GET",
+  "path": "/v1/devices",
+  "description": "Retrieves a list of UniFi devices managed by hosts where the UI account making the API call is the owner or a super admin.\n\nNote: The structure of the devices.uidb field may vary depending on the UniFi OS or Network Server version. The example provided is based on UniFi OS 4.1.13.",
+  "pathParameters": [],
+  "queryParameters": [
+    {
+      "name": "hostIds[]",
+      "required": false,
+      "type": "Array of string",
+      "description": "List of host IDs to filter the results",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "time",
+      "required": false,
+      "type": "string",
+      "description": "Last processed timestamp of devices in RFC3339 format",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "pageSize",
+      "required": false,
+      "type": "string",
+      "description": "Number of items to return per page",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "nextToken",
+      "required": false,
+      "type": "string",
+      "description": "Token for pagination to retrieve the next set of results",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "429",
+        "500",
+        "502"
+      ],
+      "fields": [
+        {
+          "name": "code",
+          "required": false,
+          "type": "any",
+          "description": "Error code from upstream",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "data",
+          "required": false,
+          "type": "Array of object",
+          "description": "Generic response data, specific schema depends on the endpoint",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "hostId",
+              "required": false,
+              "type": "string",
+              "description": "Unique identifier of the host device",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hostName",
+              "required": false,
+              "type": "string",
+              "description": "Name of the host device",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "devices",
+              "required": false,
+              "type": "Array of object",
+              "description": "Array of devices managed by this host",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "id",
+                  "required": false,
+                  "type": "string",
+                  "description": "Unique identifier of the device",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "mac",
+                  "required": false,
+                  "type": "string",
+                  "description": "MAC address of the device",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "name",
+                  "required": false,
+                  "type": "string",
+                  "description": "User-defined name of the device",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "model",
+                  "required": false,
+                  "type": "string",
+                  "description": "Model name of the device",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "shortname",
+                  "required": false,
+                  "type": "string",
+                  "description": "Short identifier of the device model (e.g., UDMPROSE)",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "ip",
+                  "required": false,
+                  "type": "string",
+                  "description": "IP address of the device",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "productLine",
+                  "required": false,
+                  "type": "string",
+                  "description": "Product line of the device (network, protect, etc.)",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "status",
+                  "required": false,
+                  "type": "string",
+                  "description": "Current connection status of the device (online, offline, etc.)",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "version",
+                  "required": false,
+                  "type": "string",
+                  "description": "Current firmware version of the device",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "firmwareStatus",
+                  "required": false,
+                  "type": "string",
+                  "description": "Status of device firmware (upToDate, updateAvailable, etc.)",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "updateAvailable",
+                  "required": false,
+                  "type": "string",
+                  "description": "Version of firmware update available for the device, if any",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "isConsole",
+                  "required": false,
+                  "type": "boolean",
+                  "description": "Indicates if the device is a console device",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "isManaged",
+                  "required": false,
+                  "type": "boolean",
+                  "description": "Indicates if the device is managed by the controller",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "startupTime",
+                  "required": false,
+                  "type": "string",
+                  "description": "Time when the device was last started in RFC3339 format",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "adoptionTime",
+                  "required": false,
+                  "type": "string",
+                  "description": "Time when the device was adopted in RFC3339 format",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "note",
+                  "required": false,
+                  "type": "string",
+                  "description": "User-defined notes for the device",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "uidb",
+                  "required": false,
+                  "type": "any",
+                  "description": "UI-specific metadata including images and identifiers",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "updatedAt",
+              "required": false,
+              "type": "string",
+              "description": "Last update time in RFC3339 format",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "httpStatusCode",
+          "required": false,
+          "type": "integer",
+          "description": "HTTP status code",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": "Request trace identifier",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "nextToken",
+          "required": false,
+          "type": "string",
+          "description": "Pagination token for fetching the next set of results",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/devices?hostIds[]=900A6F00301100000000074A6BA90000000007A3387E0000000063EC9853%3A123456789%2C900A6F00301100000000074A6BA90000000007A3387E0000000063EC9853%3A987654321&time=2025-10-30T01%3A52%3A51Z&pageSize=10&nextToken=602232A870250000000006C514FF00000000073DD8DB000000006369FDA2%3A1467082514\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/devices?hostIds[]=900A6F00301100000000074A6BA90000000007A3387E0000000063EC9853%3A123456789%2C900A6F00301100000000074A6BA90000000007A3387E0000000063EC9853%3A987654321&time=2025-10-30T01%3A52%3A51Z&pageSize=10&nextToken=602232A870250000000006C514FF00000000073DD8DB000000006369FDA2%3A1467082514\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/devices?hostIds[]&time=2025-10-30T01:52:51Z&pageSize=10&nextToken=602232A870250000000006C514FF00000000073DD8DB000000006369FDA2:1467082514',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/devices?hostIds%5B%5D=null&time=2025-10-30T01:52:51Z&pageSize=10&nextToken=602232A870250000000006C514FF00000000073DD8DB000000006369FDA2:1467082514\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/site-manager/v1.0.0/listdevices"
+}

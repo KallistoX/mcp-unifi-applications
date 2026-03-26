@@ -1,0 +1,338 @@
+{
+  "h1": "Permanently disable camera microphone",
+  "method": "POST",
+  "path": "/v1/cameras/{id}/disable-mic-permanently",
+  "description": "Disable the microphone for a specific camera. This action cannot be undone unless the camera is reset.",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "The primary key of camera",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of camera",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the camera",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": "Connection state of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mac",
+          "required": true,
+          "type": "string",
+          "description": "The MAC address of the device",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "isMicEnabled",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether or not the microphone on camera is enabled",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "osdSettings",
+          "required": true,
+          "type": "object",
+          "description": "On Screen Display settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isNameEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether to show the name in the OSD.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isDateEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether to show the date in the OSD.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isLogoEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether to show the logo in the bottom right corner.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isDebugEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether debug info is enabled.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "overlayLocation",
+              "required": true,
+              "type": "string",
+              "description": "The location of the overlay on the screen.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "ledSettings",
+          "required": true,
+          "type": "object",
+          "description": "LED settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Indicates whether the status LED is enabled.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "welcomeLed",
+              "required": true,
+              "type": "boolean",
+              "description": "Indicates whether the welcome LED is enabled.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "floodLed",
+              "required": true,
+              "type": "boolean",
+              "description": "Indicates whether the flood LED is enabled.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "lcdMessage",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "resetAt",
+              "required": false,
+              "type": "numbernull",
+              "description": "UNIX timestamp when doorbell message should be removed (if not set then `nvr.doorbellSettings.defaultMessageResetTimeoutMs` is used, if set to `null` then interpreted as \"forever\")",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "text",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "micVolume",
+          "required": true,
+          "type": "number",
+          "description": "Mic volume: a number from 0-100.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "activePatrolSlot",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "videoMode",
+          "required": true,
+          "type": "string",
+          "description": "Current video mode of the camera",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "hdrType",
+          "required": true,
+          "type": "string",
+          "description": "High Dynamic Range (HDR) mode setting.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "featureFlags",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "supportFullHdSnapshot",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether camera support full HD or higher resolution snapshot",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasHdr",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the camera supports High Dynamic Range mode",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "smartDetectTypes",
+              "required": true,
+              "type": "Array of string",
+              "description": "What smart detection object types do the camera support.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "smartDetectAudioTypes",
+              "required": true,
+              "type": "Array of string",
+              "description": "What smart detection audio types do the camera support.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "videoModes",
+              "required": true,
+              "type": "Array of string",
+              "description": "A list of supported video modes by the camera",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasMic",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the camera has a microphone",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasLedStatus",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the camera has LED status",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasSpeaker",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the camera has a speaker to support talkback",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "smartDetectSettings",
+          "required": true,
+          "type": "object",
+          "description": "Smart detection settings for the camera.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "objectTypes",
+              "required": true,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "audioTypes",
+              "required": true,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g -X POST \"https://192.168.0.1/proxy/protect/integration/v1/cameras/{id}/disable-mic-permanently\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/cameras/{id}/disable-mic-permanently\"\n  method := \"POST\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/cameras/{id}/disable-mic-permanently',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"POST\", \"/proxy/protect/integration/v1/cameras/{id}/disable-mic-permanently\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Permanently disable camera microphone\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/cameras/{id}/disable-mic-permanently\"\n    method: POST\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g -X POST \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/cameras/{id}/disable-mic-permanently\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/cameras/{id}/disable-mic-permanently\"\n  method := \"POST\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/cameras/{id}/disable-mic-permanently',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"POST\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/cameras/{id}/disable-mic-permanently\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Permanently disable camera microphone\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/cameras/{id}/disable-mic-permanently\"\n    method: POST\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"isMicEnabled\": true,\n  \"osdSettings\": {\n    \"isNameEnabled\": true,\n    \"isDateEnabled\": true,\n    \"isLogoEnabled\": true,\n    \"isDebugEnabled\": true,\n    \"overlayLocation\": \"topLeft\"\n  },\n  \"ledSettings\": {\n    \"isEnabled\": true,\n    \"welcomeLed\": true,\n    \"floodLed\": true\n  },\n  \"lcdMessage\": {\n    \"type\": \"LEAVE_PACKAGE_AT_DOOR\",\n    \"resetAt\": null,\n    \"text\": \"string\"\n  },\n  \"micVolume\": 0,\n  \"activePatrolSlot\": 0,\n  \"videoMode\": \"default\",\n  \"hdrType\": \"auto\",\n  \"featureFlags\": {\n    \"supportFullHdSnapshot\": true,\n    \"hasHdr\": true,\n    \"smartDetectTypes\": [\n      \"person\"\n    ],\n    \"smartDetectAudioTypes\": [\n      \"alrmSmoke\"\n    ],\n    \"videoModes\": [\n      \"default\"\n    ],\n    \"hasMic\": true,\n    \"hasLedStatus\": true,\n    \"hasSpeaker\": true\n  },\n  \"smartDetectSettings\": {\n    \"objectTypes\": [\n      \"person\"\n    ],\n    \"audioTypes\": [\n      \"alrmSmoke\"\n    ]\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/post-v1camerasiddisable-mic-permanently"
+}

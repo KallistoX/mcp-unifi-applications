@@ -1,0 +1,630 @@
+{
+  "h1": "Patch sensor settings",
+  "method": "PATCH",
+  "path": "/v1/sensors/{id}",
+  "description": "Patch the settings for a specific sensor",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "The primary key of sensor",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "name",
+      "required": false,
+      "type": "string",
+      "description": "The name of the model",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "lightSettings",
+      "required": false,
+      "type": "object",
+      "description": null,
+      "discriminator": null,
+      "children": [
+        {
+          "name": "isEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": "Enable ambient light sensor.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "margin",
+          "required": false,
+          "type": "number",
+          "description": "Ambient light threshold detection hysteresis margin (Lux). Read-only value decided by sensor implementation.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "lowThreshold",
+          "required": false,
+          "type": "numbernull",
+          "description": "Ambient light interrupt threshold low level from 1 to 503192 (Lux).",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "highThreshold",
+          "required": false,
+          "type": "numbernull",
+          "description": "Ambient light interrupt threshold high level from 1 to 503192 (Lux).",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "humiditySettings",
+      "required": false,
+      "type": "object",
+      "description": null,
+      "discriminator": null,
+      "children": [
+        {
+          "name": "isEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": "Enable relative humidity sensor.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "margin",
+          "required": false,
+          "type": "number",
+          "description": "Humidity threshold detection hysteresis margin (%). Read-only value decided by sensor implementation.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "lowThreshold",
+          "required": false,
+          "type": "numbernull",
+          "description": "Humidity low level threshold from 1 to 99 (%).",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "highThreshold",
+          "required": false,
+          "type": "numbernull",
+          "description": "Humidity high level threshold from 1 to 99 (%).",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "temperatureSettings",
+      "required": false,
+      "type": "object",
+      "description": null,
+      "discriminator": null,
+      "children": [
+        {
+          "name": "isEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": "Enable temperature sensor.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "margin",
+          "required": false,
+          "type": "number",
+          "description": "Temperature threshold detection hysteresis margin (C). Read-only value decided by sensor implementation.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "lowThreshold",
+          "required": false,
+          "type": "numbernull",
+          "description": "Temperature low level threshold from -39 to 124 (C).",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "highThreshold",
+          "required": false,
+          "type": "numbernull",
+          "description": "Temperature high level threshold from -39 to 124 (C).",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "motionSettings",
+      "required": false,
+      "type": "object",
+      "description": null,
+      "discriminator": null,
+      "children": [
+        {
+          "name": "isEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": "Enable motion sensor.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "sensitivity",
+          "required": false,
+          "type": "number",
+          "description": "Motion sensitivity (0-100).",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "alarmSettings",
+      "required": false,
+      "type": "object",
+      "description": null,
+      "discriminator": null,
+      "children": [
+        {
+          "name": "isEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": "Enable smoke and carbon monoxide alarm sensor.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of sensor",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the sensor",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": "Connection state of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mac",
+          "required": true,
+          "type": "string",
+          "description": "The MAC address of the device",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mountType",
+          "required": true,
+          "type": "string",
+          "description": "Mounting type of the sensor.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "batteryStatus",
+          "required": true,
+          "type": "object",
+          "description": "[DEPRECATED] Use wirelessConnectionState.batteryStatus instead. Battery status.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "percentage",
+              "required": false,
+              "type": "numbernull",
+              "description": "Battery charge level from 0 to 100 (%).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isLow",
+              "required": false,
+              "type": "boolean",
+              "description": "Low battery charge level flag.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "stats",
+          "required": true,
+          "type": "object",
+          "description": "Sensor statistics.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "light",
+              "required": false,
+              "type": "object",
+              "description": "Ambient light value (Lux).",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "value",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "status",
+                  "required": false,
+                  "type": "string",
+                  "description": "What range does the measured metric fall into",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "humidity",
+              "required": false,
+              "type": "object",
+              "description": "Ambient light value (Lux).",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "value",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "status",
+                  "required": false,
+                  "type": "string",
+                  "description": "What range does the measured metric fall into",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "temperature",
+              "required": false,
+              "type": "object",
+              "description": "Ambient light value (Lux).",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "value",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "status",
+                  "required": false,
+                  "type": "string",
+                  "description": "What range does the measured metric fall into",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "lightSettings",
+          "required": true,
+          "type": "object",
+          "description": "Ambient light sensor settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Enable ambient light sensor.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "margin",
+              "required": false,
+              "type": "number",
+              "description": "Ambient light threshold detection hysteresis margin (Lux). Read-only value decided by sensor implementation.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "lowThreshold",
+              "required": false,
+              "type": "numbernull",
+              "description": "Ambient light interrupt threshold low level from 1 to 503192 (Lux).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "highThreshold",
+              "required": false,
+              "type": "numbernull",
+              "description": "Ambient light interrupt threshold high level from 1 to 503192 (Lux).",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "humiditySettings",
+          "required": true,
+          "type": "object",
+          "description": "Relative humidity sensor settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Enable relative humidity sensor.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "margin",
+              "required": false,
+              "type": "number",
+              "description": "Humidity threshold detection hysteresis margin (%). Read-only value decided by sensor implementation.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "lowThreshold",
+              "required": false,
+              "type": "numbernull",
+              "description": "Humidity low level threshold from 1 to 99 (%).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "highThreshold",
+              "required": false,
+              "type": "numbernull",
+              "description": "Humidity high level threshold from 1 to 99 (%).",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "temperatureSettings",
+          "required": true,
+          "type": "object",
+          "description": "Temperature sensor settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Enable temperature sensor.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "margin",
+              "required": false,
+              "type": "number",
+              "description": "Temperature threshold detection hysteresis margin (C). Read-only value decided by sensor implementation.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "lowThreshold",
+              "required": false,
+              "type": "numbernull",
+              "description": "Temperature low level threshold from -39 to 124 (C).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "highThreshold",
+              "required": false,
+              "type": "numbernull",
+              "description": "Temperature high level threshold from -39 to 124 (C).",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "isOpened",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether the door/window/garage is opened.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "openStatusChangedAt",
+          "required": true,
+          "type": "numbernull",
+          "description": "Unix timestamp when the door/window/garage was last opened or closed, nullable.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "isMotionDetected",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether sensor is currently detecting the motion.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "motionDetectedAt",
+          "required": true,
+          "type": "numbernull",
+          "description": "Unix timestamp when the last motion was detected.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "motionSettings",
+          "required": true,
+          "type": "object",
+          "description": "Motion sensor settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Enable motion sensor.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "sensitivity",
+              "required": false,
+              "type": "number",
+              "description": "Motion sensitivity (0-100).",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "alarmTriggeredAt",
+          "required": true,
+          "type": "numbernull",
+          "description": "Unix timestamp when the smoke or carbon monoxide alarm was triggered, nullable.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "alarmSettings",
+          "required": true,
+          "type": "object",
+          "description": "Smoke and carbon monoxide alarm sensor settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Enable smoke and carbon monoxide alarm sensor.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "leakDetectedAt",
+          "required": true,
+          "type": "numbernull",
+          "description": "Unix timestamp when the sensor detected a water leak, nullable.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "externalLeakDetectedAt",
+          "required": true,
+          "type": "numbernull",
+          "description": "Unix timestamp when the sensor detected an external water leak, nullable.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "leakSettings",
+          "required": true,
+          "type": "object",
+          "description": "Leak sensor settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isInternalEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Enable internal water leak detection.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isExternalEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Enable external water leak detection.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "tamperingDetectedAt",
+          "required": true,
+          "type": "numbernull",
+          "description": "Unix timestamp when the sensor detected tampering, nullable.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g -X PATCH \"https://192.168.0.1/proxy/protect/integration/v1/sensors/{id}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"name\\\": \\\"string\\\",\n  \\\"lightSettings\\\": {\n    \\\"isEnabled\\\": true,\n    \\\"margin\\\": 0\n  },\n  \\\"humiditySettings\\\": {\n    \\\"isEnabled\\\": true,\n    \\\"margin\\\": 0\n  },\n  \\\"temperatureSettings\\\": {\n    \\\"isEnabled\\\": true,\n    \\\"margin\\\": 0\n  },\n  \\\"motionSettings\\\": {\n    \\\"isEnabled\\\": true,\n    \\\"sensitivity\\\": 0\n  },\n  \\\"alarmSettings\\\": {\n    \\\"isEnabled\\\": true\n  }\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/sensors/{id}\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"name\": \"string\",\n  \"lightSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"humiditySettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"temperatureSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"motionSettings\": {\n    \"isEnabled\": true,\n    \"sensitivity\": 0\n  },\n  \"alarmSettings\": {\n    \"isEnabled\": true\n  }\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"name\": \"string\",\n  \"lightSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"humiditySettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"temperatureSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"motionSettings\": {\n    \"isEnabled\": true,\n    \"sensitivity\": 0\n  },\n  \"alarmSettings\": {\n    \"isEnabled\": true\n  }\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/sensors/{id}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"name\": \"string\",\n  \"lightSettings\": {\n    \"isEnabled\": True,\n    \"margin\": 0\n  },\n  \"humiditySettings\": {\n    \"isEnabled\": True,\n    \"margin\": 0\n  },\n  \"temperatureSettings\": {\n    \"isEnabled\": True,\n    \"margin\": 0\n  },\n  \"motionSettings\": {\n    \"isEnabled\": True,\n    \"sensitivity\": 0\n  },\n  \"alarmSettings\": {\n    \"isEnabled\": True\n  }\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/proxy/protect/integration/v1/sensors/{id}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Patch sensor settings\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/sensors/{id}\"\n    method: PATCH\n    body:\n      name: string\n      lightSettings:\n        isEnabled: true\n        margin: 0\n      humiditySettings:\n        isEnabled: true\n        margin: 0\n      temperatureSettings:\n        isEnabled: true\n        margin: 0\n      motionSettings:\n        isEnabled: true\n        sensitivity: 0\n      alarmSettings:\n        isEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g -X PATCH \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/sensors/{id}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"name\\\": \\\"string\\\",\n  \\\"lightSettings\\\": {\n    \\\"isEnabled\\\": true,\n    \\\"margin\\\": 0\n  },\n  \\\"humiditySettings\\\": {\n    \\\"isEnabled\\\": true,\n    \\\"margin\\\": 0\n  },\n  \\\"temperatureSettings\\\": {\n    \\\"isEnabled\\\": true,\n    \\\"margin\\\": 0\n  },\n  \\\"motionSettings\\\": {\n    \\\"isEnabled\\\": true,\n    \\\"sensitivity\\\": 0\n  },\n  \\\"alarmSettings\\\": {\n    \\\"isEnabled\\\": true\n  }\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/sensors/{id}\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"name\": \"string\",\n  \"lightSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"humiditySettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"temperatureSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"motionSettings\": {\n    \"isEnabled\": true,\n    \"sensitivity\": 0\n  },\n  \"alarmSettings\": {\n    \"isEnabled\": true\n  }\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"name\": \"string\",\n  \"lightSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"humiditySettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"temperatureSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0\n  },\n  \"motionSettings\": {\n    \"isEnabled\": true,\n    \"sensitivity\": 0\n  },\n  \"alarmSettings\": {\n    \"isEnabled\": true\n  }\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/sensors/{id}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"name\": \"string\",\n  \"lightSettings\": {\n    \"isEnabled\": True,\n    \"margin\": 0\n  },\n  \"humiditySettings\": {\n    \"isEnabled\": True,\n    \"margin\": 0\n  },\n  \"temperatureSettings\": {\n    \"isEnabled\": True,\n    \"margin\": 0\n  },\n  \"motionSettings\": {\n    \"isEnabled\": True,\n    \"sensitivity\": 0\n  },\n  \"alarmSettings\": {\n    \"isEnabled\": True\n  }\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/sensors/{id}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Patch sensor settings\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/sensors/{id}\"\n    method: PATCH\n    body:\n      name: string\n      lightSettings:\n        isEnabled: true\n        margin: 0\n      humiditySettings:\n        isEnabled: true\n        margin: 0\n      temperatureSettings:\n        isEnabled: true\n        margin: 0\n      motionSettings:\n        isEnabled: true\n        sensitivity: 0\n      alarmSettings:\n        isEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"mountType\": \"door\",\n  \"batteryStatus\": {\n    \"percentage\": null,\n    \"isLow\": true\n  },\n  \"stats\": {\n    \"light\": {\n      \"value\": 0,\n      \"status\": \"neutral\"\n    },\n    \"humidity\": {\n      \"value\": 0,\n      \"status\": \"neutral\"\n    },\n    \"temperature\": {\n      \"value\": 0,\n      \"status\": \"neutral\"\n    }\n  },\n  \"lightSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0,\n    \"lowThreshold\": null,\n    \"highThreshold\": null\n  },\n  \"humiditySettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0,\n    \"lowThreshold\": null,\n    \"highThreshold\": null\n  },\n  \"temperatureSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0,\n    \"lowThreshold\": null,\n    \"highThreshold\": null\n  },\n  \"isOpened\": true,\n  \"openStatusChangedAt\": null,\n  \"isMotionDetected\": true,\n  \"motionDetectedAt\": null,\n  \"motionSettings\": {\n    \"isEnabled\": true,\n    \"sensitivity\": 0\n  },\n  \"alarmTriggeredAt\": null,\n  \"alarmSettings\": {\n    \"isEnabled\": true\n  },\n  \"leakDetectedAt\": null,\n  \"externalLeakDetectedAt\": null,\n  \"leakSettings\": {",
+  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/patch-v1sensorsid"
+}
