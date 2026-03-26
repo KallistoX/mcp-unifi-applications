@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 .mcp.json
 .env
+docs/tmp_pageClarification/
