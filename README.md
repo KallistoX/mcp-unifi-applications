@@ -217,6 +217,10 @@ mcp-unifi-applications/
 - Nesting is recursive - discriminators within variants are fully expanded
 - `children` captures statically expanded object fields
 
+## Disclaimer
+
+This project is not affiliated with, endorsed by, or sponsored by Ubiquiti Inc. The API documentation content scraped and served by this tool is the property of [Ubiquiti Inc.](https://ui.com) and is sourced from their public [developer portal](https://developer.ui.com). "UniFi" is a trademark of Ubiquiti Inc.
+
 ## License
 
 MIT
