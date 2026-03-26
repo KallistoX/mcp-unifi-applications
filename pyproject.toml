@@ -1,0 +1,16 @@
+[project]
+name = "mcp-unifi-applications"
+version = "0.1.0"
+description = "MCP server exposing UniFi Network API documentation as queryable tools"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    "fastmcp>=3.1.1",
+    "rapidfuzz>=3.14.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+mcp-unifi-applications = "mcp_server:mcp.run"

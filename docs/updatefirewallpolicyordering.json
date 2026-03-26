@@ -1,0 +1,113 @@
+{
+  "h1": "Reorder User-Defined Firewall Policies",
+  "method": "PUT",
+  "path": "/v1/sites/{siteId}/firewall/policies/ordering",
+  "description": "Reorder user-defined firewall policies for a specific source/destination zone pair.",
+  "pathParameters": [
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [
+    {
+      "name": "sourceFirewallZoneId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "destinationFirewallZoneId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [
+    {
+      "name": "orderedFirewallPolicyIds",
+      "required": true,
+      "type": "object",
+      "description": null,
+      "discriminator": null,
+      "children": [
+        {
+          "name": "beforeSystemDefined",
+          "required": true,
+          "type": "Array of string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "afterSystemDefined",
+          "required": true,
+          "type": "Array of string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "orderedFirewallPolicyIds",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "beforeSystemDefined",
+              "required": true,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "afterSystemDefined",
+              "required": true,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g -X PUT \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/firewall/policies/ordering?sourceFirewallZoneId={sourceFirewallZoneId}&destinationFirewallZoneId={destinationFirewallZoneId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"orderedFirewallPolicyIds\\\": {\n    \\\"beforeSystemDefined\\\": [\n      \\\"string\\\"\n    ],\n    \\\"afterSystemDefined\\\": [\n      \\\"string\\\"\n    ]\n  }\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/firewall/policies/ordering?sourceFirewallZoneId={sourceFirewallZoneId}&destinationFirewallZoneId={destinationFirewallZoneId}\"\n  method := \"PUT\"\n\n\n  payload := strings.NewReader(`{\n  \"orderedFirewallPolicyIds\": {\n    \"beforeSystemDefined\": [\n      \"string\"\n    ],\n    \"afterSystemDefined\": [\n      \"string\"\n    ]\n  }\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"orderedFirewallPolicyIds\": {\n    \"beforeSystemDefined\": [\n      \"string\"\n    ],\n    \"afterSystemDefined\": [\n      \"string\"\n    ]\n  }\n});\n\n\nlet config = {\n  method: 'put',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/firewall/policies/ordering?sourceFirewallZoneId={sourceFirewallZoneId}&destinationFirewallZoneId={destinationFirewallZoneId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"orderedFirewallPolicyIds\": {\n    \"beforeSystemDefined\": [\n      \"string\"\n    ],\n    \"afterSystemDefined\": [\n      \"string\"\n    ]\n  }\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PUT\", \"/proxy/network/integration/v1/sites/{siteId}/firewall/policies/ordering?sourceFirewallZoneId=%7BsourceFirewallZoneId%7D&destinationFirewallZoneId=%7BdestinationFirewallZoneId%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Reorder User-Defined Firewall Policies\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/firewall/policies/ordering\"\n    method: PUT\n    query:\n      sourceFirewallZoneId: \"{sourceFirewallZoneId}\"\n      destinationFirewallZoneId: \"{destinationFirewallZoneId}\"\n    body:\n      orderedFirewallPolicyIds:\n        beforeSystemDefined:\n          - string\n        afterSystemDefined:\n          - string\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g -X PUT \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/firewall/policies/ordering?sourceFirewallZoneId={sourceFirewallZoneId}&destinationFirewallZoneId={destinationFirewallZoneId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"orderedFirewallPolicyIds\\\": {\n    \\\"beforeSystemDefined\\\": [\n      \\\"string\\\"\n    ],\n    \\\"afterSystemDefined\\\": [\n      \\\"string\\\"\n    ]\n  }\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/firewall/policies/ordering?sourceFirewallZoneId={sourceFirewallZoneId}&destinationFirewallZoneId={destinationFirewallZoneId}\"\n  method := \"PUT\"\n\n\n  payload := strings.NewReader(`{\n  \"orderedFirewallPolicyIds\": {\n    \"beforeSystemDefined\": [\n      \"string\"\n    ],\n    \"afterSystemDefined\": [\n      \"string\"\n    ]\n  }\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"orderedFirewallPolicyIds\": {\n    \"beforeSystemDefined\": [\n      \"string\"\n    ],\n    \"afterSystemDefined\": [\n      \"string\"\n    ]\n  }\n});\n\n\nlet config = {\n  method: 'put',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/firewall/policies/ordering?sourceFirewallZoneId={sourceFirewallZoneId}&destinationFirewallZoneId={destinationFirewallZoneId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"orderedFirewallPolicyIds\": {\n    \"beforeSystemDefined\": [\n      \"string\"\n    ],\n    \"afterSystemDefined\": [\n      \"string\"\n    ]\n  }\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PUT\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/firewall/policies/ordering?sourceFirewallZoneId=%7BsourceFirewallZoneId%7D&destinationFirewallZoneId=%7BdestinationFirewallZoneId%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Reorder User-Defined Firewall Policies\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/firewall/policies/ordering\"\n    method: PUT\n    query:\n      sourceFirewallZoneId: \"{sourceFirewallZoneId}\"\n      destinationFirewallZoneId: \"{destinationFirewallZoneId}\"\n    body:\n      orderedFirewallPolicyIds:\n        beforeSystemDefined:\n          - string\n        afterSystemDefined:\n          - string\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"orderedFirewallPolicyIds\": {\n    \"beforeSystemDefined\": [\n      \"00000000-0000-0000-0000-000000000000\"\n    ],\n    \"afterSystemDefined\": [\n      \"00000000-0000-0000-0000-000000000000\"\n    ]\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/updatefirewallpolicyordering"
+}

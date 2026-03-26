@@ -1,0 +1,158 @@
+{
+  "h1": "Get Connected Client Details",
+  "method": "GET",
+  "path": "/v1/sites/{siteId}/clients/{clientId}",
+  "description": "Retrieve detailed information about a specific connected client, including name, IP address, MAC address, connection type and access information.",
+  "pathParameters": [
+    {
+      "name": "clientId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "type",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": [
+            {
+              "value": "WIRED",
+              "selected": true,
+              "schema": null
+            },
+            {
+              "value": "WIRELESS",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "VPN",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "TELEPORT",
+              "selected": false,
+              "schema": null
+            }
+          ],
+          "children": []
+        },
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "connectedAt",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "ipAddress",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "access",
+          "required": true,
+          "type": "object (Local client access details)",
+          "description": "Represents the type of network access and/or any applicable authorization status the client is using. - **Wired clients** may have direct access without additional authorization. - **Wireless clients** can be connected via a protected network or an open network that may require additional authorization (e.g., a guest portal). - **VPN clients** may have different authorization mechanisms. Currently, the only two supported access types are `GUEST` (used for wired and wireless guest clients) and `DEFAULT` (a placeholder, which might be refined in the future releases, used for all other clients). Filtering is possible by `access.type`, for example `access.type.eq('GUEST')` to list guest clients.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "DEFAULT",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "GUEST",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "macAddress",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "uplinkDeviceId",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get Connected Client Details\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/clients/{clientId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get Connected Client Details\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/clients/{clientId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"type\": \"string\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\",\n  \"connectedAt\": \"2024-01-01T00:00:00Z\",\n  \"ipAddress\": \"string\",\n  \"access\": null\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getconnectedclientdetails"
+}

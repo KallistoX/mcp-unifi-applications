@@ -1,0 +1,843 @@
+{
+  "h1": "Patch Firewall Policy",
+  "method": "PATCH",
+  "path": "/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}",
+  "description": "Patch an existing firewall policy on a site.",
+  "pathParameters": [
+    {
+      "name": "firewallPolicyId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "loggingEnabled",
+      "required": false,
+      "type": "boolean",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "enabled",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "description",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "index",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "action",
+          "required": true,
+          "type": "object (Firewall policy action)",
+          "description": "Defines action for matched traffic.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "ALLOW",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "BLOCK",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "REJECT",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "allowReturnTraffic",
+              "required": false,
+              "type": "boolean",
+              "description": "Creates a derived policy for the mirrored firewall zone pair to automatically allow the return traffic.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "source",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "zoneId",
+              "required": true,
+              "type": "string",
+              "description": "ID of the firewall zone from which the matched traffic originates.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "trafficFilter",
+              "required": false,
+              "type": "object (Firewall policy source traffic filter)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "PORT",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "NETWORK",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "MAC_ADDRESS",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "IP_ADDRESS",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "IPV6_IID",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "REGION",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "VPN_SERVER",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "SITE_TO_SITE_VPN_TUNNEL",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "portFilter",
+                  "required": false,
+                  "type": "object",
+                  "description": "Match source traffic by ports.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "PORTS",
+                          "selected": true,
+                          "schema": null
+                        },
+                        {
+                          "value": "TRAFFIC_MATCHING_LIST",
+                          "selected": false,
+                          "schema": null
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "matchOpposite",
+                      "required": true,
+                      "type": "boolean",
+                      "description": "Match on all ports except the specified ones.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "items",
+                      "required": false,
+                      "type": "Array of object (Port matching)",
+                      "description": "List of ports or port ranges to match.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "PORT_NUMBER",
+                              "selected": true,
+                              "schema": null
+                            },
+                            {
+                              "value": "PORT_NUMBER_RANGE",
+                              "selected": false,
+                              "schema": null
+                            }
+                          ],
+                          "children": []
+                        },
+                        {
+                          "name": "value",
+                          "required": false,
+                          "type": "integer",
+                          "description": "Port number",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "destination",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "zoneId",
+              "required": true,
+              "type": "string",
+              "description": "ID of the firewall zone to which the matched traffic is destined.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "trafficFilter",
+              "required": false,
+              "type": "object (Firewall policy destination traffic filter)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "PORT",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "NETWORK",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "IP_ADDRESS",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "IPV6_IID",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "REGION",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "VPN_SERVER",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "SITE_TO_SITE_VPN_TUNNEL",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "DOMAIN",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "APPLICATION",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "APPLICATION_CATEGORY",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "portFilter",
+                  "required": false,
+                  "type": "object",
+                  "description": "Match destination traffic by ports.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ipProtocolScope",
+          "required": true,
+          "type": "object (Firewall policy IP protocol scope)",
+          "description": "Defines rules for matching by IP version and protocol.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "ipVersion",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "IPV4",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "IPV6",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "IPV4_AND_IPV6",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "protocolFilter",
+              "required": false,
+              "type": "object (Firewall policy IPv4 protocol)",
+              "description": "Defines protocol matching. If null, matches all protocols.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "NAMED_PROTOCOL",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "PROTOCOL_NUMBER",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "PRESET",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "protocol",
+                  "required": false,
+                  "type": "object",
+                  "description": "Defines rules for matching by protocol name.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "name",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "ICMP",
+                          "selected": true,
+                          "schema": null
+                        },
+                        {
+                          "value": "AH",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "AX_25",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "DCCP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "DDP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "EGP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "EIGRP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "ENCAP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "ESP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "ETHERIP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "FC",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "GGP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "GRE",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "HIP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "HMP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "IDPR_CMTP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "IDRP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "IGMP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "IGP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "IP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "IPCOMP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "IPENCAP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "IPIP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "ISIS",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "ISO_TP4",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "L2TP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "MANET",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "MOBILITY_HEADER",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "MPLS_IN_IP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "OSPF",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "PIM",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "PUP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "RDP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "ROHC",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "RSPF",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "RSVP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "SCTP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "SHIM6",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "SKIP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "ST",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "TCP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "UDP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "UDPLITE",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "VMTP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "VRRP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "WESP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "XNS_IDP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "XTP",
+                          "selected": false,
+                          "schema": null
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "typenameFilter",
+                      "required": false,
+                      "type": "string",
+                      "description": "Match specific type of ICMP traffic. If null, matches all types.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "matchOpposite",
+                  "required": false,
+                  "type": "boolean",
+                  "description": "Match on all protocols except the specified protocol.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "connectionStateFilter",
+          "required": false,
+          "type": "Array of string",
+          "description": "Match on firewall connection state. If null, matches all connection states.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "ipsecFilter",
+          "required": false,
+          "type": "string",
+          "description": "Match on traffic encrypted, or not encrypted by IPsec. If null, matches all traffic.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "loggingEnabled",
+          "required": true,
+          "type": "boolean",
+          "description": "Generate syslog entries when traffic is matched. Such entries are sent to a remote syslog server.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "schedule",
+          "required": false,
+          "type": "object (Firewall schedule)",
+          "description": "Defines date and time when the entity is active. If null, the entity is always active.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "mode",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "EVERY_DAY",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "EVERY_WEEK",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "ONE_TIME_ONLY",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "CUSTOM",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "timeFilter",
+              "required": false,
+              "type": "object",
+              "description": "Defines the time range when the entity is active. If null, the entity is active all day.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "startTime",
+                  "required": true,
+                  "type": "string",
+                  "description": "Time in HH:MM format. Uses 24-hour clock system. ISO 8601 compliant.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "stopTime",
+                  "required": true,
+                  "type": "string",
+                  "description": "Time in HH:MM format. Uses 24-hour clock system. ISO 8601 compliant.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "metadata",
+          "required": true,
+          "type": "object (User or system defined or derived entity metadata)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "USER_DEFINED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "SYSTEM_DEFINED",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "DERIVED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g -X PATCH \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"loggingEnabled\\\": true\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"loggingEnabled\": true\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"loggingEnabled\": true\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"loggingEnabled\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/proxy/network/integration/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Patch Firewall Policy\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\"\n    method: PATCH\n    body:\n      loggingEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g -X PATCH \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"loggingEnabled\\\": true\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"loggingEnabled\": true\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"loggingEnabled\": true\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"loggingEnabled\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Patch Firewall Policy\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\"\n    method: PATCH\n    body:\n      loggingEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"enabled\": true,\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"index\": 0,\n  \"action\": {\n    \"type\": \"string\"\n  },\n  \"source\": {\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\",\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    }\n  },\n  \"destination\": {\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\",\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    }\n  },\n  \"ipProtocolScope\": {\n    \"ipVersion\": \"string\"\n  },\n  \"connectionStateFilter\": [\n    \"NEW\"\n  ],\n  \"ipsecFilter\": \"MATCH_ENCRYPTED\",\n  \"loggingEnabled\": true,\n  \"schedule\": {\n    \"mode\": \"string\"\n  },\n  \"metadata\": {\n    \"origin\": \"string\"\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/patchfirewallpolicy"
+}

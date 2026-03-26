@@ -1,0 +1,353 @@
+{
+  "h1": "Execute Client Action",
+  "method": "POST",
+  "path": "/v1/sites/{siteId}/clients/{clientId}/actions",
+  "description": "Perform an action on a specific connected client. The request body must include the action name and any applicable input arguments.",
+  "pathParameters": [
+    {
+      "name": "clientId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "action",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": [
+        {
+          "value": "AUTHORIZE_GUEST_ACCESS",
+          "selected": true,
+          "schema": [
+            {
+              "name": "timeLimitMinutes",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) how long (in minutes) the guest will be authorized to access the network. If not specified, the default limit is used from the site settings",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "dataUsageLimitMBytes",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) data usage limit in megabytes",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "rxRateLimitKbps",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) download rate limit in kilobits per second",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "txRateLimitKbps",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) upload rate limit in kilobits per second",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "value": "UNAUTHORIZE_GUEST_ACCESS",
+          "selected": false,
+          "schema": []
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "timeLimitMinutes",
+      "required": false,
+      "type": "integer",
+      "description": "(Optional) how long (in minutes) the guest will be authorized to access the network. If not specified, the default limit is used from the site settings",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "dataUsageLimitMBytes",
+      "required": false,
+      "type": "integer",
+      "description": "(Optional) data usage limit in megabytes",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "rxRateLimitKbps",
+      "required": false,
+      "type": "integer",
+      "description": "(Optional) download rate limit in kilobits per second",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "txRateLimitKbps",
+      "required": false,
+      "type": "integer",
+      "description": "(Optional) upload rate limit in kilobits per second",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "action",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": [
+            {
+              "value": "AUTHORIZE_GUEST_ACCESS",
+              "selected": true,
+              "schema": null
+            },
+            {
+              "value": "UNAUTHORIZE_GUEST_ACCESS",
+              "selected": false,
+              "schema": null
+            }
+          ],
+          "children": []
+        },
+        {
+          "name": "revokedAuthorization",
+          "required": false,
+          "type": "object",
+          "description": "(Optional) Revoked authorization in case the guest was already authorized at the time of this request",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "authorizedAt",
+              "required": true,
+              "type": "string",
+              "description": "Timestamp when the guest has been authorized",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "authorizationMethod",
+              "required": true,
+              "type": "string",
+              "description": "Guest authorization method (API, Voucher etc)",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "expiresAt",
+              "required": true,
+              "type": "string",
+              "description": "Timestamp when the guest will get automatically unauthorized",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "dataUsageLimitMBytes",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) data usage limit in megabytes",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "rxRateLimitKbps",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) download rate limit in kilobits per second",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "txRateLimitKbps",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) upload rate limit in kilobits per second",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "usage",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "durationSec",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "rxBytes",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "txBytes",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "bytes",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "grantedAuthorization",
+          "required": false,
+          "type": "object",
+          "description": "Granted guest authorization",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "authorizedAt",
+              "required": true,
+              "type": "string",
+              "description": "Timestamp when the guest has been authorized",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "authorizationMethod",
+              "required": true,
+              "type": "string",
+              "description": "Guest authorization method (API, Voucher etc)",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "expiresAt",
+              "required": true,
+              "type": "string",
+              "description": "Timestamp when the guest will get automatically unauthorized",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "dataUsageLimitMBytes",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) data usage limit in megabytes",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "rxRateLimitKbps",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) download rate limit in kilobits per second",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "txRateLimitKbps",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) upload rate limit in kilobits per second",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "usage",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "durationSec",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "rxBytes",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "txBytes",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "bytes",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}/actions\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"action\\\": \\\"string\\\"\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}/actions\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"action\": \"string\"\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"action\": \"string\"\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}/actions',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"action\": \"string\"\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}/actions\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Execute Client Action\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/clients/{clientId}/actions\"\n    method: POST\n    body:\n      action: string\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}/actions\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"action\\\": \\\"string\\\"\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}/actions\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"action\": \"string\"\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"action\": \"string\"\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}/actions',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"action\": \"string\"\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/clients/{clientId}/actions\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Execute Client Action\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/clients/{clientId}/actions\"\n    method: POST\n    body:\n      action: string\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"action\": \"string\"\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/executeconnectedclientaction"
+}

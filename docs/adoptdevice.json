@@ -1,0 +1,340 @@
+{
+  "h1": "Adopt Devices",
+  "method": "POST",
+  "path": "/v1/sites/{siteId}/devices",
+  "description": "Adopt a device to a site.",
+  "pathParameters": [
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "macAddress",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "ignoreDeviceLimit",
+      "required": true,
+      "type": "boolean",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "macAddress",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "ipAddress",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "model",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "supported",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "firmwareVersion",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "firmwareUpdatable",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "adoptedAt",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "provisionedAt",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "configurationId",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "uplink",
+          "required": false,
+          "type": "object",
+          "description": "Uplink interface is device's connection to the parent device in the network topology",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "deviceId",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "features",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "switching",
+              "required": false,
+              "type": "any",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "accessPoint",
+              "required": false,
+              "type": "any",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "interfaces",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "ports",
+              "required": false,
+              "type": "Array of object (Port overview)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "idx",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "state",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "connector",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "maxSpeedMbps",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "speedMbps",
+                  "required": false,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "poe",
+                  "required": false,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "standard",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "integer",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "enabled",
+                      "required": true,
+                      "type": "boolean",
+                      "description": "Whether the PoE feature is enabled on the port",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "state",
+                      "required": true,
+                      "type": "string",
+                      "description": "Whether the port currently supplies power to the (connected) device.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "radios",
+              "required": false,
+              "type": "Array of object (Wireless radio overview)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "wlanStandard",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "frequencyGHz",
+                  "required": true,
+                  "type": "number",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "channelWidthMHz",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "channel",
+                  "required": false,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/devices\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"macAddress\\\": \\\"string\\\",\n  \\\"ignoreDeviceLimit\\\": true\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/devices\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"macAddress\": \"string\",\n  \"ignoreDeviceLimit\": true\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"macAddress\": \"string\",\n  \"ignoreDeviceLimit\": true\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/devices',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"macAddress\": \"string\",\n  \"ignoreDeviceLimit\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/proxy/network/integration/v1/sites/{siteId}/devices\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Adopt Devices\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/devices\"\n    method: POST\n    body:\n      macAddress: string\n      ignoreDeviceLimit: true\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/devices\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"macAddress\\\": \\\"string\\\",\n  \\\"ignoreDeviceLimit\\\": true\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/devices\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"macAddress\": \"string\",\n  \"ignoreDeviceLimit\": true\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"macAddress\": \"string\",\n  \"ignoreDeviceLimit\": true\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/devices',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"macAddress\": \"string\",\n  \"ignoreDeviceLimit\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/devices\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Adopt Devices\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/devices\"\n    method: POST\n    body:\n      macAddress: string\n      ignoreDeviceLimit: true\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"macAddress\": \"string\",\n  \"ipAddress\": \"string\",\n  \"name\": \"string\",\n  \"model\": \"string\",\n  \"supported\": true,\n  \"state\": \"ONLINE\",\n  \"firmwareVersion\": \"string\",\n  \"firmwareUpdatable\": true,\n  \"adoptedAt\": \"2024-01-01T00:00:00Z\",\n  \"provisionedAt\": \"2024-01-01T00:00:00Z\",\n  \"configurationId\": \"string\",\n  \"uplink\": {\n    \"deviceId\": \"00000000-0000-0000-0000-000000000000\"\n  },\n  \"features\": {\n    \"switching\": null,\n    \"accessPoint\": null\n  },\n  \"interfaces\": {\n    \"ports\": [\n      {\n        \"idx\": 0,\n        \"state\": \"UP\",\n        \"connector\": \"RJ45\",\n        \"maxSpeedMbps\": 0,\n        \"speedMbps\": 0,\n        \"poe\": {\n          \"standard\": \"802.3af\",\n          \"type\": 0,\n          \"enabled\": true,\n          \"state\": \"UP\"\n        }\n      }\n    ],\n    \"radios\": [\n      {\n        \"wlanStandard\": \"802.11a\",\n        \"frequencyGHz\": 0,\n        \"channelWidthMHz\": 0,\n        \"channel\": 0\n      }\n    ]\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/adoptdevice"
+}

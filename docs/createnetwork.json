@@ -1,0 +1,1433 @@
+{
+  "h1": "Create Network",
+  "method": "POST",
+  "path": "/v1/sites/{siteId}/networks",
+  "description": "Create a new network on a site.",
+  "pathParameters": [
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "management",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": [
+        {
+          "value": "UNMANAGED",
+          "selected": true,
+          "schema": [
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "enabled",
+              "required": true,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "vlanId",
+              "required": true,
+              "type": "integer",
+              "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "dhcpGuarding",
+              "required": false,
+              "type": "object",
+              "description": "DHCP Guarding settings for this Network. If this field is omitted or null, the feature is disabled",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "trustedDhcpServerIpAddresses",
+                  "required": true,
+                  "type": "Array of string",
+                  "description": "List of trusted DHCP server IP addresses.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "value": "GATEWAY",
+          "selected": false,
+          "schema": [
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "enabled",
+              "required": true,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "vlanId",
+              "required": true,
+              "type": "integer",
+              "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "dhcpGuarding",
+              "required": false,
+              "type": "object",
+              "description": "DHCP Guarding settings for this Network. If this field is omitted or null, the feature is disabled",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "trustedDhcpServerIpAddresses",
+                  "required": true,
+                  "type": "Array of string",
+                  "description": "List of trusted DHCP server IP addresses.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "isolationEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Whether this network is isolated from all other networks.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "cellularBackupEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Whether this network is allowed to use cellular data when WAN connection(s) are down.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "zoneId",
+              "required": false,
+              "type": "string",
+              "description": "Firewall zone ID associated with this Network.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "internetAccessEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Whether the internet access is allowed for the device on this network.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "mdnsForwardingEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Whether this network should participate in mDNS traffic forwarding.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "ipv4Configuration",
+              "required": false,
+              "type": "object",
+              "description": "Details about IPv4 configuration for this Network.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "autoScaleEnabled",
+                  "required": true,
+                  "type": "boolean",
+                  "description": "Whether the Network can automatically scale its subnet size based on the number of active DHCP leases.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "hostIpAddress",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "prefixLength",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "additionalHostIpSubnets",
+                  "required": false,
+                  "type": "Array of string",
+                  "description": "Additional host IP subnets assigned to this VLAN.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "dhcpConfiguration",
+                  "required": false,
+                  "type": "object (Gateway Managed IPv4 DHCP Configuration)",
+                  "description": "IPv4 DHCP configuration for this network. If this field is omitted or null, DHCP is not working and hosts must get an address statically or from another server in this broadcast domain.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "mode",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "SERVER",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "ipAddressRange",
+                              "required": false,
+                              "type": "object",
+                              "description": null,
+                              "discriminator": null,
+                              "children": [
+                                {
+                                  "name": "start",
+                                  "required": true,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                },
+                                {
+                                  "name": "stop",
+                                  "required": true,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "gatewayIpAddressOverride",
+                              "required": false,
+                              "type": "string",
+                              "description": "Gateway IP address provided to DHCP clients. If null, the default gateway will be assigned.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "dnsServerIpAddressesOverride",
+                              "required": false,
+                              "type": "Array of string",
+                              "description": "List of DNS servers assigned to client devices by the DHCP server. If none are specified, they will be selected automatically.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "leaseTimeSeconds",
+                              "required": false,
+                              "type": "integer",
+                              "description": "The lease time in seconds for addresses in this range.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "domainName",
+                              "required": false,
+                              "type": "string",
+                              "description": "Domain name that can be used to access network in the browser.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "pingConflictDetectionEnabled",
+                              "required": false,
+                              "type": "boolean",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "pxeConfiguration",
+                              "required": false,
+                              "type": "object",
+                              "description": "Pre execution environment configuration for network boot",
+                              "discriminator": null,
+                              "children": [
+                                {
+                                  "name": "serverIpAddress",
+                                  "required": true,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                },
+                                {
+                                  "name": "filename",
+                                  "required": true,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "ntpServerIpAddresses",
+                              "required": false,
+                              "type": "Array of string",
+                              "description": "Network Time Protocol (NTP) server IP addresses.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "option43Value",
+                              "required": false,
+                              "type": "string",
+                              "description": "Custom DHCP option (43) — the value MUST be the UniFi Network application's host IP address.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "tftpServerAddress",
+                              "required": false,
+                              "type": "string",
+                              "description": "Trivial File Transfer Protocol (TFTP) server address — accepts a hostname, URL or IP address.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "timeOffsetSeconds",
+                              "required": false,
+                              "type": "integer",
+                              "description": "Time offset in seconds from UTC.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "wpadUrl",
+                              "required": false,
+                              "type": "string",
+                              "description": "Web Proxy Auto-Discovery (WPAD) URL.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "winsServerIpAddresses",
+                              "required": false,
+                              "type": "Array of string",
+                              "description": "Windows Internet Name Service (WINS) server IP addresses.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "RELAY",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "dhcpServerIpAddresses",
+                              "required": false,
+                              "type": "Array of string",
+                              "description": "DHCP Server IP addresses",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "ipAddressRange",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "start",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "stop",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "gatewayIpAddressOverride",
+                      "required": false,
+                      "type": "string",
+                      "description": "Gateway IP address provided to DHCP clients. If null, the default gateway will be assigned.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "dnsServerIpAddressesOverride",
+                      "required": false,
+                      "type": "Array of string",
+                      "description": "List of DNS servers assigned to client devices by the DHCP server. If none are specified, they will be selected automatically.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "leaseTimeSeconds",
+                      "required": false,
+                      "type": "integer",
+                      "description": "The lease time in seconds for addresses in this range.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "domainName",
+                      "required": false,
+                      "type": "string",
+                      "description": "Domain name that can be used to access network in the browser.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "pingConflictDetectionEnabled",
+                      "required": false,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "pxeConfiguration",
+                      "required": false,
+                      "type": "object",
+                      "description": "Pre execution environment configuration for network boot",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "serverIpAddress",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "filename",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "ntpServerIpAddresses",
+                      "required": false,
+                      "type": "Array of string",
+                      "description": "Network Time Protocol (NTP) server IP addresses.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "option43Value",
+                      "required": false,
+                      "type": "string",
+                      "description": "Custom DHCP option (43) — the value MUST be the UniFi Network application's host IP address.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "tftpServerAddress",
+                      "required": false,
+                      "type": "string",
+                      "description": "Trivial File Transfer Protocol (TFTP) server address — accepts a hostname, URL or IP address.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "timeOffsetSeconds",
+                      "required": false,
+                      "type": "integer",
+                      "description": "Time offset in seconds from UTC.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "wpadUrl",
+                      "required": false,
+                      "type": "string",
+                      "description": "Web Proxy Auto-Discovery (WPAD) URL.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "winsServerIpAddresses",
+                      "required": false,
+                      "type": "Array of string",
+                      "description": "Windows Internet Name Service (WINS) server IP addresses.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "natOutboundIpAddressConfiguration",
+                  "required": false,
+                  "type": "Array of object (WAN NAT Outbound Configuration)",
+                  "description": "List of NAT Outbound Configurations defining which IP addresses are used for NAT translation. This array must contain all WAN interfaces with `static` or `PPPoE` IPv4 connection configuration.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "AUTO",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "wanInterfaceId",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "ipAddressSelectionMode",
+                              "required": false,
+                              "type": "string",
+                              "description": "IP address selection mode which determines how the IP address will be selected from the group of IP addresses to translate the traffic on network using NAT.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "STATIC",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "wanInterfaceId",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "ipAddressSelectors",
+                              "required": false,
+                              "type": "Array of object (IP address selector)",
+                              "description": "List of IP addresses or address ranges which determines which IP addresses will be used to translate the traffic on network using NAT.",
+                              "discriminator": null,
+                              "children": [
+                                {
+                                  "name": "type",
+                                  "required": true,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": [
+                                    {
+                                      "value": "IP_ADDRESS",
+                                      "selected": true,
+                                      "schema": [
+                                        {
+                                          "name": "value",
+                                          "required": false,
+                                          "type": "string",
+                                          "description": null,
+                                          "discriminator": null,
+                                          "children": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "value": "IP_ADDRESS_RANGE",
+                                      "selected": false,
+                                      "schema": [
+                                        {
+                                          "name": "start",
+                                          "required": false,
+                                          "type": "string",
+                                          "description": null,
+                                          "discriminator": null,
+                                          "children": []
+                                        },
+                                        {
+                                          "name": "stop",
+                                          "required": false,
+                                          "type": "string",
+                                          "description": null,
+                                          "discriminator": null,
+                                          "children": []
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "children": []
+                                },
+                                {
+                                  "name": "value",
+                                  "required": false,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "wanInterfaceId",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "ipAddressSelectionMode",
+                      "required": false,
+                      "type": "string",
+                      "description": "IP address selection mode which determines how the IP address will be selected from the group of IP addresses to translate the traffic on network using NAT.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "ipv6Configuration",
+              "required": false,
+              "type": "object",
+              "description": "Details about IPv6 configuration for this Network. If this field is omitted or null then IPv6 is not configured on this Network.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "interfaceType",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "PREFIX_DELEGATION",
+                      "selected": true,
+                      "schema": [
+                        {
+                          "name": "clientAddressAssignment",
+                          "required": true,
+                          "type": "object",
+                          "description": "Client Address Assignment",
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "dhcpConfiguration",
+                              "required": false,
+                              "type": "object",
+                              "description": "IPv6 DHCP configuration for this network. At least one addressing method must be active: either enable SLAAC or provide DHCP configuration. If this field is null, SLAAC must be enabled.",
+                              "discriminator": null,
+                              "children": [
+                                {
+                                  "name": "ipAddressSuffixRange",
+                                  "required": true,
+                                  "type": "object",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": [
+                                    {
+                                      "name": "start",
+                                      "required": true,
+                                      "type": "string",
+                                      "description": "Start suffix of the DHCPv6 address pool.",
+                                      "discriminator": null,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "stop",
+                                      "required": true,
+                                      "type": "string",
+                                      "description": "End suffix of the DHCPv6 address pool.",
+                                      "discriminator": null,
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "leaseTimeSeconds",
+                                  "required": true,
+                                  "type": "integer",
+                                  "description": "The lease time in seconds for IP addresses in this range.",
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "slaacEnabled",
+                              "required": true,
+                              "type": "boolean",
+                              "description": "Allows devices to obtain IPv6 addresses via SLAAC (Stateless Address Autoconfiguration) without DHCPv6. At least one addressing method must be active: either enable SLAAC or provide DHCP configuration.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "routerAdvertisement",
+                          "required": false,
+                          "type": "object",
+                          "description": "Router advertisement. Without it, hosts will not autoconfigure addresses and will lack a default route even with DHCPv6.",
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "priority",
+                              "required": true,
+                              "type": "string",
+                              "description": "Router advertisement priority.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "dnsServerIpAddressesOverride",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "The IPv6 DNS server addresses assigned to this Network. If none are specified, they will be selected automatically.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "additionalHostIpSubnets",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "Additional host IP subnets assigned to this VLAN.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "prefixDelegationWanInterfaceId",
+                          "required": false,
+                          "type": "string",
+                          "description": "ID of the WAN interface from which the prefix is delegated.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "value": "STATIC",
+                      "selected": false,
+                      "schema": [
+                        {
+                          "name": "clientAddressAssignment",
+                          "required": true,
+                          "type": "object",
+                          "description": "Client Address Assignment",
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "dhcpConfiguration",
+                              "required": false,
+                              "type": "object",
+                              "description": "IPv6 DHCP configuration for this network. At least one addressing method must be active: either enable SLAAC or provide DHCP configuration. If this field is null, SLAAC must be enabled.",
+                              "discriminator": null,
+                              "children": [
+                                {
+                                  "name": "ipAddressSuffixRange",
+                                  "required": true,
+                                  "type": "object",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": [
+                                    {
+                                      "name": "start",
+                                      "required": true,
+                                      "type": "string",
+                                      "description": "Start suffix of the DHCPv6 address pool.",
+                                      "discriminator": null,
+                                      "children": []
+                                    },
+                                    {
+                                      "name": "stop",
+                                      "required": true,
+                                      "type": "string",
+                                      "description": "End suffix of the DHCPv6 address pool.",
+                                      "discriminator": null,
+                                      "children": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "name": "leaseTimeSeconds",
+                                  "required": true,
+                                  "type": "integer",
+                                  "description": "The lease time in seconds for IP addresses in this range.",
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "slaacEnabled",
+                              "required": true,
+                              "type": "boolean",
+                              "description": "Allows devices to obtain IPv6 addresses via SLAAC (Stateless Address Autoconfiguration) without DHCPv6. At least one addressing method must be active: either enable SLAAC or provide DHCP configuration.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "routerAdvertisement",
+                          "required": false,
+                          "type": "object",
+                          "description": "Router advertisement. Without it, hosts will not autoconfigure addresses and will lack a default route even with DHCPv6.",
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "priority",
+                              "required": true,
+                              "type": "string",
+                              "description": "Router advertisement priority.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "dnsServerIpAddressesOverride",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "The IPv6 DNS server addresses assigned to this Network. If none are specified, they will be selected automatically.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "additionalHostIpSubnets",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "Additional host IP subnets assigned to this VLAN.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "hostIpAddress",
+                          "required": false,
+                          "type": "string",
+                          "description": "The static IPv6 address assigned to this Network.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "prefixLength",
+                          "required": false,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "clientAddressAssignment",
+                  "required": true,
+                  "type": "object",
+                  "description": "Client Address Assignment",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "dhcpConfiguration",
+                      "required": false,
+                      "type": "object",
+                      "description": "IPv6 DHCP configuration for this network. At least one addressing method must be active: either enable SLAAC or provide DHCP configuration. If this field is null, SLAAC must be enabled.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "ipAddressSuffixRange",
+                          "required": true,
+                          "type": "object",
+                          "description": null,
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "start",
+                              "required": true,
+                              "type": "string",
+                              "description": "Start suffix of the DHCPv6 address pool.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "stop",
+                              "required": true,
+                              "type": "string",
+                              "description": "End suffix of the DHCPv6 address pool.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "name": "leaseTimeSeconds",
+                          "required": true,
+                          "type": "integer",
+                          "description": "The lease time in seconds for IP addresses in this range.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "slaacEnabled",
+                      "required": true,
+                      "type": "boolean",
+                      "description": "Allows devices to obtain IPv6 addresses via SLAAC (Stateless Address Autoconfiguration) without DHCPv6. At least one addressing method must be active: either enable SLAAC or provide DHCP configuration.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "routerAdvertisement",
+                  "required": false,
+                  "type": "object",
+                  "description": "Router advertisement. Without it, hosts will not autoconfigure addresses and will lack a default route even with DHCPv6.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "priority",
+                      "required": true,
+                      "type": "string",
+                      "description": "Router advertisement priority.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "dnsServerIpAddressesOverride",
+                  "required": false,
+                  "type": "Array of string",
+                  "description": "The IPv6 DNS server addresses assigned to this Network. If none are specified, they will be selected automatically.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "additionalHostIpSubnets",
+                  "required": false,
+                  "type": "Array of string",
+                  "description": "Additional host IP subnets assigned to this VLAN.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "prefixDelegationWanInterfaceId",
+                  "required": false,
+                  "type": "string",
+                  "description": "ID of the WAN interface from which the prefix is delegated.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "value": "SWITCH",
+          "selected": false,
+          "schema": [
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "enabled",
+              "required": true,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "vlanId",
+              "required": true,
+              "type": "integer",
+              "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "dhcpGuarding",
+              "required": false,
+              "type": "object",
+              "description": "DHCP Guarding settings for this Network. If this field is omitted or null, the feature is disabled",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "trustedDhcpServerIpAddresses",
+                  "required": true,
+                  "type": "Array of string",
+                  "description": "List of trusted DHCP server IP addresses.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "isolationEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Whether this network is isolated from all other networks.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "cellularBackupEnabled",
+              "required": false,
+              "type": "boolean",
+              "description": "Whether this network is allowed to use cellular data when WAN connection(s) are down.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "deviceId",
+              "required": false,
+              "type": "string",
+              "description": "ID of the L3 switching capable device that manages this network.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "ipv4Configuration",
+              "required": false,
+              "type": "object",
+              "description": "Details about IPv4 configuration for this Network.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "autoScaleEnabled",
+                  "required": true,
+                  "type": "boolean",
+                  "description": "Whether the Network can automatically scale its subnet size based on the number of active DHCP leases.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "hostIpAddress",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "prefixLength",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "additionalHostIpSubnets",
+                  "required": false,
+                  "type": "Array of string",
+                  "description": "Additional host IP subnets assigned to this VLAN.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "dhcpConfiguration",
+                  "required": false,
+                  "type": "object (Switch Managed IPv4 DHCP Configuration)",
+                  "description": "IPv4 DHCP configuration for this network. If this field is omitted or null, DHCP is not working and hosts must get an address statically or from another server in this broadcast domain.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "mode",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "SERVER",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "ipAddressRange",
+                              "required": false,
+                              "type": "object",
+                              "description": null,
+                              "discriminator": null,
+                              "children": [
+                                {
+                                  "name": "start",
+                                  "required": true,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                },
+                                {
+                                  "name": "stop",
+                                  "required": true,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "name": "gatewayIpAddressOverride",
+                              "required": false,
+                              "type": "string",
+                              "description": "Gateway IP address provided to DHCP clients. If null, the default gateway will be assigned.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "dnsServerIpAddressesOverride",
+                              "required": false,
+                              "type": "Array of string",
+                              "description": "List of DNS servers assigned to client devices by the DHCP server. If none are specified, they will be selected automatically.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "leaseTimeSeconds",
+                              "required": false,
+                              "type": "integer",
+                              "description": "The lease time in seconds for addresses in this range.",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "domainName",
+                              "required": false,
+                              "type": "string",
+                              "description": "Domain name that can be used to access network in the browser.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "RELAY",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "dhcpServerIpAddresses",
+                              "required": false,
+                              "type": "Array of string",
+                              "description": "DHCP Server IP addresses",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "ipAddressRange",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "start",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "stop",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "gatewayIpAddressOverride",
+                      "required": false,
+                      "type": "string",
+                      "description": "Gateway IP address provided to DHCP clients. If null, the default gateway will be assigned.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "dnsServerIpAddressesOverride",
+                      "required": false,
+                      "type": "Array of string",
+                      "description": "List of DNS servers assigned to client devices by the DHCP server. If none are specified, they will be selected automatically.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "leaseTimeSeconds",
+                      "required": false,
+                      "type": "integer",
+                      "description": "The lease time in seconds for addresses in this range.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "domainName",
+                      "required": false,
+                      "type": "string",
+                      "description": "Domain name that can be used to access network in the browser.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "children": []
+    },
+    {
+      "name": "name",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "enabled",
+      "required": true,
+      "type": "boolean",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "vlanId",
+      "required": true,
+      "type": "integer",
+      "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "dhcpGuarding",
+      "required": false,
+      "type": "object",
+      "description": "DHCP Guarding settings for this Network. If this field is omitted or null, the feature is disabled",
+      "discriminator": null,
+      "children": [
+        {
+          "name": "trustedDhcpServerIpAddresses",
+          "required": true,
+          "type": "Array of string",
+          "description": "List of trusted DHCP server IP addresses.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "201"
+      ],
+      "fields": [
+        {
+          "name": "management",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": [
+            {
+              "value": "UNMANAGED",
+              "selected": true,
+              "schema": null
+            },
+            {
+              "value": "GATEWAY",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "SWITCH",
+              "selected": false,
+              "schema": null
+            }
+          ],
+          "children": []
+        },
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "enabled",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "vlanId",
+          "required": true,
+          "type": "integer",
+          "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "metadata",
+          "required": true,
+          "type": "object (User or system defined or orchestrated entity metadata)",
+          "description": "Orchestrated or System-defined configurable network support",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "USER_DEFINED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "SYSTEM_DEFINED",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "ORCHESTRATED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "dhcpGuarding",
+          "required": false,
+          "type": "object",
+          "description": "DHCP Guarding settings for this Network. If this field is omitted or null, the feature is disabled",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "trustedDhcpServerIpAddresses",
+              "required": true,
+              "type": "Array of string",
+              "description": "List of trusted DHCP server IP addresses.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "default",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/networks\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"management\\\": \\\"string\\\",\n  \\\"name\\\": \\\"Default Network\\\",\n  \\\"enabled\\\": true,\n  \\\"vlanId\\\": 0,\n  \\\"dhcpGuarding\\\": {\n    \\\"trustedDhcpServerIpAddresses\\\": [\n      \\\"string\\\"\n    ]\n  }\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/networks\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"management\": \"string\",\n  \"name\": \"Default Network\",\n  \"enabled\": true,\n  \"vlanId\": 0,\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  }\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"management\": \"string\",\n  \"name\": \"Default Network\",\n  \"enabled\": true,\n  \"vlanId\": 0,\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  }\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/networks',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"management\": \"string\",\n  \"name\": \"Default Network\",\n  \"enabled\": True,\n  \"vlanId\": 0,\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  }\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/proxy/network/integration/v1/sites/{siteId}/networks\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Create Network\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/networks\"\n    method: POST\n    body:\n      management: string\n      name: Default Network\n      enabled: true\n      vlanId: 0\n      dhcpGuarding:\n        trustedDhcpServerIpAddresses:\n          - string\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/networks\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"management\\\": \\\"string\\\",\n  \\\"name\\\": \\\"Default Network\\\",\n  \\\"enabled\\\": true,\n  \\\"vlanId\\\": 0,\n  \\\"dhcpGuarding\\\": {\n    \\\"trustedDhcpServerIpAddresses\\\": [\n      \\\"string\\\"\n    ]\n  }\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/networks\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"management\": \"string\",\n  \"name\": \"Default Network\",\n  \"enabled\": true,\n  \"vlanId\": 0,\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  }\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"management\": \"string\",\n  \"name\": \"Default Network\",\n  \"enabled\": true,\n  \"vlanId\": 0,\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  }\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/networks',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"management\": \"string\",\n  \"name\": \"Default Network\",\n  \"enabled\": True,\n  \"vlanId\": 0,\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  }\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/networks\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Create Network\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/networks\"\n    method: POST\n    body:\n      management: string\n      name: Default Network\n      enabled: true\n      vlanId: 0\n      dhcpGuarding:\n        trustedDhcpServerIpAddresses:\n          - string\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"management\": \"string\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\",\n  \"enabled\": true,\n  \"vlanId\": 0,\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  },\n  \"default\": true\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/createnetwork"
+}

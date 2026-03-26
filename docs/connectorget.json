@@ -1,0 +1,59 @@
+{
+  "h1": "Connector - GET",
+  "method": "GET",
+  "path": "/v1/connector/consoles/{id}/*path",
+  "description": "Forward GET requests to UniFi applications using RESTful HTTP methods.\n\nRequest Flow: The request is proxied through api.ui.com cloud endpoint to the remote console at http://127.0.0.1/proxy/[path] with GET method.\n\nRequirements:\n- Console firmware version must >= 5.0.3\n- For non-organization API keys: Limited to API key owner's consoles only (cannot access other admins' consoles)\n- For organization API keys: Can access any console within the organization\n\nAPI Documentation:\n- Network API: https://developer.ui.com/network\n- Protect API: https://developer.ui.com/protect\n\nExamples:\n- Network: GET /v1/connector/consoles/\\{id\\}/network/integration/v1/sites retrieves network sites\n- Protect: GET /v1/connector/consoles/\\{id\\}/protect/integration/v1/meta/info retrieves protect application info\n\nResponse: On success, the upstream API response is passed through directly. On error, a standardized error schema is returned.",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "Host ID to proxy the request to",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "path",
+      "required": true,
+      "type": "string",
+      "description": "API path to proxy",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "408",
+        "429",
+        "500",
+        "502"
+      ],
+      "fields": []
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{id}/*path\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{id}/*path\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{id}/*path',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{id}/*path\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Connector - GET\n  ubiquiti.unifi_api.network:\n    path: \"/v1/connector/consoles/{id}/*path\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{id}/*path\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{id}/*path\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{id}/*path',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{id}/*path\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Connector - GET\n  ubiquiti.unifi_api.network:\n    path: \"/v1/connector/consoles/{id}/*path\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"count\": 1,\n  \"data\": [\n    {\n      \"id\": \"88f7af54-98f8-306a-a1c7-c9349722b1f6\",\n      \"internalReference\": \"default\",\n      \"name\": \"Default\"\n    }\n  ],\n  \"limit\": 25,\n  \"offset\": 0,\n  \"totalCount\": 1\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/connectorget"
+}

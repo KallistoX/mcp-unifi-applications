@@ -1,0 +1,59 @@
+{
+  "h1": "Connector - PATCH",
+  "method": "PATCH",
+  "path": "/v1/connector/consoles/{id}/*path",
+  "description": "Forward PATCH requests to UniFi applications using RESTful HTTP methods.\n\nRequest Flow: The request is proxied through api.ui.com cloud endpoint to the remote console at http://127.0.0.1/proxy/[path] with PATCH method.\n\nRequirements:\n- Console firmware version must >= 5.0.3\n- For non-organization API keys: Limited to API key owner's consoles only (cannot access other admins' consoles)\n- For organization API keys: Can access any console within the organization\n\nAPI Documentation:\n- Network API: https://developer.ui.com/network\n- Protect API: https://developer.ui.com/protect\n\nResponse: On success, the upstream API response is passed through directly. On error, a standardized error schema is returned.",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "Host ID to proxy the request to",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "path",
+      "required": true,
+      "type": "string",
+      "description": "API path to proxy",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "408",
+        "429",
+        "500",
+        "502"
+      ],
+      "fields": []
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g -X PATCH \"https://api.ui.com/v1/connector/consoles/{id}/*path\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"name\\\": \\\"Updated Viewer Name\\\"\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{id}/*path\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"name\": \"Updated Viewer Name\"\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"name\": \"Updated Viewer Name\"\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{id}/*path',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"name\": \"Updated Viewer Name\"\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/v1/connector/consoles/{id}/*path\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Connector - PATCH\n  ubiquiti.unifi_api.network:\n    path: \"/v1/connector/consoles/{id}/*path\"\n    method: PATCH\n    body:\n      name: Updated Viewer Name\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g -X PATCH \"https://api.ui.com/v1/connector/consoles/{id}/*path\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"name\\\": \\\"Updated Viewer Name\\\"\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{id}/*path\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"name\": \"Updated Viewer Name\"\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"name\": \"Updated Viewer Name\"\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{id}/*path',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"name\": \"Updated Viewer Name\"\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/v1/connector/consoles/{id}/*path\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Connector - PATCH\n  ubiquiti.unifi_api.network:\n    path: \"/v1/connector/consoles/{id}/*path\"\n    method: PATCH\n    body:\n      name: Updated Viewer Name\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"id\": \"507f1f77bcf86cd799439011\",\n  \"liveview\": \"507f1f77bcf86cd799439012\",\n  \"modelKey\": \"viewer\",\n  \"name\": \"Living Room Viewer\",\n  \"state\": \"CONNECTED\",\n  \"streamLimit\": 4\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/connectorpatch"
+}

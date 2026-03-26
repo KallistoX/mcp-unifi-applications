@@ -1,0 +1,187 @@
+{
+  "h1": "List Traffic Matching Lists",
+  "method": "GET",
+  "path": "/v1/sites/{siteId}/traffic-matching-lists",
+  "description": "Retrieve all traffic matching lists on a site.",
+  "pathParameters": [
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [
+    {
+      "name": "offset",
+      "required": false,
+      "type": "integer",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "limit",
+      "required": false,
+      "type": "integer",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "filter",
+      "required": false,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "offset",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "count",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "totalCount",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "data",
+          "required": true,
+          "type": "Array of object (Traffic matching list)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "PORTS",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "IPV4_ADDRESSES",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "IPV6_ADDRESSES",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "id",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "items",
+              "required": false,
+              "type": "Array of object (Port matching)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "PORT_NUMBER",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "PORT_NUMBER_RANGE",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "value",
+                  "required": false,
+                  "type": "integer",
+                  "description": "Port number",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/traffic-matching-lists?offset={offset}&limit={limit}&filter={filter}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/traffic-matching-lists?offset={offset}&limit={limit}&filter={filter}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/traffic-matching-lists?offset={offset}&limit={limit}&filter={filter}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/network/integration/v1/sites/{siteId}/traffic-matching-lists?offset=%7Boffset%7D&limit=%7Blimit%7D&filter=%7Bfilter%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: List Traffic Matching Lists\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/traffic-matching-lists\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/traffic-matching-lists?offset={offset}&limit={limit}&filter={filter}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/traffic-matching-lists?offset={offset}&limit={limit}&filter={filter}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/traffic-matching-lists?offset={offset}&limit={limit}&filter={filter}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/traffic-matching-lists?offset=%7Boffset%7D&limit=%7Blimit%7D&filter=%7Bfilter%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: List Traffic Matching Lists\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/traffic-matching-lists\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"offset\": 0,\n  \"limit\": 0,\n  \"count\": 0,\n  \"totalCount\": 0,\n  \"data\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"string\"\n    }\n  ]\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/gettrafficmatchinglists"
+}

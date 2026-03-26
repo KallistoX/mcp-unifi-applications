@@ -1,0 +1,382 @@
+[
+  {
+    "slug": "gettingstarted",
+    "title": "Getting Started",
+    "file": "gettingstarted.json"
+  },
+  {
+    "slug": "filtering",
+    "title": "Filtering",
+    "file": "filtering.json"
+  },
+  {
+    "slug": "error-handling",
+    "title": "Error Handling",
+    "file": "error-handling.json"
+  },
+  {
+    "slug": "connectorpost",
+    "title": "Connector - POST",
+    "file": "connectorpost.json"
+  },
+  {
+    "slug": "connectorget",
+    "title": "Connector - GET",
+    "file": "connectorget.json"
+  },
+  {
+    "slug": "connectorput",
+    "title": "Connector - PUT",
+    "file": "connectorput.json"
+  },
+  {
+    "slug": "connectordelete",
+    "title": "Connector - DELETE",
+    "file": "connectordelete.json"
+  },
+  {
+    "slug": "connectorpatch",
+    "title": "Connector - PATCH",
+    "file": "connectorpatch.json"
+  },
+  {
+    "slug": "getinfo",
+    "title": "Get Application Info",
+    "file": "getinfo.json"
+  },
+  {
+    "slug": "getsiteoverviewpage",
+    "title": "List Local Sites",
+    "file": "getsiteoverviewpage.json"
+  },
+  {
+    "slug": "getadopteddeviceoverviewpage",
+    "title": "List Adopted Devices",
+    "file": "getadopteddeviceoverviewpage.json"
+  },
+  {
+    "slug": "adoptdevice",
+    "title": "Adopt Devices",
+    "file": "adoptdevice.json"
+  },
+  {
+    "slug": "executeportaction",
+    "title": "Execute Port Action",
+    "file": "executeportaction.json"
+  },
+  {
+    "slug": "executeadopteddeviceaction",
+    "title": "Execute Adopted Device Action",
+    "file": "executeadopteddeviceaction.json"
+  },
+  {
+    "slug": "getadopteddevicedetails",
+    "title": "Get Adopted Device Details",
+    "file": "getadopteddevicedetails.json"
+  },
+  {
+    "slug": "removedevice",
+    "title": "Remove (Unadopt) Device",
+    "file": "removedevice.json"
+  },
+  {
+    "slug": "getadopteddevicelateststatistics",
+    "title": "Get Latest Adopted Device Statistics",
+    "file": "getadopteddevicelateststatistics.json"
+  },
+  {
+    "slug": "getpendingdevicepage",
+    "title": "List Devices Pending Adoption",
+    "file": "getpendingdevicepage.json"
+  },
+  {
+    "slug": "executeconnectedclientaction",
+    "title": "Execute Client Action",
+    "file": "executeconnectedclientaction.json"
+  },
+  {
+    "slug": "getconnectedclientoverviewpage",
+    "title": "List Connected Clients",
+    "file": "getconnectedclientoverviewpage.json"
+  },
+  {
+    "slug": "getconnectedclientdetails",
+    "title": "Get Connected Client Details",
+    "file": "getconnectedclientdetails.json"
+  },
+  {
+    "slug": "getnetworkdetails",
+    "title": "Get Network Details",
+    "file": "getnetworkdetails.json"
+  },
+  {
+    "slug": "updatenetwork",
+    "title": "Update Network",
+    "file": "updatenetwork.json"
+  },
+  {
+    "slug": "deletenetwork",
+    "title": "Delete Network",
+    "file": "deletenetwork.json"
+  },
+  {
+    "slug": "getnetworksoverviewpage",
+    "title": "List Networks",
+    "file": "getnetworksoverviewpage.json"
+  },
+  {
+    "slug": "createnetwork",
+    "title": "Create Network",
+    "file": "createnetwork.json"
+  },
+  {
+    "slug": "getnetworkreferences",
+    "title": "Get Network References",
+    "file": "getnetworkreferences.json"
+  },
+  {
+    "slug": "getwifibroadcastdetails",
+    "title": "Get Wifi Broadcast Details",
+    "file": "getwifibroadcastdetails.json"
+  },
+  {
+    "slug": "updatewifibroadcast",
+    "title": "Update Wifi Broadcast",
+    "file": "updatewifibroadcast.json"
+  },
+  {
+    "slug": "deletewifibroadcast",
+    "title": "Delete Wifi Broadcast",
+    "file": "deletewifibroadcast.json"
+  },
+  {
+    "slug": "getwifibroadcastpage",
+    "title": "List Wifi Broadcasts",
+    "file": "getwifibroadcastpage.json"
+  },
+  {
+    "slug": "createwifibroadcast",
+    "title": "Create Wifi Broadcast",
+    "file": "createwifibroadcast.json"
+  },
+  {
+    "slug": "getvouchers",
+    "title": "List Vouchers",
+    "file": "getvouchers.json"
+  },
+  {
+    "slug": "createvouchers",
+    "title": "Generate Vouchers",
+    "file": "createvouchers.json"
+  },
+  {
+    "slug": "deletevouchers",
+    "title": "Delete Vouchers",
+    "file": "deletevouchers.json"
+  },
+  {
+    "slug": "getvoucher",
+    "title": "Get Voucher Details",
+    "file": "getvoucher.json"
+  },
+  {
+    "slug": "deletevoucher",
+    "title": "Delete Voucher",
+    "file": "deletevoucher.json"
+  },
+  {
+    "slug": "getfirewallzone",
+    "title": "Get Firewall Zone",
+    "file": "getfirewallzone.json"
+  },
+  {
+    "slug": "updatefirewallzone",
+    "title": "Update Firewall Zone",
+    "file": "updatefirewallzone.json"
+  },
+  {
+    "slug": "deletefirewallzone",
+    "title": "Delete Custom Firewall Zone",
+    "file": "deletefirewallzone.json"
+  },
+  {
+    "slug": "getfirewallpolicy",
+    "title": "Get Firewall Policy",
+    "file": "getfirewallpolicy.json"
+  },
+  {
+    "slug": "updatefirewallpolicy",
+    "title": "Update Firewall Policy",
+    "file": "updatefirewallpolicy.json"
+  },
+  {
+    "slug": "deletefirewallpolicy",
+    "title": "Delete Firewall Policy",
+    "file": "deletefirewallpolicy.json"
+  },
+  {
+    "slug": "patchfirewallpolicy",
+    "title": "Patch Firewall Policy",
+    "file": "patchfirewallpolicy.json"
+  },
+  {
+    "slug": "getfirewallpolicyordering",
+    "title": "Get User-Defined Firewall Policy Ordering",
+    "file": "getfirewallpolicyordering.json"
+  },
+  {
+    "slug": "updatefirewallpolicyordering",
+    "title": "Reorder User-Defined Firewall Policies",
+    "file": "updatefirewallpolicyordering.json"
+  },
+  {
+    "slug": "getfirewallzones",
+    "title": "List Firewall Zones",
+    "file": "getfirewallzones.json"
+  },
+  {
+    "slug": "createfirewallzone",
+    "title": "Create Custom Firewall Zone",
+    "file": "createfirewallzone.json"
+  },
+  {
+    "slug": "getfirewallpolicies",
+    "title": "List Firewall Policies",
+    "file": "getfirewallpolicies.json"
+  },
+  {
+    "slug": "createfirewallpolicy",
+    "title": "Create Firewall Policy",
+    "file": "createfirewallpolicy.json"
+  },
+  {
+    "slug": "getaclrule",
+    "title": "Get ACL Rule",
+    "file": "getaclrule.json"
+  },
+  {
+    "slug": "updateaclrule",
+    "title": "Update ACL Rule",
+    "file": "updateaclrule.json"
+  },
+  {
+    "slug": "deleteaclrule",
+    "title": "Delete ACL Rule",
+    "file": "deleteaclrule.json"
+  },
+  {
+    "slug": "getaclruleordering",
+    "title": "Get User-Defined ACL Rule Ordering",
+    "file": "getaclruleordering.json"
+  },
+  {
+    "slug": "updateaclruleordering",
+    "title": "Reorder User-Defined ACL Rules",
+    "file": "updateaclruleordering.json"
+  },
+  {
+    "slug": "getaclrulepage",
+    "title": "List ACL Rules",
+    "file": "getaclrulepage.json"
+  },
+  {
+    "slug": "createaclrule",
+    "title": "Create ACL Rule",
+    "file": "createaclrule.json"
+  },
+  {
+    "slug": "getdnspolicy",
+    "title": "Get DNS Policy",
+    "file": "getdnspolicy.json"
+  },
+  {
+    "slug": "updatednspolicy",
+    "title": "Update DNS Policy",
+    "file": "updatednspolicy.json"
+  },
+  {
+    "slug": "deletednspolicy",
+    "title": "Delete DNS Policy",
+    "file": "deletednspolicy.json"
+  },
+  {
+    "slug": "getdnspolicypage",
+    "title": "List DNS Policies",
+    "file": "getdnspolicypage.json"
+  },
+  {
+    "slug": "creatednspolicy",
+    "title": "Create DNS Policy",
+    "file": "creatednspolicy.json"
+  },
+  {
+    "slug": "gettrafficmatchinglist",
+    "title": "Get Traffic Matching List",
+    "file": "gettrafficmatchinglist.json"
+  },
+  {
+    "slug": "updatetrafficmatchinglist",
+    "title": "Update Traffic Matching List",
+    "file": "updatetrafficmatchinglist.json"
+  },
+  {
+    "slug": "deletetrafficmatchinglist",
+    "title": "Delete Traffic Matching List",
+    "file": "deletetrafficmatchinglist.json"
+  },
+  {
+    "slug": "gettrafficmatchinglists",
+    "title": "List Traffic Matching Lists",
+    "file": "gettrafficmatchinglists.json"
+  },
+  {
+    "slug": "createtrafficmatchinglist",
+    "title": "Create Traffic Matching List",
+    "file": "createtrafficmatchinglist.json"
+  },
+  {
+    "slug": "getwansoverviewpage",
+    "title": "List WAN Interfaces",
+    "file": "getwansoverviewpage.json"
+  },
+  {
+    "slug": "getsitetositevpntunnelpage",
+    "title": "List Site-To-Site VPN Tunnels",
+    "file": "getsitetositevpntunnelpage.json"
+  },
+  {
+    "slug": "getvpnserverpage",
+    "title": "List VPN Servers",
+    "file": "getvpnserverpage.json"
+  },
+  {
+    "slug": "getradiusprofileoverviewpage",
+    "title": "List Radius Profiles",
+    "file": "getradiusprofileoverviewpage.json"
+  },
+  {
+    "slug": "getdevicetagpage",
+    "title": "List Device Tags",
+    "file": "getdevicetagpage.json"
+  },
+  {
+    "slug": "getdpiapplicationcategories",
+    "title": "List DPI Application Categories",
+    "file": "getdpiapplicationcategories.json"
+  },
+  {
+    "slug": "getdpiapplications",
+    "title": "List DPI Applications",
+    "file": "getdpiapplications.json"
+  },
+  {
+    "slug": "getcountries",
+    "title": "List Countries",
+    "file": "getcountries.json"
+  },
+  {
+    "slug": "quick_start.ansible",
+    "title": "Quick Start",
+    "file": "quick_start.ansible.json"
+  }
+]

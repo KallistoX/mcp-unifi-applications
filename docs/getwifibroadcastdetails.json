@@ -1,0 +1,616 @@
+{
+  "h1": "Get Wifi Broadcast Details",
+  "method": "GET",
+  "path": "/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}",
+  "description": "Retrieve detailed information about a specific Wifi.",
+  "pathParameters": [
+    {
+      "name": "wifiBroadcastId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "type",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": [
+            {
+              "value": "STANDARD",
+              "selected": true,
+              "schema": null
+            },
+            {
+              "value": "IOT_OPTIMIZED",
+              "selected": false,
+              "schema": null
+            }
+          ],
+          "children": []
+        },
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "metadata",
+          "required": true,
+          "type": "object (User or derived or orchestrated entity metadata)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "USER_DEFINED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "DERIVED",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "ORCHESTRATED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "enabled",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "network",
+          "required": false,
+          "type": "object (Wifi network reference)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "NATIVE",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "SPECIFIC",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "securityConfiguration",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "OPEN",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "WPA2_PERSONAL",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "WPA3_PERSONAL",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "WPA2_WPA3_PERSONAL",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "WPA2_ENTERPRISE",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "WPA3_ENTERPRISE",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "WPA2_WPA3_ENTERPRISE",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "radiusConfiguration",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "profileId",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "nasId",
+                  "required": true,
+                  "type": "object (Wifi Radius NAS ID configuration)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": null
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": null
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "macAuthenticationConfiguration",
+                  "required": true,
+                  "type": "object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "macAddressFormat",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "broadcastingDeviceFilter",
+          "required": false,
+          "type": "object (Broadcasting device filter)",
+          "description": "Defines the custom scope of devices that will broadcast this WiFi network. If null, the WiFi network will be broadcast by all Access Point capable devices.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "DEVICES",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "DEVICE_TAGS",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "deviceIds",
+              "required": false,
+              "type": "Array of string",
+              "description": "List of Access Point capable device IDs to which the WiFi broadcast applies.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "mdnsProxyConfiguration",
+          "required": false,
+          "type": "object (mDNS filtering configuration)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "mode",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "AUTO",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "CUSTOM",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "multicastFilteringPolicy",
+          "required": false,
+          "type": "object (Multicast filtering policy)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "action",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "ALLOW",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "BLOCK",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "sourceMacAddressFilter",
+              "required": false,
+              "type": "Array of string",
+              "description": "List of multicast source MAC addresses allowed. Multicast traffic from gateways is always allowed.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "multicastToUnicastConversionEnabled",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "clientIsolationEnabled",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "hideName",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "uapsdEnabled",
+          "required": true,
+          "type": "boolean",
+          "description": "Indicates whether Unscheduled Automatic Power Save Delivery (U-APSD) is enabled",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "basicDataRateKbpsByFrequencyGHz",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "5",
+              "required": true,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "2.4",
+              "required": true,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "clientFilteringPolicy",
+          "required": false,
+          "type": "object",
+          "description": "Client connection filtering policy. Allow/restrict access to the WiFi network based on client device MAC addresses.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "action",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "macAddressFilter",
+              "required": true,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "blackoutScheduleConfiguration",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "days",
+              "required": true,
+              "type": "Array of object (Blackout schedule configuration per day)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "ALL_DAY",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "TIME_RANGE",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "day",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "broadcastingFrequenciesGHz",
+          "required": false,
+          "type": "Array of number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "hotspotConfiguration",
+          "required": false,
+          "type": "object (Wifi hotspot configuration)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "CAPTIVE_PORTAL",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "PASSPOINT",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "mloEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "bandSteeringEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "arpProxyEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "bssTransitionEnabled",
+          "required": false,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "advertiseDeviceName",
+          "required": false,
+          "type": "boolean",
+          "description": "Indicates whether the device name is advertised in beacon frames.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "dtimPeriodByFrequencyGHzOverride",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "5",
+              "required": true,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "6",
+              "required": true,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "2.4",
+              "required": true,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get Wifi Broadcast Details\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get Wifi Broadcast Details\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"type\": \"string\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\",\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"enabled\": true,\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\",\n    \"radiusConfiguration\": null\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"clientIsolationEnabled\": true,\n  \"hideName\": true,\n  \"uapsdEnabled\": true,\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 0,\n    \"2.4\": 0\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"type\": \"string\",\n        \"day\": \"SUN\"\n      }\n    ]\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getwifibroadcastdetails"
+}

@@ -1,0 +1,167 @@
+{
+  "h1": "Get Network Details",
+  "method": "GET",
+  "path": "/v1/sites/{siteId}/networks/{networkId}",
+  "description": "Retrieve detailed information about a specific network.",
+  "pathParameters": [
+    {
+      "name": "networkId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "management",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": [
+            {
+              "value": "UNMANAGED",
+              "selected": true,
+              "schema": null
+            },
+            {
+              "value": "GATEWAY",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "SWITCH",
+              "selected": false,
+              "schema": null
+            }
+          ],
+          "children": []
+        },
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "enabled",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "vlanId",
+          "required": true,
+          "type": "integer",
+          "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "metadata",
+          "required": true,
+          "type": "object (User or system defined or orchestrated entity metadata)",
+          "description": "Orchestrated or System-defined configurable network support",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "USER_DEFINED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "SYSTEM_DEFINED",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "ORCHESTRATED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "dhcpGuarding",
+          "required": false,
+          "type": "object",
+          "description": "DHCP Guarding settings for this Network. If this field is omitted or null, the feature is disabled",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "trustedDhcpServerIpAddresses",
+              "required": true,
+              "type": "Array of string",
+              "description": "List of trusted DHCP server IP addresses.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "default",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/networks/{networkId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/networks/{networkId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/networks/{networkId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/network/integration/v1/sites/{siteId}/networks/{networkId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get Network Details\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/networks/{networkId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/networks/{networkId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/networks/{networkId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/networks/{networkId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/networks/{networkId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get Network Details\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/networks/{networkId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"management\": \"string\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\",\n  \"enabled\": true,\n  \"vlanId\": 0,\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  },\n  \"default\": true\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getnetworkdetails"
+}

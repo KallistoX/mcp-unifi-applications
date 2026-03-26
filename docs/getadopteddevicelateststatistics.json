@@ -1,0 +1,176 @@
+{
+  "h1": "Get Latest Adopted Device Statistics",
+  "method": "GET",
+  "path": "/v1/sites/{siteId}/devices/{deviceId}/statistics/latest",
+  "description": "Retrieve the latest real-time statistics of a specific adopted device, such as uptime, data transmission rates, CPU and memory utilization.",
+  "pathParameters": [
+    {
+      "name": "siteId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "deviceId",
+      "required": true,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "uptimeSec",
+          "required": false,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "lastHeartbeatAt",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "nextHeartbeatAt",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "loadAverage1Min",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "loadAverage5Min",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "loadAverage15Min",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "cpuUtilizationPct",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "memoryUtilizationPct",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "uplink",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "txRateBps",
+              "required": false,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "rxRateBps",
+              "required": false,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "interfaces",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "radios",
+              "required": false,
+              "type": "Array of object (Latest statistics for wireless radio)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "frequencyGHz",
+                  "required": true,
+                  "type": "number",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "txRetriesPct",
+                  "required": false,
+                  "type": "number",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/devices/{deviceId}/statistics/latest',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/network/integration/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get Latest Adopted Device Statistics\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/devices/{deviceId}/statistics/latest',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get Latest Adopted Device Statistics\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"uptimeSec\": 0,\n  \"lastHeartbeatAt\": \"2024-01-01T00:00:00Z\",\n  \"nextHeartbeatAt\": \"2024-01-01T00:00:00Z\",\n  \"loadAverage1Min\": 0,\n  \"loadAverage5Min\": 0,\n  \"loadAverage15Min\": 0,\n  \"cpuUtilizationPct\": 0,\n  \"memoryUtilizationPct\": 0,\n  \"uplink\": {\n    \"txRateBps\": 0,\n    \"rxRateBps\": 0\n  },\n  \"interfaces\": {\n    \"radios\": [\n      {\n        \"frequencyGHz\": 0,\n        \"txRetriesPct\": 0\n      }\n    ]\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getadopteddevicelateststatistics"
+}
