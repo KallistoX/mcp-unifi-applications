@@ -12,6 +12,16 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 import mcp_server as m
 
 
+# --- Helpers ---
+
+def _find_slug(fragment: str) -> str | None:
+    """Find a qualified slug containing the fragment (e.g. 'createnetwork' -> 'network/createnetwork')."""
+    for slug in m._endpoints:
+        if slug.endswith(f"/{fragment}") or slug == fragment:
+            return slug
+    return None
+
+
 # --- Data loading ---
 
 
@@ -21,12 +31,15 @@ class TestDataLoading:
 
     def test_all_json_files_parse(self):
         docs_dir = Path(__file__).parent.parent / "docs"
-        for f in docs_dir.glob("*.json"):
-            if f.stem.startswith("_"):
+        for app_dir in docs_dir.iterdir():
+            if not app_dir.is_dir() or app_dir.name.startswith(("_", ".")):
                 continue
-            data = json.loads(f.read_text())
-            assert isinstance(data, dict), f"{f.name} is not a dict"
-            assert "sourceUrl" in data or "error" in data, f"{f.name} missing sourceUrl"
+            for f in app_dir.glob("*.json"):
+                if f.stem.startswith("_"):
+                    continue
+                data = json.loads(f.read_text())
+                assert isinstance(data, dict), f"{f.name} is not a dict"
+                assert "sourceUrl" in data or "error" in data, f"{f.name} missing sourceUrl"
 
     def test_endpoints_have_required_fields(self):
         for slug, ep in m._endpoints.items():
@@ -34,6 +47,10 @@ class TestDataLoading:
             assert ep.get("method"), f"{slug} missing method"
             assert ep.get("path"), f"{slug} missing path"
             assert ep.get("sourceUrl"), f"{slug} missing sourceUrl"
+
+    def test_endpoints_have_app_tag(self):
+        for slug, ep in m._endpoints.items():
+            assert ep.get("_app"), f"{slug} missing _app tag"
 
     def test_guides_loaded_separately(self):
         for slug, guide in m._guides.items():
@@ -102,18 +119,21 @@ class TestListEndpoints:
 
 class TestGetEndpoint:
     def test_valid_slug(self):
-        result = m.get_endpoint("createnetwork")
+        slug = _find_slug("createnetwork")
+        assert slug, "createnetwork not found"
+        result = m.get_endpoint(slug)
         assert "Create Network" in result
         assert "POST" in result
         assert "/v1/sites" in result
 
     def test_invalid_slug_suggests(self):
-        result = m.get_endpoint("createnetwork_typo")
+        result = m.get_endpoint("network/createnetwork_typo")
         assert "Did you mean" in result
-        assert "createnetwork" in result
 
     def test_raw_json(self):
-        result = m.get_endpoint("createnetwork", summary=False)
+        slug = _find_slug("createnetwork")
+        assert slug, "createnetwork not found"
+        result = m.get_endpoint(slug, summary=False)
         data = json.loads(result)
         assert data["method"] == "POST"
 
@@ -132,11 +152,13 @@ class TestGetExample:
         pytest.skip("No endpoints with ansible examples")
 
     def test_invalid_language(self):
-        result = m.get_example("createnetwork", "rust")
+        slug = _find_slug("createnetwork") or "network/createnetwork"
+        result = m.get_example(slug, "rust")
         assert "Unknown language" in result
 
     def test_invalid_mode(self):
-        result = m.get_example("createnetwork", "curl", "cloud")
+        slug = _find_slug("createnetwork") or "network/createnetwork"
+        result = m.get_example(slug, "curl", "cloud")
         assert "Unknown mode" in result
 
     def test_invalid_slug(self):
@@ -157,11 +179,15 @@ class TestFindField:
         assert "Similar fields" in result or "not found" in result
 
     def test_scoped_to_slug(self):
-        result = m.find_field("siteId", slug="createnetwork")
+        slug = _find_slug("createnetwork")
+        assert slug, "createnetwork not found"
+        result = m.find_field("siteId", slug=slug)
         assert "createnetwork" in result
 
     def test_scoped_miss(self):
-        result = m.find_field("xyznonexistent", slug="createnetwork")
+        slug = _find_slug("createnetwork")
+        assert slug, "createnetwork not found"
+        result = m.find_field("xyznonexistent", slug=slug)
         assert "not found" in result
 
 
@@ -197,7 +223,8 @@ class TestGetGuide:
         assert "#" in result  # Has a markdown heading
 
     def test_fuzzy_match(self):
-        if "filtering" not in m._guides:
+        has_filtering = any("filtering" in s for s in m._guides)
+        if not has_filtering:
             pytest.skip("filtering guide not loaded")
         result = m.get_guide("filter")
         assert "filter" in result.lower()

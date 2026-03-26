@@ -1,5 +1,6 @@
 // scrape.mjs — UniFi API docs scraper
 // Usage: node scrape.mjs [options] [slug...]
+//   --app <name>      Application to scrape: network (default), protect, site-manager.
 //   --version <ver>   API version to scrape (e.g. v10.1.84). Default: latest.
 //   --list-versions   Print available versions and exit.
 //   --force           Re-scrape even if output file exists.
@@ -14,21 +15,38 @@ const OUTPUT = '/output';
 const RETRY_LIMIT = 3;
 const NAV_TIMEOUT = 20000;
 
+// --- Application definitions ---
+
+const APPS = {
+  network:        { path: 'network',      modes: ['local', 'remote'] },
+  protect:        { path: 'protect',      modes: ['local', 'remote'] },
+  'site-manager': { path: 'site-manager', modes: ['remote'] },
+};
+
 // --- CLI argument parsing ---
 
 const args = process.argv.slice(2);
 let requestedVersion = null;
+let requestedApp = 'network';
 let listVersions = false;
 let force = false;
 const slugs = [];
 
 for (let i = 0; i < args.length; i++) {
   if (args[i] === '--version' && args[i + 1]) { requestedVersion = args[++i]; continue; }
+  if (args[i] === '--app' && args[i + 1]) { requestedApp = args[++i]; continue; }
   if (args[i] === '--list-versions') { listVersions = true; continue; }
   if (args[i] === '--force') { force = true; continue; }
   if (args[i].startsWith('--')) { console.error(`Unknown option: ${args[i]}`); process.exit(1); }
   slugs.push(args[i]);
 }
+
+const appConfig = APPS[requestedApp];
+if (!appConfig) {
+  console.error(`Unknown app '${requestedApp}'. Available: ${Object.keys(APPS).join(', ')}`);
+  process.exit(1);
+}
+const APP_PATH = appConfig.path;
 
 const singleMode = slugs.length > 0;
 
@@ -304,7 +322,7 @@ const MODES = [
   { label: 'Remote', key: 'remote' },
 ];
 
-async function scrapeExamples(page) {
+async function scrapeExamples(page, modes) {
   const examples = {};
   const responseSample = await page.evaluate(() => {
     const visible = Array.from(document.querySelectorAll('pre')).filter(el => {
@@ -314,11 +332,18 @@ async function scrapeExamples(page) {
     return visible.find(el => el.innerText.trim().startsWith('{'))?.innerText.trim() || null;
   });
 
+  // Determine if a mode switch is present on the page
+  const hasSwitch = modes.length > 1;
+
   for (const mode of MODES) {
-    try {
-      await page.click(`label:has-text("${mode.label}")`, { timeout: 2000 });
-      await page.waitForTimeout(400);
-    } catch (_) { continue; }
+    if (!modes.includes(mode.key)) continue;
+
+    if (hasSwitch) {
+      try {
+        await page.click(`label:has-text("${mode.label}")`, { timeout: 2000 });
+        await page.waitForTimeout(400);
+      } catch (_) { continue; }
+    }
 
     examples[mode.key] = {};
     for (const lang of LANGUAGES) {
@@ -354,8 +379,10 @@ async function scrapePage(page, url) {
   const isGuide = await page.evaluate(() => !document.querySelector('[class*="HttpMethod"], [class*="MethodBadge"]'));
   if (isGuide) return scrapeGuidePage(page, url);
 
-  // Click Local first for initial schema parse
-  try { await page.click('label:has-text("Local")', { timeout: 3000 }); await page.waitForTimeout(400); } catch (_) {}
+  // Click Local first for initial schema parse (only if the app has a local mode)
+  if (appConfig.modes.includes('local')) {
+    try { await page.click('label:has-text("Local")', { timeout: 3000 }); await page.waitForTimeout(400); } catch (_) {}
+  }
   await expandAll(page);
 
   const base = await page.evaluate(() => {
@@ -379,15 +406,15 @@ async function scrapePage(page, url) {
 
   base.requestBody = await enrichSchema(page, base.requestBody, 'request Body');
 
-  const { examples, responseSample } = await scrapeExamples(page);
+  const { examples, responseSample } = await scrapeExamples(page, appConfig.modes);
 
   return { ...base, examples, responseSample, sourceUrl: url };
 }
 
 // --- Version discovery ---
 
-async function discoverVersions(page) {
-  await page.goto(`${SITE}/network`, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT });
+async function discoverVersions(page, appPath) {
+  await page.goto(`${SITE}/${appPath}`, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT });
   await page.waitForTimeout(800);
   // Open the version dropdown
   try {
@@ -396,7 +423,7 @@ async function discoverVersions(page) {
     await page.waitForTimeout(500);
   } catch (_) {}
   // Extract versions from the dropdown list items
-  const versions = await page.evaluate(() => {
+  const versions = await page.evaluate((appPath) => {
     const items = Array.from(document.querySelectorAll('[data-ui-portal-container] li'));
     if (items.length > 0) {
       return items.map(li => ({
@@ -405,15 +432,16 @@ async function discoverVersions(page) {
       }));
     }
     // Fallback: look for version in URL or nav links
-    const links = Array.from(document.querySelectorAll('a[href*="/network/v"]'));
+    const links = Array.from(document.querySelectorAll(`a[href*="/${appPath}/v"]`));
     const seen = new Set();
+    const re = new RegExp(`\\/${appPath.replace('-', '\\-')}\\/v([\\d.]+)`);
     return links.map(a => {
-      const m = a.href.match(/\/network\/v([\d.]+)/);
+      const m = a.href.match(re);
       if (!m || seen.has(m[1])) return null;
       seen.add(m[1]);
       return { version: m[1], selected: false };
     }).filter(Boolean);
-  });
+  }, appPath);
   // Close dropdown by pressing Escape
   try { await page.keyboard.press('Escape'); } catch (_) {}
   return versions;
@@ -425,8 +453,9 @@ const browser = await chromium.launch({ args: ['--no-sandbox'] });
 const page = await browser.newPage();
 
 // Discover available versions
+console.log(`App: ${requestedApp} (${SITE}/${APP_PATH})`);
 console.log('Discovering API versions...');
-const versions = await discoverVersions(page);
+const versions = await discoverVersions(page, APP_PATH);
 
 if (versions.length === 0) {
   console.error('Could not discover any API versions.');
@@ -451,7 +480,7 @@ if (!validVersion) {
   process.exit(1);
 }
 
-const BASE = `${SITE}/network/v${version}`;
+const BASE = `${SITE}/${APP_PATH}/v${version}`;
 console.log(`Using API version: v${version}\n`);
 
 // Discover nav links
@@ -459,12 +488,13 @@ console.log('Discovering nav links...');
 await page.goto(BASE, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT });
 await page.waitForTimeout(800);
 
-let links = await page.$$eval('a[href]', els =>
+let links = await page.$$eval('a[href]', (els, appPath) =>
   [...new Map(
     els.map(el => ({ href: el.getAttribute('href'), text: el.innerText.trim() }))
-      .filter(l => l.href && l.href.includes('/network') && l.text)
+      .filter(l => l.href && l.href.includes(`/${appPath}`) && l.text)
       .map(l => [l.href, l])
-  ).values()]
+  ).values()],
+  APP_PATH
 );
 
 // Filter to requested slugs if in single mode
@@ -475,13 +505,14 @@ if (singleMode) {
   for (const s of slugs) {
     if (!found.has(s)) {
       console.warn(`  ⚠ Slug '${s}' not found in nav, will try direct URL`);
-      links.push({ href: `/network/v${version}/${s}`, text: s });
+      links.push({ href: `/${APP_PATH}/v${version}/${s}`, text: s });
     }
   }
 }
 
+const outDir = `${OUTPUT}/${APP_PATH}`;
 console.log(`${singleMode ? 'Selected' : 'Found'} ${links.length} pages\n`);
-mkdirSync(OUTPUT, { recursive: true });
+mkdirSync(outDir, { recursive: true });
 
 const failed = [];
 let done = 0;
@@ -489,7 +520,7 @@ let done = 0;
 for (const { href, text } of links) {
   const url = href.startsWith('http') ? href : `${SITE}${href}`;
   const slug = href.split('/').pop() || href.replace(/\//g, '_');
-  const outPath = `${OUTPUT}/${slug}.json`;
+  const outPath = `${outDir}/${slug}.json`;
 
   if (!force && existsSync(outPath)) { console.log(`  ⟳ Skip: ${text}`); done++; continue; }
 
@@ -510,13 +541,13 @@ for (const { href, text } of links) {
 }
 
 const index = links.map(({ href, text }) => ({ slug: href.split('/').pop(), title: text, file: `${href.split('/').pop()}.json` }));
-writeFileSync(`${OUTPUT}/_index.json`, JSON.stringify(index, null, 2));
+writeFileSync(`${outDir}/_index.json`, JSON.stringify(index, null, 2));
 
 if (failed.length) {
   console.log(`\n✗ Failed (${failed.length}):`);
   failed.forEach(f => console.log(`  - ${f.text}: ${f.url}`));
-  writeFileSync(`${OUTPUT}/_failed.txt`, failed.map(f => `${f.text}\t${f.url}`).join('\n'));
+  writeFileSync(`${outDir}/_failed.txt`, failed.map(f => `${f.text}\t${f.url}`).join('\n'));
 }
 
-console.log(`\nDone. ${done} pages (v${version}).`);
+console.log(`\nDone. ${done} ${requestedApp} pages (v${version}).`);
 await browser.close();

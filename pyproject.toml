@@ -1,13 +1,27 @@
 [project]
 name = "mcp-unifi-applications"
 version = "0.1.0"
-description = "MCP server exposing UniFi Network API documentation as queryable tools"
+description = "MCP server exposing UniFi application API documentation (Network, Protect, Site Manager) as queryable tools"
 license = "MIT"
+readme = "README.md"
 requires-python = ">=3.11"
+authors = [
+    { name = "Dominic Bussemas" },
+]
+keywords = ["mcp", "unifi", "ubiquiti", "api", "documentation", "claude", "protect", "site-manager"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Documentation",
+]
 dependencies = [
     "fastmcp>=3.1.1",
     "rapidfuzz>=3.14.3",
 ]
+
+[project.urls]
+Repository = "https://github.com/dbussemas/mcp-unifi-applications"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]

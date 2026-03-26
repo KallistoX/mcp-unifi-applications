@@ -1,7 +1,7 @@
-"""UniFi Network API Docs MCP Server.
+"""UniFi API Docs MCP Server.
 
-Exposes scraped UniFi API documentation as queryable tools
-for use in Claude Desktop or any MCP-compatible client.
+Exposes scraped UniFi application API documentation (Network, Protect, Site Manager)
+as queryable tools for use in Claude Desktop or any MCP-compatible client.
 """
 
 import json
@@ -13,20 +13,23 @@ from rapidfuzz import fuzz
 
 DOCS_DIR = Path(os.environ.get("DOCS_DIR", Path(__file__).parent / "docs"))
 
+KNOWN_APPS = ("network", "protect", "site-manager")
+
 mcp = FastMCP("unifi-applications", instructions=(
-    "You have access to the full UniFi Network API v10.1.84 documentation. "
+    "You have access to UniFi application API documentation (Network, Protect, Site Manager). "
     "Use list_endpoints to browse, search_endpoints to find relevant endpoints, "
     "and get_endpoint to get full schema details. Use get_endpoint_group to get "
-    "all CRUD operations for a resource at once."
+    "all CRUD operations for a resource at once. Filter by app name to narrow results."
 ))
 
 # --- Data loading ---
 
 _endpoints: dict[str, dict] = {}
 _guides: dict[str, dict] = {}
-_search_index: list[tuple[str, str, str, str, str]] = []  # (slug, title, method, path, description)
+_search_index: list[tuple[str, str, str, str, str, str]] = []  # (slug, title, method, path, description, app)
 _field_index: dict[str, list[tuple[str, str]]] = {}  # field_name_lower -> [(slug, path)]
 _resource_groups: dict[str, list[str]] = {}  # resource path -> [slugs]
+_loaded_apps: set[str] = set()
 
 VALID_LANGUAGES = ("curl", "go", "nodejs", "python", "ansible")
 VALID_MODES = ("local", "remote")
@@ -57,13 +60,10 @@ def _resource_key(path: str) -> str | None:
     return "/".join(parts) if parts else None
 
 
-def _load_docs():
-    _endpoints.clear()
-    _guides.clear()
-    _search_index.clear()
-    _field_index.clear()
-    _resource_groups.clear()
-    for f in sorted(DOCS_DIR.glob("*.json")):
+def _load_app(app: str, directory: Path):
+    """Load all JSON docs from a single app directory."""
+    _loaded_apps.add(app)
+    for f in sorted(directory.glob("*.json")):
         slug = f.stem
         if slug.startswith("_"):
             continue
@@ -71,24 +71,47 @@ def _load_docs():
             data = json.loads(f.read_text())
         except (json.JSONDecodeError, OSError):
             continue
+        # Prefix slug with app name for uniqueness across apps
+        qualified = f"{app}/{slug}" if app else slug
+        data["_app"] = app or "network"
         # Guide pages have type: "guide"
         if data.get("type") == "guide":
-            _guides[slug] = data
+            _guides[qualified] = data
             continue
-        _endpoints[slug] = data
+        _endpoints[qualified] = data
         method = data.get("method", "") or ""
         path = data.get("path", "") or ""
         desc = data.get("description", "") or ""
-        _search_index.append((slug, data.get("h1", ""), method, path, desc))
+        _search_index.append((qualified, data.get("h1", ""), method, path, desc, data["_app"]))
         # Build field index
         for section_key in ("pathParameters", "requestBody"):
-            _index_fields(data.get(section_key) or [], slug)
+            _index_fields(data.get(section_key) or [], qualified)
         for resp in data.get("responses") or []:
-            _index_fields(resp.get("fields") or [], slug)
+            _index_fields(resp.get("fields") or [], qualified)
         # Group by resource
         rk = _resource_key(path)
         if rk:
-            _resource_groups.setdefault(rk, []).append(slug)
+            _resource_groups.setdefault(rk, []).append(qualified)
+
+
+def _load_docs():
+    _endpoints.clear()
+    _guides.clear()
+    _search_index.clear()
+    _field_index.clear()
+    _resource_groups.clear()
+    _loaded_apps.clear()
+
+    # Try loading from app subdirectories first
+    subdirs = [d for d in sorted(DOCS_DIR.iterdir())
+               if d.is_dir() and not d.name.startswith(("_", "."))
+               and any(d.glob("*.json"))]
+    if subdirs:
+        for d in subdirs:
+            _load_app(d.name, d)
+    else:
+        # Flat layout fallback (backward compat)
+        _load_app("", DOCS_DIR)
 
 
 _load_docs()
@@ -135,22 +158,32 @@ def _summarise_fields(fields: list[dict], depth: int = 0, max_depth: int = 2) ->
 
 
 @mcp.tool()
-def list_endpoints(method: str | None = None) -> str:
+def list_endpoints(method: str | None = None, app: str | None = None) -> str:
     """List all available UniFi API endpoints with their HTTP method and path.
 
     Args:
         method: Optional HTTP method filter (GET, POST, PUT, DELETE, PATCH).
+        app: Optional app filter (network, protect, site-manager). Omit to list all.
     """
     if not _search_index:
         return "No endpoints loaded. Check DOCS_DIR."
     lines = []
     method_filter = method.upper() if method else None
-    for slug, title, m, path, desc in _search_index:
+    app_filter = app.lower() if app else None
+    for slug, title, m, path, desc, ep_app in _search_index:
         if method_filter and m.upper() != method_filter:
             continue
-        lines.append(f"{m} {path}  [{slug}]  {title}")
+        if app_filter and ep_app != app_filter:
+            continue
+        app_tag = f"[{ep_app}] " if len(_loaded_apps) > 1 else ""
+        lines.append(f"{app_tag}{m} {path}  [{slug}]  {title}")
     if not lines:
-        return f"No endpoints found for method {method_filter}."
+        filters = []
+        if method_filter:
+            filters.append(f"method={method_filter}")
+        if app_filter:
+            filters.append(f"app={app_filter}")
+        return f"No endpoints found ({', '.join(filters)})."
     return "\n".join(lines)
 
 
@@ -171,7 +204,7 @@ def _suggest_slugs(slug: str, n: int = 3) -> str:
 
 
 @mcp.tool()
-def search_endpoints(query: str, method: str | None = None) -> str:
+def search_endpoints(query: str, method: str | None = None, app: str | None = None) -> str:
     """Search UniFi API endpoints by name, path, method, or description.
 
     Returns the top matching endpoints ranked by relevance.
@@ -180,15 +213,19 @@ def search_endpoints(query: str, method: str | None = None) -> str:
     Args:
         query: Search term (endpoint name, path fragment, or keyword).
         method: Optional HTTP method filter (GET, POST, PUT, DELETE, PATCH).
+        app: Optional app filter (network, protect, site-manager). Omit to search all.
     """
     if not query.strip():
         return "Please provide a search query."
 
     q = query.lower()
     method_filter = method.upper() if method else None
+    app_filter = app.lower() if app else None
     scored = []
-    for slug, title, m, path, desc in _search_index:
+    for slug, title, m, path, desc, ep_app in _search_index:
         if method_filter and m.upper() != method_filter:
+            continue
+        if app_filter and ep_app != app_filter:
             continue
         # Weight title/slug/path much higher than description
         core = f"{slug} {title} {m} {path}".lower()
@@ -197,16 +234,17 @@ def search_endpoints(query: str, method: str | None = None) -> str:
         # Exact substring in core fields gets a big bonus
         bonus = 60 if q in core else (20 if q in desc.lower() else 0)
         score = core_score + desc_score + bonus
-        scored.append((score, slug, title, m, path, desc))
+        scored.append((score, slug, title, m, path, desc, ep_app))
 
     scored.sort(key=lambda x: x[0], reverse=True)
     top = scored[:10]
 
     lines = []
-    for score, slug, title, m, path, desc in top:
+    for score, slug, title, m, path, desc, ep_app in top:
         if score < 30:
             break
-        lines.append(f"[{slug}] {m} {path}  {title}")
+        app_tag = f"[{ep_app}] " if len(_loaded_apps) > 1 else ""
+        lines.append(f"{app_tag}[{slug}] {m} {path}  {title}")
         if desc:
             lines.append(f"    {_truncate(desc)}")
     return "\n".join(lines) if lines else "No matching endpoints found."
@@ -228,8 +266,9 @@ def get_endpoint(slug: str, summary: bool = True) -> str:
     if not summary:
         return json.dumps(ep, indent=2)
 
+    app_label = f" ({ep['_app']})" if ep.get("_app") and len(_loaded_apps) > 1 else ""
     lines = [
-        f"# {ep.get('h1', slug)}",
+        f"# {ep.get('h1', slug)}{app_label}",
         f"{ep.get('method', '?')} {ep.get('path', '?')}",
     ]
     if ep.get("description"):
@@ -254,20 +293,23 @@ def get_endpoint(slug: str, summary: bool = True) -> str:
 
 
 @mcp.tool()
-def get_example(slug: str, language: str = "curl", mode: str = "local") -> str:
+def get_example(slug: str, language: str = "curl", mode: str | None = None) -> str:
     """Get a code example for a specific UniFi API endpoint.
 
     Args:
-        slug: Endpoint identifier (e.g. 'createnetwork').
+        slug: Endpoint identifier (e.g. 'network/createnetwork').
         language: Programming language — one of: curl, go, nodejs, python, ansible.
         mode: 'local' (direct console access) or 'remote' (via cloud API).
+              Defaults to 'local' for network/protect, 'remote' for site-manager.
     """
     ep = _endpoints.get(slug)
     if not ep:
         return f"Endpoint '{slug}' not found. {_suggest_slugs(slug)}"
 
     lang = language.lower()
-    m = mode.lower()
+    # Default mode based on app (site-manager is remote only)
+    app = ep.get("_app", "network")
+    m = (mode or ("remote" if app == "site-manager" else "local")).lower()
     if lang not in VALID_LANGUAGES:
         return f"Unknown language '{language}'. Choose from: {', '.join(VALID_LANGUAGES)}"
     if m not in VALID_MODES:
@@ -364,7 +406,8 @@ def get_endpoint_group(resource: str) -> str:
             m = ep.get("method", "?")
             title = ep.get("h1", slug)
             desc = ep.get("description", "") or ""
-            lines.append(f"  {m} [{slug}] {title}")
+            app_tag = f"[{ep.get('_app')}] " if len(_loaded_apps) > 1 else ""
+            lines.append(f"  {app_tag}{m} [{slug}] {title}")
             if desc:
                 lines.append(f"    {_truncate(desc)}")
         lines.append("")
@@ -372,38 +415,43 @@ def get_endpoint_group(resource: str) -> str:
 
 
 @mcp.tool()
-def get_guide(topic: str | None = None) -> str:
+def get_guide(topic: str | None = None, app: str | None = None) -> str:
     """Get a UniFi API guide page (e.g. filtering syntax, error handling, getting started).
 
     Args:
         topic: Guide slug or search term. Omit to list all available guides.
+        app: Optional app filter (network, protect, site-manager). Omit to search all.
     """
+    app_filter = app.lower() if app else None
+    guides = {s: g for s, g in _guides.items() if not app_filter or g.get("_app") == app_filter}
+
     if not topic:
-        if not _guides:
+        if not guides:
             return "No guide pages loaded."
         lines = ["Available guides:"]
-        for slug, data in sorted(_guides.items()):
+        for slug, data in sorted(guides.items()):
             title = data.get("h1") or slug
-            lines.append(f"  [{slug}] {title}")
+            app_tag = f"[{data.get('_app')}] " if len(_loaded_apps) > 1 else ""
+            lines.append(f"  {app_tag}[{slug}] {title}")
         return "\n".join(lines)
 
     # Exact match
-    if topic in _guides:
-        g = _guides[topic]
+    if topic in guides:
+        g = guides[topic]
         title = g.get("h1") or topic
         return f"# {title}\n\n{g.get('content', 'No content.')}\n\nSource: {g.get('sourceUrl', 'N/A')}"
 
     # Fuzzy match
     scored = [(fuzz.token_set_ratio(topic.lower(), f"{s} {g.get('h1', '')}".lower()), s)
-              for s, g in _guides.items()]
+              for s, g in guides.items()]
     scored.sort(reverse=True)
     if scored and scored[0][0] > 50:
         best_slug = scored[0][1]
-        g = _guides[best_slug]
+        g = guides[best_slug]
         title = g.get("h1") or best_slug
         return f"# {title}\n\n{g.get('content', 'No content.')}\n\nSource: {g.get('sourceUrl', 'N/A')}"
 
-    available = ", ".join(sorted(_guides.keys()))
+    available = ", ".join(sorted(guides.keys()))
     return f"No guide found for '{topic}'. Available: {available}"
 
 
