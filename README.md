@@ -67,7 +67,7 @@ pip install .
 
 ### 3. Register with your client
 
-**Claude Code (VS Code / JetBrains)** - add `.mcp.json` to your project root:
+**Claude Code (VS Code / JetBrains)** - add `.mcp.json` to your project root (Reload Window after):
 
 ```json
 {
