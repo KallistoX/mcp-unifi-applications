@@ -305,3 +305,20 @@ class TestMeta:
     def test_instructions_name_versions(self):
         for app, meta in m._meta.items():
             assert f"{app} v{meta['version']}" in m.mcp.instructions
+
+
+# --- get_docs_info ---
+
+
+class TestGetDocsInfo:
+    def test_lists_every_loaded_app(self):
+        out = m.get_docs_info()
+        for app in m._loaded_apps:
+            assert app in out
+
+    def test_contains_versions_and_counts(self):
+        out = m.get_docs_info()
+        for app, meta in m._meta.items():
+            assert f"API v{meta['version']}" in out
+        assert "endpoints" in out
+        assert "guides" in out

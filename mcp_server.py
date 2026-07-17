@@ -572,5 +572,23 @@ def get_guide(topic: str | None = None, app: str | None = None) -> str:
     return f"No guide found for '{topic}'. Available: {available}"
 
 
+@mcp.tool()
+def get_docs_info() -> str:
+    """Show which UniFi API docs are loaded: API version, scrape date, endpoint and guide counts per app."""
+    if not _loaded_apps:
+        return "No docs loaded. Check DOCS_DIR."
+    lines = []
+    for app in sorted(_loaded_apps):
+        meta = _meta.get(app, {})
+        n_ep = sum(1 for e in _endpoints.values() if e["_app"] == app)
+        n_gd = sum(1 for g in _guides.values() if g["_app"] == app)
+        lines.append(
+            f"{app}: API v{meta.get('version', 'unknown')}, "
+            f"scraped {meta.get('scrapedAt', 'unknown')}, "
+            f"{n_ep} endpoints, {n_gd} guides"
+        )
+    return "\n".join(lines)
+
+
 if __name__ == "__main__":
     mcp.run()
