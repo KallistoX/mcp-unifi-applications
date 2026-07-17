@@ -1,0 +1,116 @@
+name: Update docs
+
+on:
+  schedule:
+    - cron: "17 5 * * 1"  # Mondays 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-docs
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.compare.outputs.apps }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Compare upstream vs scraped versions
+        id: compare
+        run: |
+          set -euo pipefail
+          outdated=()
+          for app in network protect site-manager; do
+            html=$(curl -fsSL --max-time 30 "https://developer.ui.com/${app}")
+            latest=$(echo "$html" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sort -uV | tail -1 || true)
+            if [ -z "$latest" ]; then
+              echo "::error::No version strings found in https://developer.ui.com/${app} - site layout may have changed"
+              exit 1
+            fi
+            current="v$(python3 -c "import json; print(json.load(open('docs/${app}/_meta.json'))['version'])" 2>/dev/null || echo 0.0.0)"
+            echo "${app}: scraped=${current} upstream=${latest}"
+            if [ "$latest" != "$current" ]; then
+              outdated+=("$app")
+            fi
+          done
+          if [ "${#outdated[@]}" -eq 0 ]; then
+            apps="[]"
+          else
+            apps=$(printf '%s\n' "${outdated[@]}" | jq -R . | jq -cs .)
+          fi
+          echo "apps=${apps}" >> "$GITHUB_OUTPUT"
+
+  scrape:
+    needs: check
+    if: needs.check.outputs.apps != '[]'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: ${{ fromJSON(needs.check.outputs.apps) }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build scraper image
+        run: docker build -t unifi-scraper .
+
+      - name: Scrape ${{ matrix.app }}
+        run: |
+          rm -f "docs/${{ matrix.app }}"/*.json "docs/${{ matrix.app }}/_failed.txt"
+          docker run --rm -v "${{ github.workspace }}/docs:/output" unifi-scraper \
+            node scrape.mjs --app "${{ matrix.app }}" --force
+
+      - name: Fail if pages failed to scrape
+        run: |
+          if [ -f "docs/${{ matrix.app }}/_failed.txt" ]; then
+            echo "::error::Scrape had failures - not opening a PR"
+            cat "docs/${{ matrix.app }}/_failed.txt"
+            exit 1
+          fi
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Test against fresh docs
+        run: |
+          pip install .[dev]
+          ruff check .
+          pytest tests/ -v
+
+      - name: Read scraped version and diff stats
+        id: stats
+        run: |
+          set -euo pipefail
+          version=$(python3 -c "import json; print(json.load(open('docs/${{ matrix.app }}/_meta.json'))['version'])")
+          git add -A "docs/${{ matrix.app }}"
+          added=$(git diff --cached --name-status -- "docs/${{ matrix.app }}" | grep -c '^A' || true)
+          modified=$(git diff --cached --name-status -- "docs/${{ matrix.app }}" | grep -c '^M' || true)
+          deleted=$(git diff --cached --name-status -- "docs/${{ matrix.app }}" | grep -c '^D' || true)
+          {
+            echo "version=${version}"
+            echo "added=${added}"
+            echo "modified=${modified}"
+            echo "deleted=${deleted}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Open PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update-docs/${{ matrix.app }}-v${{ steps.stats.outputs.version }}
+          title: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
+          commit-message: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
+          add-paths: docs/${{ matrix.app }}/**
+          body: |
+            Automated docs refresh: upstream published **v${{ steps.stats.outputs.version }}** for `${{ matrix.app }}`.
+
+            - Pages: ${{ steps.stats.outputs.added }} added, ${{ steps.stats.outputs.modified }} modified, ${{ steps.stats.outputs.deleted }} removed
+            - Scrape had no failed pages; ruff + pytest passed against the fresh docs.
+
+            Weekly `update-docs` workflow.
