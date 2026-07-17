@@ -513,7 +513,7 @@ if (singleMode) {
 const outDir = `${OUTPUT}/${APP_PATH}`;
 console.log(`${singleMode ? 'Selected' : 'Found'} ${links.length} pages\n`);
 mkdirSync(outDir, { recursive: true });
-rmSync(`${outDir}/_failed.txt`, { force: true });
+if (!singleMode) rmSync(`${outDir}/_failed.txt`, { force: true });
 
 const failed = [];
 let done = 0;

@@ -90,9 +90,9 @@ jobs:
           set -euo pipefail
           version=$(python3 -c "import json; print(json.load(open('docs/${{ matrix.app }}/_meta.json'))['version'])")
           git add -A "docs/${{ matrix.app }}"
-          added=$(git diff --cached --name-status -- "docs/${{ matrix.app }}" | grep -c '^A' || true)
-          modified=$(git diff --cached --name-status -- "docs/${{ matrix.app }}" | grep -c '^M' || true)
-          deleted=$(git diff --cached --name-status -- "docs/${{ matrix.app }}" | grep -c '^D' || true)
+          added=$(git diff --cached --no-renames --name-status -- "docs/${{ matrix.app }}" | grep -c '^A' || true)
+          modified=$(git diff --cached --no-renames --name-status -- "docs/${{ matrix.app }}" | grep -c '^M' || true)
+          deleted=$(git diff --cached --no-renames --name-status -- "docs/${{ matrix.app }}" | grep -c '^D' || true)
           {
             echo "version=${version}"
             echo "added=${added}"
@@ -100,6 +100,9 @@ jobs:
             echo "deleted=${deleted}"
           } >> "$GITHUB_OUTPUT"
 
+      # NOTE: PRs created with GITHUB_TOKEN do not trigger ci.yml (GitHub suppresses
+      # workflow events for Actions-created PRs). The merge gate for these PRs is the
+      # ruff+pytest step above, which runs against the fresh docs before the PR opens.
       - name: Open PR
         uses: peter-evans/create-pull-request@v7
         with:

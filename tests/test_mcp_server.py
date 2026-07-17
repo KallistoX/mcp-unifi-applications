@@ -355,6 +355,12 @@ class TestListEndpointsCap:
         assert "truncated" in lines[-1]
         assert "app" in lines[-1] and "method" in lines[-1]
 
-    def test_no_cap_below_limit(self):
+    def test_no_cap_below_limit(self, monkeypatch):
+        fake = [
+            (f"network/fake{i}", f"Fake {i}", "GET", f"/v1/fake/{i}", "", "network")
+            for i in range(10)
+        ]
+        monkeypatch.setattr(m, "_search_index", fake)
         out = m.list_endpoints()
         assert "truncated" not in out
+        assert len(out.split("\n")) == 10
