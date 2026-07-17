@@ -491,7 +491,7 @@ await page.waitForTimeout(800);
 let links = await page.$$eval('a[href]', (els, appPath) =>
   [...new Map(
     els.map(el => ({ href: el.getAttribute('href'), text: el.innerText.trim() }))
-      .filter(l => l.href && l.href.includes(`/${appPath}`) && l.text)
+      .filter(l => l.href && l.href.includes(`/${appPath}`) && l.text && !l.href.endsWith('.json'))
       .map(l => [l.href, l])
   ).values()],
   APP_PATH
