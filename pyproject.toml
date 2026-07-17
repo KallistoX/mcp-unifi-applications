@@ -23,7 +23,11 @@ dependencies = [
 Repository = "https://github.com/KallistoX/mcp-unifi-applications"
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0"]
+dev = ["pytest>=8.0", "ruff>=0.14"]
 
 [project.scripts]
 mcp-unifi-applications = "mcp_server:mcp.run"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
