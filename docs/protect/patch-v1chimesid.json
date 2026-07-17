@@ -19,7 +19,7 @@
       "name": "name",
       "required": false,
       "type": "string",
-      "description": "The name of the chime",
+      "description": "The name of the device.",
       "discriminator": null,
       "children": []
     },
@@ -115,7 +115,7 @@
           "name": "mac",
           "required": true,
           "type": "string",
-          "description": "The MAC address of the device",
+          "description": "The primary MAC address of the device.",
           "discriminator": null,
           "children": []
         },
@@ -188,5 +188,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"cameraIds\": [\n    \"string\"\n  ],\n  \"ringSettings\": [\n    {\n      \"cameraId\": \"string\",\n      \"repeatTimes\": 0,\n      \"ringtoneId\": \"string\",\n      \"volume\": 0\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/patch-v1chimesid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/patch-v1chimesid"
 }

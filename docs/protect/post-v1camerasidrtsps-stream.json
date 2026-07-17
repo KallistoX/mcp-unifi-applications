@@ -19,7 +19,7 @@
       "name": "qualities",
       "required": true,
       "type": "Array of string",
-      "description": "Array of quality levels of RTSPS streams",
+      "description": "Array of quality levels of RTSPS streams. All qualities (high, medium, low) are available for all cameras. The package quality is only available for cameras with hasPackageCamera: true.",
       "discriminator": null,
       "children": []
     }
@@ -82,5 +82,5 @@
     }
   },
   "responseSample": "{\n  \"high\": \"https://example.com\",\n  \"medium\": \"https://example.com\",\n  \"low\": \"https://example.com\",\n  \"package\": \"https://example.com\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/post-v1camerasidrtsps-stream"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/post-v1camerasidrtsps-stream"
 }

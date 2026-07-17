@@ -47,31 +47,7 @@
       ],
       "fields": [
         {
-          "name": "offset",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "limit",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
           "name": "count",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "totalCount",
           "required": true,
           "type": "integer",
           "description": null,
@@ -86,59 +62,17 @@
           "discriminator": null,
           "children": [
             {
-              "name": "type",
+              "name": "enabled",
               "required": true,
-              "type": "string",
+              "type": "boolean",
               "description": null,
-              "discriminator": [
-                {
-                  "value": "OPENVPN",
-                  "selected": true,
-                  "schema": null
-                },
-                {
-                  "value": "WIREGUARD",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "L2TP",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "PPTP",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "UID",
-                  "selected": false,
-                  "schema": null
-                }
-              ],
+              "discriminator": null,
               "children": []
             },
             {
               "name": "id",
               "required": true,
               "type": "string",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "name",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "enabled",
-              "required": true,
-              "type": "boolean",
               "description": null,
               "discriminator": null,
               "children": []
@@ -157,12 +91,12 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "USER_DEFINED",
+                      "value": "DERIVED",
                       "selected": true,
                       "schema": null
                     },
                     {
-                      "value": "DERIVED",
+                      "value": "USER_DEFINED",
                       "selected": false,
                       "schema": null
                     }
@@ -170,8 +104,74 @@
                   "children": []
                 }
               ]
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "L2TP",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "OPENVPN",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "PPTP",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "UID",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "WIREGUARD",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
             }
           ]
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "offset",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "totalCount",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
         }
       ]
     }
@@ -192,6 +192,6 @@
       "ansible": "- name: List VPN Servers\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/vpn/servers\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"offset\": 0,\n  \"limit\": 0,\n  \"count\": 0,\n  \"totalCount\": 0,\n  \"data\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"string\",\n      \"enabled\": true,\n      \"metadata\": {\n        \"origin\": \"string\"\n      }\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getvpnserverpage"
+  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"enabled\": true,\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getvpnserverpage"
 }

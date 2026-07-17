@@ -34,14 +34,6 @@
           "selected": true,
           "schema": [
             {
-              "name": "timeLimitMinutes",
-              "required": false,
-              "type": "integer",
-              "description": "(Optional) how long (in minutes) the guest will be authorized to access the network. If not specified, the default limit is used from the site settings",
-              "discriminator": null,
-              "children": []
-            },
-            {
               "name": "dataUsageLimitMBytes",
               "required": false,
               "type": "integer",
@@ -54,6 +46,14 @@
               "required": false,
               "type": "integer",
               "description": "(Optional) download rate limit in kilobits per second",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "timeLimitMinutes",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) how long (in minutes) the guest will be authorized to access the network. If not specified, the default limit is used from the site settings",
               "discriminator": null,
               "children": []
             },
@@ -76,14 +76,6 @@
       "children": []
     },
     {
-      "name": "timeLimitMinutes",
-      "required": false,
-      "type": "integer",
-      "description": "(Optional) how long (in minutes) the guest will be authorized to access the network. If not specified, the default limit is used from the site settings",
-      "discriminator": null,
-      "children": []
-    },
-    {
       "name": "dataUsageLimitMBytes",
       "required": false,
       "type": "integer",
@@ -96,6 +88,14 @@
       "required": false,
       "type": "integer",
       "description": "(Optional) download rate limit in kilobits per second",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "timeLimitMinutes",
+      "required": false,
+      "type": "integer",
+      "description": "(Optional) how long (in minutes) the guest will be authorized to access the network. If not specified, the default limit is used from the site settings",
       "discriminator": null,
       "children": []
     },
@@ -134,20 +134,12 @@
           "children": []
         },
         {
-          "name": "revokedAuthorization",
+          "name": "grantedAuthorization",
           "required": false,
           "type": "object",
-          "description": "(Optional) Revoked authorization in case the guest was already authorized at the time of this request",
+          "description": "Granted guest authorization",
           "discriminator": null,
           "children": [
-            {
-              "name": "authorizedAt",
-              "required": true,
-              "type": "string",
-              "description": "Timestamp when the guest has been authorized",
-              "discriminator": null,
-              "children": []
-            },
             {
               "name": "authorizationMethod",
               "required": true,
@@ -157,10 +149,10 @@
               "children": []
             },
             {
-              "name": "expiresAt",
+              "name": "authorizedAt",
               "required": true,
               "type": "string",
-              "description": "Timestamp when the guest will get automatically unauthorized",
+              "description": "Timestamp when the guest has been authorized",
               "discriminator": null,
               "children": []
             },
@@ -169,6 +161,14 @@
               "required": false,
               "type": "integer",
               "description": "(Optional) data usage limit in megabytes",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "expiresAt",
+              "required": true,
+              "type": "string",
+              "description": "Timestamp when the guest will get automatically unauthorized",
               "discriminator": null,
               "children": []
             },
@@ -196,6 +196,14 @@
               "discriminator": null,
               "children": [
                 {
+                  "name": "bytes",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
                   "name": "durationSec",
                   "required": true,
                   "type": "integer",
@@ -213,14 +221,6 @@
                 },
                 {
                   "name": "txBytes",
-                  "required": true,
-                  "type": "integer",
-                  "description": null,
-                  "discriminator": null,
-                  "children": []
-                },
-                {
-                  "name": "bytes",
                   "required": true,
                   "type": "integer",
                   "description": null,
@@ -232,20 +232,12 @@
           ]
         },
         {
-          "name": "grantedAuthorization",
+          "name": "revokedAuthorization",
           "required": false,
           "type": "object",
-          "description": "Granted guest authorization",
+          "description": "(Optional) Revoked authorization in case the guest was already authorized at the time of this request",
           "discriminator": null,
           "children": [
-            {
-              "name": "authorizedAt",
-              "required": true,
-              "type": "string",
-              "description": "Timestamp when the guest has been authorized",
-              "discriminator": null,
-              "children": []
-            },
             {
               "name": "authorizationMethod",
               "required": true,
@@ -255,10 +247,10 @@
               "children": []
             },
             {
-              "name": "expiresAt",
+              "name": "authorizedAt",
               "required": true,
               "type": "string",
-              "description": "Timestamp when the guest will get automatically unauthorized",
+              "description": "Timestamp when the guest has been authorized",
               "discriminator": null,
               "children": []
             },
@@ -267,6 +259,14 @@
               "required": false,
               "type": "integer",
               "description": "(Optional) data usage limit in megabytes",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "expiresAt",
+              "required": true,
+              "type": "string",
+              "description": "Timestamp when the guest will get automatically unauthorized",
               "discriminator": null,
               "children": []
             },
@@ -294,6 +294,14 @@
               "discriminator": null,
               "children": [
                 {
+                  "name": "bytes",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
                   "name": "durationSec",
                   "required": true,
                   "type": "integer",
@@ -311,14 +319,6 @@
                 },
                 {
                   "name": "txBytes",
-                  "required": true,
-                  "type": "integer",
-                  "description": null,
-                  "discriminator": null,
-                  "children": []
-                },
-                {
-                  "name": "bytes",
                   "required": true,
                   "type": "integer",
                   "description": null,
@@ -349,5 +349,5 @@
     }
   },
   "responseSample": "{\n  \"action\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/executeconnectedclientaction"
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/executeconnectedclientaction"
 }

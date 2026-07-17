@@ -19,7 +19,7 @@
       "name": "name",
       "required": false,
       "type": "string",
-      "description": "The name of the model",
+      "description": "The name of the device.",
       "discriminator": null,
       "children": []
     },
@@ -140,7 +140,7 @@
           "name": "mac",
           "required": true,
           "type": "string",
-          "description": "The MAC address of the device",
+          "description": "The primary MAC address of the device.",
           "discriminator": null,
           "children": []
         },
@@ -278,5 +278,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"lightModeSettings\": {\n    \"mode\": \"string\",\n    \"enableAt\": \"string\"\n  },\n  \"lightDeviceSettings\": {\n    \"isIndicatorEnabled\": true,\n    \"pirDuration\": 0,\n    \"pirSensitivity\": 0,\n    \"ledLevel\": 0\n  },\n  \"isDark\": true,\n  \"isLightOn\": true,\n  \"isLightForceEnabled\": true,\n  \"lastMotion\": null,\n  \"isPirMotionDetected\": true,\n  \"camera\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/patch-v1lightsid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/patch-v1lightsid"
 }

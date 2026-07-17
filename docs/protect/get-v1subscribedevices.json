@@ -1,6 +1,6 @@
 {
   "h1": "Get update messages about devices",
-  "method": "GET",
+  "method": "WS",
   "path": "/v1/subscribe/devices",
   "description": "A WebSocket subscription which broadcasts all changes happening to Protect-managed hardware devices",
   "pathParameters": [],
@@ -78,7 +78,7 @@
                   "name": "defaultMessageText",
                   "required": false,
                   "type": "string",
-                  "description": null,
+                  "description": "Default text to display on the LCD screen.",
                   "discriminator": null,
                   "children": []
                 },
@@ -86,7 +86,7 @@
                   "name": "defaultMessageResetTimeoutMs",
                   "required": false,
                   "type": "number",
-                  "description": null,
+                  "description": "Default timeout for resetting LCD screen to the default message.",
                   "discriminator": null,
                   "children": []
                 },
@@ -94,7 +94,7 @@
                   "name": "customMessages",
                   "required": false,
                   "type": "Array of string",
-                  "description": null,
+                  "description": "A list of custom doorbell messages.",
                   "discriminator": null,
                   "children": []
                 },
@@ -102,7 +102,7 @@
                   "name": "customImages",
                   "required": false,
                   "type": "Array of object",
-                  "description": null,
+                  "description": "A list of custom doorbell images for client preview.",
                   "discriminator": null,
                   "children": [
                     {
@@ -124,6 +124,79 @@
                   ]
                 }
               ]
+            },
+            {
+              "name": "armMode",
+              "required": true,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "status",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "armProfileId",
+                  "required": true,
+                  "type": "stringnull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "armedAt",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "willBeArmedAt",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "breachDetectedAt",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "breachEventCount",
+                  "required": true,
+                  "type": "number",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "breachTriggerEventId",
+                  "required": true,
+                  "type": "stringnull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "breachEventId",
+                  "required": true,
+                  "type": "stringnull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
             }
           ]
         }
@@ -132,20 +205,16 @@
   ],
   "examples": {
     "local": {
-      "curl": "curl -L \"https://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
-      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
-      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/subscribe/devices',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
-      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/protect/integration/v1/subscribe/devices\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
-      "ansible": "- name: Get update messages about devices\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/subscribe/devices\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+      "go": "package main\n\n\nimport (\n\t\"log\"\n\t\"net/http\"\n\n\n\t\"github.com/gorilla/websocket\"\n)\n\n\nfunc main() {\n\theader := http.Header{}\n\theader.Set(\"Accept\", \"application/json\")\n\theader.Set(\"X-API-Key\", \"<X-API-Key>\")\n\n\n\tconn, _, err := websocket.DefaultDialer.Dial(\"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\", header)\n\tif err != nil {\n\t\tlog.Fatal(\"dial:\", err)\n\t}\n\tdefer conn.Close()\n\n\n\tfor {\n\t\t_, message, err := conn.ReadMessage()\n\t\tif err != nil {\n\t\t\tlog.Println(\"read:\", err)\n\t\t\treturn\n\t\t}\n\t\tlog.Printf(\"recv: %s\", message)\n\t}\n}",
+      "nodejs": "const WebSocket = require(\"ws\");\n\n\nconst ws = new WebSocket(\"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\", {\n  headers: {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n  },\n});\n\n\nws.on(\"open\", () => console.log(\"connected\"));\nws.on(\"message\", (data) => console.log(data.toString()));\nws.on(\"close\", () => console.log(\"disconnected\"));\nws.on(\"error\", (err) => console.error(err));",
+      "python": "import asyncio\nimport websockets\n\n\nasync def main():\n    url = \"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\"\n    headers = {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n    }\n    async with websockets.connect(url, additional_headers=headers) as ws:\n        async for message in ws:\n            print(message)\n\n\nasyncio.run(main())"
     },
     "remote": {
-      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/subscribe/devices\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
-      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/subscribe/devices\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
-      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/subscribe/devices',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
-      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/subscribe/devices\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
-      "ansible": "- name: Get update messages about devices\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/subscribe/devices\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+      "go": "package main\n\n\nimport (\n\t\"log\"\n\t\"net/http\"\n\n\n\t\"github.com/gorilla/websocket\"\n)\n\n\nfunc main() {\n\theader := http.Header{}\n\theader.Set(\"Accept\", \"application/json\")\n\theader.Set(\"X-API-Key\", \"<X-API-Key>\")\n\n\n\tconn, _, err := websocket.DefaultDialer.Dial(\"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\", header)\n\tif err != nil {\n\t\tlog.Fatal(\"dial:\", err)\n\t}\n\tdefer conn.Close()\n\n\n\tfor {\n\t\t_, message, err := conn.ReadMessage()\n\t\tif err != nil {\n\t\t\tlog.Println(\"read:\", err)\n\t\t\treturn\n\t\t}\n\t\tlog.Printf(\"recv: %s\", message)\n\t}\n}",
+      "nodejs": "const WebSocket = require(\"ws\");\n\n\nconst ws = new WebSocket(\"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\", {\n  headers: {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n  },\n});\n\n\nws.on(\"open\", () => console.log(\"connected\"));\nws.on(\"message\", (data) => console.log(data.toString()));\nws.on(\"close\", () => console.log(\"disconnected\"));\nws.on(\"error\", (err) => console.error(err));",
+      "python": "import asyncio\nimport websockets\n\n\nasync def main():\n    url = \"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\"\n    headers = {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n    }\n    async with websockets.connect(url, additional_headers=headers) as ws:\n        async for message in ws:\n            print(message)\n\n\nasyncio.run(main())"
     }
   },
-  "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"name\": \"string\",\n    \"doorbellSettings\": {\n      \"defaultMessageText\": \"string\",\n      \"defaultMessageResetTimeoutMs\": 0,\n      \"customMessages\": [\n        \"string\"\n      ],\n      \"customImages\": [\n        {\n          \"preview\": \"string\",\n          \"sprite\": \"string\"\n        }\n      ]\n    }\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1subscribedevices"
+  "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"name\": \"string\",\n    \"doorbellSettings\": {\n      \"defaultMessageText\": \"string\",\n      \"defaultMessageResetTimeoutMs\": 0,\n      \"customMessages\": [\n        \"string\"\n      ],\n      \"customImages\": [\n        {\n          \"preview\": \"string\",\n          \"sprite\": \"string\"\n        }\n      ]\n    },\n    \"armMode\": {\n      \"status\": \"arming\",\n      \"armProfileId\": null,\n      \"armedAt\": null,\n      \"willBeArmedAt\": null,\n      \"breachDetectedAt\": null,\n      \"breachEventCount\": 0,\n      \"breachTriggerEventId\": null,\n      \"breachEventId\": null\n    }\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1subscribedevices"
 }

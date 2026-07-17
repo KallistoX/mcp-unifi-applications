@@ -40,5 +40,5 @@
     }
   },
   "responseSample": "{\n  \"applicationVersion\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getinfo"
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getinfo"
 }

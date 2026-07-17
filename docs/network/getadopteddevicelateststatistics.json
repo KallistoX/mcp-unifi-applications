@@ -30,93 +30,12 @@
       ],
       "fields": [
         {
-          "name": "uptimeSec",
-          "required": false,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "lastHeartbeatAt",
-          "required": false,
-          "type": "string",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "nextHeartbeatAt",
-          "required": false,
-          "type": "string",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "loadAverage1Min",
-          "required": false,
-          "type": "number",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "loadAverage5Min",
-          "required": false,
-          "type": "number",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "loadAverage15Min",
-          "required": false,
-          "type": "number",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
           "name": "cpuUtilizationPct",
           "required": false,
           "type": "number",
           "description": null,
           "discriminator": null,
           "children": []
-        },
-        {
-          "name": "memoryUtilizationPct",
-          "required": false,
-          "type": "number",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "uplink",
-          "required": false,
-          "type": "object",
-          "description": null,
-          "discriminator": null,
-          "children": [
-            {
-              "name": "txRateBps",
-              "required": false,
-              "type": "integer",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "rxRateBps",
-              "required": false,
-              "type": "integer",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            }
-          ]
         },
         {
           "name": "interfaces",
@@ -151,6 +70,87 @@
               ]
             }
           ]
+        },
+        {
+          "name": "lastHeartbeatAt",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "loadAverage15Min",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "loadAverage1Min",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "loadAverage5Min",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "memoryUtilizationPct",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "nextHeartbeatAt",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "uplink",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "rxRateBps",
+              "required": false,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "txRateBps",
+              "required": false,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "uptimeSec",
+          "required": false,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
         }
       ]
     }
@@ -171,6 +171,6 @@
       "ansible": "- name: Get Latest Adopted Device Statistics\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/devices/{deviceId}/statistics/latest\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"uptimeSec\": 0,\n  \"lastHeartbeatAt\": \"2024-01-01T00:00:00Z\",\n  \"nextHeartbeatAt\": \"2024-01-01T00:00:00Z\",\n  \"loadAverage1Min\": 0,\n  \"loadAverage5Min\": 0,\n  \"loadAverage15Min\": 0,\n  \"cpuUtilizationPct\": 0,\n  \"memoryUtilizationPct\": 0,\n  \"uplink\": {\n    \"txRateBps\": 0,\n    \"rxRateBps\": 0\n  },\n  \"interfaces\": {\n    \"radios\": [\n      {\n        \"frequencyGHz\": 0,\n        \"txRetriesPct\": 0\n      }\n    ]\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getadopteddevicelateststatistics"
+  "responseSample": "{\n  \"cpuUtilizationPct\": 0,\n  \"interfaces\": {\n    \"radios\": [\n      {\n        \"frequencyGHz\": 0,\n        \"txRetriesPct\": 0\n      }\n    ]\n  },\n  \"lastHeartbeatAt\": \"2024-01-01T00:00:00Z\",\n  \"loadAverage15Min\": 0,\n  \"loadAverage1Min\": 0,\n  \"loadAverage5Min\": 0,\n  \"memoryUtilizationPct\": 0,\n  \"nextHeartbeatAt\": \"2024-01-01T00:00:00Z\",\n  \"uplink\": {\n    \"rxRateBps\": 0,\n    \"txRateBps\": 0\n  },\n  \"uptimeSec\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getadopteddevicelateststatistics"
 }

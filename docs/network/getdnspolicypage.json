@@ -47,31 +47,7 @@
       ],
       "fields": [
         {
-          "name": "offset",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "limit",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
           "name": "count",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "totalCount",
           "required": true,
           "type": "integer",
           "description": null,
@@ -86,52 +62,8 @@
           "discriminator": null,
           "children": [
             {
-              "name": "type",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": [
-                {
-                  "value": "A_RECORD",
-                  "selected": true,
-                  "schema": null
-                },
-                {
-                  "value": "AAAA_RECORD",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "CNAME_RECORD",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "MX_RECORD",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "TXT_RECORD",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "SRV_RECORD",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "FORWARD_DOMAIN",
-                  "selected": false,
-                  "schema": null
-                }
-              ],
-              "children": []
-            },
-            {
-              "name": "id",
-              "required": true,
+              "name": "domain",
+              "required": false,
               "type": "string",
               "description": null,
               "discriminator": null,
@@ -141,6 +73,14 @@
               "name": "enabled",
               "required": true,
               "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "id",
+              "required": true,
+              "type": "string",
               "description": null,
               "discriminator": null,
               "children": []
@@ -159,7 +99,74 @@
                   "description": null,
                   "discriminator": [
                     {
+                      "value": "DERIVED",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "ORCHESTRATED",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "SYSTEM_DEFINED",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
                       "value": "USER_DEFINED",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "origin",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "SYSTEM_DEFINED",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "USER_DEFINED",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "origin",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "DERIVED",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "USER_DEFINED",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "origin",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "ORCHESTRATED",
                       "selected": true,
                       "schema": null
                     },
@@ -169,12 +176,26 @@
                       "schema": null
                     },
                     {
-                      "value": "DERIVED",
+                      "value": "USER_DEFINED",
                       "selected": false,
                       "schema": null
-                    },
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "origin",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
                     {
                       "value": "ORCHESTRATED",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "USER_DEFINED",
                       "selected": false,
                       "schema": null
                     }
@@ -187,70 +208,8 @@
                   "type": "string",
                   "description": null,
                   "discriminator": [
-                    {
-                      "value": "USER_DEFINED",
-                      "selected": true,
-                      "schema": null
-                    },
-                    {
-                      "value": "SYSTEM_DEFINED",
-                      "selected": false,
-                      "schema": null
-                    }
-                  ],
-                  "children": []
-                },
-                {
-                  "name": "origin",
-                  "required": true,
-                  "type": "string",
-                  "description": null,
-                  "discriminator": [
-                    {
-                      "value": "USER_DEFINED",
-                      "selected": true,
-                      "schema": null
-                    },
                     {
                       "value": "DERIVED",
-                      "selected": false,
-                      "schema": null
-                    }
-                  ],
-                  "children": []
-                },
-                {
-                  "name": "origin",
-                  "required": true,
-                  "type": "string",
-                  "description": null,
-                  "discriminator": [
-                    {
-                      "value": "USER_DEFINED",
-                      "selected": true,
-                      "schema": null
-                    },
-                    {
-                      "value": "SYSTEM_DEFINED",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "ORCHESTRATED",
-                      "selected": false,
-                      "schema": null
-                    }
-                  ],
-                  "children": []
-                },
-                {
-                  "name": "origin",
-                  "required": true,
-                  "type": "string",
-                  "description": null,
-                  "discriminator": [
-                    {
-                      "value": "USER_DEFINED",
                       "selected": true,
                       "schema": null
                     },
@@ -258,28 +217,9 @@
                       "value": "ORCHESTRATED",
                       "selected": false,
                       "schema": null
-                    }
-                  ],
-                  "children": []
-                },
-                {
-                  "name": "origin",
-                  "required": true,
-                  "type": "string",
-                  "description": null,
-                  "discriminator": [
+                    },
                     {
                       "value": "USER_DEFINED",
-                      "selected": true,
-                      "schema": null
-                    },
-                    {
-                      "value": "DERIVED",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "ORCHESTRATED",
                       "selected": false,
                       "schema": null
                     }
@@ -293,30 +233,74 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "USER_DEFINED",
+                      "value": "DERIVED",
                       "selected": true,
                       "schema": null
                     },
                     {
-                      "value": "DERIVED",
+                      "value": "USER_DEFINED",
                       "selected": false,
                       "schema": null
                     }
                   ],
+                  "children": []
+                },
+                {
+                  "name": "source",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
                   "children": []
                 }
               ]
             },
             {
-              "name": "domain",
-              "required": false,
+              "name": "type",
+              "required": true,
               "type": "string",
               "description": null,
-              "discriminator": null,
+              "discriminator": [
+                {
+                  "value": "AAAA_RECORD",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "A_RECORD",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "CNAME_RECORD",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "FORWARD_DOMAIN",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "MX_RECORD",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "SRV_RECORD",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "TXT_RECORD",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
               "children": []
             },
             {
-              "name": "ipv4Address",
+              "name": "ipv6Address",
               "required": false,
               "type": "string",
               "description": null,
@@ -332,6 +316,30 @@
               "children": []
             }
           ]
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "offset",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "totalCount",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
         }
       ]
     }
@@ -352,6 +360,6 @@
       "ansible": "- name: List DNS Policies\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/dns/policies\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"offset\": 0,\n  \"limit\": 0,\n  \"count\": 0,\n  \"totalCount\": 0,\n  \"data\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"enabled\": true,\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"domain\": \"string\"\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getdnspolicypage"
+  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"domain\": \"string\",\n      \"enabled\": true,\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"type\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getdnspolicypage"
 }

@@ -73,5 +73,5 @@
     }
   },
   "responseSample": "{\n  \"high\": null,\n  \"medium\": null,\n  \"low\": null,\n  \"package\": null\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1camerasidrtsps-stream"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1camerasidrtsps-stream"
 }

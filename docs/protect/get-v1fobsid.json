@@ -1,0 +1,185 @@
+{
+  "h1": "Get fob details",
+  "method": "GET",
+  "path": "/v1/fobs/{id}",
+  "description": "Get detailed information about a specific fob",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "The primary key of fob",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of fob",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the fob",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": "Connection state of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mac",
+          "required": true,
+          "type": "string",
+          "description": "The primary MAC address of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "awayState",
+          "required": true,
+          "type": "string",
+          "description": "Fob presence/away state.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "buttonLabels",
+          "required": true,
+          "type": "string",
+          "description": "Label style applied when this fob is rendered in button selection lists.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "featureFlags",
+          "required": true,
+          "type": "object",
+          "description": "Feature flags for the fob.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "buttons",
+              "required": true,
+              "type": "Array of string",
+              "description": "Available button types on the fob.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "wirelessConnectionState",
+          "required": true,
+          "type": "object",
+          "description": "Wireless connection state including signal quality, battery status, and bridge connection.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "signalState",
+              "required": true,
+              "type": "object",
+              "description": "Signal state.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "signalQuality",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": "Percent representation of Bluetooth signal strength.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "signalStrength",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": "dBm value of Bluetooth signal strength.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "batteryStatus",
+              "required": true,
+              "type": "object",
+              "description": "Battery status.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "percentage",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": "Battery charge level from 0 to 100 (%).",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "isLow",
+                  "required": true,
+                  "type": "boolean",
+                  "description": "Low battery charge level flag.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "bridge",
+              "required": true,
+              "type": "object (wirelessBridgeId)",
+              "description": "The ID of the bridge this device is connected through.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/protect/integration/v1/fobs/{id}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/fobs/{id}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/fobs/{id}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/protect/integration/v1/fobs/{id}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get fob details\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/fobs/{id}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/fobs/{id}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/fobs/{id}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/fobs/{id}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/fobs/{id}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get fob details\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/fobs/{id}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"awayState\": \"ONLINE\",\n  \"buttonLabels\": \"securityActions\",\n  \"featureFlags\": {\n    \"buttons\": [\n      \"function\"\n    ]\n  },\n  \"wirelessConnectionState\": {\n    \"signalState\": {\n      \"signalQuality\": null,\n      \"signalStrength\": null\n    },\n    \"batteryStatus\": {\n      \"percentage\": null,\n      \"isLow\": true\n    },\n    \"bridge\": \"string\"\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1fobsid"
+}

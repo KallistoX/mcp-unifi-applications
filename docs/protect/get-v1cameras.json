@@ -11,7 +11,309 @@
       "statuses": [
         "200"
       ],
-      "fields": []
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of camera",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the camera",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": "Connection state of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mac",
+          "required": true,
+          "type": "string",
+          "description": "The primary MAC address of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "isMicEnabled",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether or not the microphone on camera is enabled",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "osdSettings",
+          "required": true,
+          "type": "object",
+          "description": "On Screen Display settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isNameEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether to show the name in the OSD.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isDateEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether to show the date in the OSD.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isLogoEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether to show the logo in the bottom right corner.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isDebugEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether debug info is enabled.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "overlayLocation",
+              "required": true,
+              "type": "string",
+              "description": "The location of the overlay on the screen.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "ledSettings",
+          "required": true,
+          "type": "object",
+          "description": "LED settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Indicates whether the status LED is enabled.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "welcomeLed",
+              "required": true,
+              "type": "boolean",
+              "description": "Indicates whether the welcome LED is enabled.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "floodLed",
+              "required": true,
+              "type": "boolean",
+              "description": "Indicates whether the flood LED is enabled.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "lcdMessage",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "type",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "resetAt",
+              "required": false,
+              "type": "numbernull",
+              "description": "UNIX timestamp when doorbell message should be removed (if not set then `nvr.doorbellSettings.defaultMessageResetTimeoutMs` is used, if set to `null` then interpreted as \"forever\")",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "text",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "micVolume",
+          "required": true,
+          "type": "number",
+          "description": "Mic volume: a number from 0-100.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "activePatrolSlot",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "videoMode",
+          "required": true,
+          "type": "string",
+          "description": "Current video mode of the camera",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "hdrType",
+          "required": true,
+          "type": "string",
+          "description": "High Dynamic Range (HDR) mode setting.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "featureFlags",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "supportFullHdSnapshot",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether camera support full HD or higher resolution snapshot",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasHdr",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the camera supports High Dynamic Range mode",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "smartDetectTypes",
+              "required": true,
+              "type": "Array of string",
+              "description": "What smart detection object types do the camera support.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "smartDetectAudioTypes",
+              "required": true,
+              "type": "Array of string",
+              "description": "What smart detection audio types do the camera support.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "videoModes",
+              "required": true,
+              "type": "Array of string",
+              "description": "A list of supported video modes by the camera",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasMic",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the camera has a microphone",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasLedStatus",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the camera has LED status",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasSpeaker",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the camera has a speaker to support talkback",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "smartDetectSettings",
+          "required": true,
+          "type": "object",
+          "description": "Smart detection settings for the camera.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "objectTypes",
+              "required": true,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "audioTypes",
+              "required": true,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "hasPackageCamera",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether the camera has a package camera.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
     }
   ],
   "examples": {
@@ -31,5 +333,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1cameras"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1cameras"
 }

@@ -46,7 +46,7 @@
           "discriminator": null,
           "children": [
             {
-              "name": "beforeSystemDefined",
+              "name": "afterSystemDefined",
               "required": true,
               "type": "Array of string",
               "description": null,
@@ -54,7 +54,7 @@
               "children": []
             },
             {
-              "name": "afterSystemDefined",
+              "name": "beforeSystemDefined",
               "required": true,
               "type": "Array of string",
               "description": null,
@@ -82,6 +82,6 @@
       "ansible": "- name: Get User-Defined Firewall Policy Ordering\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/firewall/policies/ordering\"\n    method: GET\n    query:\n      sourceFirewallZoneId: \"{sourceFirewallZoneId}\"\n      destinationFirewallZoneId: \"{destinationFirewallZoneId}\"\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"orderedFirewallPolicyIds\": {\n    \"beforeSystemDefined\": [\n      \"00000000-0000-0000-0000-000000000000\"\n    ],\n    \"afterSystemDefined\": [\n      \"00000000-0000-0000-0000-000000000000\"\n    ]\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getfirewallpolicyordering"
+  "responseSample": "{\n  \"orderedFirewallPolicyIds\": {\n    \"afterSystemDefined\": [\n      \"00000000-0000-0000-0000-000000000000\"\n    ],\n    \"beforeSystemDefined\": [\n      \"00000000-0000-0000-0000-000000000000\"\n    ]\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getfirewallpolicyordering"
 }

@@ -1,0 +1,192 @@
+{
+  "h1": "Update arm profile",
+  "method": "PATCH",
+  "path": "/v1/arm-profiles/{id}",
+  "description": "Update an existing arm profile. Only available when using local alarm manager.",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "The primary key of armProfile",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "name",
+      "required": false,
+      "type": "string",
+      "description": "Name of the arm profile.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "automations",
+      "required": false,
+      "type": "Array of string",
+      "description": "List of automation IDs associated with this arm profile.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "schedules",
+      "required": false,
+      "type": "Array of object (armSchedule)",
+      "description": "List of arm schedules.",
+      "discriminator": null,
+      "children": [
+        {
+          "name": "start",
+          "required": true,
+          "type": "string",
+          "description": "Cron expression for the start time.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "end",
+          "required": true,
+          "type": "string",
+          "description": "Cron expression for the end time.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "recordEverything",
+      "required": false,
+      "type": "boolean",
+      "description": "Whether to record everything when this arm profile is active.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "activationDelay",
+      "required": false,
+      "type": "object (activationDelay)",
+      "description": "Activation delay in milliseconds. Allowed values: 0 (none), 60000 (1 min), 300000 (5 min), 600000 (10 min).",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of armProfile",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": "Name of the arm profile.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "automations",
+          "required": true,
+          "type": "Array of string",
+          "description": "List of automation IDs associated with this arm profile.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "creator",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "schedules",
+          "required": true,
+          "type": "Array of object (armSchedule)",
+          "description": "List of arm schedules.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "start",
+              "required": true,
+              "type": "string",
+              "description": "Cron expression for the start time.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "end",
+              "required": true,
+              "type": "string",
+              "description": "Cron expression for the end time.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "recordEverything",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether to record everything when this arm profile is active.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "activationDelay",
+          "required": true,
+          "type": "object (activationDelay)",
+          "description": "Activation delay in milliseconds. Allowed values: 0 (none), 60000 (1 min), 300000 (5 min), 600000 (10 min).",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "createdAt",
+          "required": true,
+          "type": "number",
+          "description": "Arm profile creation time.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "updatedAt",
+          "required": true,
+          "type": "number",
+          "description": "Arm profile update time.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g -X PATCH \"https://192.168.0.1/proxy/protect/integration/v1/arm-profiles/{id}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"name\\\": \\\"string\\\",\n  \\\"automations\\\": [\n    \\\"string\\\"\n  ],\n  \\\"schedules\\\": [\n    {\n      \\\"start\\\": \\\"string\\\",\n      \\\"end\\\": \\\"string\\\"\n    }\n  ],\n  \\\"recordEverything\\\": true,\n  \\\"activationDelay\\\": 0\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/arm-profiles/{id}\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"name\": \"string\",\n  \"automations\": [\n    \"string\"\n  ],\n  \"schedules\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\"\n    }\n  ],\n  \"recordEverything\": true,\n  \"activationDelay\": 0\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"name\": \"string\",\n  \"automations\": [\n    \"string\"\n  ],\n  \"schedules\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\"\n    }\n  ],\n  \"recordEverything\": true,\n  \"activationDelay\": 0\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/arm-profiles/{id}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"name\": \"string\",\n  \"automations\": [\n    \"string\"\n  ],\n  \"schedules\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\"\n    }\n  ],\n  \"recordEverything\": True,\n  \"activationDelay\": 0\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/proxy/protect/integration/v1/arm-profiles/{id}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Update arm profile\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/arm-profiles/{id}\"\n    method: PATCH\n    body:\n      name: string\n      automations:\n        - string\n      schedules:\n        - start: string\n          end: string\n      recordEverything: true\n      activationDelay: 0\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g -X PATCH \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/arm-profiles/{id}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"name\\\": \\\"string\\\",\n  \\\"automations\\\": [\n    \\\"string\\\"\n  ],\n  \\\"schedules\\\": [\n    {\n      \\\"start\\\": \\\"string\\\",\n      \\\"end\\\": \\\"string\\\"\n    }\n  ],\n  \\\"recordEverything\\\": true,\n  \\\"activationDelay\\\": 0\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/arm-profiles/{id}\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"name\": \"string\",\n  \"automations\": [\n    \"string\"\n  ],\n  \"schedules\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\"\n    }\n  ],\n  \"recordEverything\": true,\n  \"activationDelay\": 0\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"name\": \"string\",\n  \"automations\": [\n    \"string\"\n  ],\n  \"schedules\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\"\n    }\n  ],\n  \"recordEverything\": true,\n  \"activationDelay\": 0\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/arm-profiles/{id}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"name\": \"string\",\n  \"automations\": [\n    \"string\"\n  ],\n  \"schedules\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\"\n    }\n  ],\n  \"recordEverything\": True,\n  \"activationDelay\": 0\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/arm-profiles/{id}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Update arm profile\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/arm-profiles/{id}\"\n    method: PATCH\n    body:\n      name: string\n      automations:\n        - string\n      schedules:\n        - start: string\n          end: string\n      recordEverything: true\n      activationDelay: 0\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"automations\": [\n    \"string\"\n  ],\n  \"creator\": \"string\",\n  \"schedules\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\"\n    }\n  ],\n  \"recordEverything\": true,\n  \"activationDelay\": 0,\n  \"createdAt\": 0,\n  \"updatedAt\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/patch-v1arm-profilesid"
+}

@@ -47,31 +47,7 @@
       ],
       "fields": [
         {
-          "name": "offset",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "limit",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
           "name": "count",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "totalCount",
           "required": true,
           "type": "integer",
           "description": null,
@@ -94,14 +70,6 @@
               "children": []
             },
             {
-              "name": "name",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
               "name": "metadata",
               "required": true,
               "type": "object (User or system defined or derived entity metadata)",
@@ -115,7 +83,7 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "USER_DEFINED",
+                      "value": "DERIVED",
                       "selected": true,
                       "schema": null
                     },
@@ -125,7 +93,7 @@
                       "schema": null
                     },
                     {
-                      "value": "DERIVED",
+                      "value": "USER_DEFINED",
                       "selected": false,
                       "schema": null
                     }
@@ -133,8 +101,40 @@
                   "children": []
                 }
               ]
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
             }
           ]
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "offset",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "totalCount",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
         }
       ]
     }
@@ -155,6 +155,6 @@
       "ansible": "- name: List Radius Profiles\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/radius/profiles\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"offset\": 0,\n  \"limit\": 0,\n  \"count\": 0,\n  \"totalCount\": 0,\n  \"data\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"string\",\n      \"metadata\": {\n        \"origin\": \"string\"\n      }\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getradiusprofileoverviewpage"
+  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"name\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getradiusprofileoverviewpage"
 }

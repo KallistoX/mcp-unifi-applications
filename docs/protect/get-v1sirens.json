@@ -1,0 +1,209 @@
+{
+  "h1": "Get all sirens",
+  "method": "GET",
+  "path": "/v1/sirens",
+  "description": "Get detailed information about all sirens",
+  "pathParameters": [],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of siren",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the siren",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": "Connection state of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mac",
+          "required": true,
+          "type": "string",
+          "description": "The primary MAC address of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "volume",
+          "required": true,
+          "type": "integer",
+          "description": "Volume: a number from 1-100.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "ledSettings",
+          "required": true,
+          "type": "object",
+          "description": "Status LED settings.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Enable status LED.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "sirenStatus",
+          "required": true,
+          "type": "object",
+          "description": "Status of the siren",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "isActive",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the siren is active.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "activatedAt",
+              "required": true,
+              "type": "numbernull",
+              "description": "Timestamp when the siren was activated.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "duration",
+              "required": true,
+              "type": "object (sirenStatusDuration)",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "connectionType",
+          "required": true,
+          "type": "string",
+          "description": "The connection type of the siren.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "wirelessConnectionState",
+          "required": true,
+          "type": "object",
+          "description": "Wireless connection state including signal quality, battery status, and bridge connection.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "signalState",
+              "required": true,
+              "type": "object",
+              "description": "Signal state.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "signalQuality",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": "Percent representation of Bluetooth signal strength.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "signalStrength",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": "dBm value of Bluetooth signal strength.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "batteryStatus",
+              "required": true,
+              "type": "object",
+              "description": "Battery status.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "percentage",
+                  "required": true,
+                  "type": "numbernull",
+                  "description": "Battery charge level from 0 to 100 (%).",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "isLow",
+                  "required": true,
+                  "type": "boolean",
+                  "description": "Low battery charge level flag.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "bridge",
+              "required": true,
+              "type": "object (wirelessBridgeId)",
+              "description": "The ID of the bridge this device is connected through.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L \"https://192.168.0.1/proxy/protect/integration/v1/sirens\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/sirens\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/sirens',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/protect/integration/v1/sirens\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get all sirens\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/sirens\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/sirens\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/sirens\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/sirens',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/sirens\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get all sirens\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/sirens\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1sirens"
+}

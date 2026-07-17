@@ -73,5 +73,5 @@
     }
   },
   "responseSample": "{\n  \"url\": \"https://example.com\",\n  \"codec\": \"string\",\n  \"samplingRate\": 0,\n  \"bitsPerSample\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/post-v1camerasidtalkback-session"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/post-v1camerasidtalkback-session"
 }

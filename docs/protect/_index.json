@@ -100,6 +100,41 @@
     "file": "post-v1alarm-managerwebhookid.json"
   },
   {
+    "slug": "get-v1arm-profiles",
+    "title": "Get all arm profiles",
+    "file": "get-v1arm-profiles.json"
+  },
+  {
+    "slug": "post-v1arm-profiles",
+    "title": "Create arm profile",
+    "file": "post-v1arm-profiles.json"
+  },
+  {
+    "slug": "patch-v1arm-profilessettings",
+    "title": "Set current arm profile",
+    "file": "patch-v1arm-profilessettings.json"
+  },
+  {
+    "slug": "patch-v1arm-profilesid",
+    "title": "Update arm profile",
+    "file": "patch-v1arm-profilesid.json"
+  },
+  {
+    "slug": "delete-v1arm-profilesid",
+    "title": "Delete arm profile",
+    "file": "delete-v1arm-profilesid.json"
+  },
+  {
+    "slug": "post-v1arm-profilesenable",
+    "title": "Enable arm alarm",
+    "file": "post-v1arm-profilesenable.json"
+  },
+  {
+    "slug": "post-v1arm-profilesdisable",
+    "title": "Disable arm alarm",
+    "file": "post-v1arm-profilesdisable.json"
+  },
+  {
     "slug": "get-v1lightsid",
     "title": "Get light details",
     "file": "get-v1lightsid.json"
@@ -175,6 +210,141 @@
     "file": "get-v1sensors.json"
   },
   {
+    "slug": "get-v1sirensid",
+    "title": "Get siren details",
+    "file": "get-v1sirensid.json"
+  },
+  {
+    "slug": "patch-v1sirensid",
+    "title": "Patch siren settings",
+    "file": "patch-v1sirensid.json"
+  },
+  {
+    "slug": "get-v1sirens",
+    "title": "Get all sirens",
+    "file": "get-v1sirens.json"
+  },
+  {
+    "slug": "post-v1sirensidplay",
+    "title": "Play siren",
+    "file": "post-v1sirensidplay.json"
+  },
+  {
+    "slug": "post-v1sirensidstop",
+    "title": "Stop siren",
+    "file": "post-v1sirensidstop.json"
+  },
+  {
+    "slug": "post-v1sirensidtest-sound",
+    "title": "Test siren sound",
+    "file": "post-v1sirensidtest-sound.json"
+  },
+  {
+    "slug": "get-v1fobsid",
+    "title": "Get fob details",
+    "file": "get-v1fobsid.json"
+  },
+  {
+    "slug": "patch-v1fobsid",
+    "title": "Patch fob settings",
+    "file": "patch-v1fobsid.json"
+  },
+  {
+    "slug": "get-v1fobs",
+    "title": "Get all fobs",
+    "file": "get-v1fobs.json"
+  },
+  {
+    "slug": "get-v1relaysid",
+    "title": "Get relay details",
+    "file": "get-v1relaysid.json"
+  },
+  {
+    "slug": "patch-v1relaysid",
+    "title": "Patch relay settings",
+    "file": "patch-v1relaysid.json"
+  },
+  {
+    "slug": "get-v1relays",
+    "title": "Get all relays",
+    "file": "get-v1relays.json"
+  },
+  {
+    "slug": "post-v1relaysidoutputsoutputidactivate",
+    "title": "Activate relay output",
+    "file": "post-v1relaysidoutputsoutputidactivate.json"
+  },
+  {
+    "slug": "get-v1speakersid",
+    "title": "Get speaker details",
+    "file": "get-v1speakersid.json"
+  },
+  {
+    "slug": "patch-v1speakersid",
+    "title": "Patch speaker settings",
+    "file": "patch-v1speakersid.json"
+  },
+  {
+    "slug": "get-v1speakers",
+    "title": "Get all speakers",
+    "file": "get-v1speakers.json"
+  },
+  {
+    "slug": "post-v1speakersidtest-sound",
+    "title": "Test speaker sound",
+    "file": "post-v1speakersidtest-sound.json"
+  },
+  {
+    "slug": "get-v1bridgesid",
+    "title": "Get bridge details",
+    "file": "get-v1bridgesid.json"
+  },
+  {
+    "slug": "patch-v1bridgesid",
+    "title": "Patch bridge settings",
+    "file": "patch-v1bridgesid.json"
+  },
+  {
+    "slug": "get-v1bridges",
+    "title": "Get all bridges",
+    "file": "get-v1bridges.json"
+  },
+  {
+    "slug": "get-v1link-stationsid",
+    "title": "Get link station details",
+    "file": "get-v1link-stationsid.json"
+  },
+  {
+    "slug": "patch-v1link-stationsid",
+    "title": "Patch link station settings",
+    "file": "patch-v1link-stationsid.json"
+  },
+  {
+    "slug": "get-v1link-stations",
+    "title": "Get all link stations",
+    "file": "get-v1link-stations.json"
+  },
+  {
+    "slug": "get-v1alarm-hubsid",
+    "title": "Get alarm hub details",
+    "file": "get-v1alarm-hubsid.json"
+  },
+  {
+    "slug": "patch-v1alarm-hubsid",
+    "title": "Patch alarm hub settings",
+    "file": "patch-v1alarm-hubsid.json"
+  },
+  {
+    "slug": "get-v1alarm-hubs",
+    "title": "Get all alarm hubs",
+    "file": "get-v1alarm-hubs.json"
+  },
+  {
+    "slug": "post-v1alarm-hubsidoutputsoutputidtrigger",
+    "title": "Trigger alarm hub output",
+    "file": "post-v1alarm-hubsidoutputsoutputidtrigger.json"
+  },
+  {
     "slug": "get-v1nvrs",
     "title": "Get NVR details",
     "file": "get-v1nvrs.json"
@@ -203,6 +373,26 @@
     "slug": "get-v1chimes",
     "title": "Get all chimes",
     "file": "get-v1chimes.json"
+  },
+  {
+    "slug": "get-v1usersid",
+    "title": "Get user details",
+    "file": "get-v1usersid.json"
+  },
+  {
+    "slug": "get-v1users",
+    "title": "Get all users",
+    "file": "get-v1users.json"
+  },
+  {
+    "slug": "get-v1ulp-usersid",
+    "title": "Get identity user details",
+    "file": "get-v1ulp-usersid.json"
+  },
+  {
+    "slug": "get-v1ulp-users",
+    "title": "Get all identity users",
+    "file": "get-v1ulp-users.json"
   },
   {
     "slug": "quick_start.ansible",

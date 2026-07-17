@@ -38,6 +38,34 @@
           "children": []
         },
         {
+          "name": "metadata",
+          "required": true,
+          "type": "object (User or system defined entity metadata)",
+          "description": "System-defined configurable zones support configuring only attached networks",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "SYSTEM_DEFINED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "USER_DEFINED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
           "name": "name",
           "required": true,
           "type": "string",
@@ -52,34 +80,6 @@
           "description": "List of Network IDs",
           "discriminator": null,
           "children": []
-        },
-        {
-          "name": "metadata",
-          "required": true,
-          "type": "object (User or system defined entity metadata)",
-          "description": "System-defined configurable zones support configuring only attached networks",
-          "discriminator": null,
-          "children": [
-            {
-              "name": "origin",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": [
-                {
-                  "value": "USER_DEFINED",
-                  "selected": true,
-                  "schema": null
-                },
-                {
-                  "value": "SYSTEM_DEFINED",
-                  "selected": false,
-                  "schema": null
-                }
-              ],
-              "children": []
-            }
-          ]
         }
       ]
     }
@@ -100,6 +100,6 @@
       "ansible": "- name: Get Firewall Zone\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/firewall/zones/{firewallZoneId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\",\n  \"networkIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ],\n  \"metadata\": {\n    \"origin\": \"string\"\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getfirewallzone"
+  "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"name\": \"string\",\n  \"networkIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getfirewallzone"
 }

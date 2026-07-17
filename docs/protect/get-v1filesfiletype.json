@@ -20,7 +20,40 @@
       "statuses": [
         "200"
       ],
-      "fields": []
+      "fields": [
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": "Unique ID for the asset file",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "type",
+          "required": true,
+          "type": "string",
+          "description": "Device asset file type",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "originalName",
+          "required": false,
+          "type": "string",
+          "description": "Original filename of the uploaded file",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "path",
+          "required": true,
+          "type": "string",
+          "description": "Path to the file on the filesystem",
+          "discriminator": null,
+          "children": []
+        }
+      ]
     }
   ],
   "examples": {
@@ -40,5 +73,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1filesfiletype"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1filesfiletype"
 }

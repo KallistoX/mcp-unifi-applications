@@ -37,14 +37,6 @@
           "discriminator": null,
           "children": [
             {
-              "name": "resourceType",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
               "name": "referenceCount",
               "required": true,
               "type": "integer",
@@ -68,6 +60,14 @@
                   "children": []
                 }
               ]
+            },
+            {
+              "name": "resourceType",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
             }
           ]
         }
@@ -90,6 +90,6 @@
       "ansible": "- name: Get Network References\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/networks/{networkId}/references\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"referenceResources\": [\n    {\n      \"resourceType\": \"CLIENT\",\n      \"referenceCount\": 0,\n      \"references\": [\n        {\n          \"referenceId\": \"00000000-0000-0000-0000-000000000000\"\n        }\n      ]\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getnetworkreferences"
+  "responseSample": "{\n  \"referenceResources\": [\n    {\n      \"referenceCount\": 0,\n      \"references\": [\n        {\n          \"referenceId\": \"00000000-0000-0000-0000-000000000000\"\n        }\n      ],\n      \"resourceType\": \"CLIENT\"\n    }\n  ]\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getnetworkreferences"
 }

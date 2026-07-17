@@ -1,0 +1,44 @@
+{
+  "h1": "Set current arm profile",
+  "method": "PATCH",
+  "path": "/v1/arm-profiles/settings",
+  "description": "Set the current arm profile to be used when enabling the arm alarm. Only available when using local alarm manager.",
+  "pathParameters": [],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "armProfileId",
+      "required": true,
+      "type": "string",
+      "description": "The primary key of armProfile",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "204"
+      ],
+      "fields": []
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -X PATCH \"https://192.168.0.1/proxy/protect/integration/v1/arm-profiles/settings\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"armProfileId\\\": \\\"string\\\"\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/arm-profiles/settings\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"armProfileId\": \"string\"\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"armProfileId\": \"string\"\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/arm-profiles/settings',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"armProfileId\": \"string\"\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/proxy/protect/integration/v1/arm-profiles/settings\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Set current arm profile\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/arm-profiles/settings\"\n    method: PATCH\n    body:\n      armProfileId: string\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g -X PATCH \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/arm-profiles/settings\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"armProfileId\\\": \\\"string\\\"\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/arm-profiles/settings\"\n  method := \"PATCH\"\n\n\n  payload := strings.NewReader(`{\n  \"armProfileId\": \"string\"\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"armProfileId\": \"string\"\n});\n\n\nlet config = {\n  method: 'patch',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/arm-profiles/settings',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"armProfileId\": \"string\"\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PATCH\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/arm-profiles/settings\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Set current arm profile\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/arm-profiles/settings\"\n    method: PATCH\n    body:\n      armProfileId: string\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/patch-v1arm-profilessettings"
+}

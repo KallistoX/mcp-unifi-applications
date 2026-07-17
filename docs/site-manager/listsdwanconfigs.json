@@ -2,7 +2,7 @@
   "h1": "List SD-WAN Configs",
   "method": "GET",
   "path": "/v1/sd-wan-configs",
-  "description": "Retrieves a list of all SD-WAN configurations associated with the UI account making the API call.",
+  "description": "Retrieves a list of all hub-and-spoke SD-WAN configurations associated with the UI account making the API call.",
   "pathParameters": [],
   "queryParameters": [],
   "requestBody": [],

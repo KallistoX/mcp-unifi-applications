@@ -18,7 +18,7 @@
       "name": "qualities",
       "required": true,
       "type": "string",
-      "description": "The array of quality levels for the RTSPS streams to be removed.",
+      "description": "The array of quality levels for the RTSPS streams to be removed. All qualities (high, medium, low) are available for all cameras. The package quality is only available for cameras with hasPackageCamera: true.",
       "discriminator": null,
       "children": []
     }
@@ -49,5 +49,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/delete-v1camerasidrtsps-stream"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/delete-v1camerasidrtsps-stream"
 }

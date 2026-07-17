@@ -24,13 +24,21 @@
   "queryParameters": [],
   "requestBody": [
     {
+      "name": "enabled",
+      "required": true,
+      "type": "boolean",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
       "name": "type",
       "required": true,
       "type": "string",
       "description": null,
       "discriminator": [
         {
-          "value": "A_RECORD",
+          "value": "AAAA_RECORD",
           "selected": true,
           "schema": [
             {
@@ -50,7 +58,7 @@
               "children": []
             },
             {
-              "name": "ipv4Address",
+              "name": "ipv6Address",
               "required": false,
               "type": "string",
               "description": null,
@@ -68,7 +76,7 @@
           ]
         },
         {
-          "value": "AAAA_RECORD",
+          "value": "A_RECORD",
           "selected": false,
           "schema": [
             {
@@ -88,7 +96,7 @@
               "children": []
             },
             {
-              "name": "ipv6Address",
+              "name": "ipv4Address",
               "required": false,
               "type": "string",
               "description": null,
@@ -144,6 +152,36 @@
           ]
         },
         {
+          "value": "FORWARD_DOMAIN",
+          "selected": false,
+          "schema": [
+            {
+              "name": "enabled",
+              "required": true,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "domain",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "ipAddress",
+              "required": false,
+              "type": "string",
+              "description": "IP address of the DNS Server that the DNS query is forwarded to.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
           "value": "MX_RECORD",
           "selected": false,
           "schema": [
@@ -182,6 +220,76 @@
           ]
         },
         {
+          "value": "SRV_RECORD",
+          "selected": false,
+          "schema": [
+            {
+              "name": "enabled",
+              "required": true,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "domain",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "port",
+              "required": false,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "priority",
+              "required": false,
+              "type": "integer",
+              "description": "Priority. A lower number is preferred.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "protocol",
+              "required": false,
+              "type": "string",
+              "description": "Protocol used by the service.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "serverDomain",
+              "required": false,
+              "type": "string",
+              "description": "Domain of the server that is running the service.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "service",
+              "required": false,
+              "type": "string",
+              "description": "Service associated with this SRV record.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "weight",
+              "required": false,
+              "type": "integer",
+              "description": "Weight. A relative value applicable for records with the same priority. A lower number is preferred.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
           "value": "TXT_RECORD",
           "selected": false,
           "schema": [
@@ -210,116 +318,8 @@
               "children": []
             }
           ]
-        },
-        {
-          "value": "SRV_RECORD",
-          "selected": false,
-          "schema": [
-            {
-              "name": "enabled",
-              "required": true,
-              "type": "boolean",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "domain",
-              "required": false,
-              "type": "string",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "serverDomain",
-              "required": false,
-              "type": "string",
-              "description": "Domain of the server that is running the service.",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "service",
-              "required": false,
-              "type": "string",
-              "description": "Service associated with this SRV record.",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "protocol",
-              "required": false,
-              "type": "string",
-              "description": "Protocol used by the service.",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "port",
-              "required": false,
-              "type": "integer",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "priority",
-              "required": false,
-              "type": "integer",
-              "description": "Priority. A lower number is preferred.",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "weight",
-              "required": false,
-              "type": "integer",
-              "description": "Weight. A relative value applicable for records with the same priority. A lower number is preferred.",
-              "discriminator": null,
-              "children": []
-            }
-          ]
-        },
-        {
-          "value": "FORWARD_DOMAIN",
-          "selected": false,
-          "schema": [
-            {
-              "name": "enabled",
-              "required": true,
-              "type": "boolean",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "domain",
-              "required": false,
-              "type": "string",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "ipAddress",
-              "required": false,
-              "type": "string",
-              "description": "IP address of the DNS Server that the DNS query is forwarded to.",
-              "discriminator": null,
-              "children": []
-            }
-          ]
         }
       ],
-      "children": []
-    },
-    {
-      "name": "enabled",
-      "required": true,
-      "type": "boolean",
-      "description": null,
-      "discriminator": null,
       "children": []
     },
     {
@@ -331,7 +331,7 @@
       "children": []
     },
     {
-      "name": "ipv4Address",
+      "name": "ipv6Address",
       "required": false,
       "type": "string",
       "description": null,
@@ -354,52 +354,8 @@
       ],
       "fields": [
         {
-          "name": "type",
-          "required": true,
-          "type": "string",
-          "description": null,
-          "discriminator": [
-            {
-              "value": "A_RECORD",
-              "selected": true,
-              "schema": null
-            },
-            {
-              "value": "AAAA_RECORD",
-              "selected": false,
-              "schema": null
-            },
-            {
-              "value": "CNAME_RECORD",
-              "selected": false,
-              "schema": null
-            },
-            {
-              "value": "MX_RECORD",
-              "selected": false,
-              "schema": null
-            },
-            {
-              "value": "TXT_RECORD",
-              "selected": false,
-              "schema": null
-            },
-            {
-              "value": "SRV_RECORD",
-              "selected": false,
-              "schema": null
-            },
-            {
-              "value": "FORWARD_DOMAIN",
-              "selected": false,
-              "schema": null
-            }
-          ],
-          "children": []
-        },
-        {
-          "name": "id",
-          "required": true,
+          "name": "domain",
+          "required": false,
           "type": "string",
           "description": null,
           "discriminator": null,
@@ -409,6 +365,14 @@
           "name": "enabled",
           "required": true,
           "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
           "description": null,
           "discriminator": null,
           "children": []
@@ -427,7 +391,74 @@
               "description": null,
               "discriminator": [
                 {
+                  "value": "DERIVED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "ORCHESTRATED",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "SYSTEM_DEFINED",
+                  "selected": false,
+                  "schema": null
+                },
+                {
                   "value": "USER_DEFINED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "SYSTEM_DEFINED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "USER_DEFINED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "DERIVED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "USER_DEFINED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "ORCHESTRATED",
                   "selected": true,
                   "schema": null
                 },
@@ -437,12 +468,26 @@
                   "schema": null
                 },
                 {
-                  "value": "DERIVED",
+                  "value": "USER_DEFINED",
                   "selected": false,
                   "schema": null
-                },
+                }
+              ],
+              "children": []
+            },
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
                 {
                   "value": "ORCHESTRATED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "USER_DEFINED",
                   "selected": false,
                   "schema": null
                 }
@@ -455,70 +500,8 @@
               "type": "string",
               "description": null,
               "discriminator": [
-                {
-                  "value": "USER_DEFINED",
-                  "selected": true,
-                  "schema": null
-                },
-                {
-                  "value": "SYSTEM_DEFINED",
-                  "selected": false,
-                  "schema": null
-                }
-              ],
-              "children": []
-            },
-            {
-              "name": "origin",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": [
-                {
-                  "value": "USER_DEFINED",
-                  "selected": true,
-                  "schema": null
-                },
                 {
                   "value": "DERIVED",
-                  "selected": false,
-                  "schema": null
-                }
-              ],
-              "children": []
-            },
-            {
-              "name": "origin",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": [
-                {
-                  "value": "USER_DEFINED",
-                  "selected": true,
-                  "schema": null
-                },
-                {
-                  "value": "SYSTEM_DEFINED",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "ORCHESTRATED",
-                  "selected": false,
-                  "schema": null
-                }
-              ],
-              "children": []
-            },
-            {
-              "name": "origin",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": [
-                {
-                  "value": "USER_DEFINED",
                   "selected": true,
                   "schema": null
                 },
@@ -526,28 +509,9 @@
                   "value": "ORCHESTRATED",
                   "selected": false,
                   "schema": null
-                }
-              ],
-              "children": []
-            },
-            {
-              "name": "origin",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": [
+                },
                 {
                   "value": "USER_DEFINED",
-                  "selected": true,
-                  "schema": null
-                },
-                {
-                  "value": "DERIVED",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "ORCHESTRATED",
                   "selected": false,
                   "schema": null
                 }
@@ -561,30 +525,74 @@
               "description": null,
               "discriminator": [
                 {
-                  "value": "USER_DEFINED",
+                  "value": "DERIVED",
                   "selected": true,
                   "schema": null
                 },
                 {
-                  "value": "DERIVED",
+                  "value": "USER_DEFINED",
                   "selected": false,
                   "schema": null
                 }
               ],
+              "children": []
+            },
+            {
+              "name": "source",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
               "children": []
             }
           ]
         },
         {
-          "name": "domain",
-          "required": false,
+          "name": "type",
+          "required": true,
           "type": "string",
           "description": null,
-          "discriminator": null,
+          "discriminator": [
+            {
+              "value": "AAAA_RECORD",
+              "selected": true,
+              "schema": null
+            },
+            {
+              "value": "A_RECORD",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "CNAME_RECORD",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "FORWARD_DOMAIN",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "MX_RECORD",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "SRV_RECORD",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "TXT_RECORD",
+              "selected": false,
+              "schema": null
+            }
+          ],
           "children": []
         },
         {
-          "name": "ipv4Address",
+          "name": "ipv6Address",
           "required": false,
           "type": "string",
           "description": null,
@@ -604,20 +612,20 @@
   ],
   "examples": {
     "local": {
-      "curl": "curl -L -g -X PUT \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"type\\\": \\\"string\\\",\n  \\\"enabled\\\": true\n}\"",
-      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\"\n  method := \"PUT\"\n\n\n  payload := strings.NewReader(`{\n  \"type\": \"string\",\n  \"enabled\": true\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
-      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"type\": \"string\",\n  \"enabled\": true\n});\n\n\nlet config = {\n  method: 'put',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
-      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"type\": \"string\",\n  \"enabled\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PUT\", \"/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
-      "ansible": "- name: Update DNS Policy\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\"\n    method: PUT\n    body:\n      type: string\n      enabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
+      "curl": "curl -L -g -X PUT \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"enabled\\\": true,\n  \\\"type\\\": \\\"string\\\"\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\"\n  method := \"PUT\"\n\n\n  payload := strings.NewReader(`{\n  \"enabled\": true,\n  \"type\": \"string\"\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"enabled\": true,\n  \"type\": \"string\"\n});\n\n\nlet config = {\n  method: 'put',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"enabled\": True,\n  \"type\": \"string\"\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PUT\", \"/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Update DNS Policy\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\"\n    method: PUT\n    body:\n      enabled: true\n      type: string\n  register: result\n\n\n- debug:\n    var: result.data"
     },
     "remote": {
-      "curl": "curl -L -g -X PUT \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"type\\\": \\\"string\\\",\n  \\\"enabled\\\": true\n}\"",
-      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\"\n  method := \"PUT\"\n\n\n  payload := strings.NewReader(`{\n  \"type\": \"string\",\n  \"enabled\": true\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
-      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"type\": \"string\",\n  \"enabled\": true\n});\n\n\nlet config = {\n  method: 'put',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
-      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"type\": \"string\",\n  \"enabled\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PUT\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
-      "ansible": "- name: Update DNS Policy\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\"\n    method: PUT\n    body:\n      type: string\n      enabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
+      "curl": "curl -L -g -X PUT \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"enabled\\\": true,\n  \\\"type\\\": \\\"string\\\"\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\"\n  method := \"PUT\"\n\n\n  payload := strings.NewReader(`{\n  \"enabled\": true,\n  \"type\": \"string\"\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"enabled\": true,\n  \"type\": \"string\"\n});\n\n\nlet config = {\n  method: 'put',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"enabled\": True,\n  \"type\": \"string\"\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PUT\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Update DNS Policy\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/dns/policies/{dnsPolicyId}\"\n    method: PUT\n    body:\n      enabled: true\n      type: string\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"type\": \"string\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"enabled\": true,\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"domain\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/updatednspolicy"
+  "responseSample": "{\n  \"domain\": \"string\",\n  \"enabled\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"type\": \"string\"\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/updatednspolicy"
 }

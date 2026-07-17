@@ -130,5 +130,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"name\": \"string\",\n  \"isDefault\": true,\n  \"isGlobal\": true,\n  \"owner\": \"string\",\n  \"layout\": 0,\n  \"slots\": [\n    {\n      \"cameras\": [\n        \"string\"\n      ],\n      \"cycleMode\": \"motion\",\n      \"cycleInterval\": 0\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1liveviewsid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1liveviewsid"
 }

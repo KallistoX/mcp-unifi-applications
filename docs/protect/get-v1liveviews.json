@@ -11,7 +11,97 @@
       "statuses": [
         "200"
       ],
-      "fields": []
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of liveview",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the liveview",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": "The name of this live view.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "isDefault",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether this live view is the default one for all viewers.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "isGlobal",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether this live view is global and available system-wide to all users",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "owner",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of user",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "layout",
+          "required": true,
+          "type": "number",
+          "description": "The number of slots this live view contains. Which as a consequence also affects the layout of the live view.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "slots",
+          "required": true,
+          "type": "Array of object",
+          "description": "List of cameras visible in each given slot. And cycling settings for each slot if it has multiple cameras listed.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "cameras",
+              "required": true,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "cycleMode",
+              "required": true,
+              "type": "string",
+              "description": "Whether to switch to next camera in slot based on motion events or a strict time interval",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "cycleInterval",
+              "required": true,
+              "type": "number",
+              "description": "How long should each camera stream be shown for in seconds until we cycle to the next camera",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
     }
   ],
   "examples": {
@@ -31,5 +121,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1liveviews"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1liveviews"
 }

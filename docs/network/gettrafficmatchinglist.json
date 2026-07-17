@@ -30,30 +30,6 @@
       ],
       "fields": [
         {
-          "name": "type",
-          "required": true,
-          "type": "string",
-          "description": null,
-          "discriminator": [
-            {
-              "value": "PORTS",
-              "selected": true,
-              "schema": null
-            },
-            {
-              "value": "IPV4_ADDRESSES",
-              "selected": false,
-              "schema": null
-            },
-            {
-              "value": "IPV6_ADDRESSES",
-              "selected": false,
-              "schema": null
-            }
-          ],
-          "children": []
-        },
-        {
           "name": "id",
           "required": true,
           "type": "string",
@@ -70,9 +46,33 @@
           "children": []
         },
         {
+          "name": "type",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": [
+            {
+              "value": "IPV4_ADDRESSES",
+              "selected": true,
+              "schema": null
+            },
+            {
+              "value": "IPV6_ADDRESSES",
+              "selected": false,
+              "schema": null
+            },
+            {
+              "value": "PORTS",
+              "selected": false,
+              "schema": null
+            }
+          ],
+          "children": []
+        },
+        {
           "name": "items",
           "required": false,
-          "type": "Array of object (Port matching)",
+          "type": "Array of object (IPv4 matching)",
           "description": null,
           "discriminator": null,
           "children": [
@@ -83,12 +83,17 @@
               "description": null,
               "discriminator": [
                 {
-                  "value": "PORT_NUMBER",
+                  "value": "IP_ADDRESS",
                   "selected": true,
                   "schema": null
                 },
                 {
-                  "value": "PORT_NUMBER_RANGE",
+                  "value": "IP_ADDRESS_RANGE",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "SUBNET",
                   "selected": false,
                   "schema": null
                 }
@@ -98,8 +103,8 @@
             {
               "name": "value",
               "required": false,
-              "type": "integer",
-              "description": "Port number",
+              "type": "string",
+              "description": "IPv4 address",
               "discriminator": null,
               "children": []
             }
@@ -124,6 +129,6 @@
       "ansible": "- name: Get Traffic Matching List\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/traffic-matching-lists/{trafficMatchingListId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"type\": \"string\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/gettrafficmatchinglist"
+  "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\",\n  \"type\": \"string\"\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/gettrafficmatchinglist"
 }

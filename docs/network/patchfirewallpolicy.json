@@ -39,46 +39,6 @@
       ],
       "fields": [
         {
-          "name": "id",
-          "required": true,
-          "type": "string",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "enabled",
-          "required": true,
-          "type": "boolean",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "name",
-          "required": true,
-          "type": "string",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "description",
-          "required": false,
-          "type": "string",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "index",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
           "name": "action",
           "required": true,
           "type": "object (Firewall policy action)",
@@ -120,24 +80,32 @@
           ]
         },
         {
-          "name": "source",
+          "name": "connectionStateFilter",
+          "required": false,
+          "type": "Array of string",
+          "description": "Match on firewall connection state. If null, matches all connection states.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "description",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "destination",
           "required": true,
           "type": "object",
           "description": null,
           "discriminator": null,
           "children": [
             {
-              "name": "zoneId",
-              "required": true,
-              "type": "string",
-              "description": "ID of the firewall zone from which the matched traffic originates.",
-              "discriminator": null,
-              "children": []
-            },
-            {
               "name": "trafficFilter",
               "required": false,
-              "type": "object (Firewall policy source traffic filter)",
+              "type": "object (Firewall policy destination traffic filter)",
               "description": null,
               "discriminator": null,
               "children": [
@@ -148,22 +116,17 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "PORT",
+                      "value": "APPLICATION",
                       "selected": true,
                       "schema": null
                     },
                     {
-                      "value": "NETWORK",
+                      "value": "APPLICATION_CATEGORY",
                       "selected": false,
                       "schema": null
                     },
                     {
-                      "value": "MAC_ADDRESS",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "IP_ADDRESS",
+                      "value": "DOMAIN",
                       "selected": false,
                       "schema": null
                     },
@@ -173,12 +136,22 @@
                       "schema": null
                     },
                     {
-                      "value": "REGION",
+                      "value": "IP_ADDRESS",
                       "selected": false,
                       "schema": null
                     },
                     {
-                      "value": "VPN_SERVER",
+                      "value": "NETWORK",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "PORT",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "REGION",
                       "selected": false,
                       "schema": null
                     },
@@ -186,17 +159,47 @@
                       "value": "SITE_TO_SITE_VPN_TUNNEL",
                       "selected": false,
                       "schema": null
+                    },
+                    {
+                      "value": "VPN_SERVER",
+                      "selected": false,
+                      "schema": null
                     }
                   ],
                   "children": []
                 },
                 {
+                  "name": "applicationFilter",
+                  "required": false,
+                  "type": "object",
+                  "description": "Match destination traffic by DPI applications.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "applicationIds",
+                      "required": true,
+                      "type": "Array of integer",
+                      "description": "Array of DPI Application IDs to match.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
                   "name": "portFilter",
                   "required": false,
                   "type": "object",
-                  "description": "Match source traffic by ports.",
+                  "description": "Match destination traffic additionally by ports. If null, match all ports.",
                   "discriminator": null,
                   "children": [
+                    {
+                      "name": "matchOpposite",
+                      "required": true,
+                      "type": "boolean",
+                      "description": "Match on all ports except the specified ones.",
+                      "discriminator": null,
+                      "children": []
+                    },
                     {
                       "name": "type",
                       "required": true,
@@ -214,14 +217,6 @@
                           "schema": null
                         }
                       ],
-                      "children": []
-                    },
-                    {
-                      "name": "matchOpposite",
-                      "required": true,
-                      "type": "boolean",
-                      "description": "Match on all ports except the specified ones.",
-                      "discriminator": null,
                       "children": []
                     },
                     {
@@ -263,16 +258,7 @@
                   ]
                 }
               ]
-            }
-          ]
-        },
-        {
-          "name": "destination",
-          "required": true,
-          "type": "object",
-          "description": null,
-          "discriminator": null,
-          "children": [
+            },
             {
               "name": "zoneId",
               "required": true,
@@ -280,84 +266,32 @@
               "description": "ID of the firewall zone to which the matched traffic is destined.",
               "discriminator": null,
               "children": []
-            },
-            {
-              "name": "trafficFilter",
-              "required": false,
-              "type": "object (Firewall policy destination traffic filter)",
-              "description": null,
-              "discriminator": null,
-              "children": [
-                {
-                  "name": "type",
-                  "required": true,
-                  "type": "string",
-                  "description": null,
-                  "discriminator": [
-                    {
-                      "value": "PORT",
-                      "selected": true,
-                      "schema": null
-                    },
-                    {
-                      "value": "NETWORK",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "IP_ADDRESS",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "IPV6_IID",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "REGION",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "VPN_SERVER",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "SITE_TO_SITE_VPN_TUNNEL",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "DOMAIN",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "APPLICATION",
-                      "selected": false,
-                      "schema": null
-                    },
-                    {
-                      "value": "APPLICATION_CATEGORY",
-                      "selected": false,
-                      "schema": null
-                    }
-                  ],
-                  "children": []
-                },
-                {
-                  "name": "portFilter",
-                  "required": false,
-                  "type": "object",
-                  "description": "Match destination traffic by ports.",
-                  "discriminator": null,
-                  "children": []
-                }
-              ]
             }
           ]
+        },
+        {
+          "name": "enabled",
+          "required": true,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "index",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
         },
         {
           "name": "ipProtocolScope",
@@ -378,12 +312,12 @@
                   "schema": null
                 },
                 {
-                  "value": "IPV6",
+                  "value": "IPV4_AND_IPV6",
                   "selected": false,
                   "schema": null
                 },
                 {
-                  "value": "IPV4_AND_IPV6",
+                  "value": "IPV6",
                   "selected": false,
                   "schema": null
                 }
@@ -409,16 +343,24 @@
                       "schema": null
                     },
                     {
-                      "value": "PROTOCOL_NUMBER",
+                      "value": "PRESET",
                       "selected": false,
                       "schema": null
                     },
                     {
-                      "value": "PRESET",
+                      "value": "PROTOCOL_NUMBER",
                       "selected": false,
                       "schema": null
                     }
                   ],
+                  "children": []
+                },
+                {
+                  "name": "matchOpposite",
+                  "required": false,
+                  "type": "boolean",
+                  "description": "Match on all protocols except the specified protocol.",
+                  "discriminator": null,
                   "children": []
                 },
                 {
@@ -435,13 +377,8 @@
                       "description": null,
                       "discriminator": [
                         {
-                          "value": "ICMP",
-                          "selected": true,
-                          "schema": null
-                        },
-                        {
                           "value": "AH",
-                          "selected": false,
+                          "selected": true,
                           "schema": null
                         },
                         {
@@ -506,6 +443,11 @@
                         },
                         {
                           "value": "HMP",
+                          "selected": false,
+                          "schema": null
+                        },
+                        {
+                          "value": "ICMP",
                           "selected": false,
                           "schema": null
                         },
@@ -676,36 +618,12 @@
                         }
                       ],
                       "children": []
-                    },
-                    {
-                      "name": "typenameFilter",
-                      "required": false,
-                      "type": "string",
-                      "description": "Match specific type of ICMP traffic. If null, matches all types.",
-                      "discriminator": null,
-                      "children": []
                     }
                   ]
-                },
-                {
-                  "name": "matchOpposite",
-                  "required": false,
-                  "type": "boolean",
-                  "description": "Match on all protocols except the specified protocol.",
-                  "discriminator": null,
-                  "children": []
                 }
               ]
             }
           ]
-        },
-        {
-          "name": "connectionStateFilter",
-          "required": false,
-          "type": "Array of string",
-          "description": "Match on firewall connection state. If null, matches all connection states.",
-          "discriminator": null,
-          "children": []
         },
         {
           "name": "ipsecFilter",
@@ -724,6 +642,47 @@
           "children": []
         },
         {
+          "name": "metadata",
+          "required": true,
+          "type": "object (User or system defined or derived entity metadata)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "origin",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": [
+                {
+                  "value": "DERIVED",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "SYSTEM_DEFINED",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "USER_DEFINED",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "schedule",
           "required": false,
           "type": "object (Firewall schedule)",
@@ -737,8 +696,13 @@
               "description": null,
               "discriminator": [
                 {
-                  "value": "EVERY_DAY",
+                  "value": "CUSTOM",
                   "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "EVERY_DAY",
+                  "selected": false,
                   "schema": null
                 },
                 {
@@ -750,13 +714,32 @@
                   "value": "ONE_TIME_ONLY",
                   "selected": false,
                   "schema": null
-                },
-                {
-                  "value": "CUSTOM",
-                  "selected": false,
-                  "schema": null
                 }
               ],
+              "children": []
+            },
+            {
+              "name": "repeatOnDays",
+              "required": false,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "startDate",
+              "required": false,
+              "type": "string",
+              "description": "Date in YYYY-MM-DD format. ISO 8601 compliant.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "stopDate",
+              "required": false,
+              "type": "string",
+              "description": "Date in YYYY-MM-DD format. ISO 8601 compliant.",
+              "discriminator": null,
               "children": []
             },
             {
@@ -787,34 +770,117 @@
           ]
         },
         {
-          "name": "metadata",
+          "name": "source",
           "required": true,
-          "type": "object (User or system defined or derived entity metadata)",
+          "type": "object",
           "description": null,
           "discriminator": null,
           "children": [
             {
-              "name": "origin",
+              "name": "trafficFilter",
+              "required": false,
+              "type": "object (Firewall policy source traffic filter)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "IPV6_IID",
+                      "selected": true,
+                      "schema": null
+                    },
+                    {
+                      "value": "IP_ADDRESS",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "MAC_ADDRESS",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "NETWORK",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "PORT",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "REGION",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "SITE_TO_SITE_VPN_TUNNEL",
+                      "selected": false,
+                      "schema": null
+                    },
+                    {
+                      "value": "VPN_SERVER",
+                      "selected": false,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "name": "ipv6IidFilter",
+                  "required": false,
+                  "type": "object",
+                  "description": "Match source traffic by IPv6 interface identifier",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "ipv6Iid",
+                      "required": true,
+                      "type": "string",
+                      "description": "IPv6 Interface Identifier.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "matchOpposite",
+                      "required": true,
+                      "type": "boolean",
+                      "description": "Match on all IPv6 IIDs except the specified one.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "macAddressFilter",
+                  "required": false,
+                  "type": "string",
+                  "description": "Match source traffic additionally by a MAC address. If null, match all MAC addresses.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "portFilter",
+                  "required": false,
+                  "type": "object",
+                  "description": "Match source traffic additionally by ports. If null, match all ports.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "zoneId",
               "required": true,
               "type": "string",
-              "description": null,
-              "discriminator": [
-                {
-                  "value": "USER_DEFINED",
-                  "selected": true,
-                  "schema": null
-                },
-                {
-                  "value": "SYSTEM_DEFINED",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "DERIVED",
-                  "selected": false,
-                  "schema": null
-                }
-              ],
+              "description": "ID of the firewall zone from which the matched traffic originates.",
+              "discriminator": null,
               "children": []
             }
           ]
@@ -838,6 +904,6 @@
       "ansible": "- name: Patch Firewall Policy\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\"\n    method: PATCH\n    body:\n      loggingEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"enabled\": true,\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"index\": 0,\n  \"action\": {\n    \"type\": \"string\"\n  },\n  \"source\": {\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\",\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    }\n  },\n  \"destination\": {\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\",\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    }\n  },\n  \"ipProtocolScope\": {\n    \"ipVersion\": \"string\"\n  },\n  \"connectionStateFilter\": [\n    \"NEW\"\n  ],\n  \"ipsecFilter\": \"MATCH_ENCRYPTED\",\n  \"loggingEnabled\": true,\n  \"schedule\": {\n    \"mode\": \"string\"\n  },\n  \"metadata\": {\n    \"origin\": \"string\"\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/patchfirewallpolicy"
+  "responseSample": "{\n  \"action\": {\n    \"type\": \"string\"\n  },\n  \"connectionStateFilter\": [\n    \"NEW\"\n  ],\n  \"description\": \"string\",\n  \"destination\": {\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    },\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\"\n  },\n  \"enabled\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"index\": 0,\n  \"ipProtocolScope\": {\n    \"ipVersion\": \"string\"\n  },\n  \"ipsecFilter\": \"MATCH_ENCRYPTED\",\n  \"loggingEnabled\": true,\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"name\": \"string\",\n  \"schedule\": {\n    \"mode\": \"string\"\n  },\n  \"source\": {\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    },\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/patchfirewallpolicy"
 }

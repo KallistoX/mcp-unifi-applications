@@ -47,31 +47,7 @@
       ],
       "fields": [
         {
-          "name": "offset",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "limit",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
           "name": "count",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "totalCount",
           "required": true,
           "type": "integer",
           "description": null,
@@ -86,53 +62,39 @@
           "discriminator": null,
           "children": [
             {
-              "name": "type",
+              "name": "access",
               "required": true,
+              "type": "object (Teleport client access overview)",
+              "description": "Represents the type of network access and/or any applicable authorization status the client is using. - **Wired clients** may have direct access without additional authorization. - **Wireless clients** can be connected via a protected network or an open network that may require additional authorization (e.g., a guest portal). - **VPN clients** may have different authorization mechanisms. Currently, the only two supported access types are `GUEST` (used for wired and wireless guest clients) and `DEFAULT` (a placeholder, which might be refined in the future releases, used for all other clients). Filtering is possible by `access.type`, for example `access.type.eq('GUEST')` to list guest clients.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": [
+                    {
+                      "value": "DEFAULT",
+                      "selected": true,
+                      "schema": null
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "connectedAt",
+              "required": false,
               "type": "string",
               "description": null,
-              "discriminator": [
-                {
-                  "value": "WIRED",
-                  "selected": true,
-                  "schema": null
-                },
-                {
-                  "value": "WIRELESS",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "VPN",
-                  "selected": false,
-                  "schema": null
-                },
-                {
-                  "value": "TELEPORT",
-                  "selected": false,
-                  "schema": null
-                }
-              ],
+              "discriminator": null,
               "children": []
             },
             {
               "name": "id",
               "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "name",
-              "required": true,
-              "type": "string",
-              "description": null,
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "connectedAt",
-              "required": false,
               "type": "string",
               "description": null,
               "discriminator": null,
@@ -147,50 +109,67 @@
               "children": []
             },
             {
-              "name": "access",
+              "name": "name",
               "required": true,
-              "type": "object (Local client access overview)",
-              "description": "Represents the type of network access and/or any applicable authorization status the client is using. - **Wired clients** may have direct access without additional authorization. - **Wireless clients** can be connected via a protected network or an open network that may require additional authorization (e.g., a guest portal). - **VPN clients** may have different authorization mechanisms. Currently, the only two supported access types are `GUEST` (used for wired and wireless guest clients) and `DEFAULT` (a placeholder, which might be refined in the future releases, used for all other clients). Filtering is possible by `access.type`, for example `access.type.eq('GUEST')` to list guest clients.",
-              "discriminator": null,
-              "children": [
-                {
-                  "name": "type",
-                  "required": true,
-                  "type": "string",
-                  "description": null,
-                  "discriminator": [
-                    {
-                      "value": "DEFAULT",
-                      "selected": true,
-                      "schema": null
-                    },
-                    {
-                      "value": "GUEST",
-                      "selected": false,
-                      "schema": null
-                    }
-                  ],
-                  "children": []
-                }
-              ]
-            },
-            {
-              "name": "macAddress",
-              "required": false,
               "type": "string",
               "description": null,
               "discriminator": null,
               "children": []
             },
             {
-              "name": "uplinkDeviceId",
-              "required": false,
+              "name": "type",
+              "required": true,
               "type": "string",
               "description": null,
-              "discriminator": null,
+              "discriminator": [
+                {
+                  "value": "TELEPORT",
+                  "selected": true,
+                  "schema": null
+                },
+                {
+                  "value": "VPN",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "WIRED",
+                  "selected": false,
+                  "schema": null
+                },
+                {
+                  "value": "WIRELESS",
+                  "selected": false,
+                  "schema": null
+                }
+              ],
               "children": []
             }
           ]
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "offset",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "totalCount",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
         }
       ]
     }
@@ -211,6 +190,6 @@
       "ansible": "- name: List Connected Clients\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/clients\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"offset\": 0,\n  \"limit\": 0,\n  \"count\": 0,\n  \"totalCount\": 0,\n  \"data\": [\n    {\n      \"type\": \"string\",\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"string\",\n      \"connectedAt\": \"2024-01-01T00:00:00Z\",\n      \"ipAddress\": \"string\",\n      \"access\": null\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getconnectedclientoverviewpage"
+  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"access\": null,\n      \"connectedAt\": \"2024-01-01T00:00:00Z\",\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"ipAddress\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getconnectedclientoverviewpage"
 }

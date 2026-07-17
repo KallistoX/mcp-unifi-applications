@@ -11,7 +11,64 @@
       "statuses": [
         "200"
       ],
-      "fields": []
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of viewer",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the viewer",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": "Connection state of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mac",
+          "required": true,
+          "type": "string",
+          "description": "The primary MAC address of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "liveview",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "streamLimit",
+          "required": true,
+          "type": "number",
+          "description": "Count of maximum supported parallel live streams.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
     }
   ],
   "examples": {
@@ -31,5 +88,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1viewers"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1viewers"
 }

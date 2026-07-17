@@ -1,0 +1,78 @@
+{
+  "h1": "Trigger alarm hub output",
+  "method": "POST",
+  "path": "/v1/alarm-hubs/{id}/outputs/{outputId}/trigger",
+  "description": "Trigger an alarm hub output channel. Can be used to turn on/off connected devices like sirens, lights, or other actuators.",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "The primary key of linkStation",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "outputId",
+      "required": true,
+      "type": "integer",
+      "description": "Output channel ID (0 or 1)",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "enable",
+      "required": false,
+      "type": "boolean",
+      "description": "Set to true to turn on, false to turn off. If omitted, toggles the current state.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "delay",
+      "required": false,
+      "type": "integer",
+      "description": "Delay in milliseconds before the output activates",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "duration",
+      "required": false,
+      "type": "integer",
+      "description": "Duration in milliseconds to keep the output active. 0 means indefinite until manually turned off.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "204",
+        "503"
+      ],
+      "fields": []
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/protect/integration/v1/alarm-hubs/{id}/outputs/{outputId}/trigger\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"enable\\\": true,\n  \\\"delay\\\": 0,\n  \\\"duration\\\": 0\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/alarm-hubs/{id}/outputs/{outputId}/trigger\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"enable\": true,\n  \"delay\": 0,\n  \"duration\": 0\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"enable\": true,\n  \"delay\": 0,\n  \"duration\": 0\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/alarm-hubs/{id}/outputs/{outputId}/trigger',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"enable\": True,\n  \"delay\": 0,\n  \"duration\": 0\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/proxy/protect/integration/v1/alarm-hubs/{id}/outputs/{outputId}/trigger\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Trigger alarm hub output\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/alarm-hubs/{id}/outputs/{outputId}/trigger\"\n    method: POST\n    body:\n      enable: true\n      delay: 0\n      duration: 0\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/alarm-hubs/{id}/outputs/{outputId}/trigger\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"enable\\\": true,\n  \\\"delay\\\": 0,\n  \\\"duration\\\": 0\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/alarm-hubs/{id}/outputs/{outputId}/trigger\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"enable\": true,\n  \"delay\": 0,\n  \"duration\": 0\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"enable\": true,\n  \"delay\": 0,\n  \"duration\": 0\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/alarm-hubs/{id}/outputs/{outputId}/trigger',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"enable\": True,\n  \"delay\": 0,\n  \"duration\": 0\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/alarm-hubs/{id}/outputs/{outputId}/trigger\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Trigger alarm hub output\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/alarm-hubs/{id}/outputs/{outputId}/trigger\"\n    method: POST\n    body:\n      enable: true\n      delay: 0\n      duration: 0\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/post-v1alarm-hubsidoutputsoutputidtrigger"
+}

@@ -47,31 +47,7 @@
       ],
       "fields": [
         {
-          "name": "offset",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "limit",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
           "name": "count",
-          "required": true,
-          "type": "integer",
-          "description": null,
-          "discriminator": null,
-          "children": []
-        },
-        {
-          "name": "totalCount",
           "required": true,
           "type": "integer",
           "description": null,
@@ -86,7 +62,39 @@
           "discriminator": null,
           "children": [
             {
-              "name": "id",
+              "name": "activatedAt",
+              "required": false,
+              "type": "string",
+              "description": "(Optional) timestamp when the voucher has been activated (authorization time of the first guest)",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "authorizedGuestCount",
+              "required": true,
+              "type": "integer",
+              "description": "For how many guests the voucher has been used to authorize network access",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "authorizedGuestLimit",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) limit for how many different guests can use the same voucher to authorize network access",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "code",
+              "required": true,
+              "type": "string",
+              "description": "Secret code to active the voucher using the Hotspot portal",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "createdAt",
               "required": true,
               "type": "string",
               "description": null,
@@ -94,7 +102,31 @@
               "children": []
             },
             {
-              "name": "createdAt",
+              "name": "dataUsageLimitMBytes",
+              "required": false,
+              "type": "integer",
+              "description": "(Optional) data usage limit in megabytes",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "expired",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the voucher has been expired and can no longer be used to authorize network access",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "expiresAt",
+              "required": false,
+              "type": "string",
+              "description": "(Optional) timestamp when the voucher will become expired. All guests using the voucher will be unauthorized from network access",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "id",
               "required": true,
               "type": "string",
               "description": null,
@@ -110,50 +142,10 @@
               "children": []
             },
             {
-              "name": "code",
-              "required": true,
-              "type": "string",
-              "description": "Secret code to active the voucher using the Hotspot portal",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "authorizedGuestLimit",
+              "name": "rxRateLimitKbps",
               "required": false,
               "type": "integer",
-              "description": "(Optional) limit for how many different guests can use the same voucher to authorize network access",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "authorizedGuestCount",
-              "required": true,
-              "type": "integer",
-              "description": "For how many guests the voucher has been used to authorize network access",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "activatedAt",
-              "required": false,
-              "type": "string",
-              "description": "(Optional) timestamp when the voucher has been activated (authorization time of the first guest)",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "expiresAt",
-              "required": false,
-              "type": "string",
-              "description": "(Optional) timestamp when the voucher will become expired. All guests using the voucher will be unauthorized from network access",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "expired",
-              "required": true,
-              "type": "boolean",
-              "description": "Whether the voucher has been expired and can no longer be used to authorize network access",
+              "description": "(Optional) download rate limit in kilobits per second",
               "discriminator": null,
               "children": []
             },
@@ -166,22 +158,6 @@
               "children": []
             },
             {
-              "name": "dataUsageLimitMBytes",
-              "required": false,
-              "type": "integer",
-              "description": "(Optional) data usage limit in megabytes",
-              "discriminator": null,
-              "children": []
-            },
-            {
-              "name": "rxRateLimitKbps",
-              "required": false,
-              "type": "integer",
-              "description": "(Optional) download rate limit in kilobits per second",
-              "discriminator": null,
-              "children": []
-            },
-            {
               "name": "txRateLimitKbps",
               "required": false,
               "type": "integer",
@@ -190,6 +166,30 @@
               "children": []
             }
           ]
+        },
+        {
+          "name": "limit",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "offset",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "totalCount",
+          "required": true,
+          "type": "integer",
+          "description": null,
+          "discriminator": null,
+          "children": []
         }
       ]
     }
@@ -210,6 +210,6 @@
       "ansible": "- name: List Vouchers\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/hotspot/vouchers\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"offset\": 0,\n  \"limit\": 0,\n  \"count\": 0,\n  \"totalCount\": 0,\n  \"data\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"createdAt\": \"2024-01-01T00:00:00Z\",\n      \"name\": \"string\",\n      \"code\": \"string\",\n      \"authorizedGuestLimit\": 0,\n      \"authorizedGuestCount\": 0,\n      \"activatedAt\": \"2024-01-01T00:00:00Z\",\n      \"expiresAt\": \"2024-01-01T00:00:00Z\",\n      \"expired\": true,\n      \"timeLimitMinutes\": 0,\n      \"dataUsageLimitMBytes\": 0,\n      \"rxRateLimitKbps\": 0,\n      \"txRateLimitKbps\": 0\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.1.84/getvouchers"
+  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"activatedAt\": \"2024-01-01T00:00:00Z\",\n      \"authorizedGuestCount\": 0,\n      \"authorizedGuestLimit\": 0,\n      \"code\": \"string\",\n      \"createdAt\": \"2024-01-01T00:00:00Z\",\n      \"dataUsageLimitMBytes\": 0,\n      \"expired\": true,\n      \"expiresAt\": \"2024-01-01T00:00:00Z\",\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"string\",\n      \"rxRateLimitKbps\": 0,\n      \"timeLimitMinutes\": 0,\n      \"txRateLimitKbps\": 0\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getvouchers"
 }

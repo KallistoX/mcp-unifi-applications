@@ -16,7 +16,7 @@
       "name": "slot",
       "required": true,
       "type": "string",
-      "description": "The slot number (0-4) of the preset to move the camera to",
+      "description": "Which slot this preset belongs to (-1 home preset, >=0 other presets).",
       "discriminator": null,
       "children": []
     }
@@ -48,5 +48,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/post-v1camerasidptzgotoslot"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/post-v1camerasidptzgotoslot"
 }

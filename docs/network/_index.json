@@ -50,6 +50,11 @@
     "file": "getsiteoverviewpage.json"
   },
   {
+    "slug": "getpendingdevicepage",
+    "title": "List Devices Pending Adoption",
+    "file": "getpendingdevicepage.json"
+  },
+  {
     "slug": "getadopteddeviceoverviewpage",
     "title": "List Adopted Devices",
     "file": "getadopteddeviceoverviewpage.json"
@@ -60,14 +65,9 @@
     "file": "adoptdevice.json"
   },
   {
-    "slug": "executeportaction",
-    "title": "Execute Port Action",
-    "file": "executeportaction.json"
-  },
-  {
-    "slug": "executeadopteddeviceaction",
-    "title": "Execute Adopted Device Action",
-    "file": "executeadopteddeviceaction.json"
+    "slug": "removedevice",
+    "title": "Remove (Unadopt) Device",
+    "file": "removedevice.json"
   },
   {
     "slug": "getadopteddevicedetails",
@@ -75,24 +75,19 @@
     "file": "getadopteddevicedetails.json"
   },
   {
-    "slug": "removedevice",
-    "title": "Remove (Unadopt) Device",
-    "file": "removedevice.json"
+    "slug": "executeadopteddeviceaction",
+    "title": "Execute Adopted Device Action",
+    "file": "executeadopteddeviceaction.json"
+  },
+  {
+    "slug": "executeportaction",
+    "title": "Execute Port Action",
+    "file": "executeportaction.json"
   },
   {
     "slug": "getadopteddevicelateststatistics",
     "title": "Get Latest Adopted Device Statistics",
     "file": "getadopteddevicelateststatistics.json"
-  },
-  {
-    "slug": "getpendingdevicepage",
-    "title": "List Devices Pending Adoption",
-    "file": "getpendingdevicepage.json"
-  },
-  {
-    "slug": "executeconnectedclientaction",
-    "title": "Execute Client Action",
-    "file": "executeconnectedclientaction.json"
   },
   {
     "slug": "getconnectedclientoverviewpage",
@@ -105,19 +100,9 @@
     "file": "getconnectedclientdetails.json"
   },
   {
-    "slug": "getnetworkdetails",
-    "title": "Get Network Details",
-    "file": "getnetworkdetails.json"
-  },
-  {
-    "slug": "updatenetwork",
-    "title": "Update Network",
-    "file": "updatenetwork.json"
-  },
-  {
-    "slug": "deletenetwork",
-    "title": "Delete Network",
-    "file": "deletenetwork.json"
+    "slug": "executeconnectedclientaction",
+    "title": "Execute Client Action",
+    "file": "executeconnectedclientaction.json"
   },
   {
     "slug": "getnetworksoverviewpage",
@@ -130,24 +115,24 @@
     "file": "createnetwork.json"
   },
   {
+    "slug": "deletenetwork",
+    "title": "Delete Network",
+    "file": "deletenetwork.json"
+  },
+  {
+    "slug": "getnetworkdetails",
+    "title": "Get Network Details",
+    "file": "getnetworkdetails.json"
+  },
+  {
+    "slug": "updatenetwork",
+    "title": "Update Network",
+    "file": "updatenetwork.json"
+  },
+  {
     "slug": "getnetworkreferences",
     "title": "Get Network References",
     "file": "getnetworkreferences.json"
-  },
-  {
-    "slug": "getwifibroadcastdetails",
-    "title": "Get Wifi Broadcast Details",
-    "file": "getwifibroadcastdetails.json"
-  },
-  {
-    "slug": "updatewifibroadcast",
-    "title": "Update Wifi Broadcast",
-    "file": "updatewifibroadcast.json"
-  },
-  {
-    "slug": "deletewifibroadcast",
-    "title": "Delete Wifi Broadcast",
-    "file": "deletewifibroadcast.json"
   },
   {
     "slug": "getwifibroadcastpage",
@@ -160,6 +145,26 @@
     "file": "createwifibroadcast.json"
   },
   {
+    "slug": "deletewifibroadcast",
+    "title": "Delete Wifi Broadcast",
+    "file": "deletewifibroadcast.json"
+  },
+  {
+    "slug": "getwifibroadcastdetails",
+    "title": "Get Wifi Broadcast Details",
+    "file": "getwifibroadcastdetails.json"
+  },
+  {
+    "slug": "updatewifibroadcast",
+    "title": "Update Wifi Broadcast",
+    "file": "updatewifibroadcast.json"
+  },
+  {
+    "slug": "deletevouchers",
+    "title": "Delete Vouchers",
+    "file": "deletevouchers.json"
+  },
+  {
     "slug": "getvouchers",
     "title": "List Vouchers",
     "file": "getvouchers.json"
@@ -170,74 +175,14 @@
     "file": "createvouchers.json"
   },
   {
-    "slug": "deletevouchers",
-    "title": "Delete Vouchers",
-    "file": "deletevouchers.json"
-  },
-  {
-    "slug": "getvoucher",
-    "title": "Get Voucher Details",
-    "file": "getvoucher.json"
-  },
-  {
     "slug": "deletevoucher",
     "title": "Delete Voucher",
     "file": "deletevoucher.json"
   },
   {
-    "slug": "getfirewallzone",
-    "title": "Get Firewall Zone",
-    "file": "getfirewallzone.json"
-  },
-  {
-    "slug": "updatefirewallzone",
-    "title": "Update Firewall Zone",
-    "file": "updatefirewallzone.json"
-  },
-  {
-    "slug": "deletefirewallzone",
-    "title": "Delete Custom Firewall Zone",
-    "file": "deletefirewallzone.json"
-  },
-  {
-    "slug": "getfirewallpolicy",
-    "title": "Get Firewall Policy",
-    "file": "getfirewallpolicy.json"
-  },
-  {
-    "slug": "updatefirewallpolicy",
-    "title": "Update Firewall Policy",
-    "file": "updatefirewallpolicy.json"
-  },
-  {
-    "slug": "deletefirewallpolicy",
-    "title": "Delete Firewall Policy",
-    "file": "deletefirewallpolicy.json"
-  },
-  {
-    "slug": "patchfirewallpolicy",
-    "title": "Patch Firewall Policy",
-    "file": "patchfirewallpolicy.json"
-  },
-  {
-    "slug": "getfirewallpolicyordering",
-    "title": "Get User-Defined Firewall Policy Ordering",
-    "file": "getfirewallpolicyordering.json"
-  },
-  {
-    "slug": "updatefirewallpolicyordering",
-    "title": "Reorder User-Defined Firewall Policies",
-    "file": "updatefirewallpolicyordering.json"
-  },
-  {
-    "slug": "getfirewallzones",
-    "title": "List Firewall Zones",
-    "file": "getfirewallzones.json"
-  },
-  {
-    "slug": "createfirewallzone",
-    "title": "Create Custom Firewall Zone",
-    "file": "createfirewallzone.json"
+    "slug": "getvoucher",
+    "title": "Get Voucher Details",
+    "file": "getvoucher.json"
   },
   {
     "slug": "getfirewallpolicies",
@@ -250,29 +195,59 @@
     "file": "createfirewallpolicy.json"
   },
   {
-    "slug": "getaclrule",
-    "title": "Get ACL Rule",
-    "file": "getaclrule.json"
+    "slug": "getfirewallpolicyordering",
+    "title": "Get User-Defined Firewall Policy Ordering",
+    "file": "getfirewallpolicyordering.json"
   },
   {
-    "slug": "updateaclrule",
-    "title": "Update ACL Rule",
-    "file": "updateaclrule.json"
+    "slug": "updatefirewallpolicyordering",
+    "title": "Reorder User-Defined Firewall Policies",
+    "file": "updatefirewallpolicyordering.json"
   },
   {
-    "slug": "deleteaclrule",
-    "title": "Delete ACL Rule",
-    "file": "deleteaclrule.json"
+    "slug": "deletefirewallpolicy",
+    "title": "Delete Firewall Policy",
+    "file": "deletefirewallpolicy.json"
   },
   {
-    "slug": "getaclruleordering",
-    "title": "Get User-Defined ACL Rule Ordering",
-    "file": "getaclruleordering.json"
+    "slug": "getfirewallpolicy",
+    "title": "Get Firewall Policy",
+    "file": "getfirewallpolicy.json"
   },
   {
-    "slug": "updateaclruleordering",
-    "title": "Reorder User-Defined ACL Rules",
-    "file": "updateaclruleordering.json"
+    "slug": "patchfirewallpolicy",
+    "title": "Patch Firewall Policy",
+    "file": "patchfirewallpolicy.json"
+  },
+  {
+    "slug": "updatefirewallpolicy",
+    "title": "Update Firewall Policy",
+    "file": "updatefirewallpolicy.json"
+  },
+  {
+    "slug": "getfirewallzones",
+    "title": "List Firewall Zones",
+    "file": "getfirewallzones.json"
+  },
+  {
+    "slug": "createfirewallzone",
+    "title": "Create Custom Firewall Zone",
+    "file": "createfirewallzone.json"
+  },
+  {
+    "slug": "deletefirewallzone",
+    "title": "Delete Custom Firewall Zone",
+    "file": "deletefirewallzone.json"
+  },
+  {
+    "slug": "getfirewallzone",
+    "title": "Get Firewall Zone",
+    "file": "getfirewallzone.json"
+  },
+  {
+    "slug": "updatefirewallzone",
+    "title": "Update Firewall Zone",
+    "file": "updatefirewallzone.json"
   },
   {
     "slug": "getaclrulepage",
@@ -285,19 +260,59 @@
     "file": "createaclrule.json"
   },
   {
-    "slug": "getdnspolicy",
-    "title": "Get DNS Policy",
-    "file": "getdnspolicy.json"
+    "slug": "getaclruleordering",
+    "title": "Get User-Defined ACL Rule Ordering",
+    "file": "getaclruleordering.json"
   },
   {
-    "slug": "updatednspolicy",
-    "title": "Update DNS Policy",
-    "file": "updatednspolicy.json"
+    "slug": "updateaclruleordering",
+    "title": "Reorder User-Defined ACL Rules",
+    "file": "updateaclruleordering.json"
   },
   {
-    "slug": "deletednspolicy",
-    "title": "Delete DNS Policy",
-    "file": "deletednspolicy.json"
+    "slug": "deleteaclrule",
+    "title": "Delete ACL Rule",
+    "file": "deleteaclrule.json"
+  },
+  {
+    "slug": "getaclrule",
+    "title": "Get ACL Rule",
+    "file": "getaclrule.json"
+  },
+  {
+    "slug": "updateaclrule",
+    "title": "Update ACL Rule",
+    "file": "updateaclrule.json"
+  },
+  {
+    "slug": "getlagpage",
+    "title": "List LAGs",
+    "file": "getlagpage.json"
+  },
+  {
+    "slug": "getlag",
+    "title": "Get LAG Details",
+    "file": "getlag.json"
+  },
+  {
+    "slug": "getmclagdomainpage",
+    "title": "List MC-LAG Domains",
+    "file": "getmclagdomainpage.json"
+  },
+  {
+    "slug": "getmclagdomain",
+    "title": "Get MC-LAG Domain",
+    "file": "getmclagdomain.json"
+  },
+  {
+    "slug": "getswitchstackpage",
+    "title": "List Switch Stacks",
+    "file": "getswitchstackpage.json"
+  },
+  {
+    "slug": "getswitchstack",
+    "title": "Get Switch Stack",
+    "file": "getswitchstack.json"
   },
   {
     "slug": "getdnspolicypage",
@@ -310,19 +325,19 @@
     "file": "creatednspolicy.json"
   },
   {
-    "slug": "gettrafficmatchinglist",
-    "title": "Get Traffic Matching List",
-    "file": "gettrafficmatchinglist.json"
+    "slug": "deletednspolicy",
+    "title": "Delete DNS Policy",
+    "file": "deletednspolicy.json"
   },
   {
-    "slug": "updatetrafficmatchinglist",
-    "title": "Update Traffic Matching List",
-    "file": "updatetrafficmatchinglist.json"
+    "slug": "getdnspolicy",
+    "title": "Get DNS Policy",
+    "file": "getdnspolicy.json"
   },
   {
-    "slug": "deletetrafficmatchinglist",
-    "title": "Delete Traffic Matching List",
-    "file": "deletetrafficmatchinglist.json"
+    "slug": "updatednspolicy",
+    "title": "Update DNS Policy",
+    "file": "updatednspolicy.json"
   },
   {
     "slug": "gettrafficmatchinglists",
@@ -335,34 +350,24 @@
     "file": "createtrafficmatchinglist.json"
   },
   {
-    "slug": "getwansoverviewpage",
-    "title": "List WAN Interfaces",
-    "file": "getwansoverviewpage.json"
+    "slug": "deletetrafficmatchinglist",
+    "title": "Delete Traffic Matching List",
+    "file": "deletetrafficmatchinglist.json"
   },
   {
-    "slug": "getsitetositevpntunnelpage",
-    "title": "List Site-To-Site VPN Tunnels",
-    "file": "getsitetositevpntunnelpage.json"
+    "slug": "gettrafficmatchinglist",
+    "title": "Get Traffic Matching List",
+    "file": "gettrafficmatchinglist.json"
   },
   {
-    "slug": "getvpnserverpage",
-    "title": "List VPN Servers",
-    "file": "getvpnserverpage.json"
+    "slug": "updatetrafficmatchinglist",
+    "title": "Update Traffic Matching List",
+    "file": "updatetrafficmatchinglist.json"
   },
   {
-    "slug": "getradiusprofileoverviewpage",
-    "title": "List Radius Profiles",
-    "file": "getradiusprofileoverviewpage.json"
-  },
-  {
-    "slug": "getdevicetagpage",
-    "title": "List Device Tags",
-    "file": "getdevicetagpage.json"
-  },
-  {
-    "slug": "getdpiapplicationcategories",
-    "title": "List DPI Application Categories",
-    "file": "getdpiapplicationcategories.json"
+    "slug": "getcountries",
+    "title": "List Countries",
+    "file": "getcountries.json"
   },
   {
     "slug": "getdpiapplications",
@@ -370,9 +375,34 @@
     "file": "getdpiapplications.json"
   },
   {
-    "slug": "getcountries",
-    "title": "List Countries",
-    "file": "getcountries.json"
+    "slug": "getdpiapplicationcategories",
+    "title": "List DPI Application Categories",
+    "file": "getdpiapplicationcategories.json"
+  },
+  {
+    "slug": "getdevicetagpage",
+    "title": "List Device Tags",
+    "file": "getdevicetagpage.json"
+  },
+  {
+    "slug": "getradiusprofileoverviewpage",
+    "title": "List Radius Profiles",
+    "file": "getradiusprofileoverviewpage.json"
+  },
+  {
+    "slug": "getvpnserverpage",
+    "title": "List VPN Servers",
+    "file": "getvpnserverpage.json"
+  },
+  {
+    "slug": "getsitetositevpntunnelpage",
+    "title": "List Site-To-Site VPN Tunnels",
+    "file": "getsitetositevpntunnelpage.json"
+  },
+  {
+    "slug": "getwansoverviewpage",
+    "title": "List WAN Interfaces",
+    "file": "getwansoverviewpage.json"
   },
   {
     "slug": "quick_start.ansible",

@@ -19,7 +19,7 @@
       "name": "name",
       "required": false,
       "type": "string",
-      "description": "The name of the model",
+      "description": "The name of the device.",
       "discriminator": null,
       "children": []
     },
@@ -74,7 +74,7 @@
           "name": "mac",
           "required": true,
           "type": "string",
-          "description": "The MAC address of the device",
+          "description": "The primary MAC address of the device.",
           "discriminator": null,
           "children": []
         },
@@ -114,5 +114,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"liveview\": \"string\",\n  \"streamLimit\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/patch-v1viewersid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/patch-v1viewersid"
 }

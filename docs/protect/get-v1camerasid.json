@@ -57,7 +57,7 @@
           "name": "mac",
           "required": true,
           "type": "string",
-          "description": "The MAC address of the device",
+          "description": "The primary MAC address of the device.",
           "discriminator": null,
           "children": []
         },
@@ -313,6 +313,14 @@
               "children": []
             }
           ]
+        },
+        {
+          "name": "hasPackageCamera",
+          "required": true,
+          "type": "boolean",
+          "description": "Whether the camera has a package camera.",
+          "discriminator": null,
+          "children": []
         }
       ]
     }
@@ -333,6 +341,6 @@
       "ansible": "- name: Get camera details\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/cameras/{id}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"isMicEnabled\": true,\n  \"osdSettings\": {\n    \"isNameEnabled\": true,\n    \"isDateEnabled\": true,\n    \"isLogoEnabled\": true,\n    \"isDebugEnabled\": true,\n    \"overlayLocation\": \"topLeft\"\n  },\n  \"ledSettings\": {\n    \"isEnabled\": true,\n    \"welcomeLed\": true,\n    \"floodLed\": true\n  },\n  \"lcdMessage\": {\n    \"type\": \"LEAVE_PACKAGE_AT_DOOR\",\n    \"resetAt\": null,\n    \"text\": \"string\"\n  },\n  \"micVolume\": 0,\n  \"activePatrolSlot\": 0,\n  \"videoMode\": \"default\",\n  \"hdrType\": \"auto\",\n  \"featureFlags\": {\n    \"supportFullHdSnapshot\": true,\n    \"hasHdr\": true,\n    \"smartDetectTypes\": [\n      \"person\"\n    ],\n    \"smartDetectAudioTypes\": [\n      \"alrmSmoke\"\n    ],\n    \"videoModes\": [\n      \"default\"\n    ],\n    \"hasMic\": true,\n    \"hasLedStatus\": true,\n    \"hasSpeaker\": true\n  },\n  \"smartDetectSettings\": {\n    \"objectTypes\": [\n      \"person\"\n    ],\n    \"audioTypes\": [\n      \"alrmSmoke\"\n    ]\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1camerasid"
+  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"isMicEnabled\": true,\n  \"osdSettings\": {\n    \"isNameEnabled\": true,\n    \"isDateEnabled\": true,\n    \"isLogoEnabled\": true,\n    \"isDebugEnabled\": true,\n    \"overlayLocation\": \"topLeft\"\n  },\n  \"ledSettings\": {\n    \"isEnabled\": true,\n    \"welcomeLed\": true,\n    \"floodLed\": true\n  },\n  \"lcdMessage\": {\n    \"type\": \"LEAVE_PACKAGE_AT_DOOR\",\n    \"resetAt\": null,\n    \"text\": \"string\"\n  },\n  \"micVolume\": 0,\n  \"activePatrolSlot\": 0,\n  \"videoMode\": \"default\",\n  \"hdrType\": \"auto\",\n  \"featureFlags\": {\n    \"supportFullHdSnapshot\": true,\n    \"hasHdr\": true,\n    \"smartDetectTypes\": [\n      \"person\"\n    ],\n    \"smartDetectAudioTypes\": [\n      \"alrmSmoke\"\n    ],\n    \"videoModes\": [\n      \"default\"\n    ],\n    \"hasMic\": true,\n    \"hasLedStatus\": true,\n    \"hasSpeaker\": true\n  },\n  \"smartDetectSettings\": {\n    \"objectTypes\": [\n      \"person\"\n    ],\n    \"audioTypes\": [\n      \"alrmSmoke\"\n    ]\n  },\n  \"hasPackageCamera\": true\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1camerasid"
 }

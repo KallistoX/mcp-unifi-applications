@@ -11,7 +11,97 @@
       "statuses": [
         "200"
       ],
-      "fields": []
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "The primary key of chime",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "modelKey",
+          "required": true,
+          "type": "string",
+          "description": "The model key of the chime",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "string",
+          "description": "Connection state of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": true,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "mac",
+          "required": true,
+          "type": "string",
+          "description": "The primary MAC address of the device.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "cameraIds",
+          "required": true,
+          "type": "Array of string",
+          "description": "The list of (doorbell-only) cameras which this chime is paired to.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "ringSettings",
+          "required": true,
+          "type": "Array of object (ringSettings)",
+          "description": "List of custom ringtone settings for (doorbell-only) cameras paired to this chime.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "cameraId",
+              "required": true,
+              "type": "string",
+              "description": "Which paired (doorbell-only) camera do these settings refer to.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "repeatTimes",
+              "required": true,
+              "type": "number",
+              "description": "How many times should the ringtone be repeated",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "ringtoneId",
+              "required": true,
+              "type": "string",
+              "description": "The ID of the ringtone that should be played when the (doorbell-only) camera is rung.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "volume",
+              "required": true,
+              "type": "number",
+              "description": "How loud should the ringtone be played. 0 being silent and 100 the loudest.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
     }
   ],
   "examples": {
@@ -31,5 +121,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v6.2.88/get-v1chimes"
+  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1chimes"
 }
