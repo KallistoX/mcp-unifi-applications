@@ -85,7 +85,7 @@ def _load_app(app: str, directory: Path):
         desc = data.get("description", "") or ""
         _search_index.append((qualified, data.get("h1", ""), method, path, desc, data["_app"]))
         # Build field index
-        for section_key in ("pathParameters", "requestBody"):
+        for section_key in ("pathParameters", "queryParameters", "requestBody"):
             _index_fields(data.get(section_key) or [], qualified)
         for resp in data.get("responses") or []:
             _index_fields(resp.get("fields") or [], qualified)

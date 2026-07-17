@@ -322,3 +322,18 @@ class TestGetDocsInfo:
             assert f"API v{meta['version']}" in out
         assert "endpoints" in out
         assert "guides" in out
+
+
+# --- Field index covers query parameters ---
+
+
+class TestQueryParameterIndex:
+    def test_query_parameters_indexed(self):
+        checked = 0
+        for slug, ep in m._endpoints.items():
+            for f in ep.get("queryParameters") or []:
+                assert f["name"].lower() in m._field_index, (
+                    f"query param '{f['name']}' of {slug} missing from field index"
+                )
+                checked += 1
+        assert checked > 0, "corpus unexpectedly has no queryParameters"
