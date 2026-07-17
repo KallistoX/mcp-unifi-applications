@@ -15,8 +15,8 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
 ]
 dependencies = [
-    "fastmcp>=3.1.1",
-    "rapidfuzz>=3.14.3",
+    "fastmcp>=3.4",
+    "rapidfuzz>=3.14.5",
 ]
 
 [project.urls]
