@@ -337,3 +337,24 @@ class TestQueryParameterIndex:
                 )
                 checked += 1
         assert checked > 0, "corpus unexpectedly has no queryParameters"
+
+
+# --- list_endpoints cap ---
+
+
+class TestListEndpointsCap:
+    def test_caps_output_with_hint(self, monkeypatch):
+        fake = [
+            (f"network/fake{i}", f"Fake {i}", "GET", f"/v1/fake/{i}", "", "network")
+            for i in range(300)
+        ]
+        monkeypatch.setattr(m, "_search_index", fake)
+        out = m.list_endpoints()
+        lines = out.split("\n")
+        assert len(lines) == m.MAX_LIST_LINES + 1
+        assert "truncated" in lines[-1]
+        assert "app" in lines[-1] and "method" in lines[-1]
+
+    def test_no_cap_below_limit(self):
+        out = m.list_endpoints()
+        assert "truncated" not in out

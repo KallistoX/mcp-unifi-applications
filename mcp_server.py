@@ -27,6 +27,7 @@ _meta: dict[str, dict] = {}  # app -> {"app", "version", "scrapedAt", "pageCount
 
 VALID_LANGUAGES = ("curl", "go", "nodejs", "python", "ansible")
 VALID_MODES = ("local", "remote")
+MAX_LIST_LINES = 200
 
 
 def _index_fields(fields: list[dict], slug: str, path: str = ""):
@@ -203,6 +204,13 @@ def list_endpoints(method: str | None = None, app: str | None = None) -> str:
         if app_filter:
             filters.append(f"app={app_filter}")
         return f"No endpoints found ({', '.join(filters)})."
+    if len(lines) > MAX_LIST_LINES:
+        total = len(lines)
+        lines = lines[:MAX_LIST_LINES]
+        lines.append(
+            f"... truncated: showing {MAX_LIST_LINES} of {total} endpoints. "
+            "Filter by app= (network, protect, site-manager) or method= to narrow."
+        )
     return "\n".join(lines)
 
 
