@@ -57,7 +57,7 @@ docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs createnetwo
 docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --force
 ```
 
-Pre-scraped docs for Network API v10.1.84 are included in `docs/network/`.
+Pre-scraped docs are included: Network API v10.3.58 (`docs/network/`), Protect v7.1.87 (`docs/protect/`), Site Manager v1.0.0 (`docs/site-manager/`). Each app dir carries a `_meta.json` (API version, scrape date, page count). A weekly GitHub Action checks upstream for new versions and opens a PR with freshly scraped docs.
 
 ### 2. Install the MCP server
 
@@ -119,6 +119,7 @@ All three applications share the same docs SPA structure with version dropdowns,
 | `find_field` | Search for a field name across all endpoint schemas |
 | `get_field_schema` | Drill into a specific field's subtree (e.g. `management[GATEWAY].dhcpV4`) |
 | `get_guide` | API guide pages (filtering syntax, error handling, getting started) |
+| `get_docs_info` | Which docs are loaded: API version, scrape date, endpoint/guide counts per app |
 
 Tools that return multiple results accept an optional `app` parameter (`network`, `protect`, `site-manager`) to filter by application.
 
