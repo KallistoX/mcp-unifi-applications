@@ -8,7 +8,7 @@
 //                     Omit to scrape all pages.
 
 import { chromium } from 'playwright';
-import { writeFileSync, mkdirSync, existsSync } from 'fs';
+import { writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
 
 const SITE = 'https://developer.ui.com';
 const OUTPUT = '/output';
@@ -513,6 +513,7 @@ if (singleMode) {
 const outDir = `${OUTPUT}/${APP_PATH}`;
 console.log(`${singleMode ? 'Selected' : 'Found'} ${links.length} pages\n`);
 mkdirSync(outDir, { recursive: true });
+rmSync(`${outDir}/_failed.txt`, { force: true });
 
 const failed = [];
 let done = 0;
@@ -540,8 +541,16 @@ for (const { href, text } of links) {
   }
 }
 
-const index = links.map(({ href, text }) => ({ slug: href.split('/').pop(), title: text, file: `${href.split('/').pop()}.json` }));
-writeFileSync(`${outDir}/_index.json`, JSON.stringify(index, null, 2));
+if (!singleMode) {
+  const index = links.map(({ href, text }) => ({ slug: href.split('/').pop(), title: text, file: `${href.split('/').pop()}.json` }));
+  writeFileSync(`${outDir}/_index.json`, JSON.stringify(index, null, 2));
+  writeFileSync(`${outDir}/_meta.json`, JSON.stringify({
+    app: requestedApp,
+    version,
+    scrapedAt: new Date().toISOString(),
+    pageCount: links.length,
+  }, null, 2));
+}
 
 if (failed.length) {
   console.log(`\n✗ Failed (${failed.length}):`);
