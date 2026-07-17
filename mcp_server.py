@@ -15,13 +15,6 @@ DOCS_DIR = Path(os.environ.get("DOCS_DIR", Path(__file__).parent / "docs"))
 
 KNOWN_APPS = ("network", "protect", "site-manager")
 
-mcp = FastMCP("unifi-applications", instructions=(
-    "You have access to UniFi application API documentation (Network, Protect, Site Manager). "
-    "Use list_endpoints to browse, search_endpoints to find relevant endpoints, "
-    "and get_endpoint to get full schema details. Use get_endpoint_group to get "
-    "all CRUD operations for a resource at once. Filter by app name to narrow results."
-))
-
 # --- Data loading ---
 
 _endpoints: dict[str, dict] = {}
@@ -30,6 +23,7 @@ _search_index: list[tuple[str, str, str, str, str, str]] = []  # (slug, title, m
 _field_index: dict[str, list[tuple[str, str]]] = {}  # field_name_lower -> [(slug, path)]
 _resource_groups: dict[str, list[str]] = {}  # resource path -> [slugs]
 _loaded_apps: set[str] = set()
+_meta: dict[str, dict] = {}  # app -> {"app", "version", "scrapedAt", "pageCount"}
 
 VALID_LANGUAGES = ("curl", "go", "nodejs", "python", "ansible")
 VALID_MODES = ("local", "remote")
@@ -62,7 +56,14 @@ def _resource_key(path: str) -> str | None:
 
 def _load_app(app: str, directory: Path):
     """Load all JSON docs from a single app directory."""
-    _loaded_apps.add(app)
+    name = app or "network"
+    _loaded_apps.add(name)
+    meta_file = directory / "_meta.json"
+    if meta_file.exists():
+        try:
+            _meta[name] = json.loads(meta_file.read_text())
+        except (json.JSONDecodeError, OSError):
+            pass
     for f in sorted(directory.glob("*.json")):
         slug = f.stem
         if slug.startswith("_"):
@@ -101,6 +102,7 @@ def _load_docs():
     _field_index.clear()
     _resource_groups.clear()
     _loaded_apps.clear()
+    _meta.clear()
 
     # Try loading from app subdirectories first
     subdirs = [d for d in sorted(DOCS_DIR.iterdir())
@@ -115,6 +117,23 @@ def _load_docs():
 
 
 _load_docs()
+
+
+def _docs_summary() -> str:
+    parts = []
+    for app in sorted(_loaded_apps):
+        v = _meta.get(app, {}).get("version")
+        parts.append(f"{app} v{v}" if v else f"{app} (version unknown)")
+    return ", ".join(parts)
+
+
+mcp = FastMCP("unifi-applications", instructions=(
+    "You have access to UniFi application API documentation (Network, Protect, Site Manager). "
+    "Use list_endpoints to browse, search_endpoints to find relevant endpoints, "
+    "and get_endpoint to get full schema details. Use get_endpoint_group to get "
+    "all CRUD operations for a resource at once. Filter by app name to narrow results. "
+    f"Loaded docs: {_docs_summary()}. Use get_docs_info for scrape details."
+))
 
 # --- Field traversal helper ---
 

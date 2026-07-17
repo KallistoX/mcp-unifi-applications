@@ -1,6 +1,7 @@
 """Tests for the UniFi Docs MCP Server."""
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -274,3 +275,33 @@ class TestGetResponseSample:
     def test_invalid_slug(self):
         result = m.get_response_sample("nonexistent")
         assert "not found" in result.lower()
+
+
+# --- Version metadata ---
+
+
+class TestMeta:
+    def test_meta_files_parse_and_match_dir(self):
+        docs_dir = Path(__file__).parent.parent / "docs"
+        found = 0
+        for app_dir in docs_dir.iterdir():
+            if not app_dir.is_dir() or app_dir.name.startswith(("_", ".")) or app_dir.name == "tmp_pageClarification":
+                continue
+            meta_file = app_dir / "_meta.json"
+            if not meta_file.exists():
+                continue
+            data = json.loads(meta_file.read_text())
+            assert data["app"] == app_dir.name, f"{meta_file}: app mismatch"
+            assert re.fullmatch(r"\d+(\.\d+)*", data["version"]), f"{meta_file}: bad version"
+            assert data["pageCount"] > 0
+            found += 1
+        assert found > 0, "no _meta.json found in any app dir"
+
+    def test_meta_loaded_for_known_apps(self):
+        for app in ("network", "protect", "site-manager"):
+            if app in m._loaded_apps:
+                assert app in m._meta, f"{app} has no _meta loaded"
+
+    def test_instructions_name_versions(self):
+        for app, meta in m._meta.items():
+            assert f"{app} v{meta['version']}" in m.mcp.instructions
