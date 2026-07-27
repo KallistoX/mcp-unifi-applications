@@ -130,5 +130,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\",\n  \"type\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/gettrafficmatchinglist"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/gettrafficmatchinglist"
 }

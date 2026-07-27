@@ -172,5 +172,5 @@
     }
   },
   "responseSample": "{\n  \"cpuUtilizationPct\": 0,\n  \"interfaces\": {\n    \"radios\": [\n      {\n        \"frequencyGHz\": 0,\n        \"txRetriesPct\": 0\n      }\n    ]\n  },\n  \"lastHeartbeatAt\": \"2024-01-01T00:00:00Z\",\n  \"loadAverage15Min\": 0,\n  \"loadAverage1Min\": 0,\n  \"loadAverage5Min\": 0,\n  \"memoryUtilizationPct\": 0,\n  \"nextHeartbeatAt\": \"2024-01-01T00:00:00Z\",\n  \"uplink\": {\n    \"rxRateBps\": 0,\n    \"txRateBps\": 0\n  },\n  \"uptimeSec\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getadopteddevicelateststatistics"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getadopteddevicelateststatistics"
 }

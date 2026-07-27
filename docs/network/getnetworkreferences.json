@@ -91,5 +91,5 @@
     }
   },
   "responseSample": "{\n  \"referenceResources\": [\n    {\n      \"referenceCount\": 0,\n      \"references\": [\n        {\n          \"referenceId\": \"00000000-0000-0000-0000-000000000000\"\n        }\n      ],\n      \"resourceType\": \"CLIENT\"\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getnetworkreferences"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getnetworkreferences"
 }

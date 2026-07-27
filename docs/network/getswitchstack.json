@@ -302,5 +302,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"lags\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"members\": [\n        {\n          \"deviceId\": \"00000000-0000-0000-0000-000000000000\",\n          \"portIdxs\": [\n            0\n          ]\n        }\n      ],\n      \"metadata\": {\n        \"origin\": \"string\"\n      }\n    }\n  ],\n  \"members\": [\n    {\n      \"deviceId\": \"00000000-0000-0000-0000-000000000000\"\n    }\n  ],\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"name\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getswitchstack"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getswitchstack"
 }

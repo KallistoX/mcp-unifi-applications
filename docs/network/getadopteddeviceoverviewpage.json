@@ -195,5 +195,5 @@
     }
   },
   "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"features\": [\n        \"switching\"\n      ],\n      \"firmwareUpdatable\": true,\n      \"firmwareVersion\": \"string\",\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"interfaces\": [\n        \"ports\"\n      ],\n      \"ipAddress\": \"string\",\n      \"macAddress\": \"string\",\n      \"model\": \"string\",\n      \"name\": \"string\",\n      \"state\": \"ONLINE\",\n      \"supported\": true\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getadopteddeviceoverviewpage"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getadopteddeviceoverviewpage"
 }

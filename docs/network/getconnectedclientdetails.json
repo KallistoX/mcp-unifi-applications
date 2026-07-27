@@ -104,5 +104,5 @@
     }
   },
   "responseSample": "{\n  \"access\": null,\n  \"connectedAt\": \"2024-01-01T00:00:00Z\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"ipAddress\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getconnectedclientdetails"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getconnectedclientdetails"
 }
