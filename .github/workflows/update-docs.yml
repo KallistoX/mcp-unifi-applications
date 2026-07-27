@@ -21,6 +21,20 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      # Gate BEFORE the expensive scrape: ruff lints source (scrape-independent)
+      # and pytest runs against the committed docs. If this fails, `scrape`
+      # (needs: check) never runs, so a lint/test error can't waste an 82-page
+      # scrape. The post-scrape pytest still re-validates the fresh output.
+      - name: Lint and test (gate before scraping)
+        run: |
+          pip install .[dev]
+          ruff check .
+          pytest tests/ -v
+
       - name: Compare upstream vs scraped versions
         id: compare
         run: |
@@ -81,7 +95,6 @@ jobs:
       - name: Test against fresh docs
         run: |
           pip install .[dev]
-          ruff check .
           pytest tests/ -v
 
       - name: Read scraped version and diff stats
@@ -102,7 +115,8 @@ jobs:
 
       # NOTE: PRs created with GITHUB_TOKEN do not trigger ci.yml (GitHub suppresses
       # workflow events for Actions-created PRs). The merge gate for these PRs is the
-      # ruff+pytest step above, which runs against the fresh docs before the PR opens.
+      # check job's ruff+pytest gate plus the pytest step above, which re-validates
+      # against the fresh docs before the PR opens.
       - name: Open PR
         uses: peter-evans/create-pull-request@v7
         with:
@@ -114,6 +128,6 @@ jobs:
             Automated docs refresh: upstream published **v${{ steps.stats.outputs.version }}** for `${{ matrix.app }}`.
 
             - Pages: ${{ steps.stats.outputs.added }} added, ${{ steps.stats.outputs.modified }} modified, ${{ steps.stats.outputs.deleted }} removed
-            - Scrape had no failed pages; ruff + pytest passed against the fresh docs.
+            - Scrape had no failed pages; pytest passed against the fresh docs (ruff + pytest also gated pre-scrape).
 
             Weekly `update-docs` workflow.
