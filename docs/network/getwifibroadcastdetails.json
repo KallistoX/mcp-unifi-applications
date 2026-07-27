@@ -136,6 +136,14 @@
           ]
         },
         {
+          "name": "channel2gLockedTo6",
+          "required": true,
+          "type": "boolean",
+          "description": "Locks 2.4GHz radio channel to 6 on all broadcasting devices",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "clientFilteringPolicy",
           "required": false,
           "type": "object",
@@ -165,6 +173,14 @@
           "required": true,
           "type": "boolean",
           "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "dtimPeriod2gLockedTo3",
+          "required": true,
+          "type": "boolean",
+          "description": "Locks DTIM period to 3 for 2.4GHz radio",
           "discriminator": null,
           "children": []
         },
@@ -510,6 +526,6 @@
       "ansible": "- name: Get Wifi Broadcast Details\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/wifi/broadcasts/{wifiBroadcastId}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 0,\n    \"2.4\": 0\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"radiusConfiguration\": null,\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getwifibroadcastdetails"
+  "responseSample": "{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 0,\n    \"2.4\": 0\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": true,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"dtimPeriod2gLockedTo3\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"radiusConfiguration\": null,\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getwifibroadcastdetails"
 }

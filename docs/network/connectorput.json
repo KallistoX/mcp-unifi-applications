@@ -55,5 +55,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"ffcdb32c-6278-4364-8947-df4f77118df8\",\n  \"metadata\": {\n    \"isConfigurable\": true,\n    \"type\": \"system\"\n  },\n  \"name\": \"External\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/connectorput"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/connectorput"
 }

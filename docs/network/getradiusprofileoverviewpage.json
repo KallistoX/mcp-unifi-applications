@@ -156,5 +156,5 @@
     }
   },
   "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"name\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getradiusprofileoverviewpage"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getradiusprofileoverviewpage"
 }

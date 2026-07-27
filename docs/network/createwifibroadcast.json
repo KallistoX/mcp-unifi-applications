@@ -183,6 +183,14 @@
       ]
     },
     {
+      "name": "channel2gLockedTo6",
+      "required": true,
+      "type": "boolean",
+      "description": "Locks 2.4GHz radio channel to 6 on all broadcasting devices",
+      "discriminator": null,
+      "children": []
+    },
+    {
       "name": "clientFilteringPolicy",
       "required": false,
       "type": "object",
@@ -212,6 +220,14 @@
       "required": true,
       "type": "boolean",
       "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "dtimPeriod2gLockedTo3",
+      "required": true,
+      "type": "boolean",
+      "description": "Locks DTIM period to 3 for 2.4GHz radio",
       "discriminator": null,
       "children": []
     },
@@ -1801,6 +1817,14 @@
               ]
             },
             {
+              "name": "channel2gLockedTo6",
+              "required": true,
+              "type": "boolean",
+              "description": "Locks 2.4GHz radio channel to 6 on all broadcasting devices",
+              "discriminator": null,
+              "children": []
+            },
+            {
               "name": "clientFilteringPolicy",
               "required": false,
               "type": "object",
@@ -1830,6 +1854,14 @@
               "required": true,
               "type": "boolean",
               "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "dtimPeriod2gLockedTo3",
+              "required": true,
+              "type": "boolean",
+              "description": "Locks DTIM period to 3 for 2.4GHz radio",
               "discriminator": null,
               "children": []
             },
@@ -3423,6 +3455,14 @@
               ]
             },
             {
+              "name": "channel2gLockedTo6",
+              "required": true,
+              "type": "boolean",
+              "description": "Locks 2.4GHz radio channel to 6 on all broadcasting devices",
+              "discriminator": null,
+              "children": []
+            },
+            {
               "name": "clientFilteringPolicy",
               "required": false,
               "type": "object",
@@ -3452,6 +3492,14 @@
               "required": true,
               "type": "boolean",
               "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "dtimPeriod2gLockedTo3",
+              "required": true,
+              "type": "boolean",
+              "description": "Locks DTIM period to 3 for 2.4GHz radio",
               "discriminator": null,
               "children": []
             },
@@ -4975,7 +5023,32 @@
                   "name": "2.4",
                   "required": true,
                   "type": "integer",
-                  "description": null,
+                  "description": "DTIM period for 2.4GHz band must be 3 when dtimPeriod2gLockedTo3 is enabled.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "handoffSuggestionsConfiguration",
+              "required": false,
+              "type": "object",
+              "description": "Suggests low-signal clients to roam to a better access point. If null, then it is disabled.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "band5GHzRssiThreshold",
+                  "required": false,
+                  "type": "integer",
+                  "description": "RSSI threshold (dBm) for the 5 GHz band. If null, then it is disabled.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "band6GHzRssiThreshold",
+                  "required": false,
+                  "type": "integer",
+                  "description": "RSSI threshold (dBm) for the 6 GHz band. If null, then it is disabled.",
                   "discriminator": null,
                   "children": []
                 }
@@ -5144,6 +5217,14 @@
           ]
         },
         {
+          "name": "channel2gLockedTo6",
+          "required": true,
+          "type": "boolean",
+          "description": "Locks 2.4GHz radio channel to 6 on all broadcasting devices",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "clientFilteringPolicy",
           "required": false,
           "type": "object",
@@ -5173,6 +5254,14 @@
           "required": true,
           "type": "boolean",
           "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "dtimPeriod2gLockedTo3",
+          "required": true,
+          "type": "boolean",
+          "description": "Locks DTIM period to 3 for 2.4GHz radio",
           "discriminator": null,
           "children": []
         },
@@ -5504,20 +5593,20 @@
   ],
   "examples": {
     "local": {
-      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"basicDataRateKbpsByFrequencyGHz\\\": {\n    \\\"5\\\": 6000,\n    \\\"2.4\\\": 2000\n  },\n  \\\"blackoutScheduleConfiguration\\\": {\n    \\\"days\\\": [\n      {\n        \\\"day\\\": \\\"SUN\\\",\n        \\\"type\\\": \\\"string\\\"\n      }\n    ]\n  },\n  \\\"broadcastingDeviceFilter\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"clientFilteringPolicy\\\": {\n    \\\"action\\\": \\\"ALLOW\\\",\n    \\\"macAddressFilter\\\": [\n      \\\"string\\\"\n    ]\n  },\n  \\\"clientIsolationEnabled\\\": true,\n  \\\"enabled\\\": true,\n  \\\"hideName\\\": true,\n  \\\"mdnsProxyConfiguration\\\": {\n    \\\"mode\\\": \\\"string\\\"\n  },\n  \\\"multicastFilteringPolicy\\\": {\n    \\\"action\\\": \\\"string\\\"\n  },\n  \\\"multicastToUnicastConversionEnabled\\\": true,\n  \\\"name\\\": \\\"string\\\",\n  \\\"network\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"securityConfiguration\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"type\\\": \\\"string\\\",\n  \\\"uapsdEnabled\\\": true\n}\"",
-      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}`)\n\n\n  client := &http.Client {",
-      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {",
-      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": True,\n  \"enabled\": True,\n  \"hideName\": True,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": True,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
-      "ansible": "- name: Create Wifi Broadcast\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/wifi/broadcasts\"\n    method: POST\n    body:\n      basicDataRateKbpsByFrequencyGHz:\n        '5': 6000\n        '2.4': 2000\n      blackoutScheduleConfiguration:\n        days:\n          - day: SUN\n            type: string\n      broadcastingDeviceFilter:\n        type: string\n      clientFilteringPolicy:\n        action: ALLOW\n        macAddressFilter:\n          - string\n      clientIsolationEnabled: true\n      enabled: true\n      hideName: true\n      mdnsProxyConfiguration:\n        mode: string\n      multicastFilteringPolicy:\n        action: string\n      multicastToUnicastConversionEnabled: true\n      name: string\n      network:\n        type: string\n      securityConfiguration:\n        type: string\n      type: string\n      uapsdEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"basicDataRateKbpsByFrequencyGHz\\\": {\n    \\\"5\\\": 6000,\n    \\\"2.4\\\": 2000\n  },\n  \\\"blackoutScheduleConfiguration\\\": {\n    \\\"days\\\": [\n      {\n        \\\"day\\\": \\\"SUN\\\",\n        \\\"type\\\": \\\"string\\\"\n      }\n    ]\n  },\n  \\\"broadcastingDeviceFilter\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"channel2gLockedTo6\\\": true,\n  \\\"clientFilteringPolicy\\\": {\n    \\\"action\\\": \\\"ALLOW\\\",\n    \\\"macAddressFilter\\\": [\n      \\\"string\\\"\n    ]\n  },\n  \\\"clientIsolationEnabled\\\": true,\n  \\\"dtimPeriod2gLockedTo3\\\": true,\n  \\\"enabled\\\": true,\n  \\\"hideName\\\": true,\n  \\\"mdnsProxyConfiguration\\\": {\n    \\\"mode\\\": \\\"string\\\"\n  },\n  \\\"multicastFilteringPolicy\\\": {\n    \\\"action\\\": \\\"string\\\"\n  },\n  \\\"multicastToUnicastConversionEnabled\\\": true,\n  \\\"name\\\": \\\"string\\\",\n  \\\"network\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"securityConfiguration\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"type\\\": \\\"string\\\",\n  \\\"uapsdEnabled\\\": true\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": true,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"dtimPeriod2gLockedTo3\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}`)",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": true,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"dtimPeriod2gLockedTo3\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": True,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": True,\n  \"dtimPeriod2gLockedTo3\": True,\n  \"enabled\": True,\n  \"hideName\": True,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": True,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Create Wifi Broadcast\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/wifi/broadcasts\"\n    method: POST\n    body:\n      basicDataRateKbpsByFrequencyGHz:\n        '5': 6000\n        '2.4': 2000\n      blackoutScheduleConfiguration:\n        days:\n          - day: SUN\n            type: string\n      broadcastingDeviceFilter:\n        type: string\n      channel2gLockedTo6: true\n      clientFilteringPolicy:\n        action: ALLOW\n        macAddressFilter:\n          - string\n      clientIsolationEnabled: true\n      dtimPeriod2gLockedTo3: true\n      enabled: true\n      hideName: true\n      mdnsProxyConfiguration:\n        mode: string\n      multicastFilteringPolicy:\n        action: string\n      multicastToUnicastConversionEnabled: true\n      name: string\n      network:\n        type: string\n      securityConfiguration:\n        type: string\n      type: string\n      uapsdEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
     },
     "remote": {
-      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"basicDataRateKbpsByFrequencyGHz\\\": {\n    \\\"5\\\": 6000,\n    \\\"2.4\\\": 2000\n  },\n  \\\"blackoutScheduleConfiguration\\\": {\n    \\\"days\\\": [\n      {\n        \\\"day\\\": \\\"SUN\\\",\n        \\\"type\\\": \\\"string\\\"\n      }\n    ]\n  },\n  \\\"broadcastingDeviceFilter\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"clientFilteringPolicy\\\": {\n    \\\"action\\\": \\\"ALLOW\\\",\n    \\\"macAddressFilter\\\": [\n      \\\"string\\\"\n    ]\n  },\n  \\\"clientIsolationEnabled\\\": true,\n  \\\"enabled\\\": true,\n  \\\"hideName\\\": true,\n  \\\"mdnsProxyConfiguration\\\": {\n    \\\"mode\\\": \\\"string\\\"\n  },\n  \\\"multicastFilteringPolicy\\\": {\n    \\\"action\\\": \\\"string\\\"\n  },\n  \\\"multicastToUnicastConversionEnabled\\\": true,\n  \\\"name\\\": \\\"string\\\",\n  \\\"network\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"securityConfiguration\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"type\\\": \\\"string\\\",\n  \\\"uapsdEnabled\\\": true\n}\"",
-      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}`)\n\n\n  client := &http.Client {",
-      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {",
-      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": True,\n  \"enabled\": True,\n  \"hideName\": True,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": True,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
-      "ansible": "- name: Create Wifi Broadcast\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/wifi/broadcasts\"\n    method: POST\n    body:\n      basicDataRateKbpsByFrequencyGHz:\n        '5': 6000\n        '2.4': 2000\n      blackoutScheduleConfiguration:\n        days:\n          - day: SUN\n            type: string\n      broadcastingDeviceFilter:\n        type: string\n      clientFilteringPolicy:\n        action: ALLOW\n        macAddressFilter:\n          - string\n      clientIsolationEnabled: true\n      enabled: true\n      hideName: true\n      mdnsProxyConfiguration:\n        mode: string\n      multicastFilteringPolicy:\n        action: string\n      multicastToUnicastConversionEnabled: true\n      name: string\n      network:\n        type: string\n      securityConfiguration:\n        type: string\n      type: string\n      uapsdEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"basicDataRateKbpsByFrequencyGHz\\\": {\n    \\\"5\\\": 6000,\n    \\\"2.4\\\": 2000\n  },\n  \\\"blackoutScheduleConfiguration\\\": {\n    \\\"days\\\": [\n      {\n        \\\"day\\\": \\\"SUN\\\",\n        \\\"type\\\": \\\"string\\\"\n      }\n    ]\n  },\n  \\\"broadcastingDeviceFilter\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"channel2gLockedTo6\\\": true,\n  \\\"clientFilteringPolicy\\\": {\n    \\\"action\\\": \\\"ALLOW\\\",\n    \\\"macAddressFilter\\\": [\n      \\\"string\\\"\n    ]\n  },\n  \\\"clientIsolationEnabled\\\": true,\n  \\\"dtimPeriod2gLockedTo3\\\": true,\n  \\\"enabled\\\": true,\n  \\\"hideName\\\": true,\n  \\\"mdnsProxyConfiguration\\\": {\n    \\\"mode\\\": \\\"string\\\"\n  },\n  \\\"multicastFilteringPolicy\\\": {\n    \\\"action\\\": \\\"string\\\"\n  },\n  \\\"multicastToUnicastConversionEnabled\\\": true,\n  \\\"name\\\": \\\"string\\\",\n  \\\"network\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"securityConfiguration\\\": {\n    \\\"type\\\": \\\"string\\\"\n  },\n  \\\"type\\\": \\\"string\\\",\n  \\\"uapsdEnabled\\\": true\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": true,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"dtimPeriod2gLockedTo3\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}`)",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": true,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"dtimPeriod2gLockedTo3\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 6000,\n    \"2.4\": 2000\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": True,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": True,\n  \"dtimPeriod2gLockedTo3\": True,\n  \"enabled\": True,\n  \"hideName\": True,\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": True,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": True\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/connector/consoles/{consoleId}/proxy/network/integration/v1/sites/{siteId}/wifi/broadcasts\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Create Wifi Broadcast\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/wifi/broadcasts\"\n    method: POST\n    body:\n      basicDataRateKbpsByFrequencyGHz:\n        '5': 6000\n        '2.4': 2000\n      blackoutScheduleConfiguration:\n        days:\n          - day: SUN\n            type: string\n      broadcastingDeviceFilter:\n        type: string\n      channel2gLockedTo6: true\n      clientFilteringPolicy:\n        action: ALLOW\n        macAddressFilter:\n          - string\n      clientIsolationEnabled: true\n      dtimPeriod2gLockedTo3: true\n      enabled: true\n      hideName: true\n      mdnsProxyConfiguration:\n        mode: string\n      multicastFilteringPolicy:\n        action: string\n      multicastToUnicastConversionEnabled: true\n      name: string\n      network:\n        type: string\n      securityConfiguration:\n        type: string\n      type: string\n      uapsdEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 0,\n    \"2.4\": 0\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"radiusConfiguration\": null,\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/createwifibroadcast"
+  "responseSample": "{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 0,\n    \"2.4\": 0\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": true,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"dtimPeriod2gLockedTo3\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"radiusConfiguration\": null,\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/createwifibroadcast"
 }

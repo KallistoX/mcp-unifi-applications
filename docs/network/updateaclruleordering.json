@@ -58,5 +58,5 @@
     }
   },
   "responseSample": "{\n  \"orderedAclRuleIds\": [\n    \"00000000-0000-0000-0000-000000000000\"\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/updateaclruleordering"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/updateaclruleordering"
 }

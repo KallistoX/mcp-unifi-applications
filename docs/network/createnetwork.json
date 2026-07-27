@@ -2274,5 +2274,5 @@
     }
   },
   "responseSample": "{\n  \"default\": true,\n  \"dhcpGuarding\": {\n    \"trustedDhcpServerIpAddresses\": [\n      \"string\"\n    ]\n  },\n  \"enabled\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"management\": \"string\",\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"name\": \"string\",\n  \"vlanId\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/createnetwork"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/createnetwork"
 }

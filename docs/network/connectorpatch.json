@@ -55,5 +55,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"507f1f77bcf86cd799439011\",\n  \"liveview\": \"507f1f77bcf86cd799439012\",\n  \"modelKey\": \"viewer\",\n  \"name\": \"Living Room Viewer\",\n  \"state\": \"CONNECTED\",\n  \"streamLimit\": 4\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/connectorpatch"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/connectorpatch"
 }

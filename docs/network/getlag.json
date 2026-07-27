@@ -276,5 +276,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"members\": [\n    {\n      \"deviceId\": \"00000000-0000-0000-0000-000000000000\",\n      \"portIdxs\": [\n        0\n      ]\n    }\n  ],\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"type\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getlag"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getlag"
 }

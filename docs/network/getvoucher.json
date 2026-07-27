@@ -153,5 +153,5 @@
     }
   },
   "responseSample": "{\n  \"activatedAt\": \"2024-01-01T00:00:00Z\",\n  \"authorizedGuestCount\": 0,\n  \"authorizedGuestLimit\": 0,\n  \"code\": \"string\",\n  \"createdAt\": \"2024-01-01T00:00:00Z\",\n  \"dataUsageLimitMBytes\": 0,\n  \"expired\": true,\n  \"expiresAt\": \"2024-01-01T00:00:00Z\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"name\": \"string\",\n  \"rxRateLimitKbps\": 0,\n  \"timeLimitMinutes\": 0,\n  \"txRateLimitKbps\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getvoucher"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getvoucher"
 }

@@ -954,5 +954,5 @@
     }
   },
   "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"action\": {\n        \"type\": \"string\"\n      },\n      \"connectionStateFilter\": [\n        \"NEW\"\n      ],\n      \"description\": \"string\",\n      \"destination\": {\n        \"trafficFilter\": {\n          \"type\": \"string\"\n        },\n        \"zoneId\": \"00000000-0000-0000-0000-000000000000\"\n      },\n      \"enabled\": true,\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"index\": 0,\n      \"ipProtocolScope\": {\n        \"ipVersion\": \"string\"\n      },\n      \"ipsecFilter\": \"MATCH_ENCRYPTED\",\n      \"loggingEnabled\": true,\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"name\": \"string\",\n      \"schedule\": {\n        \"mode\": \"string\"\n      },\n      \"source\": {\n        \"trafficFilter\": {\n          \"type\": \"string\"\n        },\n        \"zoneId\": \"00000000-0000-0000-0000-000000000000\"\n      }\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.3.58/getfirewallpolicies"
+  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getfirewallpolicies"
 }
