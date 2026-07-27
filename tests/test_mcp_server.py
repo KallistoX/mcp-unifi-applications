@@ -12,7 +12,6 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import mcp_server as m
 
-
 # --- Helpers ---
 
 def _find_slug(fragment: str) -> str | None:
@@ -318,7 +317,7 @@ class TestGetDocsInfo:
 
     def test_contains_versions_and_counts(self):
         out = m.get_docs_info()
-        for app, meta in m._meta.items():
+        for meta in m._meta.values():
             assert f"API v{meta['version']}" in out
         assert "endpoints" in out
         assert "guides" in out
