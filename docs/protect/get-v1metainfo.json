@@ -16,7 +16,7 @@
           "name": "applicationVersion",
           "required": true,
           "type": "string",
-          "description": "Software version.",
+          "description": "Protect application version",
           "discriminator": null,
           "children": []
         }
@@ -40,5 +40,5 @@
     }
   },
   "responseSample": "{\n  \"applicationVersion\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1metainfo"
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1metainfo"
 }

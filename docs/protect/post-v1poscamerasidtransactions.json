@@ -1,0 +1,161 @@
+{
+  "h1": "Ingest a POS transaction",
+  "method": "POST",
+  "path": "/v1/pos/cameras/{id}/transactions",
+  "description": "Records a point of sale transaction as a camera event so the transaction details can be overlaid on recorded footage. Requires write access to the target camera. Footage capture is best-effort: the overlay only appears where the target camera was recording the transaction window (e.g. cameras in detections or adaptive recording modes), and a backdated timestamp may fall outside retained footage. A 200 response confirms the event was recorded, not that video exists for the window.",
+  "pathParameters": [
+    {
+      "name": "id",
+      "required": true,
+      "type": "string",
+      "description": "Camera id",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "type",
+      "required": true,
+      "type": "any",
+      "description": "Transaction type",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "externalId",
+      "required": true,
+      "type": "string",
+      "description": "Caller-supplied transaction id, unique per camera. Used for best-effort idempotency within a short window (in-memory, per-process; it resets on restart, so a retry after a restart or after the window elapses may create a duplicate event).",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "amount",
+      "required": true,
+      "type": "number",
+      "description": "Transaction total amount",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "currency",
+      "required": false,
+      "type": "string",
+      "description": "Uppercase ISO 4217 currency code, e.g. USD",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "lineItems",
+      "required": false,
+      "type": "Array of object",
+      "description": "Purchased line items",
+      "discriminator": null,
+      "children": [
+        {
+          "name": "title",
+          "required": true,
+          "type": "string",
+          "description": "Line item title",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "quantity",
+          "required": true,
+          "type": "integer",
+          "description": "Line item quantity",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "location",
+      "required": false,
+      "type": "object",
+      "description": null,
+      "discriminator": null,
+      "children": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": "Location or register identifier",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "name",
+          "required": false,
+          "type": "string",
+          "description": "Human-readable location or register name",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "name": "paymentTypes",
+      "required": false,
+      "type": "Array of string",
+      "description": "Payment method names",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "timestamp",
+      "required": false,
+      "type": "integer",
+      "description": "Transaction time in epoch milliseconds. Must be within the last 24 hours and no more than 5 minutes ahead of server time; out-of-range values are rejected. A value within the allowed skew is clamped to now.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "409"
+      ],
+      "fields": [
+        {
+          "name": "created",
+          "required": true,
+          "type": "boolean",
+          "description": "True when a new event was created; false when an event with the same externalId was already ingested (eventId echoes the existing one). Idempotency is best-effort - see the externalId description.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "eventId",
+          "required": false,
+          "type": "string",
+          "description": "Id of the created (or previously created) event",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/protect/integration/v1/pos/cameras/{id}/transactions\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"externalId\\\": \\\"string\\\",\n  \\\"amount\\\": 0,\n  \\\"currency\\\": \\\"string\\\",\n  \\\"lineItems\\\": [\n    {\n      \\\"title\\\": \\\"string\\\",\n      \\\"quantity\\\": 0\n    }\n  ],\n  \\\"location\\\": {\n    \\\"id\\\": \\\"string\\\",\n    \\\"name\\\": \\\"string\\\"\n  },\n  \\\"paymentTypes\\\": [\n    \\\"string\\\"\n  ],\n  \\\"timestamp\\\": 0\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/pos/cameras/{id}/transactions\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"externalId\": \"string\",\n  \"amount\": 0,\n  \"currency\": \"string\",\n  \"lineItems\": [\n    {\n      \"title\": \"string\",\n      \"quantity\": 0\n    }\n  ],\n  \"location\": {\n    \"id\": \"string\",\n    \"name\": \"string\"\n  },\n  \"paymentTypes\": [\n    \"string\"\n  ],\n  \"timestamp\": 0\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"externalId\": \"string\",\n  \"amount\": 0,\n  \"currency\": \"string\",\n  \"lineItems\": [\n    {\n      \"title\": \"string\",\n      \"quantity\": 0\n    }\n  ],\n  \"location\": {\n    \"id\": \"string\",\n    \"name\": \"string\"\n  },\n  \"paymentTypes\": [\n    \"string\"\n  ],\n  \"timestamp\": 0\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/pos/cameras/{id}/transactions',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = json.dumps({\n  \"externalId\": \"string\",\n  \"amount\": 0,\n  \"currency\": \"string\",\n  \"lineItems\": [\n    {\n      \"title\": \"string\",\n      \"quantity\": 0\n    }\n  ],\n  \"location\": {\n    \"id\": \"string\",\n    \"name\": \"string\"\n  },\n  \"paymentTypes\": [\n    \"string\"\n  ],\n  \"timestamp\": 0\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/proxy/protect/integration/v1/pos/cameras/{id}/transactions\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Ingest a POS transaction\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/pos/cameras/{id}/transactions\"\n    method: POST\n    body:\n      externalId: string\n      amount: 0\n      currency: string\n      lineItems:\n        - title: string\n          quantity: 0\n      location:\n        id: string\n        name: string\n      paymentTypes:\n        - string\n      timestamp: 0\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/pos/cameras/{id}/transactions\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"externalId\\\": \\\"string\\\",\n  \\\"amount\\\": 0,\n  \\\"currency\\\": \\\"string\\\",\n  \\\"lineItems\\\": [\n    {\n      \\\"title\\\": \\\"string\\\",\n      \\\"quantity\\\": 0\n    }\n  ],\n  \\\"location\\\": {\n    \\\"id\\\": \\\"string\\\",\n    \\\"name\\\": \\\"string\\\"\n  },\n  \\\"paymentTypes\\\": [\n    \\\"string\\\"\n  ],\n  \\\"timestamp\\\": 0\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/pos/cameras/{id}/transactions\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"externalId\": \"string\",\n  \"amount\": 0,\n  \"currency\": \"string\",\n  \"lineItems\": [\n    {\n      \"title\": \"string\",\n      \"quantity\": 0\n    }\n  ],\n  \"location\": {\n    \"id\": \"string\",\n    \"name\": \"string\"\n  },\n  \"paymentTypes\": [\n    \"string\"\n  ],\n  \"timestamp\": 0\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"externalId\": \"string\",\n  \"amount\": 0,\n  \"currency\": \"string\",\n  \"lineItems\": [\n    {\n      \"title\": \"string\",\n      \"quantity\": 0\n    }\n  ],\n  \"location\": {\n    \"id\": \"string\",\n    \"name\": \"string\"\n  },\n  \"paymentTypes\": [\n    \"string\"\n  ],\n  \"timestamp\": 0\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/pos/cameras/{id}/transactions',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"externalId\": \"string\",\n  \"amount\": 0,\n  \"currency\": \"string\",\n  \"lineItems\": [\n    {\n      \"title\": \"string\",\n      \"quantity\": 0\n    }\n  ],\n  \"location\": {\n    \"id\": \"string\",\n    \"name\": \"string\"\n  },\n  \"paymentTypes\": [\n    \"string\"\n  ],\n  \"timestamp\": 0\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/pos/cameras/{id}/transactions\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Ingest a POS transaction\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/pos/cameras/{id}/transactions\"\n    method: POST\n    body:\n      externalId: string\n      amount: 0\n      currency: string\n      lineItems:\n        - title: string\n          quantity: 0\n      location:\n        id: string\n        name: string\n      paymentTypes:\n        - string\n      timestamp: 0\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"created\": true,\n  \"eventId\": \"string\"\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/post-v1poscamerasidtransactions"
+}

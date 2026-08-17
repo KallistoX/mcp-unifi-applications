@@ -395,6 +395,11 @@
     "file": "get-v1ulp-users.json"
   },
   {
+    "slug": "post-v1poscamerasidtransactions",
+    "title": "Ingest a POS transaction",
+    "file": "post-v1poscamerasidtransactions.json"
+  },
+  {
     "slug": "quick_start.ansible",
     "title": "Quick Start",
     "file": "quick_start.ansible.json"

@@ -45,6 +45,22 @@
           "children": []
         },
         {
+          "name": "type",
+          "required": true,
+          "type": "stringnull",
+          "description": "The device model name.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "guid",
+          "required": true,
+          "type": "stringnull",
+          "description": "Stable identifier for the device model.",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "mac",
           "required": true,
           "type": "string",
@@ -186,5 +202,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1lights"
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1lights"
 }

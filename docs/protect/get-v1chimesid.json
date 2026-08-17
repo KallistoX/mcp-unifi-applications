@@ -54,6 +54,22 @@
           "children": []
         },
         {
+          "name": "type",
+          "required": true,
+          "type": "stringnull",
+          "description": "The device model name.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "guid",
+          "required": true,
+          "type": "stringnull",
+          "description": "Stable identifier for the device model.",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "mac",
           "required": true,
           "type": "string",
@@ -129,6 +145,6 @@
       "ansible": "- name: Get chime details\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/chimes/{id}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"cameraIds\": [\n    \"string\"\n  ],\n  \"ringSettings\": [\n    {\n      \"cameraId\": \"string\",\n      \"repeatTimes\": 0,\n      \"ringtoneId\": \"string\",\n      \"volume\": 0\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1chimesid"
+  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"cameraIds\": [\n    \"string\"\n  ],\n  \"ringSettings\": [\n    {\n      \"cameraId\": \"string\",\n      \"repeatTimes\": 0,\n      \"ringtoneId\": \"string\",\n      \"volume\": 0\n    }\n  ]\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1chimesid"
 }

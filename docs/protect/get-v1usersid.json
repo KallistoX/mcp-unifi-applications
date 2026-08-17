@@ -97,5 +97,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"firstName\": null,\n  \"lastName\": null,\n  \"email\": null,\n  \"ucoreUserId\": null,\n  \"modelKey\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1usersid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1usersid"
 }
