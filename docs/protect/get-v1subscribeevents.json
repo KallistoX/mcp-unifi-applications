@@ -104,5 +104,5 @@
     }
   },
   "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"type\": \"string\",\n    \"start\": 0,\n    \"end\": null,\n    \"device\": \"string\"\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1subscribeevents"
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1subscribeevents"
 }

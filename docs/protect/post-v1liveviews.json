@@ -211,5 +211,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"name\": \"string\",\n  \"isDefault\": true,\n  \"isGlobal\": true,\n  \"owner\": \"string\",\n  \"layout\": 0,\n  \"slots\": [\n    {\n      \"cameras\": [\n        \"string\"\n      ],\n      \"cycleMode\": \"motion\",\n      \"cycleInterval\": 0\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/post-v1liveviews"
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/post-v1liveviews"
 }

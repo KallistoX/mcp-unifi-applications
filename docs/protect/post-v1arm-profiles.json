@@ -179,5 +179,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"automations\": [\n    \"string\"\n  ],\n  \"creator\": \"string\",\n  \"schedules\": [\n    {\n      \"start\": \"string\",\n      \"end\": \"string\"\n    }\n  ],\n  \"recordEverything\": true,\n  \"activationDelay\": 0,\n  \"createdAt\": 0,\n  \"updatedAt\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/post-v1arm-profiles"
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/post-v1arm-profiles"
 }

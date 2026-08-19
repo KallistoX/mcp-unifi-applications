@@ -45,6 +45,22 @@
           "children": []
         },
         {
+          "name": "type",
+          "required": true,
+          "type": "stringnull",
+          "description": "The device model name.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "guid",
+          "required": true,
+          "type": "stringnull",
+          "description": "Stable identifier for the device model.",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "mac",
           "required": true,
           "type": "string",
@@ -86,6 +102,151 @@
           ]
         },
         {
+          "name": "featureFlags",
+          "required": false,
+          "type": "object",
+          "description": "Sensor feature flags.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "temperature",
+              "required": false,
+              "type": "object",
+              "description": "Matches `stats.temperature` and `temperatureSettings`.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "channelCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": "If a capability key is absent (`undefined`), the capability should be treated as not supported. When present, a positive value indicates how many independent channels of that measurement or input the sensor exposes. For example, two temperature probes would report as two channels.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "humidity",
+              "required": false,
+              "type": "object",
+              "description": "Matches `stats.humidity` and `humiditySettings`.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "channelCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": "If a capability key is absent (`undefined`), the capability should be treated as not supported. When present, a positive value indicates how many independent channels of that measurement or input the sensor exposes. For example, two temperature probes would report as two channels.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "light",
+              "required": false,
+              "type": "object",
+              "description": "Matches `stats.light` and `lightSettings`.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "channelCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": "If a capability key is absent (`undefined`), the capability should be treated as not supported. When present, a positive value indicates how many independent channels of that measurement or input the sensor exposes. For example, two temperature probes would report as two channels.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "motion",
+              "required": false,
+              "type": "object",
+              "description": "Matches motion state and `motionSettings`.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "channelCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": "If a capability key is absent (`undefined`), the capability should be treated as not supported. When present, a positive value indicates how many independent channels of that measurement or input the sensor exposes. For example, two temperature probes would report as two channels.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "waterLeak",
+              "required": false,
+              "type": "object",
+              "description": "Matches leak state and `leakSettings`.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "channelCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": "If a capability key is absent (`undefined`), the capability should be treated as not supported. When present, a positive value indicates how many independent channels of that measurement or input the sensor exposes. For example, two temperature probes would report as two channels.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "open",
+              "required": false,
+              "type": "object",
+              "description": "Matches entry/door-window/garage open state (`isOpened`).",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "channelCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": "If a capability key is absent (`undefined`), the capability should be treated as not supported. When present, a positive value indicates how many independent channels of that measurement or input the sensor exposes. For example, two temperature probes would report as two channels.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "tamper",
+              "required": false,
+              "type": "object",
+              "description": "Matches tamper detection (`tamperingDetectedAt`).",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "channelCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": "If a capability key is absent (`undefined`), the capability should be treated as not supported. When present, a positive value indicates how many independent channels of that measurement or input the sensor exposes. For example, two temperature probes would report as two channels.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "smoke",
+              "required": false,
+              "type": "object",
+              "description": "Matches smoke / CO alarm surfaces (`alarmSettings`, `alarmTriggeredAt`).",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "channelCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": "If a capability key is absent (`undefined`), the capability should be treated as not supported. When present, a positive value indicates how many independent channels of that measurement or input the sensor exposes. For example, two temperature probes would report as two channels.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
           "name": "stats",
           "required": true,
           "type": "object",
@@ -121,7 +282,7 @@
               "name": "humidity",
               "required": false,
               "type": "object",
-              "description": "Ambient light value (Lux).",
+              "description": "Relative humidity value (%).",
               "discriminator": null,
               "children": [
                 {
@@ -146,7 +307,7 @@
               "name": "temperature",
               "required": false,
               "type": "object",
-              "description": "Ambient light value (Lux).",
+              "description": "Temperature value (Celsius).",
               "discriminator": null,
               "children": [
                 {
@@ -575,5 +736,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1sensors"
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1sensors"
 }

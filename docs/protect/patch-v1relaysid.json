@@ -80,6 +80,22 @@
           "children": []
         },
         {
+          "name": "type",
+          "required": true,
+          "type": "stringnull",
+          "description": "The device model name.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "guid",
+          "required": true,
+          "type": "stringnull",
+          "description": "Stable identifier for the device model.",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "mac",
           "required": true,
           "type": "string",
@@ -312,6 +328,6 @@
       "ansible": "- name: Patch relay settings\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/relays/{id}\"\n    method: PATCH\n    body:\n      name: string\n      ledSettings:\n        isEnabled: true\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"mac\": \"string\",\n  \"ledSettings\": {\n    \"isEnabled\": true\n  },\n  \"outputs\": [\n    {\n      \"id\": 0,\n      \"name\": null,\n      \"type\": null,\n      \"delay\": null,\n      \"pulseDuration\": null,\n      \"state\": null,\n      \"rebootState\": \"restore\"\n    }\n  ],\n  \"inputs\": [\n    {\n      \"id\": 0,\n      \"name\": null,\n      \"state\": null,\n      \"actionTrigger\": null,\n      \"actionType\": null,\n      \"actionOutputId\": null\n    }\n  ],\n  \"wirelessConnectionState\": {\n    \"signalState\": {\n      \"signalQuality\": null,\n      \"signalStrength\": null\n    },\n    \"batteryStatus\": {\n      \"percentage\": null,\n      \"isLow\": true\n    },\n    \"bridge\": \"string\"\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/patch-v1relaysid"
+  "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"ledSettings\": {\n    \"isEnabled\": true\n  },\n  \"outputs\": [\n    {\n      \"id\": 0,\n      \"name\": null,\n      \"type\": null,\n      \"delay\": null,\n      \"pulseDuration\": null,\n      \"state\": null,\n      \"rebootState\": \"restore\"\n    }\n  ],\n  \"inputs\": [\n    {\n      \"id\": 0,\n      \"name\": null,\n      \"state\": null,\n      \"actionTrigger\": null,\n      \"actionType\": null,\n      \"actionOutputId\": null\n    }\n  ],\n  \"wirelessConnectionState\": {\n    \"signalState\": {\n      \"signalQuality\": null,\n      \"signalStrength\": null\n    },\n    \"batteryStatus\": {\n      \"percentage\": null,\n      \"isLow\": true\n    },\n    \"bridge\": \"string\"\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/patch-v1relaysid"
 }

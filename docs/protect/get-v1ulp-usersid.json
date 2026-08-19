@@ -54,6 +54,14 @@
           "children": []
         },
         {
+          "name": "email",
+          "required": true,
+          "type": "string",
+          "description": "Email of ulp user, empty string when none is set in UniFi Identity",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "status",
           "required": true,
           "type": "string",
@@ -88,6 +96,6 @@
       "ansible": "- name: Get identity user details\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/ulp-users/{id}\"\n    method: GET\n  register: result\n\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"id\": \"string\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"fullName\": \"string\",\n  \"status\": \"ACTIVE\",\n  \"modelKey\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1ulp-usersid"
+  "responseSample": "{\n  \"id\": \"string\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"fullName\": \"string\",\n  \"email\": \"string\",\n  \"status\": \"ACTIVE\",\n  \"modelKey\": \"string\"\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1ulp-usersid"
 }

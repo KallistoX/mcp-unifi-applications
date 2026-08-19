@@ -45,6 +45,14 @@
           "children": []
         },
         {
+          "name": "email",
+          "required": true,
+          "type": "string",
+          "description": "Email of ulp user, empty string when none is set in UniFi Identity",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "status",
           "required": true,
           "type": "string",
@@ -80,5 +88,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1ulp-users"
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1ulp-users"
 }

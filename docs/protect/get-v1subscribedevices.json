@@ -68,6 +68,30 @@
               "children": []
             },
             {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": "The NVR model name.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "guid",
+              "required": true,
+              "type": "stringnull",
+              "description": "GUID of the NVR",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "mac",
+              "required": true,
+              "type": "string",
+              "description": "The primary MAC address of the device.",
+              "discriminator": null,
+              "children": []
+            },
+            {
               "name": "doorbellSettings",
               "required": true,
               "type": "object",
@@ -215,6 +239,6 @@
       "python": "import asyncio\nimport websockets\n\n\nasync def main():\n    url = \"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\"\n    headers = {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n    }\n    async with websockets.connect(url, additional_headers=headers) as ws:\n        async for message in ws:\n            print(message)\n\n\nasyncio.run(main())"
     }
   },
-  "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"name\": \"string\",\n    \"doorbellSettings\": {\n      \"defaultMessageText\": \"string\",\n      \"defaultMessageResetTimeoutMs\": 0,\n      \"customMessages\": [\n        \"string\"\n      ],\n      \"customImages\": [\n        {\n          \"preview\": \"string\",\n          \"sprite\": \"string\"\n        }\n      ]\n    },\n    \"armMode\": {\n      \"status\": \"arming\",\n      \"armProfileId\": null,\n      \"armedAt\": null,\n      \"willBeArmedAt\": null,\n      \"breachDetectedAt\": null,\n      \"breachEventCount\": 0,\n      \"breachTriggerEventId\": null,\n      \"breachEventId\": null\n    }\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.1.87/get-v1subscribedevices"
+  "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\",\n    \"guid\": null,\n    \"mac\": \"string\",\n    \"doorbellSettings\": {\n      \"defaultMessageText\": \"string\",\n      \"defaultMessageResetTimeoutMs\": 0,\n      \"customMessages\": [\n        \"string\"\n      ],\n      \"customImages\": [\n        {\n          \"preview\": \"string\",\n          \"sprite\": \"string\"\n        }\n      ]\n    },\n    \"armMode\": {\n      \"status\": \"arming\",\n      \"armProfileId\": null,\n      \"armedAt\": null,\n      \"willBeArmedAt\": null,\n      \"breachDetectedAt\": null,\n      \"breachEventCount\": 0,\n      \"breachTriggerEventId\": null,\n      \"breachEventId\": null\n    }\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1subscribedevices"
 }
