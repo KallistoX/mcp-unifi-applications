@@ -7,6 +7,7 @@
 ![CI](https://github.com/KallistoX/mcp-unifi-applications/actions/workflows/ci.yml/badge.svg)
 [![PyPI](https://img.shields.io/pypi/v/mcp-unifi-applications)](https://pypi.org/project/mcp-unifi-applications/)
 [![Python](https://img.shields.io/pypi/pyversions/mcp-unifi-applications)](https://pypi.org/project/mcp-unifi-applications/)
+[![Glama](https://glama.ai/mcp/servers/KallistoX/mcp-unifi-applications/badges/score.svg)](https://glama.ai/mcp/servers/KallistoX/mcp-unifi-applications)
 
 A Model Context Protocol (MCP) server that makes the official [UniFi API documentation](https://developer.ui.com) queryable by AI agents — endpoint search, schema drill-down, and code examples in five languages, for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
 
@@ -279,6 +280,7 @@ mcp-unifi-applications/
 ├── Dockerfile          # Scraper container image
 ├── pyproject.toml      # Python project config
 ├── server.json         # MCP registry manifest
+├── glama.json          # Glama maintainer declaration
 ├── src/
 │   └── mcp_unifi_applications/
 │       ├── server.py   # MCP server (Python, stdio transport)
