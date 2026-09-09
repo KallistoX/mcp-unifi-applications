@@ -22,6 +22,12 @@ import { writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
 const SITE = 'https://developer.ui.com';
 const OUTPUT = '/output';
 const RETRY_LIMIT = 3;
+// Measured against the live docs with a MutationObserver: clicking a variant or
+// an expand button issues no network request at all - the page is fetched once
+// and everything after is a client-side re-render - and the DOM settles in a
+// single mutation batch after 3-5ms. The former 200/300/400/500ms sleeps were
+// blind guesses about a round trip that never happens. 50ms is a 10x margin.
+const SETTLE_MS = 50;
 // Mirrors window.__RESPONSE_SECTION in the injected parser.
 const RESPONSE_SECTION = '__response';
 const NAV_TIMEOUT = 20000;
@@ -172,18 +178,17 @@ async function injectParser(page) {
 }
 
 async function expandAll(page) {
-  let round = 0;
-  while (round < 20) {
-    const expanders = await page.$$('[class*="SchemaViewer__ExpandButton"]');
-    const toClick = [];
-    for (const el of expanders) {
-      if (!await el.isVisible()) continue;
-      if ((await el.innerText()).trim() === 'Expand') toClick.push(el);
-    }
-    if (toClick.length === 0) break;
-    round++;
-    for (const el of toClick) try { await el.click(); } catch (_) {}
-    await page.waitForTimeout(400);
+  for (let round = 0; round < 20; round++) {
+    // One round trip per round. Checking visibility and text per element over
+    // the debug protocol cost three round trips per expander, and this runs
+    // twice for every discriminator variant on the page.
+    const clicked = await page.evaluate(() =>
+      Array.from(document.querySelectorAll('[class*="SchemaViewer__ExpandButton"]'))
+        .filter(b => b.offsetParent !== null && b.innerText.trim() === 'Expand')
+        .map(b => (b.click(), 1)).length
+    );
+    if (!clicked) break;
+    await page.waitForTimeout(SETTLE_MS);
   }
 }
 
@@ -203,7 +208,7 @@ async function enrichSchema(page, fields, sectionHeaderText, clickPath = [], dep
       if (clickPath.length > 0) {
         for (const cp of clickPath) {
           await page.evaluate((cp) => window.__clickOption(cp.headerText, cp.fieldName, cp.option, cp.parentFieldName), cp);
-          await page.waitForTimeout(200);
+          await page.waitForTimeout(SETTLE_MS);
         }
         await expandAll(page);
       }
@@ -211,7 +216,7 @@ async function enrichSchema(page, fields, sectionHeaderText, clickPath = [], dep
       await page.evaluate(({ headerText, fieldName, option, parentFieldName }) =>
         window.__clickOption(headerText, fieldName, option, parentFieldName),
         { headerText: sectionHeaderText, fieldName: field.name, option: disc.value, parentFieldName });
-      await page.waitForTimeout(500);
+      await page.waitForTimeout(SETTLE_MS);
       await expandAll(page);
 
       const siblings = await page.evaluate(({ headerText, fieldName, parentFieldName }) =>
@@ -229,7 +234,7 @@ async function enrichSchema(page, fields, sectionHeaderText, clickPath = [], dep
       await page.evaluate(({ headerText, fieldName, option, parentFieldName }) =>
         window.__clickOption(headerText, fieldName, option, parentFieldName),
         { headerText: sectionHeaderText, fieldName: field.name, option: field.discriminator[0].value, parentFieldName });
-      await page.waitForTimeout(300);
+      await page.waitForTimeout(SETTLE_MS);
       await expandAll(page);
     }
   }
