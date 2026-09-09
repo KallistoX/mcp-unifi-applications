@@ -1,10 +1,10 @@
-# MCP UniFi Applications
+# UniFi MCP Server — API Documentation for Network, Protect, Site Manager & InnerSpace
 
 ![CI](https://github.com/KallistoX/mcp-unifi-applications/actions/workflows/ci.yml/badge.svg)
 
-An MCP server that exposes [UniFi application API](https://developer.ui.com) documentation (Network, Protect, Site Manager, InnerSpace) as queryable tools for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
+A Model Context Protocol (MCP) server that makes the official [UniFi API documentation](https://developer.ui.com) queryable by AI agents — endpoint search, schema drill-down, and code examples in five languages, for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
 
-Includes a Playwright-based scraper that turns the JS-rendered docs SPA into structured JSON files, and a Python MCP server that serves them.
+It is **read-only and credential-free**: it serves documentation, it does not talk to your controller. Includes a Playwright-based scraper that turns the JS-rendered docs SPA into structured JSON, and a Python MCP server that serves it.
 
 ## Example
 
@@ -109,6 +109,29 @@ pip install .
 }
 ```
 
+## How this differs from other UniFi MCP servers
+
+Most UniFi MCP servers are **control planes**: they authenticate against your controller and expose tools that read and change live state — devices, clients, firewall rules. This one is a **knowledge plane**. It never sees your network.
+
+|  | Control-plane servers | This server |
+|---|---|---|
+| Needs controller credentials | Yes | No |
+| Touches live network state | Yes | No |
+| Answers "what does this endpoint accept?" | Rarely | That is the whole job |
+| Useful before you have hardware | No | Yes |
+
+They are complements, not competitors. Pair this one with a control-plane server when you are *building* against the UniFi API: this one tells the model what the API looks like, the other one calls it.
+
+### Why not just feed the model the OpenAPI spec?
+
+Ubiquiti does publish one — `developer.ui.com/<app>/v<version>/openapi.json`. It is a good spec, and it is missing exactly the parts an agent needs most. For Network v10.4.57 (44 paths, 73 operations, 379 schemas):
+
+- **0 code examples.** No `x-codeSamples` anywhere. This server carries ten per endpoint — curl, Go, Node.js, Python and Ansible, each in a local and a remote variant.
+- **0 response examples.** This server ships the rendered response sample for every endpoint.
+- **No guide pages.** Filtering syntax, error handling, getting started — those live only in the rendered docs.
+
+And a 409 KB spec does not fit usefully into a context window. `get_field_schema` returns one field subtree (`management[GATEWAY].dhcpV4`) instead of a 70 KB endpoint schema, so the model pulls in what it needs and nothing else.
+
 ## Supported Applications
 
 | Application | URL | Local/Remote | Notes |
@@ -173,6 +196,7 @@ mcp-unifi-applications/
 ├── mcp_server.py       # MCP server (Python, stdio transport)
 ├── Dockerfile          # Scraper container image
 ├── pyproject.toml      # Python project config
+├── server.json         # MCP registry manifest
 ├── docs/               # Scraped JSON output
 │   ├── network/        # Network API docs
 │   ├── protect/        # Protect API docs
