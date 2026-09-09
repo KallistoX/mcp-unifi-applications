@@ -428,10 +428,18 @@ async function discoverVersions(page, appPath) {
   const versions = await page.evaluate((appPath) => {
     const items = Array.from(document.querySelectorAll('[data-ui-portal-container] li'));
     if (items.length > 0) {
-      return items.map(li => ({
-        version: li.innerText.trim().replace(/^v/, ''),
-        selected: li.getAttribute('data-ui-selected') === 'true',
-      }));
+      // Dropdown labels are not bare versions: Early Access apps read "v1.3.23 (EA)".
+      // Keep the label for display, but the version must be the semver alone — it is
+      // interpolated into the docs URL.
+      return items.map(li => {
+        const label = li.innerText.trim();
+        const m = label.match(/v?(\d+(?:\.\d+)*)/);
+        return m ? {
+          version: m[1],
+          label,
+          selected: li.getAttribute('data-ui-selected') === 'true',
+        } : null;
+      }).filter(Boolean);
     }
     // Fallback: look for version in URL or nav links
     const links = Array.from(document.querySelectorAll(`a[href*="/${appPath}/v"]`));
@@ -467,7 +475,10 @@ if (versions.length === 0) {
 
 if (listVersions) {
   console.log('\nAvailable versions:');
-  for (const v of versions) console.log(`  ${v.selected ? '* ' : '  '}v${v.version}`);
+  for (const v of versions) {
+    const suffix = v.label && v.label.replace(/^v/, '') !== v.version ? `  (${v.label})` : '';
+    console.log(`  ${v.selected ? '* ' : '  '}v${v.version}${suffix}`);
+  }
   await browser.close();
   process.exit(0);
 }
@@ -514,6 +525,13 @@ if (singleMode) {
 
 const outDir = `${OUTPUT}/${APP_PATH}`;
 console.log(`${singleMode ? 'Selected' : 'Found'} ${links.length} pages\n`);
+if (!singleMode && links.length === 0) {
+  // Writing _meta.json here would record a healthy-looking 0-page scrape: no
+  // _failed.txt, no failures, no docs. Fail instead so CI cannot open a PR for it.
+  console.error(`No nav links found at ${BASE} - the page may not exist or the docs layout changed.`);
+  await browser.close();
+  process.exit(1);
+}
 mkdirSync(outDir, { recursive: true });
 if (!singleMode) rmSync(`${outDir}/_failed.txt`, { force: true });
 
