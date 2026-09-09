@@ -1,0 +1,156 @@
+{
+  "h1": "List devices",
+  "method": "GET",
+  "path": "/v1/mobility/workspaces/{workspaceID}/devices",
+  "description": "Returns a paginated list of devices in the workspace. Each item contains identity and status fields only. Use getDevice for full detail.",
+  "pathParameters": [
+    {
+      "name": "workspaceID",
+      "required": true,
+      "type": "string",
+      "description": "Workspace UUID. Obtain from API call: GET /v1/mobility/workspaces",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [
+    {
+      "name": "limit",
+      "required": false,
+      "type": "integer",
+      "description": "Maximum records per page. Capped at 200.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "offset",
+      "required": false,
+      "type": "integer",
+      "description": "Number of records to skip.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "429",
+        "500"
+      ],
+      "fields": [
+        {
+          "name": "total",
+          "required": false,
+          "type": "integer",
+          "description": "Total number of records matching the query, ignoring pagination.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "offset",
+          "required": false,
+          "type": "integer",
+          "description": "Number of records skipped (echoes the `offset` query parameter).",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "limit",
+          "required": false,
+          "type": "integer",
+          "description": "Page size applied (echoes the `limit` query parameter).",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "httpStatusCode",
+          "required": true,
+          "type": "integer",
+          "description": "HTTP status code.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "traceId",
+          "required": true,
+          "type": "string",
+          "description": "Matches `X-Request-ID` if provided, otherwise auto-generated.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "data",
+          "required": true,
+          "type": "Array of object (DeviceSummary)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "model",
+              "required": true,
+              "type": "string",
+              "description": "Hardware model name. - `UMR` — UMR Flex EU/US - `UMR Industrial` — UMR Industrial EU/US - `UMR Ultra` — UMR Ultra EU/US/ROW",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "state",
+              "required": true,
+              "type": "string",
+              "description": "Current device state. | Value | Description | |-------|-------------| | `CONNECTED` | Online and communicating normally | | `DISCONNECTED` | Lost connection to the cloud | | `ADOPTING` | Adoption in progress | | `ADOPTING_TIMEOUT` | Adoption timed out | | `DOWNLOADING` | Downloading firmware update | | `UPGRADING` | Applying firmware update | | `RESTARTING` | Rebooting | | `FACTORY_RESET` | Performing factory reset | | `GETTING_READY` | Initialising after adoption | | `RESTORING` | Restoring from backup | | `NULL` | Record exists but adoption not started | | `DELETING` | Cloud-side deletion in progress |",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "firmware_version",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "mac_address",
+              "required": true,
+              "type": "string",
+              "description": "Primary MAC address in upper-case colon-separated format. Empty string when not yet initialised.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices?limit={limit}&offset={offset}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices?limit={limit}&offset={offset}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices?limit={limit}&offset={offset}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/mobility/workspaces/{workspaceID}/devices?limit=%7Blimit%7D&offset=%7Boffset%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/mobility/v1.0.0/listdevices"
+}
