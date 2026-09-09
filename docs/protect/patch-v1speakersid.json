@@ -196,5 +196,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"volume\": 0,\n  \"micVolume\": 0,\n  \"isMicEnabled\": true,\n  \"speakerState\": {\n    \"status\": \"idle\",\n    \"mode\": \"listen\"\n  },\n  \"featureFlags\": {\n    \"hasMic\": true\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/patch-v1speakersid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/patch-v1speakersid"
 }

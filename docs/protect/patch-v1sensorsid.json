@@ -985,5 +985,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"mountType\": \"door\",\n  \"batteryStatus\": {\n    \"percentage\": null,\n    \"isLow\": true\n  },\n  \"featureFlags\": {\n    \"temperature\": {\n      \"channelCount\": 0\n    },\n    \"humidity\": {\n      \"channelCount\": 0\n    },\n    \"light\": {\n      \"channelCount\": 0\n    },\n    \"motion\": {\n      \"channelCount\": 0\n    },\n    \"waterLeak\": {\n      \"channelCount\": 0\n    },\n    \"open\": {\n      \"channelCount\": 0\n    },\n    \"tamper\": {\n      \"channelCount\": 0\n    },\n    \"smoke\": {\n      \"channelCount\": 0\n    }\n  },\n  \"stats\": {\n    \"light\": {\n      \"value\": 0,\n      \"status\": \"neutral\"\n    },\n    \"humidity\": {\n      \"value\": 0,\n      \"status\": \"neutral\"\n    },\n    \"temperature\": {\n      \"value\": 0,\n      \"status\": \"neutral\"\n    }\n  },\n  \"lightSettings\": {\n    \"isEnabled\": true,\n    \"margin\": 0,\n    \"lowThreshold\": null,\n    \"highThreshold\": null",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/patch-v1sensorsid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/patch-v1sensorsid"
 }
