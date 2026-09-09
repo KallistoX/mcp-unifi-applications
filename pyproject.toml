@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "mcp-unifi-applications"
 version = "0.1.0"
@@ -26,9 +30,17 @@ Repository = "https://github.com/KallistoX/mcp-unifi-applications"
 dev = ["pytest>=8.0", "ruff>=0.14"]
 
 [project.scripts]
-mcp-unifi-applications = "mcp_server:mcp.run"
+mcp-unifi-applications = "mcp_unifi_applications.server:mcp.run"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# The scraped docs are the payload — without them an installed server has nothing to serve.
+[tool.setuptools.package-data]
+"mcp_unifi_applications" = ["docs/*/*.json"]
 
 [tool.ruff]
+src = ["src"]
 line-length = 120
 target-version = "py311"
 

@@ -47,7 +47,7 @@ jobs:
               echo "::error::No version strings found in https://developer.ui.com/${app} - site layout may have changed"
               exit 1
             fi
-            current="v$(python3 -c "import json; print(json.load(open('docs/${app}/_meta.json'))['version'])" 2>/dev/null || echo 0.0.0)"
+            current="v$(python3 -c "import json; print(json.load(open('src/mcp_unifi_applications/docs/${app}/_meta.json'))['version'])" 2>/dev/null || echo 0.0.0)"
             echo "${app}: scraped=${current} upstream=${latest}"
             if [ "$latest" != "$current" ]; then
               outdated+=("$app")
@@ -76,15 +76,15 @@ jobs:
 
       - name: Scrape ${{ matrix.app }}
         run: |
-          rm -f "docs/${{ matrix.app }}"/*.json "docs/${{ matrix.app }}/_failed.txt"
-          docker run --rm -v "${{ github.workspace }}/docs:/output" unifi-scraper \
+          rm -f "src/mcp_unifi_applications/docs/${{ matrix.app }}"/*.json "src/mcp_unifi_applications/docs/${{ matrix.app }}/_failed.txt"
+          docker run --rm -v "${{ github.workspace }}/src/mcp_unifi_applications/docs:/output" unifi-scraper \
             node scrape.mjs --app "${{ matrix.app }}" --force
 
       - name: Fail if pages failed to scrape
         run: |
-          if [ -f "docs/${{ matrix.app }}/_failed.txt" ]; then
+          if [ -f "src/mcp_unifi_applications/docs/${{ matrix.app }}/_failed.txt" ]; then
             echo "::error::Scrape had failures - not opening a PR"
-            cat "docs/${{ matrix.app }}/_failed.txt"
+            cat "src/mcp_unifi_applications/docs/${{ matrix.app }}/_failed.txt"
             exit 1
           fi
 
@@ -104,11 +104,11 @@ jobs:
         id: stats
         run: |
           set -euo pipefail
-          version=$(python3 -c "import json; print(json.load(open('docs/${{ matrix.app }}/_meta.json'))['version'])")
-          git add -A "docs/${{ matrix.app }}"
-          added=$(git diff --cached --no-renames --name-status -- "docs/${{ matrix.app }}" | grep -c '^A' || true)
-          modified=$(git diff --cached --no-renames --name-status -- "docs/${{ matrix.app }}" | grep -c '^M' || true)
-          deleted=$(git diff --cached --no-renames --name-status -- "docs/${{ matrix.app }}" | grep -c '^D' || true)
+          version=$(python3 -c "import json; print(json.load(open('src/mcp_unifi_applications/docs/${{ matrix.app }}/_meta.json'))['version'])")
+          git add -A "src/mcp_unifi_applications/docs/${{ matrix.app }}"
+          added=$(git diff --cached --no-renames --name-status -- "src/mcp_unifi_applications/docs/${{ matrix.app }}" | grep -c '^A' || true)
+          modified=$(git diff --cached --no-renames --name-status -- "src/mcp_unifi_applications/docs/${{ matrix.app }}" | grep -c '^M' || true)
+          deleted=$(git diff --cached --no-renames --name-status -- "src/mcp_unifi_applications/docs/${{ matrix.app }}" | grep -c '^D' || true)
           {
             echo "version=${version}"
             echo "added=${added}"
@@ -127,7 +127,7 @@ jobs:
           title: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
           commit-message: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
           add-paths: |
-            docs/${{ matrix.app }}/**
+            src/mcp_unifi_applications/docs/${{ matrix.app }}/**
             README.md
           body: |
             Automated docs refresh: upstream published **v${{ steps.stats.outputs.version }}** for `${{ matrix.app }}`.
