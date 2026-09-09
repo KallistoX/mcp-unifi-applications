@@ -21,8 +21,14 @@ npm install
 ## Running Tests
 
 ```bash
-pytest tests/ -v
+pytest tests/ -v      # MCP server
+node --test tests/    # scraper parsers (lib/parse.mjs)
 ```
+
+The scraper's parsing logic lives in `lib/parse.mjs` rather than inside the
+`page.evaluate` callbacks, because Playwright serialises those into the browser
+where no test can reach them. Keep it that way: have the browser read the DOM
+and return plain data, and make every decision in `lib/`.
 
 ## Scraper Development
 
