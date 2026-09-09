@@ -1,5 +1,9 @@
 # UniFi MCP Server — Queryable API Documentation
 
+<!-- Ownership token for the MCP registry: it fetches this README as the PyPI
+     long_description and looks for this exact token. Do not remove. -->
+<!-- mcp-name: io.github.KallistoX/mcp-unifi-applications -->
+
 ![CI](https://github.com/KallistoX/mcp-unifi-applications/actions/workflows/ci.yml/badge.svg)
 
 A Model Context Protocol (MCP) server that makes the official [UniFi API documentation](https://developer.ui.com) queryable by AI agents — endpoint search, schema drill-down, and code examples in five languages, for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
