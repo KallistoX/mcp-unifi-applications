@@ -15,8 +15,20 @@ authors = [
 keywords = ["mcp", "unifi", "ubiquiti", "api", "documentation", "claude", "protect", "site-manager", "innerspace", "mobility", "carrier-fabric"]
 classifiers = [
     "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Documentation",
     "Topic :: Software Development :: Documentation",
+    "Topic :: System :: Networking",
+    "Topic :: System :: Systems Administration",
 ]
 dependencies = [
     "fastmcp>=3.4",
@@ -24,7 +36,11 @@ dependencies = [
 ]
 
 [project.urls]
+Homepage = "https://github.com/KallistoX/mcp-unifi-applications"
+Documentation = "https://github.com/KallistoX/mcp-unifi-applications#readme"
 Repository = "https://github.com/KallistoX/mcp-unifi-applications"
+Issues = "https://github.com/KallistoX/mcp-unifi-applications/issues"
+Changelog = "https://github.com/KallistoX/mcp-unifi-applications/releases"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.14"]
