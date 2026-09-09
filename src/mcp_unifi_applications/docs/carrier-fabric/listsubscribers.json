@@ -1,0 +1,261 @@
+{
+  "h1": "List subscribers",
+  "method": "GET",
+  "path": "/v1/carrier/subscribers",
+  "description": "Lists subscribers visible to the key (in-scope subscribers only). Cursor-paginated. Requires scope read:subscribers.",
+  "pathParameters": [],
+  "queryParameters": [
+    {
+      "name": "limit",
+      "required": false,
+      "type": "integer",
+      "description": "Page size — how many subscribers to return per page. Alias: pageSize. Must be an integer from 1 to 500. Anything else is rejected with 400 validation_failed naming whichever of the two spellings you sent and the bound it broke: a non-numeric value (abc, 1.5), a value below 1 (0, -1), or a value above 500. Nothing is silently rounded or clamped — if you ask for 1000 you get an error stating the maximum is 500, not a page of 500. Omit the parameter for the default of 50.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "cursor",
+      "required": false,
+      "type": "string",
+      "description": "Opaque keyset cursor from a prior response's meta.nextCursor. Alias: nextToken. A cursor is only valid for the same sort it was issued for.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "sort",
+      "required": false,
+      "type": "string",
+      "description": "Sort field, optionally prefixed with \"-\" for descending. When omitted, results are newest-first.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "planId",
+      "required": false,
+      "type": "string",
+      "description": "Filter by assigned service plan. Must be a valid UUID — a malformed value is rejected with 400 validation_failed rather than silently matching nothing. A well-formed id that matches no plan returns 200 with an empty list.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "suspended",
+      "required": false,
+      "type": "boolean",
+      "description": "Filter by suspension state.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "429",
+        "500",
+        "503"
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "required": false,
+          "type": "Array of object (Subscriber)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "orgId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "subscriberNumber",
+              "required": false,
+              "type": "string",
+              "description": "The operator-supplied external reference.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "email",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "notes",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "serviceAddress",
+              "required": false,
+              "type": "string",
+              "description": "Omitted from the response entirely when not set (never returned as JSON null).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "planId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hostId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "state",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "suspended",
+              "required": false,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "suspendReason",
+              "required": false,
+              "type": "string",
+              "description": "Present only while suspended; omitted (not null) otherwise.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "suspendedAt",
+              "required": false,
+              "type": "string",
+              "description": "Omitted (not null) when the subscriber has never been suspended.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "metadata",
+              "required": false,
+              "type": "object",
+              "description": "Omitted (not null) when no metadata is set.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "activatedAt",
+              "required": false,
+              "type": "string",
+              "description": "Omitted (not null) until the subscriber's first host attach.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "createdAt",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "updatedAt",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "meta",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "nextCursor",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hasMore",
+              "required": false,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/carrier/subscribers?limit={limit}&cursor={cursor}&sort={sort}&planId={planId}&suspended={suspended}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/carrier/subscribers?limit={limit}&cursor={cursor}&sort={sort}&planId={planId}&suspended={suspended}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/carrier/subscribers?limit={limit}&cursor={cursor}&sort={sort}&planId={planId}&suspended={suspended}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/carrier/subscribers?limit=%7Blimit%7D&cursor=%7Bcursor%7D&sort=%7Bsort%7D&planId=%7BplanId%7D&suspended=%7Bsuspended%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/carrier-fabric/v1.0.0/listsubscribers"
+}

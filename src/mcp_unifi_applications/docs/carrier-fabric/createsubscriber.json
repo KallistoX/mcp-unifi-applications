@@ -1,0 +1,245 @@
+{
+  "h1": "Create a subscriber",
+  "method": "POST",
+  "path": "/v1/carrier/subscribers",
+  "description": "Creates a subscriber (identity, optional service address, and optionally a plan; attach a gateway host separately). Always returns 201 — there is no external-reference deduplication. subscriberNumber is the only required field. Requires scope create:subscribers.",
+  "pathParameters": [],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "subscriberNumber",
+      "required": true,
+      "type": "string",
+      "description": "The operator-supplied external reference. Required; 1-32 characters.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "name",
+      "required": false,
+      "type": "string",
+      "description": "Optional display name for the subscriber (e.g. the customer or account name shown in your CRM). The 128 limit is bytes of UTF-8, so multi-byte characters each count as more than one.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "email",
+      "required": false,
+      "type": "string",
+      "description": "The 255 limit is bytes of UTF-8.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "notes",
+      "required": false,
+      "type": "string",
+      "description": "The 4096 limit is bytes of UTF-8, so multi-byte characters each count as more than one.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "serviceAddress",
+      "required": false,
+      "type": "string",
+      "description": "Free-text service address. The 1024 limit is bytes of UTF-8, so multi-byte characters each count as more than one.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "planId",
+      "required": false,
+      "type": "string",
+      "description": "Optionally assign a plan at create time.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "metadata",
+      "required": false,
+      "type": "object",
+      "description": "Free-form key/value metadata. The serialized JSON object must not exceed 8192 bytes (8 KiB); a larger object is rejected with 400.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "201",
+        "400",
+        "401",
+        "403",
+        "404",
+        "429",
+        "500",
+        "503"
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "orgId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "subscriberNumber",
+              "required": false,
+              "type": "string",
+              "description": "The operator-supplied external reference.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "email",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "notes",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "serviceAddress",
+              "required": false,
+              "type": "string",
+              "description": "Omitted from the response entirely when not set (never returned as JSON null).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "planId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "hostId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "state",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "suspended",
+              "required": false,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "suspendReason",
+              "required": false,
+              "type": "string",
+              "description": "Present only while suspended; omitted (not null) otherwise.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "suspendedAt",
+              "required": false,
+              "type": "string",
+              "description": "Omitted (not null) when the subscriber has never been suspended.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "metadata",
+              "required": false,
+              "type": "object",
+              "description": "Omitted (not null) when no metadata is set.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "activatedAt",
+              "required": false,
+              "type": "string",
+              "description": "Omitted (not null) until the subscriber's first host attach.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "createdAt",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "updatedAt",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L \"https://api.ui.com/v1/carrier/subscribers\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"subscriberNumber\\\": \\\"string\\\",\n  \\\"name\\\": \\\"string\\\",\n  \\\"email\\\": \\\"string\\\",\n  \\\"notes\\\": \\\"string\\\",\n  \\\"serviceAddress\\\": \\\"string\\\",\n  \\\"planId\\\": \\\"string\\\",\n  \\\"metadata\\\": {}\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/carrier/subscribers\"\n  method := \"POST\"\n\n\n  payload := strings.NewReader(`{\n  \"subscriberNumber\": \"string\",\n  \"name\": \"string\",\n  \"email\": \"string\",\n  \"notes\": \"string\",\n  \"serviceAddress\": \"string\",\n  \"planId\": \"string\",\n  \"metadata\": {}\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"subscriberNumber\": \"string\",\n  \"name\": \"string\",\n  \"email\": \"string\",\n  \"notes\": \"string\",\n  \"serviceAddress\": \"string\",\n  \"planId\": \"string\",\n  \"metadata\": {}\n});\n\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/carrier/subscribers',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"subscriberNumber\": \"string\",\n  \"name\": \"string\",\n  \"email\": \"string\",\n  \"notes\": \"string\",\n  \"serviceAddress\": \"string\",\n  \"planId\": \"string\",\n  \"metadata\": {}\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"POST\", \"/v1/carrier/subscribers\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/carrier-fabric/v1.0.0/createsubscriber"
+}
