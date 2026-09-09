@@ -151,6 +151,34 @@ class TestGetExample:
                 return
         pytest.skip("No endpoints with ansible examples")
 
+    def test_header_names_the_resolved_mode(self):
+        # mode defaults to None; the header must show what was actually resolved,
+        # not the raw parameter.
+        for slug, ep in m._endpoints.items():
+            examples = ep.get("examples") or {}
+            for resolved, langs in examples.items():
+                if not langs:
+                    continue
+                lang = next(iter(langs))
+                result = m.get_example(slug, lang, resolved)
+                assert f"({resolved})" in result.splitlines()[0]
+                assert "(None)" not in result
+                return
+        pytest.skip("corpus has no endpoints with examples")
+
+    def test_default_mode_is_never_none_in_output(self):
+        checked = 0
+        for slug, ep in m._endpoints.items():
+            if not (ep.get("examples") or {}):
+                continue
+            for lang in m.VALID_LANGUAGES:
+                result = m.get_example(slug, lang)  # no mode argument
+                assert "(None)" not in result, f"{slug} / {lang}: {result.splitlines()[0]}"
+                checked += 1
+            if checked >= 20:
+                break
+        assert checked > 0, "corpus has no endpoints with examples"
+
     def test_invalid_language(self):
         slug = _find_slug("createnetwork") or "network/createnetwork"
         result = m.get_example(slug, "rust")

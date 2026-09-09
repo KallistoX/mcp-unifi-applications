@@ -350,13 +350,13 @@ def get_example(slug: str, language: str = "curl", mode: str | None = None) -> s
         mode_examples = examples.get(m, {})
         code = mode_examples.get(lang)
         if code:
-            return f"# {ep.get('h1', slug)} — {language} ({mode})\n\n{code}"
+            return f"# {ep.get('h1', slug)} — {language} ({m})\n\n{code}"
         # Show what's available
         available = []
         for mk, mv in examples.items():
             for lk in mv:
                 available.append(f"{lk} ({mk})")
-        return f"No {language} ({mode}) example for '{slug}'. Available: {', '.join(available)}"
+        return f"No {language} ({m}) example for '{slug}'. Available: {', '.join(available)}"
 
     # Legacy format: ansibleExample only
     if lang == "ansible" and ep.get("ansibleExample"):
