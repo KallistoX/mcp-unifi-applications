@@ -157,5 +157,5 @@
     }
   },
   "responseSample": "{\n  \"created\": true,\n  \"eventId\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/post-v1poscamerasidtransactions"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/post-v1poscamerasidtransactions"
 }

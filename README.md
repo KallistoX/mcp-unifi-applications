@@ -72,8 +72,11 @@ Pre-scraped docs are included, so the server works out of the box:
 | Application | API version | Scraped | Pages |
 |---|---|---|---|
 | Network | v10.4.57 | 2026-07-27 | 82 |
-| Protect | v7.2.105 | 2026-08-17 | 81 |
+| Protect | v7.3.47 | 2026-09-09 | 81 |
 | Site Manager | v1.0.0 | 2026-07-17 | 12 |
+| InnerSpace | v1.3.23 | 2026-09-09 | 12 |
+| Mobility | v1.0.0 | 2026-09-09 | 9 |
+| Carrier Fabric | v1.0.0 | 2026-09-09 | 14 |
 <!-- docs-versions:end -->
 
 Each app dir carries a `_meta.json` (API version, scrape date, page count); the `get_docs_info` tool reports the same at runtime. A weekly GitHub Action checks upstream for new versions and opens a PR with freshly scraped docs — the table above is regenerated in that PR by `scripts/update_readme_versions.py`.

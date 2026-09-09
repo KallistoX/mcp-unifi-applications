@@ -265,6 +265,14 @@
               ]
             },
             {
+              "name": "deviceTamperStatus",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
               "name": "currentMeterChannelStatus",
               "required": true,
               "type": "object",
@@ -428,6 +436,96 @@
               "children": []
             }
           ]
+        },
+        {
+          "name": "threadState",
+          "required": true,
+          "type": "object",
+          "description": "Thread mesh runtime state. Populated only on Thread-capable gateway SKUs.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "network",
+              "required": true,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "status",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "role",
+                  "required": true,
+                  "type": "stringnull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "networkName",
+                  "required": true,
+                  "type": "stringnull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "channel",
+                  "required": true,
+                  "type": "integernull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "panId",
+                  "required": true,
+                  "type": "stringnull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "extendedPanId",
+                  "required": true,
+                  "type": "stringnull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "joinedDeviceCount",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "errorReason",
+                  "required": true,
+                  "type": "stringnull",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "lastUpdatedAt",
+                  "required": true,
+                  "type": "number",
+                  "description": "Wall-clock unix-epoch milliseconds when the gateway last refreshed this status.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
         }
       ]
     }
@@ -449,5 +547,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1alarm-hubs"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/get-v1alarm-hubs"
 }

@@ -98,6 +98,88 @@
               "description": "Available button types on the fob.",
               "discriminator": null,
               "children": []
+            },
+            {
+              "name": "hasKeypad",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether the device has a PIN keypad.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "armControlSettings",
+          "required": true,
+          "type": "object",
+          "description": "Which external arm profiles this fob may arm and disarm, per mode button.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "enabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether this fob may arm and disarm external arm profiles.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "armProfileId",
+              "required": true,
+              "type": "stringnull",
+              "description": "External arm profile armed by the Arm button, and disarmed by the Disarm button.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "nightProfileId",
+              "required": true,
+              "type": "stringnull",
+              "description": "External arm profile armed by the Night button, and disarmed by the Disarm button.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "keypadSettings",
+          "required": true,
+          "type": "object",
+          "description": "On-device keypad feedback settings. Only meaningful when featureFlags.hasKeypad.",
+          "discriminator": null,
+          "children": [
+            {
+              "name": "beepEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether a keypress beeps.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "beepVolume",
+              "required": true,
+              "type": "integer",
+              "description": "Keypress beep volume, 0-100%.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "backlightEnabled",
+              "required": true,
+              "type": "boolean",
+              "description": "Whether a keypress lights the keypad backlight.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "backlightBrightness",
+              "required": true,
+              "type": "integer",
+              "description": "Keypad backlight brightness, 0-100%.",
+              "discriminator": null,
+              "children": []
             }
           ]
         },
@@ -188,5 +270,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1fobs"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/get-v1fobs"
 }

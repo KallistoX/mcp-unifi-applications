@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "gettingstarted",
+    "title": "Getting Started",
+    "file": "gettingstarted.json"
+  },
+  {
+    "slug": "connectorpost",
+    "title": "Connector - POST",
+    "file": "connectorpost.json"
+  },
+  {
+    "slug": "connectorget",
+    "title": "Connector - GET",
+    "file": "connectorget.json"
+  },
+  {
+    "slug": "connectorput",
+    "title": "Connector - PUT",
+    "file": "connectorput.json"
+  },
+  {
+    "slug": "connectordelete",
+    "title": "Connector - DELETE",
+    "file": "connectordelete.json"
+  },
+  {
+    "slug": "connectorpatch",
+    "title": "Connector - PATCH",
+    "file": "connectorpatch.json"
+  },
+  {
+    "slug": "get-v1project",
+    "title": "Get project data for integration",
+    "file": "get-v1project.json"
+  },
+  {
+    "slug": "get-v1floor_plans",
+    "title": "List floor plans",
+    "file": "get-v1floor_plans.json"
+  },
+  {
+    "slug": "get-v1access_points",
+    "title": "List access points",
+    "file": "get-v1access_points.json"
+  },
+  {
+    "slug": "get-v1switches",
+    "title": "List switches",
+    "file": "get-v1switches.json"
+  },
+  {
+    "slug": "get-v1inventory",
+    "title": "List unplaced device inventory",
+    "file": "get-v1inventory.json"
+  },
+  {
+    "slug": "get-v1assetsplanidfilename",
+    "title": "Download plan asset file",
+    "file": "get-v1assetsplanidfilename.json"
+  }
+]

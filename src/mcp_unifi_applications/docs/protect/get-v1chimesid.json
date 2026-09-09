@@ -146,5 +146,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"cameraIds\": [\n    \"string\"\n  ],\n  \"ringSettings\": [\n    {\n      \"cameraId\": \"string\",\n      \"repeatTimes\": 0,\n      \"ringtoneId\": \"string\",\n      \"volume\": 0\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1chimesid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/get-v1chimesid"
 }

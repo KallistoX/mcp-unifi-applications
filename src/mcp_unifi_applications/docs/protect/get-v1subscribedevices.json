@@ -240,5 +240,5 @@
     }
   },
   "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\",\n    \"guid\": null,\n    \"mac\": \"string\",\n    \"doorbellSettings\": {\n      \"defaultMessageText\": \"string\",\n      \"defaultMessageResetTimeoutMs\": 0,\n      \"customMessages\": [\n        \"string\"\n      ],\n      \"customImages\": [\n        {\n          \"preview\": \"string\",\n          \"sprite\": \"string\"\n        }\n      ]\n    },\n    \"armMode\": {\n      \"status\": \"arming\",\n      \"armProfileId\": null,\n      \"armedAt\": null,\n      \"willBeArmedAt\": null,\n      \"breachDetectedAt\": null,\n      \"breachEventCount\": 0,\n      \"breachTriggerEventId\": null,\n      \"breachEventId\": null\n    }\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1subscribedevices"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/get-v1subscribedevices"
 }

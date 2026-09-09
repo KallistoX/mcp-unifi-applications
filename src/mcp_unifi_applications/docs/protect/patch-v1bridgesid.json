@@ -130,5 +130,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"platform\": null,\n  \"clients\": [\n    \"string\"\n  ],\n  \"maxClients\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/patch-v1bridgesid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/patch-v1bridgesid"
 }

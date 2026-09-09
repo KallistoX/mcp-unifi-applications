@@ -1,0 +1,134 @@
+{
+  "h1": "List switches",
+  "method": "GET",
+  "path": "/v1/switches",
+  "description": "Returns placed UniFi switches with position and status. Optionally filter by siteId.",
+  "pathParameters": [],
+  "queryParameters": [
+    {
+      "name": "siteId",
+      "required": false,
+      "type": "string",
+      "description": "Optional UniFi site filter. When set, only devices whose product siteId matches are returned.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "switches",
+          "required": true,
+          "type": "Array of object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "model",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "mac",
+              "required": true,
+              "type": "stringnull",
+              "description": "MAC address in colon-separated form (`aa:bb:cc:dd:ee:ff`).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "serial",
+              "required": true,
+              "type": "stringnull",
+              "description": "Device identifier for Hamina import. Uses the MAC address without colons, prefixed with `SN`.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "floor_plan_id",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "x",
+              "required": true,
+              "type": "number",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "y",
+              "required": true,
+              "type": "number",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "status",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/innerspace/integration/v1/switches?siteId={siteId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/innerspace/integration/v1/switches?siteId={siteId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/innerspace/integration/v1/switches?siteId={siteId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/innerspace/integration/v1/switches?siteId=%7BsiteId%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: List switches\n  ubiquiti.unifi_api.innerspace:\n    path: \"/v1/switches\"\n    method: GET\n    query:\n      siteId: \"{siteId}\"\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/innerspace/integration/v1/switches?siteId={siteId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/innerspace/integration/v1/switches?siteId={siteId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/innerspace/integration/v1/switches?siteId={siteId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/innerspace/integration/v1/switches?siteId=%7BsiteId%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: List switches\n  ubiquiti.unifi_api.innerspace:\n    path: \"/v1/switches\"\n    method: GET\n    query:\n      siteId: \"{siteId}\"\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"switches\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"string\",\n      \"model\": \"string\",\n      \"type\": \"string\",\n      \"mac\": null,\n      \"serial\": null,\n      \"floor_plan_id\": \"00000000-0000-0000-0000-000000000000\",\n      \"x\": 0,\n      \"y\": 0,\n      \"status\": \"online\"\n    }\n  ]\n}",
+  "sourceUrl": "https://developer.ui.com/innerspace/v1.3.23/get-v1switches"
+}

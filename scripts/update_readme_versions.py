@@ -17,6 +17,9 @@ DOCS = ROOT / "src" / "mcp_unifi_applications" / "docs"
 START = "<!-- docs-versions:start -->"
 END = "<!-- docs-versions:end -->"
 
+# Insertion order drives the table order, so it matches the Supported Applications
+# section rather than sorting Network into the middle alphabetically. Apps missing
+# here still render, appended alphabetically under their directory name.
 DISPLAY_NAMES = {
     "network": "Network",
     "protect": "Protect",
@@ -28,8 +31,14 @@ DISPLAY_NAMES = {
 
 
 def build_table() -> str:
+    order = list(DISPLAY_NAMES)
+
+    def sort_key(meta_file: Path) -> tuple[int, str]:
+        app = meta_file.parent.name
+        return (order.index(app) if app in order else len(order), app)
+
     rows = []
-    for meta_file in sorted(DOCS.glob("*/_meta.json")):
+    for meta_file in sorted(DOCS.glob("*/_meta.json"), key=sort_key):
         meta = json.loads(meta_file.read_text())
         app = meta.get("app") or meta_file.parent.name
         name = DISPLAY_NAMES.get(app, app)

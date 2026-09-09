@@ -264,5 +264,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"volume\": 0,\n  \"ledSettings\": {\n    \"isEnabled\": true\n  },\n  \"sirenStatus\": {\n    \"isActive\": true,\n    \"activatedAt\": null,\n    \"duration\": 0\n  },\n  \"connectionType\": \"ucp4\",\n  \"wirelessConnectionState\": {\n    \"signalState\": {\n      \"signalQuality\": null,\n      \"signalStrength\": null\n    },\n    \"batteryStatus\": {\n      \"percentage\": null,\n      \"isLow\": true\n    },\n    \"bridge\": \"string\"\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/patch-v1sirensid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/patch-v1sirensid"
 }
