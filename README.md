@@ -1,8 +1,10 @@
-# UniFi MCP Server — API Documentation for Network, Protect, Site Manager & InnerSpace
+# UniFi MCP Server — Queryable API Documentation
 
 ![CI](https://github.com/KallistoX/mcp-unifi-applications/actions/workflows/ci.yml/badge.svg)
 
 A Model Context Protocol (MCP) server that makes the official [UniFi API documentation](https://developer.ui.com) queryable by AI agents — endpoint search, schema drill-down, and code examples in five languages, for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
+
+Covers every application Ubiquiti publishes API docs for: **Network, Protect, Site Manager, InnerSpace, Mobility and Carrier Fabric**.
 
 It is **read-only and credential-free**: it serves documentation, it does not talk to your controller. Includes a Playwright-based scraper that turns the JS-rendered docs SPA into structured JSON, and a Python MCP server that serves it.
 
@@ -46,6 +48,10 @@ docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scrape
 
 # Scrape InnerSpace API docs
 docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app innerspace
+
+# Scrape Mobility or Carrier Fabric API docs
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app mobility
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app carrier-fabric
 
 # Scrape a specific API version
 docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app network --version v9.5.21
@@ -139,7 +145,9 @@ And a 409 KB spec does not fit usefully into a context window. `get_field_schema
 | Network | `developer.ui.com/network` | Both | Default app |
 | Protect | `developer.ui.com/protect` | Both | |
 | Site Manager | `developer.ui.com/site-manager` | Remote only | No local/remote switch |
-| InnerSpace | `developer.ui.com/innerspace` | Both | Smallest surface (integration API) |
+| InnerSpace | `developer.ui.com/innerspace` | Both | Early Access; version label reads `v1.3.23 (EA)` |
+| Mobility | `developer.ui.com/mobility` | Remote only | Sidebar links out to `mobility.ui.com` |
+| Carrier Fabric | `developer.ui.com/carrier-fabric` | Remote only | Subscriber API |
 
 All applications share the same docs SPA structure with version dropdowns, endpoint pages, and guide pages, so adding one is a single entry in the `APPS` object in `scrape.mjs` — the server discovers new app directories on its own.
 
@@ -158,13 +166,13 @@ All applications share the same docs SPA structure with version dropdowns, endpo
 | `get_guide` | API guide pages (filtering syntax, error handling, getting started) |
 | `get_docs_info` | Which docs are loaded: API version, scrape date, endpoint/guide counts per app |
 
-Tools that return multiple results accept an optional `app` parameter (`network`, `protect`, `site-manager`, `innerspace`) to filter by application.
+Tools that return multiple results accept an optional `app` parameter (`network`, `protect`, `site-manager`, `innerspace`, `mobility`, `carrier-fabric`) to filter by application.
 
 ## Environment Variables
 
 | Variable | Default | Description |
 |---|---|---|
-| `DOCS_DIR` | the `docs/` directory inside the installed package | Directory containing scraped JSON docs. Expects app subdirectories (`network/`, `protect/`, `site-manager/`, `innerspace/`). Set it to point at a checkout's freshly scraped output. |
+| `DOCS_DIR` | the `docs/` directory inside the installed package | Directory containing scraped JSON docs. Expects one subdirectory per application (`network/`, `protect/`, …). Set it to point at a checkout's freshly scraped output. |
 
 ## Scraper CLI
 
@@ -172,7 +180,7 @@ Tools that return multiple results accept an optional `app` parameter (`network`
 node scrape.mjs [options] [slug...]
 
 Options:
-  --app <name>      Application: network (default), protect, site-manager, innerspace.
+  --app <name>      Application: network (default), protect, site-manager, innerspace, mobility, carrier-fabric.
   --version <ver>   API version to scrape (e.g. v10.1.84). Default: latest.
   --list-versions   Print available versions and exit.
   --force           Re-scrape even if output file exists.
@@ -203,7 +211,9 @@ mcp-unifi-applications/
 │           ├── network/
 │           ├── protect/
 │           ├── site-manager/
-│           └── innerspace/
+│           ├── innerspace/
+│           ├── mobility/
+│           └── carrier-fabric/
 ├── scripts/
 │   └── update_readme_versions.py   # Regenerates the README version table
 └── tests/

@@ -1,6 +1,6 @@
 """UniFi API Docs MCP Server.
 
-Exposes scraped UniFi application API documentation (Network, Protect, Site Manager, InnerSpace)
+Exposes scraped UniFi application API documentation (Network, Protect, Site Manager, InnerSpace, Mobility, Carrier Fabric)
 as queryable tools for use in Claude Desktop or any MCP-compatible client.
 """
 
@@ -26,6 +26,8 @@ _meta: dict[str, dict] = {}  # app -> {"app", "version", "scrapedAt", "pageCount
 
 VALID_LANGUAGES = ("curl", "go", "nodejs", "python", "ansible")
 VALID_MODES = ("local", "remote")
+# Apps whose docs declare only the cloud server, so examples exist only in remote form.
+REMOTE_ONLY_APPS = frozenset({"site-manager", "mobility", "carrier-fabric"})
 MAX_LIST_LINES = 200
 
 
@@ -128,7 +130,7 @@ def _docs_summary() -> str:
 
 
 mcp = FastMCP("unifi-applications", instructions=(
-    "You have access to UniFi application API documentation (Network, Protect, Site Manager, InnerSpace). "
+    "You have access to UniFi application API documentation (Network, Protect, Site Manager, InnerSpace, Mobility, Carrier Fabric). "
     "Use list_endpoints to browse, search_endpoints to find relevant endpoints, "
     "and get_endpoint to get full schema details. Use get_endpoint_group to get "
     "all CRUD operations for a resource at once. Filter by app name to narrow results. "
@@ -182,7 +184,7 @@ def list_endpoints(method: str | None = None, app: str | None = None) -> str:
 
     Args:
         method: Optional HTTP method filter (GET, POST, PUT, DELETE, PATCH).
-        app: Optional app filter (network, protect, site-manager, innerspace). Omit to list all.
+        app: Optional app filter (network, protect, site-manager, innerspace, mobility, carrier-fabric). Omit to list all.
     """
     if not _search_index:
         return "No endpoints loaded. Check DOCS_DIR."
@@ -239,7 +241,7 @@ def search_endpoints(query: str, method: str | None = None, app: str | None = No
     Args:
         query: Search term (endpoint name, path fragment, or keyword).
         method: Optional HTTP method filter (GET, POST, PUT, DELETE, PATCH).
-        app: Optional app filter (network, protect, site-manager, innerspace). Omit to search all.
+        app: Optional app filter (network, protect, site-manager, innerspace, mobility, carrier-fabric). Omit to search all.
     """
     if not query.strip():
         return "Please provide a search query."
@@ -326,16 +328,17 @@ def get_example(slug: str, language: str = "curl", mode: str | None = None) -> s
         slug: Endpoint identifier (e.g. 'network/createnetwork').
         language: Programming language — one of: curl, go, nodejs, python, ansible.
         mode: 'local' (direct console access) or 'remote' (via cloud API).
-              Defaults to 'local'; site-manager is remote-only and defaults to 'remote'.
+              Defaults to 'local'; remote-only apps (site-manager, mobility,
+              carrier-fabric) default to 'remote'.
     """
     ep = _endpoints.get(slug)
     if not ep:
         return f"Endpoint '{slug}' not found. {_suggest_slugs(slug)}"
 
     lang = language.lower()
-    # Default mode based on app (site-manager is remote only)
+    # Default mode based on app: some apps are cloud-only
     app = ep.get("_app", "network")
-    m = (mode or ("remote" if app == "site-manager" else "local")).lower()
+    m = (mode or ("remote" if app in REMOTE_ONLY_APPS else "local")).lower()
     if lang not in VALID_LANGUAGES:
         return f"Unknown language '{language}'. Choose from: {', '.join(VALID_LANGUAGES)}"
     if m not in VALID_MODES:
@@ -544,7 +547,7 @@ def get_guide(topic: str | None = None, app: str | None = None) -> str:
 
     Args:
         topic: Guide slug or search term. Omit to list all available guides.
-        app: Optional app filter (network, protect, site-manager, innerspace). Omit to search all.
+        app: Optional app filter (network, protect, site-manager, innerspace, mobility, carrier-fabric). Omit to search all.
     """
     app_filter = app.lower() if app else None
     guides = {s: g for s, g in _guides.items() if not app_filter or g.get("_app") == app_filter}

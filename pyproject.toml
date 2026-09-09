@@ -5,14 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mcp-unifi-applications"
 version = "0.1.0"
-description = "MCP server exposing UniFi application API documentation (Network, Protect, Site Manager, InnerSpace) as queryable tools"
+description = "MCP server exposing UniFi application API documentation (Network, Protect, Site Manager, InnerSpace, Mobility, Carrier Fabric) as queryable tools"
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.11"
 authors = [
     { name = "Dominic Bussemas" },
 ]
-keywords = ["mcp", "unifi", "ubiquiti", "api", "documentation", "claude", "protect", "site-manager", "innerspace"]
+keywords = ["mcp", "unifi", "ubiquiti", "api", "documentation", "claude", "protect", "site-manager", "innerspace", "mobility", "carrier-fabric"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
