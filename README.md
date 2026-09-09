@@ -71,6 +71,7 @@ Pre-scraped docs are included, so the server works out of the box:
 <!-- docs-versions:start -->
 | Application | API version | Scraped | Pages |
 |---|---|---|---|
+| InnerSpace | v1.3.23 | 2026-09-09 | 12 |
 | Network | v10.4.57 | 2026-07-27 | 82 |
 | Protect | v7.2.105 | 2026-08-17 | 81 |
 | Site Manager | v1.0.0 | 2026-07-17 | 12 |
