@@ -303,5 +303,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"ledSettings\": {\n    \"isEnabled\": true\n  },\n  \"outputs\": [\n    {\n      \"id\": 0,\n      \"name\": null,\n      \"type\": null,\n      \"delay\": null,\n      \"pulseDuration\": null,\n      \"state\": null,\n      \"rebootState\": \"restore\"\n    }\n  ],\n  \"inputs\": [\n    {\n      \"id\": 0,\n      \"name\": null,\n      \"state\": null,\n      \"actionTrigger\": null,\n      \"actionType\": null,\n      \"actionOutputId\": null\n    }\n  ],\n  \"wirelessConnectionState\": {\n    \"signalState\": {\n      \"signalQuality\": null,\n      \"signalStrength\": null\n    },\n    \"batteryStatus\": {\n      \"percentage\": null,\n      \"isLow\": true\n    },\n    \"bridge\": \"string\"\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1relaysid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/get-v1relaysid"
 }

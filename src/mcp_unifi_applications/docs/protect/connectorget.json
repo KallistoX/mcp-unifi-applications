@@ -55,5 +55,5 @@
     }
   },
   "responseSample": "{\n  \"count\": 1,\n  \"data\": [\n    {\n      \"id\": \"88f7af54-98f8-306a-a1c7-c9349722b1f6\",\n      \"internalReference\": \"default\",\n      \"name\": \"Default\"\n    }\n  ],\n  \"limit\": 25,\n  \"offset\": 0,\n  \"totalCount\": 1\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/connectorget"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/connectorget"
 }
