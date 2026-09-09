@@ -97,6 +97,9 @@ jobs:
           pip install .[dev]
           pytest tests/ -v
 
+      - name: Refresh README version table
+        run: python3 scripts/update_readme_versions.py
+
       - name: Read scraped version and diff stats
         id: stats
         run: |
@@ -123,7 +126,9 @@ jobs:
           branch: update-docs/${{ matrix.app }}-v${{ steps.stats.outputs.version }}
           title: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
           commit-message: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
-          add-paths: docs/${{ matrix.app }}/**
+          add-paths: |
+            docs/${{ matrix.app }}/**
+            README.md
           body: |
             Automated docs refresh: upstream published **v${{ steps.stats.outputs.version }}** for `${{ matrix.app }}`.
 
