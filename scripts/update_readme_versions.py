@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 README = ROOT / "README.md"
-DOCS = ROOT / "docs"
+DOCS = ROOT / "src" / "mcp_unifi_applications" / "docs"
 
 START = "<!-- docs-versions:start -->"
 END = "<!-- docs-versions:end -->"
