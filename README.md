@@ -86,7 +86,7 @@ API key to configure. What you get:
 |---|---|---|---|
 | Network | v10.4.57 | 2026-07-27 | 82 |
 | Protect | v7.3.47 | 2026-09-09 | 81 |
-| Site Manager | v1.0.0 | 2026-07-17 | 12 |
+| Site Manager | v1.0.0 | 2026-09-09 | 12 |
 | InnerSpace | v1.3.23 | 2026-09-09 | 12 |
 | Mobility | v1.0.0 | 2026-09-09 | 9 |
 | Carrier Fabric | v1.0.0 | 2026-09-09 | 14 |
