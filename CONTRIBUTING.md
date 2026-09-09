@@ -64,6 +64,14 @@ If Ubiquiti adds a new developer docs application at `developer.ui.com/<app-name
 - Add or update tests for any new functionality
 - Run `pytest tests/ -v` and make sure all tests pass before submitting
 
+## Changelog
+
+`CHANGELOG.md` follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+Add your entry under `## [Unreleased]` in the same PR as the change, rather than
+reconstructing it at release time. On release, rename that heading to the version
+and open a fresh `Unreleased` section — the same text goes into the GitHub release
+notes and into Glama's changelog field, which has to be filled in by hand.
+
 ## The README version table
 
 The table in the Quick Start is generated from the committed
