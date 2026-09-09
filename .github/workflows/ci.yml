@@ -29,8 +29,11 @@ jobs:
         with:
           node-version: "22"
 
+      # Shell-expanded so node receives file paths: `node --test tests/` needs
+      # directory discovery, which Node 22 (the runner default) does not do for
+      # positional arguments - it tries to load the directory as a module.
       - name: Run scraper parser tests
-        run: node --test tests/
+        run: node --test tests/*.test.mjs
 
       # A wheel that ships no module or no docs installs cleanly and then fails
       # at runtime, which pytest above would not catch — it imports from src/.

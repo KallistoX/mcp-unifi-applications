@@ -22,7 +22,7 @@ npm install
 
 ```bash
 pytest tests/ -v      # MCP server
-node --test tests/    # scraper parsers (lib/parse.mjs)
+node --test tests/*.test.mjs   # scraper parsers (lib/parse.mjs)
 ```
 
 The scraper's parsing logic lives in `lib/parse.mjs` rather than inside the
