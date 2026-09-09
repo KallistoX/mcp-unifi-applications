@@ -36,28 +36,28 @@ The scraper runs inside Docker (requires Playwright/Chromium):
 docker build -t unifi-scraper .
 
 # Scrape Network API docs (default, latest version)
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs
 
 # Scrape Protect API docs
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app protect
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app protect
 
 # Scrape Site Manager API docs
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app site-manager
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app site-manager
 
 # Scrape InnerSpace API docs
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app innerspace
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app innerspace
 
 # Scrape a specific API version
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app network --version v9.5.21
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app network --version v9.5.21
 
 # List available API versions for an app
 docker run --rm unifi-scraper node scrape.mjs --app protect --list-versions
 
 # Scrape specific pages only
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs createnetwork filtering
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs createnetwork filtering
 
 # Force re-scrape (overwrite existing files)
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --force
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --force
 ```
 
 Pre-scraped docs are included, so the server works out of the box:
@@ -80,6 +80,8 @@ source .venv/bin/activate  # or: source .venv/bin/activate.fish
 pip install .
 ```
 
+This installs the server *and* the pre-scraped docs, and puts a `mcp-unifi-applications` executable in `.venv/bin/`.
+
 ### 3. Register with your client
 
 **Claude Code (VS Code / JetBrains)** - add `.mcp.json` to your project root (Reload Window after):
@@ -89,8 +91,7 @@ pip install .
   "mcpServers": {
     "unifi-docs": {
       "type": "stdio",
-      "command": "/path/to/mcp-unifi-applications/.venv/bin/python",
-      "args": ["/path/to/mcp-unifi-applications/mcp_server.py"]
+      "command": "/path/to/mcp-unifi-applications/.venv/bin/mcp-unifi-applications"
     }
   }
 }
@@ -102,8 +103,7 @@ pip install .
 {
   "mcpServers": {
     "unifi-docs": {
-      "command": "/path/to/mcp-unifi-applications/.venv/bin/python",
-      "args": ["/path/to/mcp-unifi-applications/mcp_server.py"]
+      "command": "/path/to/mcp-unifi-applications/.venv/bin/mcp-unifi-applications"
     }
   }
 }
@@ -164,7 +164,7 @@ Tools that return multiple results accept an optional `app` parameter (`network`
 
 | Variable | Default | Description |
 |---|---|---|
-| `DOCS_DIR` | `./docs` (relative to `mcp_server.py`) | Directory containing scraped JSON docs. Expects app subdirectories (`network/`, `protect/`, `site-manager/`, `innerspace/`). |
+| `DOCS_DIR` | the `docs/` directory inside the installed package | Directory containing scraped JSON docs. Expects app subdirectories (`network/`, `protect/`, `site-manager/`, `innerspace/`). Set it to point at a checkout's freshly scraped output. |
 
 ## Scraper CLI
 
@@ -184,7 +184,7 @@ Arguments:
 The slug is the last path segment of the docs URL:
 `https://developer.ui.com/network/v10.1.84/createnetwork` -> `createnetwork`
 
-Output is written to `<output>/<app>/` (e.g. `docs/network/`, `docs/protect/`).
+Output is written to `<output>/<app>/` — mount the package's docs directory (`src/mcp_unifi_applications/docs/`) so a scrape lands where the server reads it.
 
 The full scan is resumable - already-scraped pages are skipped. Use `--force` to re-scrape.
 
@@ -193,15 +193,17 @@ The full scan is resumable - already-scraped pages are skipped. Use `--force` to
 ```
 mcp-unifi-applications/
 ├── scrape.mjs          # Playwright scraper (runs in Docker)
-├── mcp_server.py       # MCP server (Python, stdio transport)
 ├── Dockerfile          # Scraper container image
 ├── pyproject.toml      # Python project config
 ├── server.json         # MCP registry manifest
-├── docs/               # Scraped JSON output
-│   ├── network/        # Network API docs
-│   ├── protect/        # Protect API docs
-│   ├── site-manager/   # Site Manager API docs
-│   └── innerspace/     # InnerSpace API docs
+├── src/
+│   └── mcp_unifi_applications/
+│       ├── server.py   # MCP server (Python, stdio transport)
+│       └── docs/       # Scraped JSON, shipped with the package
+│           ├── network/
+│           ├── protect/
+│           ├── site-manager/
+│           └── innerspace/
 ├── scripts/
 │   └── update_readme_versions.py   # Regenerates the README version table
 └── tests/

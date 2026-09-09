@@ -30,7 +30,7 @@ The scraper requires Playwright with Chromium. The easiest way to run it is via 
 
 ```bash
 docker build -t unifi-scraper .
-docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app network
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app network
 ```
 
 To run locally without Docker, install Playwright and its browser dependencies:
@@ -41,7 +41,7 @@ npx playwright install chromium
 node scrape.mjs --app network
 ```
 
-Note: when running locally, output goes to `/output` by default (the Docker mount point). Override by editing the `OUTPUT` constant or symlinking.
+Note: when running locally, output goes to `/output` by default (the Docker mount point). Override by editing the `OUTPUT` constant or symlinking. Scraped docs belong in `src/mcp_unifi_applications/docs/<app>/` — they ship inside the package, so the server finds them after `pip install`.
 
 ## Adding a New Application
 
@@ -49,7 +49,8 @@ If Ubiquiti adds a new developer docs application at `developer.ui.com/<app-name
 
 1. Add the app to the `APPS` object in `scrape.mjs` with its path and supported modes
 2. Run the scraper: `node scrape.mjs --app <app-name>`
-3. The MCP server auto-discovers new app subdirectories — no server changes needed
+3. Add it to the version-check loop in `.github/workflows/update-docs.yml`
+4. The MCP server auto-discovers new app subdirectories under `src/mcp_unifi_applications/docs/` — no server changes needed
 
 ## Pull Requests
 

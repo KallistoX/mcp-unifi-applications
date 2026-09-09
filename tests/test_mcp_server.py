@@ -7,10 +7,10 @@ from pathlib import Path
 
 import pytest
 
-# Ensure project root is importable
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Import from the source tree without requiring an install
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-import mcp_server as m
+from mcp_unifi_applications import server as m
 
 # --- Helpers ---
 
@@ -30,7 +30,7 @@ class TestDataLoading:
         assert len(m._endpoints) > 0, "No endpoints loaded from docs/"
 
     def test_all_json_files_parse(self):
-        docs_dir = Path(__file__).parent.parent / "docs"
+        docs_dir = Path(__file__).parent.parent / "src" / "mcp_unifi_applications" / "docs"
         for app_dir in docs_dir.iterdir():
             if not app_dir.is_dir() or app_dir.name.startswith(("_", ".")):
                 continue
@@ -281,7 +281,7 @@ class TestGetResponseSample:
 
 class TestMeta:
     def test_meta_files_parse_and_match_dir(self):
-        docs_dir = Path(__file__).parent.parent / "docs"
+        docs_dir = Path(__file__).parent.parent / "src" / "mcp_unifi_applications" / "docs"
         found = 0
         for app_dir in docs_dir.iterdir():
             if not app_dir.is_dir() or app_dir.name.startswith(("_", ".")) or app_dir.name == "tmp_pageClarification":

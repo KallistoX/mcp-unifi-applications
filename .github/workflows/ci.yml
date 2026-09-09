@@ -24,3 +24,11 @@ jobs:
 
       - name: Run tests
         run: pytest tests/ -v
+
+      # A wheel that ships no module or no docs installs cleanly and then fails
+      # at runtime, which pytest above would not catch — it imports from src/.
+      - name: Build wheel and verify its contents
+        run: |
+          pip install build
+          python -m build --wheel
+          python scripts/check_wheel.py
