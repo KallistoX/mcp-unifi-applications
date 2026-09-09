@@ -1,0 +1,53 @@
+name: Sync README version table
+
+# The docs-versions table in README.md is generated from the committed
+# docs/<app>/_meta.json files. Regenerating it inside the per-app docs PRs made
+# every one of them rewrite the same block, so the first merge left the rest
+# conflicting. Doing it here instead means those PRs touch only their own app's
+# directory and the table catches up on main.
+on:
+  push:
+    branches: [main]
+    # Also the loop guard: this workflow commits README.md only, which does not
+    # match this filter, so its own push cannot retrigger it.
+    paths:
+      - "src/mcp_unifi_applications/docs/*/_meta.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-readme-table
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Regenerate the table
+        run: python3 scripts/update_readme_versions.py
+
+      - name: Commit if it changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- README.md; then
+            echo "Table already matches the committed _meta.json files."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          # [skip ci] keeps a README-only commit from spending a full test matrix.
+          git commit -m "docs: sync README version table [skip ci]"
+          # Another docs PR may have landed while this ran; rebase rather than
+          # force, which the branch ruleset forbids on main anyway.
+          git pull --rebase origin main
+          git push
+          echo "Version table updated."

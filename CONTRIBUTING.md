@@ -64,6 +64,18 @@ If Ubiquiti adds a new developer docs application at `developer.ui.com/<app-name
 - Add or update tests for any new functionality
 - Run `pytest tests/ -v` and make sure all tests pass before submitting
 
+## The README version table
+
+The table in the Quick Start is generated from the committed
+`src/mcp_unifi_applications/docs/<app>/_meta.json` files by
+`scripts/update_readme_versions.py`, between the `<!-- docs-versions -->` markers.
+
+Do not edit it by hand, and do not regenerate it inside a docs PR. The weekly
+`update-docs` workflow opens one PR per outdated app, and each would rewrite the
+same block from its own branch — so the first merge leaves the rest conflicting.
+`sync-readme-table.yml` regenerates it on `main` after the merge instead. Run the
+script locally if you want to preview the result.
+
 ## Publishing to the MCP Registry
 
 `server.json` is the manifest for the [official MCP registry](https://registry.modelcontextprotocol.io).

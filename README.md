@@ -290,7 +290,7 @@ mcp-unifi-applications/
 │           ├── mobility/
 │           └── carrier-fabric/
 ├── scripts/
-│   └── update_readme_versions.py   # Regenerates the README version table
+│   └── update_readme_versions.py   # Regenerates the README version table (run on main by CI)
 └── tests/
     ├── test_mcp_server.py    # pytest
     └── scrape-parse.test.mjs # node --test
