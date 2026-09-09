@@ -365,3 +365,45 @@ class TestListEndpointsCap:
         out = m.list_endpoints()
         assert "truncated" not in out
         assert len(out.split("\n")) == 10
+
+
+# --- Release metadata ---
+
+
+class TestReleaseMetadata:
+    """Guards the two release traps: a PyPI version cannot be re-uploaded, and the
+    MCP registry proves package ownership by finding `mcp-name: <server>` in the
+    README it reads back as the PyPI long_description."""
+
+    @staticmethod
+    def _root() -> Path:
+        return Path(__file__).parent.parent
+
+    def _server_json(self) -> dict:
+        return json.loads((self._root() / "server.json").read_text())
+
+    def _pyproject(self) -> dict:
+        import tomllib
+
+        return tomllib.loads((self._root() / "pyproject.toml").read_text())
+
+    def test_readme_carries_the_registry_ownership_token(self):
+        name = self._server_json()["name"]
+        readme = (self._root() / "README.md").read_text()
+        assert f"mcp-name: {name}" in readme, (
+            f"README.md must contain 'mcp-name: {name}' — the registry reads it back "
+            "as the PyPI long_description to prove package ownership"
+        )
+
+    def test_versions_agree(self):
+        server = self._server_json()
+        project_version = self._pyproject()["project"]["version"]
+        assert server["version"] == project_version, "server.json and pyproject.toml versions differ"
+        for pkg in server.get("packages") or []:
+            assert pkg["version"] == project_version, (
+                f"server.json packages[{pkg['identifier']}].version != pyproject version"
+            )
+
+    def test_readme_is_the_packaged_long_description(self):
+        # The token only reaches PyPI if the README is what gets packaged.
+        assert self._pyproject()["project"]["readme"] == "README.md"
