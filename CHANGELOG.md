@@ -76,6 +76,11 @@ answering a different question than the one asked.
   variant on the page; it now does one round trip per round. A union-heavy page
   (`network/createnetwork`, 54 variants) drops from 65 s to 18 s, with
   byte-identical output.
+- A variant click now waits for the variant to report itself selected rather than
+  for a fixed number of milliseconds. The measurement was taken on a developer
+  machine; a slower CI runner that exceeded the sleep would have captured a
+  half-rendered variant, which fails silently — the same class of bug this
+  release fixes elsewhere.
 
 ### Added
 

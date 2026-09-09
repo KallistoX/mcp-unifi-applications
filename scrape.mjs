@@ -153,11 +153,11 @@ async function injectParser(page) {
       return window.__parseSchema(container);
     };
 
-    window.__clickOption = function(headerText, fieldName, optionValue, parentFieldName) {
+    window.__variantLabel = function(headerText, fieldName, optionValue, parentFieldName) {
       const sectionEl = window.__sectionEl(headerText);
-      if (!sectionEl) return;
+      if (!sectionEl) return null;
       const container = window.__getContainer(sectionEl, parentFieldName);
-      if (!container) return;
+      if (!container) return null;
       const rows = Array.from(container.querySelectorAll('[class*="SchemaViewer__PropertyRow"]'));
       const fieldRow = rows.find(r => {
         if (r.parentElement !== container) return false;
@@ -166,12 +166,23 @@ async function injectParser(page) {
         r.querySelector('[class*="SchemaViewer__PropertyName"]')?.innerText.trim() === fieldName &&
         r.querySelector('[class*="SchemaViewer__RadioGroup"]')
       );
+      return Array.from(fieldRow?.querySelectorAll('label') || [])
+        .find(l => l.innerText.trim() === optionValue) || null;
+    };
+
+    // Postcondition of a variant click, so the wait adjusts to the machine
+    // instead of trusting a number measured on a fast one.
+    window.__isSelected = function(headerText, fieldName, optionValue, parentFieldName) {
+      const label = window.__variantLabel(headerText, fieldName, optionValue, parentFieldName);
+      return label?.getAttribute('data-ui-selected') === 'true';
+    };
+
+    window.__clickOption = function(headerText, fieldName, optionValue, parentFieldName) {
       // The label carries for="-discriminator_SWITCH", an id nothing resolves to,
       // so clicking it is a no-op - which is why response variants came back
       // empty and request variants were only about half populated. The input
       // inside it does toggle.
-      const label = Array.from(fieldRow?.querySelectorAll('label') || [])
-        .find(l => l.innerText.trim() === optionValue);
+      const label = window.__variantLabel(headerText, fieldName, optionValue, parentFieldName);
       if (label) (label.querySelector('input') || label).click();
     };
   });
@@ -192,6 +203,22 @@ async function expandAll(page) {
   }
 }
 
+/** Click a discriminator variant and wait for it to actually be selected.
+ *  A fixed sleep encodes an assumption about machine speed; this one waits for
+ *  the state the click is supposed to produce, then lets the children render. */
+async function selectVariant(page, headerText, fieldName, option, parentFieldName) {
+  await page.evaluate(({ headerText, fieldName, option, parentFieldName }) =>
+    window.__clickOption(headerText, fieldName, option, parentFieldName),
+    { headerText, fieldName, option, parentFieldName });
+  await page.waitForFunction(
+    ({ headerText, fieldName, option, parentFieldName }) =>
+      window.__isSelected(headerText, fieldName, option, parentFieldName),
+    { headerText, fieldName, option, parentFieldName },
+    { timeout: 5000, polling: 25 },
+  ).catch(() => {});  // an option that never reports selected is handled by the parse that follows
+  await page.waitForTimeout(SETTLE_MS);
+}
+
 async function enrichSchema(page, fields, sectionHeaderText, clickPath = [], depth = 0, parentFieldName = null, skipNames = new Set()) {
   if (depth > 8) return fields;
 
@@ -207,16 +234,12 @@ async function enrichSchema(page, fields, sectionHeaderText, clickPath = [], dep
     for (const disc of field.discriminator) {
       if (clickPath.length > 0) {
         for (const cp of clickPath) {
-          await page.evaluate((cp) => window.__clickOption(cp.headerText, cp.fieldName, cp.option, cp.parentFieldName), cp);
-          await page.waitForTimeout(SETTLE_MS);
+          await selectVariant(page, cp.headerText, cp.fieldName, cp.option, cp.parentFieldName);
         }
         await expandAll(page);
       }
 
-      await page.evaluate(({ headerText, fieldName, option, parentFieldName }) =>
-        window.__clickOption(headerText, fieldName, option, parentFieldName),
-        { headerText: sectionHeaderText, fieldName: field.name, option: disc.value, parentFieldName });
-      await page.waitForTimeout(SETTLE_MS);
+      await selectVariant(page, sectionHeaderText, field.name, disc.value, parentFieldName);
       await expandAll(page);
 
       const siblings = await page.evaluate(({ headerText, fieldName, parentFieldName }) =>
@@ -231,10 +254,7 @@ async function enrichSchema(page, fields, sectionHeaderText, clickPath = [], dep
     }
 
     if (field.discriminator[0]) {
-      await page.evaluate(({ headerText, fieldName, option, parentFieldName }) =>
-        window.__clickOption(headerText, fieldName, option, parentFieldName),
-        { headerText: sectionHeaderText, fieldName: field.name, option: field.discriminator[0].value, parentFieldName });
-      await page.waitForTimeout(SETTLE_MS);
+      await selectVariant(page, sectionHeaderText, field.name, field.discriminator[0].value, parentFieldName);
       await expandAll(page);
     }
   }
