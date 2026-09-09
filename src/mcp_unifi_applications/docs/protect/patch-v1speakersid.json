@@ -89,7 +89,7 @@
         {
           "name": "type",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The device model name.",
           "discriminator": null,
           "children": []
@@ -97,7 +97,7 @@
         {
           "name": "guid",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "Stable identifier for the device model.",
           "discriminator": null,
           "children": []

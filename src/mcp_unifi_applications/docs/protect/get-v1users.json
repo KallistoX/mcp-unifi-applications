@@ -31,7 +31,7 @@
         {
           "name": "firstName",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The user first-name.",
           "discriminator": null,
           "children": []
@@ -39,7 +39,7 @@
         {
           "name": "lastName",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The user last-name.",
           "discriminator": null,
           "children": []
@@ -47,7 +47,7 @@
         {
           "name": "email",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The user email.",
           "discriminator": null,
           "children": []
@@ -55,7 +55,7 @@
         {
           "name": "ucoreUserId",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The unique id of the UniFi Identity user. Matches the id field of the corresponding UlpUser.",
           "discriminator": null,
           "children": []

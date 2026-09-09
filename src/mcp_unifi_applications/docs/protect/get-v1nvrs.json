@@ -47,7 +47,7 @@
         {
           "name": "guid",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "GUID of the NVR",
           "discriminator": null,
           "children": []
@@ -136,7 +136,7 @@
             {
               "name": "armProfileId",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": null,
               "discriminator": null,
               "children": []
@@ -144,7 +144,7 @@
             {
               "name": "armedAt",
               "required": true,
-              "type": "numbernull",
+              "type": "number | null",
               "description": null,
               "discriminator": null,
               "children": []
@@ -152,7 +152,7 @@
             {
               "name": "willBeArmedAt",
               "required": true,
-              "type": "numbernull",
+              "type": "number | null",
               "description": null,
               "discriminator": null,
               "children": []
@@ -160,7 +160,7 @@
             {
               "name": "breachDetectedAt",
               "required": true,
-              "type": "numbernull",
+              "type": "number | null",
               "description": null,
               "discriminator": null,
               "children": []
@@ -176,7 +176,7 @@
             {
               "name": "breachTriggerEventId",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": null,
               "discriminator": null,
               "children": []
@@ -184,7 +184,7 @@
             {
               "name": "breachEventId",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": null,
               "discriminator": null,
               "children": []

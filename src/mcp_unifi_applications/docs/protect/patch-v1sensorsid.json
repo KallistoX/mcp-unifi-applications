@@ -49,7 +49,7 @@
         {
           "name": "lowThreshold",
           "required": false,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Ambient light interrupt threshold low level from 1 to 503192 (Lux).",
           "discriminator": null,
           "children": []
@@ -57,7 +57,7 @@
         {
           "name": "highThreshold",
           "required": false,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Ambient light interrupt threshold high level from 1 to 503192 (Lux).",
           "discriminator": null,
           "children": []
@@ -90,7 +90,7 @@
         {
           "name": "lowThreshold",
           "required": false,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Humidity low level threshold from 1 to 99 (%).",
           "discriminator": null,
           "children": []
@@ -98,7 +98,7 @@
         {
           "name": "highThreshold",
           "required": false,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Humidity high level threshold from 1 to 99 (%).",
           "discriminator": null,
           "children": []
@@ -131,7 +131,7 @@
         {
           "name": "lowThreshold",
           "required": false,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Temperature low level threshold from -39 to 124 (C).",
           "discriminator": null,
           "children": []
@@ -139,7 +139,7 @@
         {
           "name": "highThreshold",
           "required": false,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Temperature high level threshold from -39 to 124 (C).",
           "discriminator": null,
           "children": []
@@ -223,7 +223,7 @@
     {
       "name": "armProfileIds",
       "required": false,
-      "type": "arraynull",
+      "type": "array | null",
       "description": null,
       "discriminator": null,
       "children": []
@@ -296,7 +296,7 @@
         {
           "name": "type",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The device model name.",
           "discriminator": null,
           "children": []
@@ -304,7 +304,7 @@
         {
           "name": "guid",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "Stable identifier for the device model.",
           "discriminator": null,
           "children": []
@@ -335,7 +335,7 @@
             {
               "name": "percentage",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Battery charge level from 0 to 100 (%).",
               "discriminator": null,
               "children": []
@@ -605,7 +605,7 @@
             {
               "name": "lowThreshold",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Ambient light interrupt threshold low level from 1 to 503192 (Lux).",
               "discriminator": null,
               "children": []
@@ -613,7 +613,7 @@
             {
               "name": "highThreshold",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Ambient light interrupt threshold high level from 1 to 503192 (Lux).",
               "discriminator": null,
               "children": []
@@ -646,7 +646,7 @@
             {
               "name": "lowThreshold",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Humidity low level threshold from 1 to 99 (%).",
               "discriminator": null,
               "children": []
@@ -654,7 +654,7 @@
             {
               "name": "highThreshold",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Humidity high level threshold from 1 to 99 (%).",
               "discriminator": null,
               "children": []
@@ -687,7 +687,7 @@
             {
               "name": "lowThreshold",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Temperature low level threshold from -39 to 124 (C).",
               "discriminator": null,
               "children": []
@@ -695,7 +695,7 @@
             {
               "name": "highThreshold",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Temperature high level threshold from -39 to 124 (C).",
               "discriminator": null,
               "children": []
@@ -705,7 +705,7 @@
         {
           "name": "isOpened",
           "required": true,
-          "type": "booleannull",
+          "type": "boolean | null",
           "description": "Whether the door/window/garage is opened.",
           "discriminator": null,
           "children": []
@@ -713,7 +713,7 @@
         {
           "name": "openStatusChangedAt",
           "required": true,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Unix timestamp when the door/window/garage was last opened or closed, nullable.",
           "discriminator": null,
           "children": []
@@ -729,7 +729,7 @@
         {
           "name": "motionDetectedAt",
           "required": true,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Unix timestamp when the last motion was detected.",
           "discriminator": null,
           "children": []
@@ -811,7 +811,7 @@
         {
           "name": "armProfileIds",
           "required": true,
-          "type": "arraynull",
+          "type": "array | null",
           "description": "When `scheduleMode` is `when_armed`, restricts armed-mode detection to these arm profile ids. Empty or null = all profiles.",
           "discriminator": null,
           "children": []
@@ -827,7 +827,7 @@
         {
           "name": "alarmTriggeredAt",
           "required": true,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Unix timestamp when the smoke or carbon monoxide alarm was triggered, nullable.",
           "discriminator": null,
           "children": []
@@ -852,7 +852,7 @@
         {
           "name": "leakDetectedAt",
           "required": true,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Unix timestamp when the sensor detected a water leak, nullable.",
           "discriminator": null,
           "children": []
@@ -860,7 +860,7 @@
         {
           "name": "externalLeakDetectedAt",
           "required": true,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Unix timestamp when the sensor detected an external water leak, nullable.",
           "discriminator": null,
           "children": []
@@ -893,7 +893,7 @@
         {
           "name": "tamperingDetectedAt",
           "required": true,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Unix timestamp when the sensor detected tampering, nullable.",
           "discriminator": null,
           "children": []
@@ -915,7 +915,7 @@
                 {
                   "name": "signalQuality",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "Percent representation of Bluetooth signal strength.",
                   "discriminator": null,
                   "children": []
@@ -923,7 +923,7 @@
                 {
                   "name": "signalStrength",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "dBm value of Bluetooth signal strength.",
                   "discriminator": null,
                   "children": []
@@ -940,7 +940,7 @@
                 {
                   "name": "percentage",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "Battery charge level from 0 to 100 (%).",
                   "discriminator": null,
                   "children": []

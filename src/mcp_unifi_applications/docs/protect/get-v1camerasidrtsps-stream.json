@@ -24,7 +24,7 @@
         {
           "name": "high",
           "required": false,
-          "type": "stringnull",
+          "type": "string | null",
           "description": null,
           "discriminator": null,
           "children": []
@@ -32,7 +32,7 @@
         {
           "name": "medium",
           "required": false,
-          "type": "stringnull",
+          "type": "string | null",
           "description": null,
           "discriminator": null,
           "children": []
@@ -40,7 +40,7 @@
         {
           "name": "low",
           "required": false,
-          "type": "stringnull",
+          "type": "string | null",
           "description": null,
           "discriminator": null,
           "children": []
@@ -48,7 +48,7 @@
         {
           "name": "package",
           "required": false,
-          "type": "stringnull",
+          "type": "string | null",
           "description": null,
           "discriminator": null,
           "children": []

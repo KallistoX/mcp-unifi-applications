@@ -65,7 +65,7 @@
         {
           "name": "type",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The device model name.",
           "discriminator": null,
           "children": []
@@ -73,7 +73,7 @@
         {
           "name": "guid",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "Stable identifier for the device model.",
           "discriminator": null,
           "children": []
@@ -145,7 +145,7 @@
             {
               "name": "armProfileId",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "External arm profile armed by the Arm button, and disarmed by the Disarm button.",
               "discriminator": null,
               "children": []
@@ -153,7 +153,7 @@
             {
               "name": "nightProfileId",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "External arm profile armed by the Night button, and disarmed by the Disarm button.",
               "discriminator": null,
               "children": []
@@ -218,7 +218,7 @@
                 {
                   "name": "signalQuality",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "Percent representation of Bluetooth signal strength.",
                   "discriminator": null,
                   "children": []
@@ -226,7 +226,7 @@
                 {
                   "name": "signalStrength",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "dBm value of Bluetooth signal strength.",
                   "discriminator": null,
                   "children": []
@@ -243,7 +243,7 @@
                 {
                   "name": "percentage",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "Battery charge level from 0 to 100 (%).",
                   "discriminator": null,
                   "children": []

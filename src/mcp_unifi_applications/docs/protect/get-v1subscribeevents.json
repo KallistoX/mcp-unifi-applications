@@ -21,12 +21,128 @@
             {
               "value": "add",
               "selected": true,
-              "schema": null
+              "schema": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "type": "object (event)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of event",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "modelKey",
+                      "required": true,
+                      "type": "string",
+                      "description": "The model key of the event",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "number",
+                      "description": "Unix timestamp of the start time of the event.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "end",
+                      "required": false,
+                      "type": "number | null",
+                      "description": "Unix timestamp of the end time of the event.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "device",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of device",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
             },
             {
               "value": "update",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "type": "object (event)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of event",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "modelKey",
+                      "required": true,
+                      "type": "string",
+                      "description": "The model key of the event",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "number",
+                      "description": "Unix timestamp of the start time of the event.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "end",
+                      "required": false,
+                      "type": "number | null",
+                      "description": "Unix timestamp of the end time of the event.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "device",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of device",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "children": []
@@ -73,7 +189,7 @@
             {
               "name": "end",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Unix timestamp of the end time of the event.",
               "discriminator": null,
               "children": []

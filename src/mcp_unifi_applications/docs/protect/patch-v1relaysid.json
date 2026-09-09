@@ -82,7 +82,7 @@
         {
           "name": "type",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The device model name.",
           "discriminator": null,
           "children": []
@@ -90,7 +90,7 @@
         {
           "name": "guid",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "Stable identifier for the device model.",
           "discriminator": null,
           "children": []
@@ -138,7 +138,7 @@
             {
               "name": "name",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "User-friendly name for this relay output.",
               "discriminator": null,
               "children": []
@@ -146,7 +146,7 @@
             {
               "name": "type",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "The type of device connected to this relay output.",
               "discriminator": null,
               "children": []
@@ -154,7 +154,7 @@
             {
               "name": "delay",
               "required": true,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Server-side delay in milliseconds before activation (0 = no delay, null = use default).",
               "discriminator": null,
               "children": []
@@ -162,7 +162,7 @@
             {
               "name": "pulseDuration",
               "required": true,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "Auto-off duration in milliseconds (0 = permanent on until manually turned off, null = use default).",
               "discriminator": null,
               "children": []
@@ -170,7 +170,7 @@
             {
               "name": "state",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "The current state of the relay output.",
               "discriminator": null,
               "children": []
@@ -203,7 +203,7 @@
             {
               "name": "name",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "User-friendly name for this relay input.",
               "discriminator": null,
               "children": []
@@ -211,7 +211,7 @@
             {
               "name": "state",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "The current state of the relay input.",
               "discriminator": null,
               "children": []
@@ -219,7 +219,7 @@
             {
               "name": "actionTrigger",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "The trigger event that activates the action.",
               "discriminator": null,
               "children": []
@@ -227,7 +227,7 @@
             {
               "name": "actionType",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "The type of action to perform when triggered.",
               "discriminator": null,
               "children": []
@@ -235,7 +235,7 @@
             {
               "name": "actionOutputId",
               "required": true,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "The index of the output to control when triggered.",
               "discriminator": null,
               "children": []
@@ -259,7 +259,7 @@
                 {
                   "name": "signalQuality",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "Percent representation of Bluetooth signal strength.",
                   "discriminator": null,
                   "children": []
@@ -267,7 +267,7 @@
                 {
                   "name": "signalStrength",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "dBm value of Bluetooth signal strength.",
                   "discriminator": null,
                   "children": []
@@ -284,7 +284,7 @@
                 {
                   "name": "percentage",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": "Battery charge level from 0 to 100 (%).",
                   "discriminator": null,
                   "children": []

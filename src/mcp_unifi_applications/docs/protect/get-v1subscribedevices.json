@@ -21,17 +21,421 @@
             {
               "value": "add",
               "selected": true,
-              "schema": null
+              "schema": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "type": "object (device)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "modelKey",
+                      "required": true,
+                      "type": "string",
+                      "description": "The model key of the nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": "The NVR model name.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "guid",
+                      "required": true,
+                      "type": "string | null",
+                      "description": "GUID of the NVR",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "mac",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary MAC address of the device.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "doorbellSettings",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "defaultMessageText",
+                          "required": false,
+                          "type": "string",
+                          "description": "Default text to display on the LCD screen.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "defaultMessageResetTimeoutMs",
+                          "required": false,
+                          "type": "number",
+                          "description": "Default timeout for resetting LCD screen to the default message.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "customMessages",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "A list of custom doorbell messages.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "customImages",
+                          "required": false,
+                          "type": "Array of object",
+                          "description": "A list of custom doorbell images for client preview.",
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "preview",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "sprite",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "armMode",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "status",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "armProfileId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "armedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "willBeArmedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachDetectedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachEventCount",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachTriggerEventId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachEventId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "value": "update",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "type": "object (devicePartialWithReference)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "modelKey",
+                      "required": true,
+                      "type": "string",
+                      "description": "The model key of the nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "type",
+                      "required": false,
+                      "type": "string",
+                      "description": "The NVR model name.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "guid",
+                      "required": false,
+                      "type": "string | null",
+                      "description": "GUID of the NVR",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "mac",
+                      "required": false,
+                      "type": "string",
+                      "description": "The primary MAC address of the device.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "doorbellSettings",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "defaultMessageText",
+                          "required": false,
+                          "type": "string",
+                          "description": "Default text to display on the LCD screen.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "defaultMessageResetTimeoutMs",
+                          "required": false,
+                          "type": "number",
+                          "description": "Default timeout for resetting LCD screen to the default message.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "customMessages",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "A list of custom doorbell messages.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "customImages",
+                          "required": false,
+                          "type": "Array of object",
+                          "description": "A list of custom doorbell images for client preview.",
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "preview",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "sprite",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "armMode",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "status",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "armProfileId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "armedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "willBeArmedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachDetectedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachEventCount",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachTriggerEventId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachEventId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "value": "remove",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "type": "object (deviceReference)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "modelKey",
+                      "required": true,
+                      "type": "string",
+                      "description": "The model key of the nvr",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "children": []
@@ -78,7 +482,7 @@
             {
               "name": "guid",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "GUID of the NVR",
               "discriminator": null,
               "children": []
@@ -167,7 +571,7 @@
                 {
                   "name": "armProfileId",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -175,7 +579,7 @@
                 {
                   "name": "armedAt",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -183,7 +587,7 @@
                 {
                   "name": "willBeArmedAt",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -191,7 +595,7 @@
                 {
                   "name": "breachDetectedAt",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -207,7 +611,7 @@
                 {
                   "name": "breachTriggerEventId",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -215,7 +619,7 @@
                 {
                   "name": "breachEventId",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []

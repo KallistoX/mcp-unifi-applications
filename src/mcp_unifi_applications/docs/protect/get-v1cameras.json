@@ -47,7 +47,7 @@
         {
           "name": "type",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The device model name.",
           "discriminator": null,
           "children": []
@@ -55,7 +55,7 @@
         {
           "name": "guid",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "Stable identifier for the device model.",
           "discriminator": null,
           "children": []
@@ -176,7 +176,7 @@
             {
               "name": "resetAt",
               "required": false,
-              "type": "numbernull",
+              "type": "number | null",
               "description": "UNIX timestamp when doorbell message should be removed (if not set then `nvr.doorbellSettings.defaultMessageResetTimeoutMs` is used, if set to `null` then interpreted as \"forever\")",
               "discriminator": null,
               "children": []
