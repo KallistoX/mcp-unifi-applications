@@ -6,6 +6,7 @@ as queryable tools for use in Claude Desktop or any MCP-compatible client.
 
 import json
 import os
+from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 from fastmcp import FastMCP
@@ -19,7 +20,7 @@ DOCS_DIR = Path(os.environ.get("DOCS_DIR", Path(__file__).parent / "docs"))
 _endpoints: dict[str, dict] = {}
 _guides: dict[str, dict] = {}
 _search_index: list[tuple[str, str, str, str, str, str]] = []  # (slug, title, method, path, description, app)
-_field_index: dict[str, list[tuple[str, str]]] = {}  # field_name_lower -> [(slug, path)]
+_field_index: dict[str, list[tuple[str, str, str]]] = {}  # field_name_lower -> [(slug, path, section)]
 _resource_groups: dict[str, list[str]] = {}  # resource path -> [slugs]
 _loaded_apps: set[str] = set()
 _meta: dict[str, dict] = {}  # app -> {"app", "version", "scrapedAt", "pageCount"}
@@ -29,18 +30,23 @@ VALID_MODES = ("local", "remote")
 # Apps whose docs declare only the cloud server, so examples exist only in remote form.
 REMOTE_ONLY_APPS = frozenset({"site-manager", "mobility", "carrier-fabric"})
 MAX_LIST_LINES = 200
+MAX_FIELD_HITS = 50
 
 
-def _index_fields(fields: list[dict], slug: str, path: str = ""):
-    """Walk field tree and build reverse index of field_name -> locations."""
+def _index_fields(fields: list[dict], slug: str, section: str, path: str = ""):
+    """Walk field tree and build reverse index of field_name -> locations.
+
+    The section is carried along so find_field can say whether a hit is in the
+    request or the response; the same dotted path often exists in both.
+    """
     for f in fields:
         current = f"{path}.{f['name']}" if path else f["name"]
         key = f["name"].lower()
-        _field_index.setdefault(key, []).append((slug, current))
-        _index_fields(f.get("children") or [], slug, current)
+        _field_index.setdefault(key, []).append((slug, current, section))
+        _index_fields(f.get("children") or [], slug, section, current)
         for disc in f.get("discriminator") or []:
             _index_fields(
-                disc.get("schema") or [], slug,
+                disc.get("schema") or [], slug, section,
                 f"{current}[{disc['value']}]"
             )
 
@@ -88,9 +94,9 @@ def _load_app(app: str, directory: Path):
         _search_index.append((qualified, data.get("h1", ""), method, path, desc, data["_app"]))
         # Build field index
         for section_key in ("pathParameters", "queryParameters", "requestBody"):
-            _index_fields(data.get(section_key) or [], qualified)
+            _index_fields(data.get(section_key) or [], qualified, section_key)
         for resp in data.get("responses") or []:
-            _index_fields(resp.get("fields") or [], qualified)
+            _index_fields(resp.get("fields") or [], qualified, "response")
         # Group by resource
         rk = _resource_key(path)
         if rk:
@@ -129,7 +135,12 @@ def _docs_summary() -> str:
     return ", ".join(parts)
 
 
-mcp = FastMCP("unifi-applications", instructions=(
+try:  # installed distribution; falls back when running from a source checkout
+    __version__ = version("mcp-unifi-applications")
+except PackageNotFoundError:  # pragma: no cover
+    __version__ = "0+unknown"
+
+mcp = FastMCP("unifi-applications", version=__version__, instructions=(
     "You have access to UniFi application API documentation (Network, Protect, Site Manager, InnerSpace, Mobility, Carrier Fabric). "
     "Use list_endpoints to browse, search_endpoints to find relevant endpoints, "
     "and get_endpoint to get full schema details. Use get_endpoint_group to get "
@@ -188,9 +199,12 @@ def list_endpoints(method: str | None = None, app: str | None = None) -> str:
     """
     if not _search_index:
         return "No endpoints loaded. Check DOCS_DIR."
+    bad = _bad_filter(app, method)
+    if bad:
+        return bad
     lines = []
-    method_filter = method.upper() if method else None
-    app_filter = app.lower() if app else None
+    method_filter = method.strip().upper() if method else None
+    app_filter = app.strip().lower() if app else None
     for slug, title, m, path, desc, ep_app in _search_index:
         if method_filter and m.upper() != method_filter:
             continue
@@ -215,6 +229,22 @@ def list_endpoints(method: str | None = None, app: str | None = None) -> str:
     return "\n".join(lines)
 
 
+VALID_METHODS = ("GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "WS")
+
+
+def _bad_filter(app: str | None, method: str | None) -> str | None:
+    """Reject unknown app/method filters by name.
+
+    Returning "nothing found" for a typo reads as "this app has no such endpoints",
+    which is a different and wrong claim.
+    """
+    if app and app.strip().lower() not in _loaded_apps:
+        return (f"Unknown app '{app}'. Loaded: {', '.join(sorted(_loaded_apps))}.")
+    if method and method.strip().upper() not in VALID_METHODS:
+        return (f"Unknown method '{method}'. Choose from: {', '.join(VALID_METHODS)}.")
+    return None
+
+
 def _truncate(text: str, max_len: int = 120) -> str:
     # Collapse to first line / sentence
     first_line = text.split("\n")[0].strip()
@@ -223,12 +253,39 @@ def _truncate(text: str, max_len: int = 120) -> str:
     return first_line[:max_len - 3].rsplit(" ", 1)[0] + "..."
 
 
+# Measured against the real corpus: genuine typos score 67-98 against their
+# intended slug, while nonsense tops out at 42. Suggesting the best of a bad
+# field reads as "this is probably what you wanted", which for garbage input is
+# a lie - and for 'listnetworks' it pointed at deletenetwork.
+MIN_SUGGEST_SCORE = 60
+MIN_SEARCH_SCORE = 60
+
+
 def _suggest_slugs(slug: str, n: int = 3) -> str:
-    """Suggest closest matching slugs using fuzzy match."""
+    """Suggest close slug matches, or nothing when none are close."""
     scored = [(fuzz.ratio(slug.lower(), s.lower()), s) for s in _endpoints]
     scored.sort(reverse=True)
-    suggestions = [s for _, s in scored[:n]]
-    return f"Did you mean: {', '.join(suggestions)}?"
+    suggestions = [s for score, s in scored[:n] if score >= MIN_SUGGEST_SCORE]
+    return f" Did you mean: {', '.join(suggestions)}?" if suggestions else ""
+
+
+def _resolve_slug(slug: str) -> tuple[str | None, str]:
+    """Resolve a slug to a qualified one, or explain why it cannot be.
+
+    Bare slugs are accepted when unambiguous - 179 of 185 are - so the
+    'createnetwork' form documented in the tool descriptions actually works.
+    """
+    if not slug or not slug.strip():
+        return None, "Please provide an endpoint slug. Use list_endpoints or search_endpoints to find one."
+    slug = slug.strip()
+    if slug in _endpoints:
+        return slug, ""
+    matches = [q for q in _endpoints if q.split("/", 1)[-1] == slug]
+    if len(matches) == 1:
+        return matches[0], ""
+    if len(matches) > 1:
+        return None, f"Endpoint '{slug}' is ambiguous. Did you mean: {', '.join(sorted(matches))}?"
+    return None, f"Endpoint '{slug}' not found.{_suggest_slugs(slug)}"
 
 
 @mcp.tool()
@@ -245,10 +302,13 @@ def search_endpoints(query: str, method: str | None = None, app: str | None = No
     """
     if not query.strip():
         return "Please provide a search query."
+    bad = _bad_filter(app, method)
+    if bad:
+        return bad
 
-    q = query.lower()
-    method_filter = method.upper() if method else None
-    app_filter = app.lower() if app else None
+    q = query.strip().lower()
+    method_filter = method.strip().upper() if method else None
+    app_filter = app.strip().lower() if app else None
     scored = []
     for slug, title, m, path, desc, ep_app in _search_index:
         if method_filter and m.upper() != method_filter:
@@ -269,7 +329,7 @@ def search_endpoints(query: str, method: str | None = None, app: str | None = No
 
     lines = []
     for score, slug, title, m, path, desc, ep_app in top:
-        if score < 30:
+        if score < MIN_SEARCH_SCORE:
             break
         app_tag = f"[{ep_app}] " if len(_loaded_apps) > 1 else ""
         lines.append(f"{app_tag}[{slug}] {m} {path}  {title}")
@@ -283,13 +343,15 @@ def get_endpoint(slug: str, summary: bool = True) -> str:
     """Get the full schema for a UniFi API endpoint.
 
     Args:
-        slug: Endpoint identifier (e.g. 'createnetwork', 'listnetworks').
-              Use list_endpoints or search_endpoints to find slugs.
+        slug: Endpoint identifier, app-qualified ('network/createnetwork') or bare
+              ('createnetwork') when only one app has it. Use list_endpoints or
+              search_endpoints to find slugs.
         summary: If True, return a compact field summary. If False, return raw JSON.
     """
-    ep = _endpoints.get(slug)
-    if not ep:
-        return f"Endpoint '{slug}' not found. {_suggest_slugs(slug)}"
+    slug, err = _resolve_slug(slug)
+    if err:
+        return err
+    ep = _endpoints[slug]
 
     if not summary:
         return json.dumps(ep, indent=2)
@@ -331,13 +393,15 @@ def get_example(slug: str, language: str = "curl", mode: str | None = None) -> s
               Defaults to 'local'; remote-only apps (site-manager, mobility,
               carrier-fabric) default to 'remote'.
     """
-    ep = _endpoints.get(slug)
-    if not ep:
-        return f"Endpoint '{slug}' not found. {_suggest_slugs(slug)}"
+    slug, err = _resolve_slug(slug)
+    if err:
+        return err
+    ep = _endpoints[slug]
 
-    lang = language.lower()
+    lang = (language or "").strip().lower()
     # Default mode based on app: some apps are cloud-only
     app = ep.get("_app", "network")
+    mode = (mode or "").strip()
     m = (mode or ("remote" if app in REMOTE_ONLY_APPS else "local")).lower()
     if lang not in VALID_LANGUAGES:
         return f"Unknown language '{language}'. Choose from: {', '.join(VALID_LANGUAGES)}"
@@ -370,11 +434,12 @@ def get_response_sample(slug: str) -> str:
     """Get the example JSON response for a specific UniFi API endpoint.
 
     Args:
-        slug: Endpoint identifier (e.g. 'listnetworks').
+        slug: Endpoint identifier (e.g. 'network/getnetworksoverviewpage').
     """
-    ep = _endpoints.get(slug)
-    if not ep:
-        return f"Endpoint '{slug}' not found. {_suggest_slugs(slug)}"
+    slug, err = _resolve_slug(slug)
+    if err:
+        return err
+    ep = _endpoints[slug]
     sample = ep.get("responseSample")
     if not sample:
         return f"No response sample available for '{slug}'."
@@ -392,23 +457,40 @@ def find_field(field_name: str, slug: str | None = None) -> str:
         field_name: The field name to search for (case-insensitive).
         slug: Optional — limit search to a specific endpoint.
     """
-    key = field_name.lower()
+    if slug:
+        # Otherwise "not found in endpoint 'bogus'" reads as though the endpoint
+        # exists and merely lacks the field.
+        slug, err = _resolve_slug(slug)
+        if err:
+            return err
+    key = field_name.strip().lower()
+    if not key:
+        return "Please provide a field name."
     hits = _field_index.get(key, [])
     if slug:
-        hits = [(s, p) for s, p in hits if s == slug]
+        hits = [h for h in hits if h[0] == slug]
     if not hits:
-        # Try fuzzy match on field names
-        similar = sorted(
-            _field_index.keys(),
-            key=lambda k: fuzz.ratio(key, k),
-            reverse=True,
-        )[:5]
+        similar = [
+            k for score, k in sorted(
+                ((fuzz.ratio(key, k), k) for k in _field_index), reverse=True
+            )[:5] if score >= MIN_SUGGEST_SCORE
+        ]
         scope = f"endpoint '{slug}'" if slug else "any endpoint"
         msg = f"Field '{field_name}' not found in {scope}."
         if similar:
             msg += f"\nSimilar fields: {', '.join(similar)}"
         return msg
-    lines = [f"[{s}] {p}" for s, p in hits[:50]]
+
+    total = len(hits)
+    endpoints = len({h[0] for h in hits})
+    lines = [f"[{s}] {path}  ({section})" for s, path, section in hits[:MAX_FIELD_HITS]]
+    if total > MAX_FIELD_HITS:
+        # Silently stopping at a cap invites the reader to conclude that an
+        # endpoint not listed here does not have the field.
+        lines.append(
+            f"... truncated: showing {MAX_FIELD_HITS} of {total} occurrences across "
+            f"{endpoints} endpoints. Pass slug= to scope the search to one endpoint."
+        )
     return "\n".join(lines)
 
 
@@ -472,12 +554,15 @@ def get_field_schema(slug: str, field_path: str) -> str:
                     Examples: 'dhcpV4', 'management[GATEWAY].dhcpV4',
                     'management[GATEWAY].dhcpV4.gateway'.
     """
-    ep = _endpoints.get(slug)
-    if not ep:
-        return f"Endpoint '{slug}' not found. {_suggest_slugs(slug)}"
+    slug, err = _resolve_slug(slug)
+    if err:
+        return err
+    ep = _endpoints[slug]
 
-    parts = field_path.replace("].", "].").split(".")
-    parts = [p for p in parts if p]
+    parts = [p for p in (field_path or "").split(".") if p]
+    if not parts:
+        return (f"Please provide a field path within '{slug}'. "
+                "Use find_field to locate one, or get_endpoint for the whole schema.")
 
     # Search across all schema sections
     for section_key in ("requestBody", "pathParameters", "queryParameters"):
@@ -520,7 +605,10 @@ def get_endpoint_group(resource: str) -> str:
     Args:
         resource: Resource name or path fragment (e.g. 'networks', 'acl-rules', 'wifi/broadcasts').
     """
-    q = resource.lower().strip("/")
+    q = (resource or "").strip().strip("/").lower()
+    if not q:
+        return ("Please provide a resource name or path fragment, e.g. 'networks', "
+                "'firewall/policies' or 'cameras'. Use list_endpoints to browse.")
     matching_keys = [k for k in _resource_groups if q in k.lower()]
     if not matching_keys:
         return f"No resource group found matching '{resource}'. Try a path fragment like 'networks' or 'firewall/policies'."
@@ -549,12 +637,24 @@ def get_guide(topic: str | None = None, app: str | None = None) -> str:
         topic: Guide slug or search term. Omit to list all available guides.
         app: Optional app filter (network, protect, site-manager, innerspace, mobility, carrier-fabric). Omit to search all.
     """
-    app_filter = app.lower() if app else None
+    if app:
+        bad = _bad_filter(app, None)
+        if bad:
+            # "No guide pages loaded." for a typo'd app claims the server has none.
+            return bad
+    app_filter = app.strip().lower() if app else None
     guides = {s: g for s, g in _guides.items() if not app_filter or g.get("_app") == app_filter}
 
-    if not topic:
-        if not guides:
-            return "No guide pages loaded."
+    def _render(slug: str) -> str:
+        g = guides[slug]
+        title = g.get("h1") or slug
+        app_tag = f" ({g.get('_app')})" if len(_loaded_apps) > 1 else ""
+        return f"# {title}{app_tag}\n\n{g.get('content', 'No content.')}\n\nSource: {g.get('sourceUrl', 'N/A')}"
+
+    if not guides:
+        return "No guide pages loaded."
+
+    if not topic or not topic.strip():
         lines = ["Available guides:"]
         for slug, data in sorted(guides.items()):
             title = data.get("h1") or slug
@@ -562,21 +662,25 @@ def get_guide(topic: str | None = None, app: str | None = None) -> str:
             lines.append(f"  {app_tag}[{slug}] {title}")
         return "\n".join(lines)
 
-    # Exact match
+    topic = topic.strip()
     if topic in guides:
-        g = guides[topic]
-        title = g.get("h1") or topic
-        return f"# {title}\n\n{g.get('content', 'No content.')}\n\nSource: {g.get('sourceUrl', 'N/A')}"
+        return _render(topic)
 
-    # Fuzzy match
+    # Slug before title. Matching only on the rendered h1 made
+    # get_guide("gettingstarted", app="site-manager") fail while listing
+    # site-manager/gettingstarted as available in the same sentence.
+    bare = [s for s in guides if s.split("/", 1)[-1] == topic]
+    if len(bare) == 1:
+        return _render(bare[0])
+    if len(bare) > 1:
+        return (f"Guide '{topic}' exists in several applications: {', '.join(sorted(bare))}. "
+                "Pass app= to choose one.")
+
     scored = [(fuzz.token_set_ratio(topic.lower(), f"{s} {g.get('h1', '')}".lower()), s)
               for s, g in guides.items()]
     scored.sort(reverse=True)
     if scored and scored[0][0] > 50:
-        best_slug = scored[0][1]
-        g = guides[best_slug]
-        title = g.get("h1") or best_slug
-        return f"# {title}\n\n{g.get('content', 'No content.')}\n\nSource: {g.get('sourceUrl', 'N/A')}"
+        return _render(scored[0][1])
 
     available = ", ".join(sorted(guides.keys()))
     return f"No guide found for '{topic}'. Available: {available}"

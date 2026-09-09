@@ -280,6 +280,7 @@ mcp-unifi-applications/
 ├── Dockerfile          # Scraper container image
 ├── pyproject.toml      # Python project config
 ├── server.json         # MCP registry manifest
+├── CHANGELOG.md        # Keep a Changelog
 ├── glama.json          # Glama maintainer declaration
 ├── src/
 │   └── mcp_unifi_applications/

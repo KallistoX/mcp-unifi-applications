@@ -110,8 +110,11 @@ class TestListEndpoints:
             assert "DELETE" in line
 
     def test_list_invalid_method(self):
+        # Naming the bad filter beats "no endpoints found", which reads as a
+        # claim about the corpus rather than about the argument.
         result = m.list_endpoints(method="TRACE")
-        assert "no endpoints" in result.lower()
+        assert "unknown method" in result.lower()
+        assert "TRACE" in result
 
 
 # --- get_endpoint ---
@@ -435,3 +438,102 @@ class TestReleaseMetadata:
     def test_readme_is_the_packaged_long_description(self):
         # The token only reaches PyPI if the README is what gets packaged.
         assert self._pyproject()["project"]["readme"] == "README.md"
+
+
+# --- Output that would mislead a model reading it ---
+
+
+class TestHonestOutput:
+    """One test per finding from the 0.2.0 package acceptance review."""
+
+    def test_unqualified_slug_resolves_when_unambiguous(self):
+        # The tool descriptions document 'createnetwork'; it used to be rejected.
+        assert m.get_endpoint("createnetwork").startswith("# Create Network")
+
+    def test_ambiguous_bare_slug_lists_the_candidates(self):
+        out = m.get_endpoint("connectorget")
+        assert "ambiguous" in out.lower()
+        assert out.count("/connectorget") >= 2
+
+    def test_find_field_rejects_an_unknown_endpoint(self):
+        out = m.find_field("vlanId", slug="bogus/slug")
+        assert "not found" in out.lower()
+        # Must be about the endpoint, not about the field being absent from it.
+        assert "bogus/slug" in out
+        assert "field 'vlanId' not found" not in out.lower()
+
+    def test_find_field_names_the_section(self):
+        for line in m.find_field("vlanId").splitlines():
+            if line.startswith("["):
+                assert line.rstrip().endswith(")"), line
+
+    def test_find_field_reports_truncation(self):
+        out = m.find_field("id")
+        lines = out.splitlines()
+        if len(lines) > m.MAX_FIELD_HITS:
+            last = lines[-1]
+            assert "truncated" in last
+            assert "occurrences" in last and "endpoints" in last
+        else:  # pragma: no cover - corpus dependent
+            pytest.skip("corpus has fewer hits than the cap")
+
+    def test_guide_resolves_by_slug_within_an_app(self):
+        for slug, g in m._guides.items():
+            app, bare = slug.split("/", 1)
+            if sum(1 for s in m._guides if s.split("/", 1)[1] == bare) > 1:
+                out = m.get_guide(topic=bare, app=app)
+                assert "No guide found" not in out, slug
+                assert g.get("h1") is None or g["h1"] in out
+                return
+        pytest.skip("no guide slug is shared across apps")
+
+    def test_ambiguous_guide_asks_instead_of_guessing(self):
+        out = m.get_guide(topic="gettingstarted")
+        if "several applications" in out:
+            assert "app=" in out
+        else:  # pragma: no cover - corpus dependent
+            assert out.startswith("#")
+
+    def test_guide_rejects_an_unknown_app(self):
+        out = m.get_guide(app="bogusapp")
+        assert "unknown app" in out.lower()
+        # "No guide pages loaded" would claim the server has none at all.
+        assert "no guide pages loaded" not in out.lower()
+
+    def test_search_rejects_an_unknown_app(self):
+        out = m.search_endpoints("camera", app="protekt")
+        assert "unknown app" in out.lower()
+
+    def test_search_returns_nothing_for_nonsense(self):
+        for q in ("zzzzznotathing", "<script>alert(1)</script>", "asdfghjkl"):
+            assert m.search_endpoints(q) == "No matching endpoints found.", q
+
+    def test_suggestions_are_withheld_when_nothing_is_close(self):
+        out = m.get_endpoint("totallybogusslug")
+        assert "not found" in out.lower()
+        assert "did you mean" not in out.lower()
+
+    def test_suggestions_still_offered_for_a_real_typo(self):
+        out = m.get_endpoint("network/createnetwrk")
+        assert "did you mean" in out.lower()
+        assert "network/createnetwork" in out
+
+    def test_empty_field_path_does_not_raise(self):
+        out = m.get_field_schema("network/createnetwork", "")
+        assert "provide a field path" in out.lower()
+
+    def test_empty_resource_group_asks_for_a_value(self):
+        out = m.get_endpoint_group("")
+        assert "provide a resource" in out.lower()
+
+    def test_mode_whitespace_is_tolerated_consistently(self):
+        blank = m.get_example("network/createnetwork", "curl", "")
+        padded = m.get_example("network/createnetwork", "curl", "remote ")
+        assert "(local)" in blank.splitlines()[0]
+        assert "(remote)" in padded.splitlines()[0]
+
+    def test_server_reports_the_package_version(self):
+        import tomllib
+
+        pyproject = tomllib.loads((Path(__file__).parent.parent / "pyproject.toml").read_text())
+        assert m.mcp.version == pyproject["project"]["version"]
