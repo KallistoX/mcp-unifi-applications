@@ -296,10 +296,12 @@ class TestMeta:
             found += 1
         assert found > 0, "no _meta.json found in any app dir"
 
-    def test_meta_loaded_for_known_apps(self):
-        for app in ("network", "protect", "site-manager"):
-            if app in m._loaded_apps:
-                assert app in m._meta, f"{app} has no _meta loaded"
+    def test_meta_loaded_for_every_app(self):
+        # Derived from what actually loaded, so a newly added app dir is covered
+        # without editing this list.
+        assert m._loaded_apps, "no app dirs loaded"
+        for app in m._loaded_apps:
+            assert app in m._meta, f"{app} has no _meta loaded"
 
     def test_instructions_name_versions(self):
         for app, meta in m._meta.items():

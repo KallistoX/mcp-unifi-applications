@@ -2,7 +2,7 @@
 
 ![CI](https://github.com/KallistoX/mcp-unifi-applications/actions/workflows/ci.yml/badge.svg)
 
-An MCP server that exposes [UniFi application API](https://developer.ui.com) documentation (Network, Protect, Site Manager) as queryable tools for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
+An MCP server that exposes [UniFi application API](https://developer.ui.com) documentation (Network, Protect, Site Manager, InnerSpace) as queryable tools for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
 
 Includes a Playwright-based scraper that turns the JS-rendered docs SPA into structured JSON files, and a Python MCP server that serves them.
 
@@ -43,6 +43,9 @@ docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app prote
 
 # Scrape Site Manager API docs
 docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app site-manager
+
+# Scrape InnerSpace API docs
+docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app innerspace
 
 # Scrape a specific API version
 docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --app network --version v9.5.21
@@ -113,8 +116,9 @@ pip install .
 | Network | `developer.ui.com/network` | Both | Default app |
 | Protect | `developer.ui.com/protect` | Both | |
 | Site Manager | `developer.ui.com/site-manager` | Remote only | No local/remote switch |
+| InnerSpace | `developer.ui.com/innerspace` | Both | Smallest surface (integration API) |
 
-All three applications share the same docs SPA structure with version dropdowns, endpoint pages, and guide pages.
+All applications share the same docs SPA structure with version dropdowns, endpoint pages, and guide pages, so adding one is a single entry in the `APPS` object in `scrape.mjs` — the server discovers new app directories on its own.
 
 ## Available Tools
 
@@ -131,13 +135,13 @@ All three applications share the same docs SPA structure with version dropdowns,
 | `get_guide` | API guide pages (filtering syntax, error handling, getting started) |
 | `get_docs_info` | Which docs are loaded: API version, scrape date, endpoint/guide counts per app |
 
-Tools that return multiple results accept an optional `app` parameter (`network`, `protect`, `site-manager`) to filter by application.
+Tools that return multiple results accept an optional `app` parameter (`network`, `protect`, `site-manager`, `innerspace`) to filter by application.
 
 ## Environment Variables
 
 | Variable | Default | Description |
 |---|---|---|
-| `DOCS_DIR` | `./docs` (relative to `mcp_server.py`) | Directory containing scraped JSON docs. Expects app subdirectories (`network/`, `protect/`, `site-manager/`). |
+| `DOCS_DIR` | `./docs` (relative to `mcp_server.py`) | Directory containing scraped JSON docs. Expects app subdirectories (`network/`, `protect/`, `site-manager/`, `innerspace/`). |
 
 ## Scraper CLI
 
@@ -145,7 +149,7 @@ Tools that return multiple results accept an optional `app` parameter (`network`
 node scrape.mjs [options] [slug...]
 
 Options:
-  --app <name>      Application: network (default), protect, site-manager.
+  --app <name>      Application: network (default), protect, site-manager, innerspace.
   --version <ver>   API version to scrape (e.g. v10.1.84). Default: latest.
   --list-versions   Print available versions and exit.
   --force           Re-scrape even if output file exists.
@@ -172,7 +176,10 @@ mcp-unifi-applications/
 ├── docs/               # Scraped JSON output
 │   ├── network/        # Network API docs
 │   ├── protect/        # Protect API docs
-│   └── site-manager/   # Site Manager API docs
+│   ├── site-manager/   # Site Manager API docs
+│   └── innerspace/     # InnerSpace API docs
+├── scripts/
+│   └── update_readme_versions.py   # Regenerates the README version table
 └── tests/
     └── test_mcp_server.py
 ```

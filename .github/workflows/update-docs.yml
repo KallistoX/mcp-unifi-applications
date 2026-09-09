@@ -40,7 +40,7 @@ jobs:
         run: |
           set -euo pipefail
           outdated=()
-          for app in network protect site-manager; do
+          for app in network protect site-manager innerspace; do
             html=$(curl -fsSL --max-time 30 "https://developer.ui.com/${app}")
             latest=$(echo "$html" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sort -uV | tail -1 || true)
             if [ -z "$latest" ]; then

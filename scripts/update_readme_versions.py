@@ -21,6 +21,7 @@ DISPLAY_NAMES = {
     "network": "Network",
     "protect": "Protect",
     "site-manager": "Site Manager",
+    "innerspace": "InnerSpace",
 }
 
 
