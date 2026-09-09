@@ -57,7 +57,17 @@ docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs createnetwo
 docker run --rm -v $(pwd)/docs:/output unifi-scraper node scrape.mjs --force
 ```
 
-Pre-scraped docs are included: Network API v10.3.58 (`docs/network/`), Protect v7.1.87 (`docs/protect/`), Site Manager v1.0.0 (`docs/site-manager/`). Each app dir carries a `_meta.json` (API version, scrape date, page count). A weekly GitHub Action checks upstream for new versions and opens a PR with freshly scraped docs.
+Pre-scraped docs are included, so the server works out of the box:
+
+<!-- docs-versions:start -->
+| Application | API version | Scraped | Pages |
+|---|---|---|---|
+| Network | v10.4.57 | 2026-07-27 | 82 |
+| Protect | v7.2.105 | 2026-08-17 | 81 |
+| Site Manager | v1.0.0 | 2026-07-17 | 12 |
+<!-- docs-versions:end -->
+
+Each app dir carries a `_meta.json` (API version, scrape date, page count); the `get_docs_info` tool reports the same at runtime. A weekly GitHub Action checks upstream for new versions and opens a PR with freshly scraped docs — the table above is regenerated in that PR by `scripts/update_readme_versions.py`.
 
 ### 2. Install the MCP server
 

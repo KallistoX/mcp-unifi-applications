@@ -6,7 +6,7 @@ Contributions are welcome! Here's how to get started.
 
 ```bash
 # Clone the repo
-git clone https://github.com/dbussemas/mcp-unifi-applications.git
+git clone https://github.com/KallistoX/mcp-unifi-applications.git
 cd mcp-unifi-applications
 
 # Python (MCP server)
