@@ -54,7 +54,7 @@
                 {
                   "name": "planId",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -184,7 +184,7 @@
                 {
                   "name": "urlModel",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -192,7 +192,7 @@
                 {
                   "name": "additionalZipUrl",
                   "required": false,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -200,7 +200,7 @@
                 {
                   "name": "additionalBinUrl",
                   "required": false,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -249,7 +249,7 @@
                 {
                   "name": "siteId",
                   "required": false,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -265,7 +265,7 @@
                 {
                   "name": "location",
                   "required": true,
-                  "type": "objectnull",
+                  "type": "object | null",
                   "description": null,
                   "discriminator": null,
                   "children": [
@@ -298,7 +298,7 @@
                 {
                   "name": "attenuation",
                   "required": true,
-                  "type": "numbernull",
+                  "type": "number | null",
                   "description": null,
                   "discriminator": null,
                   "children": []

@@ -55,7 +55,7 @@
             {
               "name": "mac",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "MAC address in colon-separated form (`aa:bb:cc:dd:ee:ff`).",
               "discriminator": null,
               "children": []
@@ -63,7 +63,7 @@
             {
               "name": "serial",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": "Device identifier for Hamina import. Uses the MAC address without colons, prefixed with `SN`.",
               "discriminator": null,
               "children": []
@@ -111,7 +111,7 @@
             {
               "name": "mount",
               "required": true,
-              "type": "stringnull",
+              "type": "string | null",
               "description": null,
               "discriminator": null,
               "children": []
