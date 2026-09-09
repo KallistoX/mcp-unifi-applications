@@ -208,6 +208,8 @@ The full scan is resumable - already-scraped pages are skipped. Use `--force` to
 ```
 mcp-unifi-applications/
 ├── scrape.mjs          # Playwright scraper (runs in Docker)
+├── lib/
+│   └── parse.mjs       # Scraper parsing logic, kept out of the browser so it is testable
 ├── Dockerfile          # Scraper container image
 ├── pyproject.toml      # Python project config
 ├── server.json         # MCP registry manifest
@@ -224,7 +226,8 @@ mcp-unifi-applications/
 ├── scripts/
 │   └── update_readme_versions.py   # Regenerates the README version table
 └── tests/
-    └── test_mcp_server.py
+    ├── test_mcp_server.py    # pytest
+    └── scrape-parse.test.mjs # node --test
 ```
 
 ## Output Format

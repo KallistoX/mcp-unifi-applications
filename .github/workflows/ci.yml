@@ -25,6 +25,13 @@ jobs:
       - name: Run tests
         run: pytest tests/ -v
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Run scraper parser tests
+        run: node --test tests/
+
       # A wheel that ships no module or no docs installs cleanly and then fails
       # at runtime, which pytest above would not catch — it imports from src/.
       - name: Build wheel and verify its contents

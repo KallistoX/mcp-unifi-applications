@@ -9,6 +9,13 @@
 //                     Omit to scrape all pages.
 
 import { chromium } from 'playwright';
+import {
+  buildVersionsFromHrefs,
+  buildVersionsFromItems,
+  resolveVersion,
+  selectNavLinks,
+  slugFromHref,
+} from './lib/parse.mjs';
 import { writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
 
 const SITE = 'https://developer.ui.com';
@@ -426,34 +433,18 @@ async function discoverVersions(page, appPath) {
     if (versionBtn) await versionBtn.click();
     await page.waitForTimeout(500);
   } catch (_) {}
-  // Extract versions from the dropdown list items
-  const versions = await page.evaluate((appPath) => {
-    const items = Array.from(document.querySelectorAll('[data-ui-portal-container] li'));
-    if (items.length > 0) {
-      // Dropdown labels are not bare versions: Early Access apps read "v1.3.23 (EA)".
-      // Keep the label for display, but the version must be the semver alone — it is
-      // interpolated into the docs URL.
-      return items.map(li => {
-        const label = li.innerText.trim();
-        const m = label.match(/v?(\d+(?:\.\d+)*)/);
-        return m ? {
-          version: m[1],
-          label,
-          selected: li.getAttribute('data-ui-selected') === 'true',
-        } : null;
-      }).filter(Boolean);
-    }
-    // Fallback: look for version in URL or nav links
-    const links = Array.from(document.querySelectorAll(`a[href*="/${appPath}/v"]`));
-    const seen = new Set();
-    const re = new RegExp(`\\/${appPath.replace('-', '\\-')}\\/v([\\d.]+)`);
-    return links.map(a => {
-      const m = a.href.match(re);
-      if (!m || seen.has(m[1])) return null;
-      seen.add(m[1]);
-      return { version: m[1], selected: false };
-    }).filter(Boolean);
-  }, appPath);
+  // The browser only reads the DOM; parsing happens in lib/parse.mjs, where it
+  // can be tested. Everything inside page.evaluate is unreachable from tests.
+  const raw = await page.evaluate((appPath) => ({
+    items: Array.from(document.querySelectorAll('[data-ui-portal-container] li')).map(li => ({
+      label: li.innerText.trim(),
+      selected: li.getAttribute('data-ui-selected') === 'true',
+    })),
+    hrefs: Array.from(document.querySelectorAll(`a[href*="/${appPath}/v"]`)).map(a => a.href),
+  }), appPath);
+  const versions = raw.items.length > 0
+    ? buildVersionsFromItems(raw.items)
+    : buildVersionsFromHrefs(raw.hrefs, appPath);
   // Close dropdown by pressing Escape
   try { await page.keyboard.press('Escape'); } catch (_) {}
   return versions;
@@ -486,14 +477,13 @@ if (listVersions) {
 }
 
 // Resolve version
-const latestVersion = versions.find(v => v.selected)?.version || versions[0].version;
-const version = requestedVersion?.replace(/^v/, '') || latestVersion;
-const validVersion = versions.find(v => v.version === version);
-if (!validVersion) {
-  console.error(`Version v${version} not found. Available: ${versions.map(v => 'v' + v.version).join(', ')}`);
+const resolved = resolveVersion(versions, requestedVersion);
+if (resolved.error) {
+  console.error(resolved.error);
   await browser.close();
   process.exit(1);
 }
+const version = resolved.version;
 
 const BASE = `${SITE}/${APP_PATH}/v${version}`;
 console.log(`Using API version: v${version}\n`);
@@ -503,22 +493,16 @@ console.log('Discovering nav links...');
 await page.goto(BASE, { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT });
 await page.waitForTimeout(800);
 
-let links = await page.$$eval('a[href]', (els, appPath) =>
-  [...new Map(
-    els.map(el => ({ href: el.getAttribute('href'), text: el.innerText.trim() }))
-      // Version-scoped and relative: `includes('/mobility')` also matches the
-      // sidebar link to https://mobility.ui.com/api-keys, which is not a doc page.
-      .filter(l => l.href && l.href.startsWith(`/${appPath}/v`) && l.text && !l.href.endsWith('.json'))
-      .map(l => [l.href, l])
-  ).values()],
-  APP_PATH
+const anchors = await page.$$eval('a[href]', els =>
+  els.map(el => ({ href: el.getAttribute('href'), text: el.innerText.trim() }))
 );
+let links = selectNavLinks(anchors, APP_PATH);
 
 // Filter to requested slugs if in single mode
 if (singleMode) {
   const slugSet = new Set(slugs);
-  links = links.filter(l => slugSet.has(l.href.split('/').pop()));
-  const found = new Set(links.map(l => l.href.split('/').pop()));
+  links = links.filter(l => slugSet.has(slugFromHref(l.href)));
+  const found = new Set(links.map(l => slugFromHref(l.href)));
   for (const s of slugs) {
     if (!found.has(s)) {
       console.warn(`  ⚠ Slug '${s}' not found in nav, will try direct URL`);
@@ -544,7 +528,7 @@ let done = 0;
 
 for (const { href, text } of links) {
   const url = href.startsWith('http') ? href : `${SITE}${href}`;
-  const slug = href.split('/').pop() || href.replace(/\//g, '_');
+  const slug = slugFromHref(href);
   const outPath = `${outDir}/${slug}.json`;
 
   if (!force && existsSync(outPath)) { console.log(`  ⟳ Skip: ${text}`); done++; continue; }
@@ -566,7 +550,7 @@ for (const { href, text } of links) {
 }
 
 if (!singleMode) {
-  const index = links.map(({ href, text }) => ({ slug: href.split('/').pop(), title: text, file: `${href.split('/').pop()}.json` }));
+  const index = links.map(({ href, text }) => ({ slug: slugFromHref(href), title: text, file: `${slugFromHref(href)}.json` }));
   writeFileSync(`${outDir}/_index.json`, JSON.stringify(index, null, 2));
   writeFileSync(`${outDir}/_meta.json`, JSON.stringify({
     app: requestedApp,
