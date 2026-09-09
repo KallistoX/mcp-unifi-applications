@@ -47,7 +47,7 @@
         {
           "name": "type",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The device model name.",
           "discriminator": null,
           "children": []
@@ -55,7 +55,7 @@
         {
           "name": "guid",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "Stable identifier for the device model.",
           "discriminator": null,
           "children": []
@@ -161,7 +161,7 @@
         {
           "name": "lastMotion",
           "required": true,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Unix timestamp of the last time the PIR motion-detection was triggered.",
           "discriminator": null,
           "children": []

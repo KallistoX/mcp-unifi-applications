@@ -65,7 +65,7 @@
         {
           "name": "type",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "The device model name.",
           "discriminator": null,
           "children": []
@@ -73,7 +73,7 @@
         {
           "name": "guid",
           "required": true,
-          "type": "stringnull",
+          "type": "string | null",
           "description": "Stable identifier for the device model.",
           "discriminator": null,
           "children": []
@@ -114,7 +114,7 @@
         {
           "name": "lastEvent",
           "required": true,
-          "type": "numbernull",
+          "type": "number | null",
           "description": "Timestamp when any last event was detected.",
           "discriminator": null,
           "children": []
@@ -407,7 +407,7 @@
             {
               "name": "emergencyTerminalStatus",
               "required": false,
-              "type": "objectnull",
+              "type": "object | null",
               "description": null,
               "discriminator": null,
               "children": [
@@ -480,7 +480,7 @@
                 {
                   "name": "role",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -488,7 +488,7 @@
                 {
                   "name": "networkName",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -496,7 +496,7 @@
                 {
                   "name": "channel",
                   "required": true,
-                  "type": "integernull",
+                  "type": "integer | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -504,7 +504,7 @@
                 {
                   "name": "panId",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -512,7 +512,7 @@
                 {
                   "name": "extendedPanId",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
@@ -528,7 +528,7 @@
                 {
                   "name": "errorReason",
                   "required": true,
-                  "type": "stringnull",
+                  "type": "string | null",
                   "description": null,
                   "discriminator": null,
                   "children": []
