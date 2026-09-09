@@ -22,6 +22,8 @@ DISPLAY_NAMES = {
     "protect": "Protect",
     "site-manager": "Site Manager",
     "innerspace": "InnerSpace",
+    "mobility": "Mobility",
+    "carrier-fabric": "Carrier Fabric",
 }
 
 

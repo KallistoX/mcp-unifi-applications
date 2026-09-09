@@ -1,7 +1,7 @@
 // scrape.mjs — UniFi API docs scraper
 // Usage: node scrape.mjs [options] [slug...]
 //   --app <name>      Application to scrape: network (default), protect, site-manager,
-//                     innerspace.
+//                     innerspace, mobility, carrier-fabric.
 //   --version <ver>   API version to scrape (e.g. v10.1.84). Default: latest.
 //   --list-versions   Print available versions and exit.
 //   --force           Re-scrape even if output file exists.
@@ -23,6 +23,8 @@ const APPS = {
   protect:        { path: 'protect',      modes: ['local', 'remote'] },
   'site-manager': { path: 'site-manager', modes: ['remote'] },
   innerspace:     { path: 'innerspace',   modes: ['local', 'remote'] },
+  mobility:       { path: 'mobility',     modes: ['remote'] },
+  'carrier-fabric': { path: 'carrier-fabric', modes: ['remote'] },
 };
 
 // --- CLI argument parsing ---
@@ -504,7 +506,9 @@ await page.waitForTimeout(800);
 let links = await page.$$eval('a[href]', (els, appPath) =>
   [...new Map(
     els.map(el => ({ href: el.getAttribute('href'), text: el.innerText.trim() }))
-      .filter(l => l.href && l.href.includes(`/${appPath}`) && l.text && !l.href.endsWith('.json'))
+      // Version-scoped and relative: `includes('/mobility')` also matches the
+      // sidebar link to https://mobility.ui.com/api-keys, which is not a doc page.
+      .filter(l => l.href && l.href.startsWith(`/${appPath}/v`) && l.text && !l.href.endsWith('.json'))
       .map(l => [l.href, l])
   ).values()],
   APP_PATH

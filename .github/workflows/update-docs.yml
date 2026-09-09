@@ -40,7 +40,7 @@ jobs:
         run: |
           set -euo pipefail
           outdated=()
-          for app in network protect site-manager innerspace; do
+          for app in network protect site-manager innerspace mobility carrier-fabric; do
             html=$(curl -fsSL --max-time 30 "https://developer.ui.com/${app}")
             latest=$(echo "$html" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sort -uV | tail -1 || true)
             if [ -z "$latest" ]; then
@@ -79,6 +79,12 @@ jobs:
           rm -f "src/mcp_unifi_applications/docs/${{ matrix.app }}"/*.json "src/mcp_unifi_applications/docs/${{ matrix.app }}/_failed.txt"
           docker run --rm -v "${{ github.workspace }}/src/mcp_unifi_applications/docs:/output" unifi-scraper \
             node scrape.mjs --app "${{ matrix.app }}" --force
+          # The container writes as root. For an app that already exists the files
+          # keep the runner's ownership on overwrite, but a new app's files land
+          # root-owned, and git then cannot remove them - which aborts the branch
+          # checkout in create-pull-request with "untracked files would be
+          # overwritten" after 14 "Permission denied" unlink warnings.
+          sudo chown -R "$(id -u):$(id -g)" "src/mcp_unifi_applications/docs/${{ matrix.app }}"
 
       - name: Fail if pages failed to scrape
         run: |
