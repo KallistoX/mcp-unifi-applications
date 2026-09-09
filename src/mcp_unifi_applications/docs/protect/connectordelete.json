@@ -55,5 +55,5 @@
     }
   },
   "responseSample": "{\n  \"vouchersDeleted\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/connectordelete"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/connectordelete"
 }

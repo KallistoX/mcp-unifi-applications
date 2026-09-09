@@ -1,0 +1,47 @@
+[
+  {
+    "slug": "getting-started",
+    "title": "Getting Started",
+    "file": "getting-started.json"
+  },
+  {
+    "slug": "listworkspaces",
+    "title": "List workspaces",
+    "file": "listworkspaces.json"
+  },
+  {
+    "slug": "listworkspaceadmins",
+    "title": "List workspace admins",
+    "file": "listworkspaceadmins.json"
+  },
+  {
+    "slug": "listdevices",
+    "title": "List devices",
+    "file": "listdevices.json"
+  },
+  {
+    "slug": "getdevice",
+    "title": "Get device detail",
+    "file": "getdevice.json"
+  },
+  {
+    "slug": "listdeviceclients",
+    "title": "List device clients",
+    "file": "listdeviceclients.json"
+  },
+  {
+    "slug": "updatedevicename",
+    "title": "Update device name",
+    "file": "updatedevicename.json"
+  },
+  {
+    "slug": "updatedevicenetwork",
+    "title": "Update LAN / DHCP settings",
+    "file": "updatedevicenetwork.json"
+  },
+  {
+    "slug": "updatedevicewireless",
+    "title": "Update WiFi settings",
+    "file": "updatedevicewireless.json"
+  }
+]

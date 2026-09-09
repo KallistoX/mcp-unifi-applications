@@ -97,5 +97,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"fullName\": \"string\",\n  \"email\": \"string\",\n  \"status\": \"ACTIVE\",\n  \"modelKey\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1ulp-usersid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/get-v1ulp-usersid"
 }

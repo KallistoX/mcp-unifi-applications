@@ -1,0 +1,91 @@
+{
+  "h1": "Update LAN / DHCP settings",
+  "method": "PUT",
+  "path": "/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}/network",
+  "description": "Partial update — only provided fields are modified. WAN, IPv6, and InternetSource are not configurable.",
+  "pathParameters": [
+    {
+      "name": "workspaceID",
+      "required": true,
+      "type": "string",
+      "description": "Workspace UUID. Obtain from API call: GET /v1/mobility/workspaces",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "deviceID",
+      "required": true,
+      "type": "string",
+      "description": "Device UUID. Obtain from API call: GET /v1/mobility/workspaces/{workspaceID}/devices",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [
+    {
+      "name": "host_address",
+      "required": false,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "dhcp_mode",
+      "required": false,
+      "type": "string",
+      "description": "`dhcp` = enabled, `none` = disabled.",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "dhcp_range_start",
+      "required": false,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "dhcp_range_stop",
+      "required": false,
+      "type": "string",
+      "description": null,
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "dhcp_lease_time",
+      "required": false,
+      "type": "integer",
+      "description": "Seconds. `0` = infinite.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "responses": [
+    {
+      "statuses": [
+        "204",
+        "400",
+        "401",
+        "403",
+        "404",
+        "429",
+        "500"
+      ],
+      "fields": []
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L -g -X PUT \"https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}/network\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\" \\\n-H \"Content-Type: application/json\" \\\n-d \"{\n  \\\"host_address\\\": \\\"192.168.10.1\\\",\n  \\\"dhcp_mode\\\": \\\"dhcp\\\",\n  \\\"dhcp_range_start\\\": \\\"192.168.10.100\\\",\n  \\\"dhcp_range_stop\\\": \\\"192.168.10.200\\\",\n  \\\"dhcp_lease_time\\\": 86400\n}\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}/network\"\n  method := \"PUT\"\n\n\n  payload := strings.NewReader(`{\n  \"host_address\": \"192.168.10.1\",\n  \"dhcp_mode\": \"dhcp\",\n  \"dhcp_range_start\": \"192.168.10.100\",\n  \"dhcp_range_stop\": \"192.168.10.200\",\n  \"dhcp_lease_time\": 86400\n}`)\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n  req.Header.Add(\"Content-Type\", \"application/json\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"host_address\": \"192.168.10.1\",\n  \"dhcp_mode\": \"dhcp\",\n  \"dhcp_range_start\": \"192.168.10.100\",\n  \"dhcp_range_stop\": \"192.168.10.200\",\n  \"dhcp_lease_time\": 86400\n});\n\n\nlet config = {\n  method: 'put',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}/network',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>', \n    'Content-Type': 'application/json'\n  },\n  data : data\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\nimport json\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = json.dumps({\n  \"host_address\": \"192.168.10.1\",\n  \"dhcp_mode\": \"dhcp\",\n  \"dhcp_range_start\": \"192.168.10.100\",\n  \"dhcp_range_stop\": \"192.168.10.200\",\n  \"dhcp_lease_time\": 86400\n})\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>',\n  'Content-Type': 'application/json'\n}\nconn.request(\"PUT\", \"/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}/network\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/mobility/v1.0.0/updatedevicenetwork"
+}

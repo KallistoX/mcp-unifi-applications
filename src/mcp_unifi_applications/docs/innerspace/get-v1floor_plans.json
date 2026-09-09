@@ -1,0 +1,134 @@
+{
+  "h1": "List floor plans",
+  "method": "GET",
+  "path": "/v1/floor_plans",
+  "description": "Returns floor plans for RF planning import including image URLs, scale (pixels per meter), and coordinate origin. Optionally filter by siteId.",
+  "pathParameters": [],
+  "queryParameters": [
+    {
+      "name": "siteId",
+      "required": false,
+      "type": "string",
+      "description": "Optional UniFi site filter. When set, only devices whose product siteId matches are returned.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "floor_plans",
+          "required": true,
+          "type": "Array of object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "floor_number",
+              "required": false,
+              "type": "number",
+              "description": "Floor ordering index. Omitted when 0.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "image_url",
+              "required": false,
+              "type": "string",
+              "description": "Floor plan image path at `/proxy/innerspace/integration/v1/assets/{planId}/{filename}`. Requires the same session auth headers as this endpoint. Prepend the API origin (e.g. api.ui.com connector prefix) to fetch.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "ppm",
+              "required": false,
+              "type": "number",
+              "description": "Pixels per meter (`ppm`). Required to interpret coordinates and heights.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "width",
+              "required": false,
+              "type": "number",
+              "description": "Floor plan image width in pixels. Omitted when unknown.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "height",
+              "required": false,
+              "type": "number",
+              "description": "Floor plan image height in pixels. Omitted when unknown.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "origin_x",
+              "required": false,
+              "type": "number",
+              "description": "X coordinate of the floor plan origin in pixels (0 when coordinates use top-left image origin).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "origin_y",
+              "required": false,
+              "type": "number",
+              "description": "Y coordinate of the floor plan origin in pixels (0 when coordinates use top-left image origin).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "site_id",
+              "required": false,
+              "type": "string",
+              "description": "UniFi site ID when `siteId` query filter is applied.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L -g \"https://192.168.0.1/proxy/innerspace/integration/v1/floor_plans?siteId={siteId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://192.168.0.1/proxy/innerspace/integration/v1/floor_plans?siteId={siteId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/innerspace/integration/v1/floor_plans?siteId={siteId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/innerspace/integration/v1/floor_plans?siteId=%7BsiteId%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: List floor plans\n  ubiquiti.unifi_api.innerspace:\n    path: \"/v1/floor_plans\"\n    method: GET\n    query:\n      siteId: \"{siteId}\"\n  register: result\n\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/innerspace/integration/v1/floor_plans?siteId={siteId}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/innerspace/integration/v1/floor_plans?siteId={siteId}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/innerspace/integration/v1/floor_plans?siteId={siteId}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/innerspace/integration/v1/floor_plans?siteId=%7BsiteId%7D\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: List floor plans\n  ubiquiti.unifi_api.innerspace:\n    path: \"/v1/floor_plans\"\n    method: GET\n    query:\n      siteId: \"{siteId}\"\n  register: result\n\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": "{\n  \"floor_plans\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"name\": \"string\",\n      \"floor_number\": 0,\n      \"image_url\": \"string\",\n      \"ppm\": 0,\n      \"width\": 0,\n      \"height\": 0,\n      \"origin_x\": 0,\n      \"origin_y\": 0,\n      \"site_id\": \"string\"\n    }\n  ]\n}",
+  "sourceUrl": "https://developer.ui.com/innerspace/v1.3.23/get-v1floor_plans"
+}

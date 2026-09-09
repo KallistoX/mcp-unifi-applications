@@ -1,0 +1,131 @@
+{
+  "h1": "List service plans",
+  "method": "GET",
+  "path": "/v1/carrier/service-plans",
+  "description": "Lists the org's service plans (read-only). Requires scope read:plans.",
+  "pathParameters": [],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "400",
+        "401",
+        "403",
+        "429",
+        "500",
+        "503"
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "required": false,
+          "type": "Array of object (ServicePlan)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "orgId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "status",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "downloadMbps",
+              "required": false,
+              "type": "number",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "uploadMbps",
+              "required": false,
+              "type": "number",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "metadata",
+              "required": false,
+              "type": "object",
+              "description": "Omitted (not null) when no metadata is set.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "createdAt",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "updatedAt",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "archivedAt",
+              "required": false,
+              "type": "string",
+              "description": "Present when the plan is archived; omitted (not null) while active.",
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "name": "traceId",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L \"https://api.ui.com/v1/carrier/service-plans\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/carrier/service-plans\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/carrier/service-plans',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/carrier/service-plans\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/carrier-fabric/v1.0.0/listserviceplans"
+}

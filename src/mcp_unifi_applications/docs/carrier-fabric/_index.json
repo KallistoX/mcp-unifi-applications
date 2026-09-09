@@ -1,0 +1,72 @@
+[
+  {
+    "slug": "getting-started",
+    "title": "Getting Started",
+    "file": "getting-started.json"
+  },
+  {
+    "slug": "examples",
+    "title": "Examples",
+    "file": "examples.json"
+  },
+  {
+    "slug": "error-handling",
+    "title": "Error Handling",
+    "file": "error-handling.json"
+  },
+  {
+    "slug": "listsubscribers",
+    "title": "List subscribers",
+    "file": "listsubscribers.json"
+  },
+  {
+    "slug": "createsubscriber",
+    "title": "Create a subscriber",
+    "file": "createsubscriber.json"
+  },
+  {
+    "slug": "getsubscriber",
+    "title": "Get a subscriber",
+    "file": "getsubscriber.json"
+  },
+  {
+    "slug": "updatesubscriber",
+    "title": "Update a subscriber",
+    "file": "updatesubscriber.json"
+  },
+  {
+    "slug": "attachsubscriberhost",
+    "title": "Attach or re-link the gateway host",
+    "file": "attachsubscriberhost.json"
+  },
+  {
+    "slug": "detachsubscriberhost",
+    "title": "Detach the gateway host",
+    "file": "detachsubscriberhost.json"
+  },
+  {
+    "slug": "assignsubscriberplan",
+    "title": "Assign a service plan",
+    "file": "assignsubscriberplan.json"
+  },
+  {
+    "slug": "suspendsubscriber",
+    "title": "Suspend service",
+    "file": "suspendsubscriber.json"
+  },
+  {
+    "slug": "resumesubscriber",
+    "title": "Resume service",
+    "file": "resumesubscriber.json"
+  },
+  {
+    "slug": "listserviceplans",
+    "title": "List service plans",
+    "file": "listserviceplans.json"
+  },
+  {
+    "slug": "getserviceplan",
+    "title": "Get a service plan",
+    "file": "getserviceplan.json"
+  }
+]

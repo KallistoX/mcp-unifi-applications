@@ -211,5 +211,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"string\",\n  \"modelKey\": \"string\",\n  \"state\": \"CONNECTED\",\n  \"name\": \"string\",\n  \"type\": null,\n  \"guid\": null,\n  \"mac\": \"string\",\n  \"lightModeSettings\": {\n    \"mode\": \"string\",\n    \"enableAt\": \"string\"\n  },\n  \"lightDeviceSettings\": {\n    \"isIndicatorEnabled\": true,\n    \"pirDuration\": 0,\n    \"pirSensitivity\": 0,\n    \"ledLevel\": 0\n  },\n  \"isDark\": true,\n  \"isLightOn\": true,\n  \"isLightForceEnabled\": true,\n  \"lastMotion\": null,\n  \"isPirMotionDetected\": true,\n  \"camera\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.2.105/get-v1lightsid"
+  "sourceUrl": "https://developer.ui.com/protect/v7.3.47/get-v1lightsid"
 }

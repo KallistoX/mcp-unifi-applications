@@ -1,0 +1,340 @@
+{
+  "h1": "Get device detail",
+  "method": "GET",
+  "path": "/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}",
+  "description": "Returns full detail for a single device, including WAN, cellular, WiFi, VPN, firewall rules, subscription, and GPS location.",
+  "pathParameters": [
+    {
+      "name": "workspaceID",
+      "required": true,
+      "type": "string",
+      "description": "Workspace UUID. Obtain from API call: GET /v1/mobility/workspaces",
+      "discriminator": null,
+      "children": []
+    },
+    {
+      "name": "deviceID",
+      "required": true,
+      "type": "string",
+      "description": "Device UUID. Obtain from API call: GET /v1/mobility/workspaces/{workspaceID}/devices",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200",
+        "401",
+        "403",
+        "404",
+        "429",
+        "500"
+      ],
+      "fields": [
+        {
+          "name": "data",
+          "required": true,
+          "type": "object (DeviceDetail)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "model",
+              "required": true,
+              "type": "string",
+              "description": "Hardware model name. - `UMR` — UMR Flex EU/US - `UMR Industrial` — UMR Industrial EU/US - `UMR Ultra` — UMR Ultra EU/US/ROW",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "state",
+              "required": true,
+              "type": "string",
+              "description": "Current device state. | Value | Description | |-------|-------------| | `CONNECTED` | Online and communicating normally | | `DISCONNECTED` | Lost connection to the cloud | | `ADOPTING` | Adoption in progress | | `ADOPTING_TIMEOUT` | Adoption timed out | | `DOWNLOADING` | Downloading firmware update | | `UPGRADING` | Applying firmware update | | `RESTARTING` | Rebooting | | `FACTORY_RESET` | Performing factory reset | | `GETTING_READY` | Initialising after adoption | | `RESTORING` | Restoring from backup | | `NULL` | Record exists but adoption not started | | `DELETING` | Cloud-side deletion in progress |",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "firmware_version",
+              "required": true,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "mac_address",
+              "required": true,
+              "type": "string",
+              "description": "Primary MAC address in upper-case colon-separated format. Empty string when not yet initialised.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "wan_source",
+              "required": false,
+              "type": "string",
+              "description": "Active WAN interface. Empty when no WAN connected.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "wan_ip",
+              "required": false,
+              "type": "string",
+              "description": "Public WAN IP. Empty when not connected.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "enabled_wans",
+              "required": false,
+              "type": "Array of string",
+              "description": "Enabled WAN interfaces sorted by priority (index 0 = highest).",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "isp",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "lte_signal_level",
+              "required": false,
+              "type": "string",
+              "description": "LTE signal quality derived from RSSI (dBm). | Value | RSSI range | Description | |-------|-----------|-------------| | `NO_SIGNAL` | < -111 dBm | No usable signal | | `POOR` | -111 to -100 dBm | Weak signal | | `FAIR` | -99 to -89 dBm | Moderate signal | | `STRONG` | -88 dBm or better | Good signal | | `\"\"` | N/A | RSSI not yet reported |",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "cellular_data_usage_bytes",
+              "required": false,
+              "type": "integer",
+              "description": "Data consumed in the current billing cycle, in bytes.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "cellular_data_limit_bytes",
+              "required": false,
+              "type": "integer",
+              "description": "Data cap in bytes for the current billing cycle. `-1` means unlimited. `0` is not a valid value.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "memory_usage_percent",
+              "required": false,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "uptime_seconds",
+              "required": false,
+              "type": "integer",
+              "description": "Seconds since last boot. `0` when state is not `CONNECTED`.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "client_count",
+              "required": false,
+              "type": "integer",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "host_address",
+              "required": false,
+              "type": "string",
+              "description": "LAN gateway IP. Contains WAN IP in `WANBRIDGE` mode.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "poe_passthrough",
+              "required": false,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "device_mode",
+              "required": false,
+              "type": "string",
+              "description": "- `ROUTER` — standard NAT router - `WANBRIDGE` — WAN bridge mode - `LTEPASS` — LTE passthrough",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "wifi_enabled",
+              "required": false,
+              "type": "boolean",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "wifi_ssid",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "tx_power_level",
+              "required": false,
+              "type": "string",
+              "description": "Empty when Wireless record is not initialised.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "vpn_profile_name",
+              "required": false,
+              "type": "string",
+              "description": "Empty when no VPN is configured.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "vpn_status",
+              "required": false,
+              "type": "string",
+              "description": "- `CONNECTING` — tunnel being established - `CONNECTED` — tunnel active - `DISCONNECTED` — configured but not connected - `FAILED` — connection failed - `\"\"` — no VPN session",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "firewall_rule_names",
+              "required": false,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "routing_rule_names",
+              "required": false,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "ddns_profile_names",
+              "required": false,
+              "type": "Array of string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "subscription_plan",
+              "required": false,
+              "type": "string",
+              "description": "Active data plan. Empty when no subscription. | Value | Description | |-------|-------------| | `FREE_TRIAL` | Free trial | | `1GB` | Monthly 1 GB | | `5GB` | Monthly 5 GB | | `20GB` | Monthly 20 GB | | `2GB` | Daily 2 GB (QA/test) | | `CLOUD` | Cloud plan (daily/yearly/3-year) | | `\"\"` | No subscription |",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "subscription_status",
+              "required": false,
+              "type": "string",
+              "description": "Derived priority: FAILED > PENDING > ACTIVE > INACTIVE. A subscription cancelled at period end remains `ACTIVE` until expiry.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "location",
+              "required": false,
+              "type": "object",
+              "description": "Omitted (not null) when no GPS fix is available.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "latitude",
+                  "required": true,
+                  "type": "number",
+                  "description": "WGS-84 latitude in decimal degrees.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "longitude",
+                  "required": true,
+                  "type": "number",
+                  "description": "WGS-84 longitude in decimal degrees.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "last_updated",
+                  "required": true,
+                  "type": "integer",
+                  "description": "Unix timestamp in milliseconds of the last GPS fix.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "httpStatusCode",
+          "required": true,
+          "type": "integer",
+          "description": "HTTP status code.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "traceId",
+          "required": true,
+          "type": "string",
+          "description": "Matches `X-Request-ID` if provided, otherwise auto-generated.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\n\nfunc main() {\n\n\n  url := \"https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}\"\n  method := \"GET\"\n\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/mobility/workspaces/{workspaceID}/devices/{deviceID}\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/mobility/v1.0.0/getdevice"
+}
