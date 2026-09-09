@@ -56,3 +56,17 @@ If Ubiquiti adds a new developer docs application at `developer.ui.com/<app-name
 - Keep changes focused — one feature or fix per PR
 - Add or update tests for any new functionality
 - Run `pytest tests/ -v` and make sure all tests pass before submitting
+
+## Publishing to the MCP Registry
+
+`server.json` is the manifest for the [official MCP registry](https://registry.modelcontextprotocol.io).
+Bump its `version` in the same commit as `pyproject.toml`'s, then publish with the
+[`mcp-publisher`](https://github.com/modelcontextprotocol/registry/tree/main/cmd/publisher) CLI:
+
+```bash
+mcp-publisher login github    # opens a browser; namespace io.github.KallistoX is proven by the login
+mcp-publisher publish
+```
+
+The manifest currently carries repository metadata only. Once the package is on PyPI, add a
+`packages` entry (`registryType: "pypi"`) so clients can install it without cloning.
