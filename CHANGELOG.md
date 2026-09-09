@@ -64,6 +64,19 @@ answering a different question than the one asked.
 - Six guides shipped with a null title and displayed their slug instead, because
   those pages render no `<h1>`. The nav link text is used as a fallback.
 
+### Changed
+
+- The scraper's fixed waits after a click were sized for a network round trip
+  that never happens. Measured with a `MutationObserver` against the live docs:
+  clicking a discriminator variant or an expand button issues zero requests — the
+  page is fetched once and everything after is a client-side re-render — and the
+  DOM settles in one mutation batch after 3–5 ms. The 200/300/400/500 ms sleeps
+  are now a single 50 ms settle. `expandAll` also checked visibility and text per
+  element over the debug protocol, three round trips per expander, twice for every
+  variant on the page; it now does one round trip per round. A union-heavy page
+  (`network/createnetwork`, 54 variants) drops from 65 s to 18 s, with
+  byte-identical output.
+
 ### Added
 
 - `update-docs` accepts a `force_apps` input, so a scraper fix can trigger a
