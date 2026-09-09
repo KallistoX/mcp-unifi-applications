@@ -5,6 +5,8 @@
 <!-- mcp-name: io.github.KallistoX/mcp-unifi-applications -->
 
 ![CI](https://github.com/KallistoX/mcp-unifi-applications/actions/workflows/ci.yml/badge.svg)
+[![PyPI](https://img.shields.io/pypi/v/mcp-unifi-applications)](https://pypi.org/project/mcp-unifi-applications/)
+[![Python](https://img.shields.io/pypi/pyversions/mcp-unifi-applications)](https://pypi.org/project/mcp-unifi-applications/)
 
 A Model Context Protocol (MCP) server that makes the official [UniFi API documentation](https://developer.ui.com) queryable by AI agents — endpoint search, schema drill-down, and code examples in five languages, for Claude Desktop, Claude Code (VS Code / JetBrains), or any MCP-compatible client.
 
@@ -33,44 +35,14 @@ Claude automatically queries the MCP server — searching endpoints, fetching sc
 
 ## Quick Start
 
-### 1. Scrape the docs
-
-The scraper runs inside Docker (requires Playwright/Chromium):
+### 1. Install
 
 ```bash
-# Build the scraper image
-docker build -t unifi-scraper .
-
-# Scrape Network API docs (default, latest version)
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs
-
-# Scrape Protect API docs
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app protect
-
-# Scrape Site Manager API docs
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app site-manager
-
-# Scrape InnerSpace API docs
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app innerspace
-
-# Scrape Mobility or Carrier Fabric API docs
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app mobility
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app carrier-fabric
-
-# Scrape a specific API version
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app network --version v9.5.21
-
-# List available API versions for an app
-docker run --rm unifi-scraper node scrape.mjs --app protect --list-versions
-
-# Scrape specific pages only
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs createnetwork filtering
-
-# Force re-scrape (overwrite existing files)
-docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --force
+pip install mcp-unifi-applications
 ```
 
-Pre-scraped docs are included, so the server works out of the box:
+The scraped docs ship inside the package — there is nothing to scrape and no
+API key to configure. What you get:
 
 <!-- docs-versions:start -->
 | Application | API version | Scraped | Pages |
@@ -83,44 +55,51 @@ Pre-scraped docs are included, so the server works out of the box:
 | Carrier Fabric | v1.0.0 | 2026-09-09 | 14 |
 <!-- docs-versions:end -->
 
-Each app dir carries a `_meta.json` (API version, scrape date, page count); the `get_docs_info` tool reports the same at runtime. A weekly GitHub Action checks upstream for new versions and opens a PR with freshly scraped docs — the table above is regenerated in that PR by `scripts/update_readme_versions.py`.
-
-### 2. Install the MCP server
+<details>
+<summary>From source instead</summary>
 
 ```bash
+git clone https://github.com/KallistoX/mcp-unifi-applications.git
+cd mcp-unifi-applications
 python -m venv .venv
 source .venv/bin/activate  # or: source .venv/bin/activate.fish
 pip install .
 ```
 
-This installs the server *and* the pre-scraped docs, and puts a `mcp-unifi-applications` executable in `.venv/bin/`.
+</details>
 
-### 3. Register with your client
+### 2. Register with your client
 
-**Claude Code (VS Code / JetBrains)** - add `.mcp.json` to your project root (Reload Window after):
+**Claude Code (VS Code / JetBrains)** — add `.mcp.json` to your project root (Reload Window after):
 
 ```json
 {
   "mcpServers": {
     "unifi-docs": {
       "type": "stdio",
-      "command": "/path/to/mcp-unifi-applications/.venv/bin/mcp-unifi-applications"
+      "command": "mcp-unifi-applications"
     }
   }
 }
 ```
 
-**Claude Desktop** - add to `~/.config/Claude/claude_desktop_config.json` (Linux) or `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS):
+**Claude Desktop** — add to `~/.config/Claude/claude_desktop_config.json` (Linux) or
+`~/Library/Application Support/Claude/claude_desktop_config.json` (macOS):
 
 ```json
 {
   "mcpServers": {
     "unifi-docs": {
-      "command": "/path/to/mcp-unifi-applications/.venv/bin/mcp-unifi-applications"
+      "command": "mcp-unifi-applications"
     }
   }
 }
 ```
+
+If the command is not on your client's `PATH` — Claude Desktop often does not
+inherit a shell `PATH` — give the absolute path instead, e.g.
+`/path/to/.venv/bin/mcp-unifi-applications`.
+
 
 ## How this differs from other UniFi MCP servers
 
@@ -180,6 +159,44 @@ Tools that return multiple results accept an optional `app` parameter (`network`
 | Variable | Default | Description |
 |---|---|---|
 | `DOCS_DIR` | the `docs/` directory inside the installed package | Directory containing scraped JSON docs. Expects one subdirectory per application (`network/`, `protect/`, …). Set it to point at a checkout's freshly scraped output. |
+
+## Re-scraping the docs
+
+Only needed to pull a newer API version before the weekly workflow does, or to
+add an application. The scraper runs in Docker (it needs Playwright/Chromium):
+
+```bash
+# Build the scraper image
+docker build -t unifi-scraper .
+
+# Scrape Network API docs (default, latest version)
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs
+
+# Scrape Protect API docs
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app protect
+
+# Scrape Site Manager API docs
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app site-manager
+
+# Scrape InnerSpace API docs
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app innerspace
+
+# Scrape Mobility or Carrier Fabric API docs
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app mobility
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app carrier-fabric
+
+# Scrape a specific API version
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --app network --version v9.5.21
+
+# List available API versions for an app
+docker run --rm unifi-scraper node scrape.mjs --app protect --list-versions
+
+# Scrape specific pages only
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs createnetwork filtering
+
+# Force re-scrape (overwrite existing files)
+docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --force
+```
 
 ## Scraper CLI
 
