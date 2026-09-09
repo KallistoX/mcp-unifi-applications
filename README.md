@@ -16,22 +16,58 @@ It is **read-only and credential-free**: it serves documentation, it does not ta
 
 ## Example
 
-> *"Can you tell me how to create a network with Go with the network API from UniFi and what options I have regarding the managed IPv4 DHCP gateway configuration?"*
+> *"Without any context, just by using the unifi-applications MCP Server: can you
+> tell me how to create a network with Go with the network API from UniFi, and
+> what options do I have regarding the managed IPv4 DHCP gateway configuration?"*
 
 <p align="center">
-  <img src="screenshots/mcp_init.png" width="320" alt="MCP server connected in Claude Code">
+  <img src="screenshots/mcp_init.png" width="300" alt="unifi-applications MCP server connected in Claude Code">
   <br><br>
-  <img src="screenshots/prompt.png" width="700" alt="Example prompt in Claude Code">
+  <img src="screenshots/prompt.png" width="640" alt="The prompt typed into Claude Code">
 </p>
 
-Claude automatically queries the MCP server — searching endpoints, fetching schemas, and drilling into discriminator variants — then responds with the full API details and a working Go example:
+Claude works that out through the server, with none of the documentation in its
+context to begin with:
 
-<p align="center">
-  <img src="screenshots/response_1.png" width="700" alt="API endpoint details and DHCP configuration schema">
-  <br>
-  <img src="screenshots/response_2.png" width="700" alt="Go code example for creating a network">
-  <img src="screenshots/response_3.png" width="700" alt="Go code example continued with key points">
-</p>
+| Call | What comes back |
+|---|---|
+| `search_endpoints("create network")` | `POST /v1/sites/{siteId}/networks` |
+| `get_endpoint("network/createnetwork")` | the request body — `management` is a discriminated union |
+| `get_field_schema(…, "management[GATEWAY].ipv4Configuration.dhcpConfiguration")` | **only** the DHCP subtree |
+| `get_example("network/createnetwork", "go")` | a working request in Go |
+
+The third call is the one that earns the server its place. It returns this, and
+nothing else — not the 70 KB endpoint schema it is buried in:
+
+```text
+# management[GATEWAY].ipv4Configuration.dhcpConfiguration (in requestBody)
+- dhcpConfiguration: object (Gateway Managed IPv4 DHCP Configuration) — IPv4 DHCP
+  configuration for this network. If omitted or null, DHCP is not working and hosts
+  must get an address statically or from another server in this broadcast domain.
+  - mode: string (required)
+    [RELAY]:
+      - dhcpServerIpAddresses: Array of string — DHCP Server IP addresses
+    [SERVER]:
+      - ipAddressRange: object
+        - start: string (required)
+        - stop: string (required)
+      - leaseTimeSeconds: integer — The lease time in seconds for addresses in this range.
+      - dnsServerIpAddressesOverride: Array of string — List of DNS servers assigned to
+        client devices by the DHCP server. If none are specified, they will be selected
+        automatically.
+      - gatewayIpAddressOverride: string — Gateway IP address provided to DHCP clients.
+      - domainName: string — Domain name that can be used to access network in the browser.
+      - option43Value: string — Custom DHCP option (43) — the value MUST be the UniFi
+        Network application's host IP address.
+      - pxeConfiguration: object — Pre execution environment configuration for network boot
+      … ntpServerIpAddresses, tftpServerAddress, timeOffsetSeconds, wpadUrl,
+        winsServerIpAddresses, pingConflictDetectionEnabled
+```
+
+Both discriminator variants, every field typed and described. That is the answer
+to *"what are my options"* — and the model writes the Go from it without ever
+having seen the UniFi docs.
+
 
 ## Quick Start
 
@@ -163,7 +199,10 @@ Tools that return multiple results accept an optional `app` parameter (`network`
 ## Re-scraping the docs
 
 Only needed to pull a newer API version before the weekly workflow does, or to
-add an application. The scraper runs in Docker (it needs Playwright/Chromium):
+add an application.
+
+<details>
+<summary>Docker commands (needs Playwright/Chromium)</summary>
 
 ```bash
 # Build the scraper image
@@ -198,7 +237,12 @@ docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scrape
 docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scraper node scrape.mjs --force
 ```
 
+</details>
+
 ## Scraper CLI
+
+<details>
+<summary>Options and arguments</summary>
 
 ```
 node scrape.mjs [options] [slug...]
@@ -220,7 +264,12 @@ Output is written to `<output>/<app>/` — mount the package's docs directory (`
 
 The full scan is resumable - already-scraped pages are skipped. Use `--force` to re-scrape.
 
+</details>
+
 ## Project Structure
+
+<details>
+<summary>Repository layout</summary>
 
 ```
 mcp-unifi-applications/
@@ -247,7 +296,14 @@ mcp-unifi-applications/
     └── scrape-parse.test.mjs # node --test
 ```
 
+</details>
+
 ## Output Format
+
+What the scraper writes, and what the server reads.
+
+<details>
+<summary>Endpoint pages, guide pages, and the recursive field object</summary>
 
 ### Endpoint pages
 
@@ -299,6 +355,8 @@ mcp-unifi-applications/
 - `discriminator.schema` contains sibling fields visible when that option is active (not the discriminator field itself)
 - Nesting is recursive - discriminators within variants are fully expanded
 - `children` captures statically expanded object fields
+
+</details>
 
 ## Disclaimer
 
