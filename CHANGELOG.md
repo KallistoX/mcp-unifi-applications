@@ -46,8 +46,28 @@ answering a different question than the one asked.
   Arguments are now stripped consistently.
 - `serverInfo.version` reported the FastMCP version instead of the package version.
 
+- Discriminated unions in response schemas were empty everywhere: 892 of 892
+  variants across 46 endpoints. Two causes. `enrichSchema` only ever ran against
+  the request body, and the option it clicked to reveal a variant was the `<label>`,
+  which carries a `for` attribute pointing at an id nothing resolves to — clicking
+  it does nothing. Clicking the `input` inside it works, which also explains why
+  request-body variants were only about half populated. Verified against
+  `network/createnetwork`: response variants went from 0/12 to 21/33 populated, the
+  remaining twelve being enum variants that genuinely carry no fields.
+- Where variant fields followed an empty stub they read as siblings of the
+  discriminator rather than as members of a variant, so `dhcpServerIpAddresses`
+  appeared to be always present rather than `[RELAY]`-only.
+- Nullable types rendered as glued tokens — `stringnull`, `numbernull` — in 301
+  fields across 47 endpoints. The docs viewer emits a single `<span>stringnull</span>`
+  for `["string","null"]`, so the join is undone in the scraper. Verified against
+  `protect/get-v1sensorsid`: 20 glued tokens became 20 readable ones.
+- Six guides shipped with a null title and displayed their slug instead, because
+  those pages render no `<h1>`. The nav link text is used as a fallback.
+
 ### Added
 
+- `update-docs` accepts a `force_apps` input, so a scraper fix can trigger a
+  re-scrape when the upstream version is unchanged but the output is not.
 - Bare, unqualified endpoint slugs now resolve when only one application has them —
   179 of 185 do. The tool descriptions documented this form (`createnetwork`) while
   the server rejected it.
