@@ -1,6 +1,6 @@
 """UniFi API Docs MCP Server.
 
-Exposes scraped UniFi application API documentation (Network, Protect, Site Manager)
+Exposes scraped UniFi application API documentation (Network, Protect, Site Manager, InnerSpace)
 as queryable tools for use in Claude Desktop or any MCP-compatible client.
 """
 
@@ -13,7 +13,6 @@ from rapidfuzz import fuzz
 
 DOCS_DIR = Path(os.environ.get("DOCS_DIR", Path(__file__).parent / "docs"))
 
-KNOWN_APPS = ("network", "protect", "site-manager")
 
 # --- Data loading ---
 
@@ -129,7 +128,7 @@ def _docs_summary() -> str:
 
 
 mcp = FastMCP("unifi-applications", instructions=(
-    "You have access to UniFi application API documentation (Network, Protect, Site Manager). "
+    "You have access to UniFi application API documentation (Network, Protect, Site Manager, InnerSpace). "
     "Use list_endpoints to browse, search_endpoints to find relevant endpoints, "
     "and get_endpoint to get full schema details. Use get_endpoint_group to get "
     "all CRUD operations for a resource at once. Filter by app name to narrow results. "
@@ -183,7 +182,7 @@ def list_endpoints(method: str | None = None, app: str | None = None) -> str:
 
     Args:
         method: Optional HTTP method filter (GET, POST, PUT, DELETE, PATCH).
-        app: Optional app filter (network, protect, site-manager). Omit to list all.
+        app: Optional app filter (network, protect, site-manager, innerspace). Omit to list all.
     """
     if not _search_index:
         return "No endpoints loaded. Check DOCS_DIR."
@@ -209,7 +208,7 @@ def list_endpoints(method: str | None = None, app: str | None = None) -> str:
         lines = lines[:MAX_LIST_LINES]
         lines.append(
             f"... truncated: showing {MAX_LIST_LINES} of {total} endpoints. "
-            "Filter by app= (network, protect, site-manager) or method= to narrow."
+            f"Filter by app= ({', '.join(sorted(_loaded_apps))}) or method= to narrow."
         )
     return "\n".join(lines)
 
@@ -240,7 +239,7 @@ def search_endpoints(query: str, method: str | None = None, app: str | None = No
     Args:
         query: Search term (endpoint name, path fragment, or keyword).
         method: Optional HTTP method filter (GET, POST, PUT, DELETE, PATCH).
-        app: Optional app filter (network, protect, site-manager). Omit to search all.
+        app: Optional app filter (network, protect, site-manager, innerspace). Omit to search all.
     """
     if not query.strip():
         return "Please provide a search query."
@@ -327,7 +326,7 @@ def get_example(slug: str, language: str = "curl", mode: str | None = None) -> s
         slug: Endpoint identifier (e.g. 'network/createnetwork').
         language: Programming language — one of: curl, go, nodejs, python, ansible.
         mode: 'local' (direct console access) or 'remote' (via cloud API).
-              Defaults to 'local' for network/protect, 'remote' for site-manager.
+              Defaults to 'local'; site-manager is remote-only and defaults to 'remote'.
     """
     ep = _endpoints.get(slug)
     if not ep:
@@ -545,7 +544,7 @@ def get_guide(topic: str | None = None, app: str | None = None) -> str:
 
     Args:
         topic: Guide slug or search term. Omit to list all available guides.
-        app: Optional app filter (network, protect, site-manager). Omit to search all.
+        app: Optional app filter (network, protect, site-manager, innerspace). Omit to search all.
     """
     app_filter = app.lower() if app else None
     guides = {s: g for s, g in _guides.items() if not app_filter or g.get("_app") == app_filter}
