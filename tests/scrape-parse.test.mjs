@@ -8,6 +8,8 @@ import { describe, it } from 'node:test';
 import {
   buildVersionsFromHrefs,
   buildVersionsFromItems,
+  normalizeSchemaTypes,
+  normalizeType,
   parseVersionLabel,
   resolveVersion,
   selectNavLinks,
@@ -194,5 +196,53 @@ describe('slugFromHref', () => {
   it('falls back for a href with no usable last segment', () => {
     assert.equal(slugFromHref('/'), '_');
     assert.equal(slugFromHref(''), '');
+  });
+});
+
+describe('normalizeType', () => {
+  it('splits every nullable form the corpus contains', () => {
+    // 301 fields across 47 endpoints, all six primitives.
+    assert.equal(normalizeType('stringnull'), 'string | null');
+    assert.equal(normalizeType('numbernull'), 'number | null');
+    assert.equal(normalizeType('objectnull'), 'object | null');
+    assert.equal(normalizeType('integernull'), 'integer | null');
+    assert.equal(normalizeType('arraynull'), 'array | null');
+    assert.equal(normalizeType('booleannull'), 'boolean | null');
+  });
+
+  it('leaves plain and composite types alone', () => {
+    for (const t of ['string', 'object', 'Array of string', 'Array of object (Port matching)']) {
+      assert.equal(normalizeType(t), t);
+    }
+  });
+
+  it('does not split a type that merely ends in those letters', () => {
+    assert.equal(normalizeType('nullable'), 'nullable');
+    assert.equal(normalizeType('null'), 'null');
+  });
+
+  it('passes through non-strings', () => {
+    assert.equal(normalizeType(null), null);
+    assert.equal(normalizeType(undefined), undefined);
+  });
+});
+
+describe('normalizeSchemaTypes', () => {
+  it('walks children and discriminator variants', () => {
+    const tree = [{
+      name: 'a',
+      type: 'stringnull',
+      children: [{ name: 'b', type: 'numbernull', children: [] }],
+      discriminator: [{ value: 'X', schema: [{ name: 'c', type: 'booleannull', children: [] }] }],
+    }];
+    normalizeSchemaTypes(tree);
+    assert.equal(tree[0].type, 'string | null');
+    assert.equal(tree[0].children[0].type, 'number | null');
+    assert.equal(tree[0].discriminator[0].schema[0].type, 'boolean | null');
+  });
+
+  it('tolerates missing branches', () => {
+    assert.deepEqual(normalizeSchemaTypes(undefined), undefined);
+    assert.deepEqual(normalizeSchemaTypes([{ name: 'a' }]), [{ name: 'a' }]);
   });
 });

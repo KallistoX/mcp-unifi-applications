@@ -4,6 +4,14 @@ on:
   schedule:
     - cron: "17 5 * * 1"  # Mondays 05:17 UTC
   workflow_dispatch:
+    inputs:
+      force_apps:
+        description: >-
+          Re-scrape these apps even when the version is unchanged: "all", or a
+          comma-separated list. Needed after a scraper fix, where the upstream
+          version is identical but the output is not.
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -39,8 +47,27 @@ jobs:
         id: compare
         run: |
           set -euo pipefail
+          ALL_APPS="network protect site-manager innerspace mobility carrier-fabric"
+          FORCE="${{ github.event.inputs.force_apps }}"
+          if [ "$FORCE" = "all" ]; then
+            printf 'apps=%s\n' "$(printf '%s\n' $ALL_APPS | jq -R . | jq -cs .)" >> "$GITHUB_OUTPUT"
+            echo "Forced re-scrape of every app."
+            exit 0
+          fi
+          if [ -n "$FORCE" ]; then
+            forced=$(echo "$FORCE" | tr ',' '\n' | sed 's/[[:space:]]//g' | grep -v '^$' || true)
+            for app in $forced; do
+              case " $ALL_APPS " in
+                *" $app "*) ;;
+                *) echo "::error::Unknown app '$app' in force_apps. Known: $ALL_APPS"; exit 1 ;;
+              esac
+            done
+            printf 'apps=%s\n' "$(printf '%s\n' $forced | jq -R . | jq -cs .)" >> "$GITHUB_OUTPUT"
+            echo "Forced re-scrape of: $forced"
+            exit 0
+          fi
           outdated=()
-          for app in network protect site-manager innerspace mobility carrier-fabric; do
+          for app in $ALL_APPS; do
             html=$(curl -fsSL --max-time 30 "https://developer.ui.com/${app}")
             latest=$(echo "$html" | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | sort -uV | tail -1 || true)
             if [ -z "$latest" ]; then

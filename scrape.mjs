@@ -12,6 +12,7 @@ import { chromium } from 'playwright';
 import {
   buildVersionsFromHrefs,
   buildVersionsFromItems,
+  normalizeSchemaTypes,
   resolveVersion,
   selectNavLinks,
   slugFromHref,
@@ -21,6 +22,8 @@ import { writeFileSync, mkdirSync, existsSync, rmSync } from 'fs';
 const SITE = 'https://developer.ui.com';
 const OUTPUT = '/output';
 const RETRY_LIMIT = 3;
+// Mirrors window.__RESPONSE_SECTION in the injected parser.
+const RESPONSE_SECTION = '__response';
 const NAV_TIMEOUT = 20000;
 
 // --- Application definitions ---
@@ -100,10 +103,22 @@ async function injectParser(page) {
       return root;
     };
 
-    window.__parseSection = function(headerText) {
+    // The response schema lives in its own container, not behind a
+    // RequestSection header. RESPONSE_SECTION routes to it so enrichSchema can
+    // drive request and response through the same code path.
+    window.__RESPONSE_SECTION = '__response';
+
+    window.__sectionEl = function(headerText) {
+      if (headerText === window.__RESPONSE_SECTION) {
+        return document.querySelector('[class*="ResponseSection__Section"]');
+      }
       const header = Array.from(document.querySelectorAll('[class*="RequestSection__SchemaHeader"]'))
         .find(el => el.innerText.trim().toLowerCase() === headerText.toLowerCase());
-      const tree = header?.nextElementSibling?.querySelector('[class*="SchemaViewer__SchemaTree"]');
+      return header?.nextElementSibling || null;
+    };
+
+    window.__parseSection = function(headerText) {
+      const tree = window.__sectionEl(headerText)?.querySelector('[class*="SchemaViewer__SchemaTree"]');
       return tree ? window.__parseSchema(tree) : [];
     };
 
@@ -125,9 +140,7 @@ async function injectParser(page) {
     };
 
     window.__parseSiblings = function(headerText, fieldName, parentFieldName) {
-      const header = Array.from(document.querySelectorAll('[class*="RequestSection__SchemaHeader"]'))
-        .find(el => el.innerText.trim().toLowerCase() === headerText.toLowerCase());
-      const sectionEl = header?.nextElementSibling;
+      const sectionEl = window.__sectionEl(headerText);
       if (!sectionEl) return [];
       const container = window.__getContainer(sectionEl, parentFieldName);
       if (!container) return [];
@@ -135,9 +148,7 @@ async function injectParser(page) {
     };
 
     window.__clickOption = function(headerText, fieldName, optionValue, parentFieldName) {
-      const header = Array.from(document.querySelectorAll('[class*="RequestSection__SchemaHeader"]'))
-        .find(el => el.innerText.trim().toLowerCase() === headerText.toLowerCase());
-      const sectionEl = header?.nextElementSibling;
+      const sectionEl = window.__sectionEl(headerText);
       if (!sectionEl) return;
       const container = window.__getContainer(sectionEl, parentFieldName);
       if (!container) return;
@@ -149,8 +160,13 @@ async function injectParser(page) {
         r.querySelector('[class*="SchemaViewer__PropertyName"]')?.innerText.trim() === fieldName &&
         r.querySelector('[class*="SchemaViewer__RadioGroup"]')
       );
-      Array.from(fieldRow?.querySelectorAll('label') || [])
-        .find(l => l.innerText.trim() === optionValue)?.click();
+      // The label carries for="-discriminator_SWITCH", an id nothing resolves to,
+      // so clicking it is a no-op - which is why response variants came back
+      // empty and request variants were only about half populated. The input
+      // inside it does toggle.
+      const label = Array.from(fieldRow?.querySelectorAll('label') || [])
+        .find(l => l.innerText.trim() === optionValue);
+      if (label) (label.querySelector('input') || label).click();
     };
   });
 }
@@ -238,7 +254,7 @@ async function navigateWithRetry(page, url) {
 
 // --- Guide page parser (MDX content -> markdown) ---
 
-async function scrapeGuidePage(page, url) {
+async function scrapeGuidePage(page, url, navTitle = null) {
   const content = await page.evaluate(() => {
     const h1 = Array.from(document.querySelectorAll('h1')).map(el => el.innerText.trim()).find(t => t !== 'Developer') || null;
     const mdx = document.querySelector('[class*="MDXRenderer"]');
@@ -311,7 +327,10 @@ async function scrapeGuidePage(page, url) {
 
   if (!content) return null;
   return {
-    h1: content.h1,
+    // Six guides render no <h1> at all and shipped with a null title, which the
+    // server then displayed as the raw slug. The nav link text is the same title
+    // the docs site shows in its sidebar.
+    h1: content.h1 || navTitle || null,
     type: 'guide',
     content: content.markdown,
     sourceUrl: url,
@@ -381,14 +400,14 @@ async function scrapeExamples(page, modes) {
 
 // --- Main page scraper ---
 
-async function scrapePage(page, url) {
+async function scrapePage(page, url, navTitle = null) {
   await injectParser(page);
   const ok = await navigateWithRetry(page, url);
   if (!ok) return null;
 
   // Detect guide pages (no HTTP method badge)
   const isGuide = await page.evaluate(() => !document.querySelector('[class*="HttpMethod"], [class*="MethodBadge"]'));
-  if (isGuide) return scrapeGuidePage(page, url);
+  if (isGuide) return scrapeGuidePage(page, url, navTitle);
 
   // Click Local first for initial schema parse (only if the app has a local mode)
   if (appConfig.modes.includes('local')) {
@@ -416,6 +435,18 @@ async function scrapePage(page, url) {
   });
 
   base.requestBody = await enrichSchema(page, base.requestBody, 'request Body');
+  // Responses carry the same discriminated unions and were never enriched, so
+  // every variant in every response shipped empty.
+  for (const resp of base.responses) {
+    resp.fields = await enrichSchema(page, resp.fields, RESPONSE_SECTION);
+  }
+
+  for (const section of [base.pathParameters, base.queryParameters, base.requestBody]) {
+    normalizeSchemaTypes(section);
+  }
+  for (const resp of base.responses) normalizeSchemaTypes(resp.fields);
+
+  if (!base.h1 && navTitle) base.h1 = navTitle;
 
   const { examples, responseSample } = await scrapeExamples(page, appConfig.modes);
 
@@ -534,7 +565,7 @@ for (const { href, text } of links) {
   if (!force && existsSync(outPath)) { console.log(`  ⟳ Skip: ${text}`); done++; continue; }
 
   process.stdout.write(`[${++done}/${links.length}] ${text}... `);
-  const data = await scrapePage(page, url);
+  const data = await scrapePage(page, url, text);
   if (!data) {
     failed.push({ url, text });
     writeFileSync(outPath, JSON.stringify({ error: 'Failed to scrape', sourceUrl: url }, null, 2));
