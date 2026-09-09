@@ -1,6 +1,7 @@
 // scrape.mjs — UniFi API docs scraper
 // Usage: node scrape.mjs [options] [slug...]
-//   --app <name>      Application to scrape: network (default), protect, site-manager.
+//   --app <name>      Application to scrape: network (default), protect, site-manager,
+//                     innerspace.
 //   --version <ver>   API version to scrape (e.g. v10.1.84). Default: latest.
 //   --list-versions   Print available versions and exit.
 //   --force           Re-scrape even if output file exists.
@@ -21,6 +22,7 @@ const APPS = {
   network:        { path: 'network',      modes: ['local', 'remote'] },
   protect:        { path: 'protect',      modes: ['local', 'remote'] },
   'site-manager': { path: 'site-manager', modes: ['remote'] },
+  innerspace:     { path: 'innerspace',   modes: ['local', 'remote'] },
 };
 
 // --- CLI argument parsing ---
