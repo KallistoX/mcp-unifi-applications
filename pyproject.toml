@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mcp-unifi-applications"
-version = "0.3.0"
+version = "0.3.1"
 description = "MCP server exposing UniFi application API documentation (Network, Protect, Site Manager, InnerSpace, Mobility, Carrier Fabric) as queryable tools"
 license = "MIT"
 readme = "README.md"
