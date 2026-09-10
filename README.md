@@ -89,7 +89,7 @@ API key to configure. What you get:
 | Site Manager | v1.0.0 | 2026-09-10 | 12 |
 | InnerSpace | v1.3.23 | 2026-09-09 | 12 |
 | Mobility | v1.0.0 | 2026-09-10 | 9 |
-| Carrier Fabric | v1.0.0 | 2026-09-09 | 14 |
+| Carrier Fabric | v1.0.0 | 2026-09-10 | 14 |
 <!-- docs-versions:end -->
 
 <details>
