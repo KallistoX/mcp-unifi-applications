@@ -591,3 +591,43 @@ class TestEnumRendering:
         out = "\n".join(m._summarise_fields([f]))
         assert "[GATEWAY]:" in out
         assert "one of:" not in out
+
+
+# --- Tool metadata ---
+
+
+class TestToolMetadata:
+    """A client should be able to tell what a tool does to the world without
+    parsing its prose. Every tool here reads bundled JSON and nothing else."""
+
+    @staticmethod
+    def _tools():
+        import asyncio
+
+        return list(asyncio.run(m.mcp._list_tools()))
+
+    def test_every_tool_is_annotated_read_only(self):
+        tools = self._tools()
+        assert len(tools) == 10, f"expected 10 tools, found {len(tools)}"
+        for tool in tools:
+            ann = tool.annotations
+            assert ann is not None, f"{tool.name} has no annotations"
+            assert ann.read_only_hint is True, tool.name
+            assert ann.destructive_hint is False, tool.name
+            assert ann.idempotent_hint is True, tool.name
+            assert ann.open_world_hint is False, tool.name
+
+    def test_every_tool_describes_itself(self):
+        for tool in self._tools():
+            desc = (tool.description or "").strip()
+            assert len(desc) > 120, f"{tool.name}: description is {len(desc)} chars"
+            assert desc[0].isupper(), f"{tool.name}: description does not start with a sentence"
+
+    def test_every_parameter_is_documented(self):
+        # FastMCP splits the docstring: the summary becomes the tool description
+        # and each Args entry becomes the parameter's schema description. A
+        # parameter with no description reaches the model as a bare type.
+        for tool in self._tools():
+            for name, schema in (tool.parameters or {}).get("properties", {}).items():
+                desc = (schema.get("description") or "").strip()
+                assert len(desc) > 15, f"{tool.name}.{name}: description is {len(desc)} chars"
