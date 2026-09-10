@@ -429,6 +429,48 @@ class TestGetGuide:
 # --- get_response_sample ---
 
 
+class TestShippedSamplesAreWellFormed:
+    """The docs site clips code blocks to their container height, and the clipped
+    text was all the scraper captured — seven of 125 samples shipped as invalid
+    JSON while the tool called them "raw JSON exactly as the documentation shows
+    it". These walk the corpus so a scraper regression cannot ship quietly."""
+
+    def test_every_shipped_sample_parses(self):
+        broken = []
+        checked = 0
+        for slug, ep in m._endpoints.items():
+            sample = ep.get("responseSample")
+            if not sample or not sample.strip().startswith("{"):
+                continue
+            checked += 1
+            try:
+                json.loads(sample)
+            except json.JSONDecodeError as exc:
+                broken.append(f"{slug}: {exc}")
+        assert checked > 50, f"only {checked} JSON samples found — corpus unexpectedly small"
+        assert not broken, f"{len(broken)} response samples do not parse: {broken[:3]}"
+
+    def test_get_response_sample_returns_what_the_data_holds(self):
+        for slug, ep in m._endpoints.items():
+            sample = ep.get("responseSample")
+            if not sample:
+                continue
+            assert m.get_response_sample(slug) == sample, slug
+            return
+        pytest.skip("corpus has no response samples")
+
+    def test_examples_are_not_empty(self):
+        checked = 0
+        for slug, ep in m._endpoints.items():
+            for mode, langs in (ep.get("examples") or {}).items():
+                for lang, code in (langs or {}).items():
+                    if code is None:
+                        continue
+                    assert code.strip(), f"{slug} {mode}/{lang}: empty example"
+                    checked += 1
+        assert checked > 500, f"only {checked} examples found — corpus unexpectedly small"
+
+
 class TestGetResponseSample:
     def test_invalid_slug(self):
         result = m.get_response_sample("nonexistent")

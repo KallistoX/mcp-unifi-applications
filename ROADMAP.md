@@ -31,6 +31,18 @@ Plus the minor observations in the report: empty `## Response [200]` headings th
 like truncation, input casing echoed into headings, a `method` description naming five
 of the eight accepted verbs, and `--help` starting the server instead of printing usage.
 
+## Two examples still truncate after a mode switch
+
+`network/createwifibroadcast` and `network/updatewifibroadcast` ship their `remote`
+Go example clipped at 62 lines — 2 of 1784, down from 8. The extractor reads a block's
+full source from the component's props but accepts it only when the rendered text is
+its beginning; after switching to `remote` on these two pages the matching props are
+not reachable, so it correctly falls back to the clipped rendering rather than
+substituting the local variant. Truncated and right beats complete and wrong.
+
+The likely cause is that props update more slowly than the 400 ms the scraper waits
+after a mode switch. Worth a targeted look, not worth a rewrite.
+
 ## Use more than one of MCP's three primitives
 
 The server advertises `tools`, `resources` and `prompts`, and exposes ten tools, zero
