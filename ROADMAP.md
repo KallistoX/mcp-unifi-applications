@@ -19,10 +19,10 @@ protocol violations. Five substantive findings, three of them high:
   third because Protect titles its mutations `Patch`. A small synonym map over the verbs
   the corpus actually uses — create/generate/issue, update/patch/modify, delete/remove —
   would close it, and is worth doing only if real queries keep missing.
-- **Response samples are truncated at 58 lines.** A hard cap in the scraper leaves seven
-  samples as invalid JSON, presented as "raw JSON exactly as the documentation shows
-  it". Needs a scraper change and a re-scrape; the server could also detect unbalanced
-  JSON and say so.
+- ~~**Response samples are truncated at 58 lines.**~~ Fixed in #46 — the docs site
+  renders code blocks clipped to their container height and the clipped text is all
+  that reaches the DOM. Code examples were affected too, at 66 lines, which the review
+  had not found. Takes effect after a re-scrape.
 - ~~**`get_guide` title lookup bypasses the ambiguity guard.**~~ Fixed in #44 —
   colliding titles score identically, so sort order decided which application the
   reader got.

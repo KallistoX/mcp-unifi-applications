@@ -115,6 +115,10 @@ async function injectParser(page) {
     // drive request and response through the same code path.
     window.__RESPONSE_SECTION = '__response';
 
+    // The docs site renders code blocks clipped to the height of their container -
+    // response samples stop at 58 lines, Go examples at 66 - and the clipped text is
+    // all that reaches innerText or textContent. The component keeps the full string
+    // in its props, so read that and fall back to the rendering only if it is gone.
     window.__sectionEl = function(headerText) {
       if (headerText === window.__RESPONSE_SECTION) {
         return document.querySelector('[class*="ResponseSection__Section"]');
@@ -122,6 +126,50 @@ async function injectParser(page) {
       const header = Array.from(document.querySelectorAll('[class*="RequestSection__SchemaHeader"]'))
         .find(el => el.innerText.trim().toLowerCase() === headerText.toLowerCase());
       return header?.nextElementSibling || null;
+    };
+
+    window.__blockSources = function(el) {
+      const out = [];
+      for (const el2 of [el, el.parentElement]) {
+        if (!el2) continue;
+        for (const key of Object.keys(el2)) {
+          if (key.startsWith('__reactProps$')) {
+            const p = el2[key];
+            if (p && typeof p.code === 'string' && p.code.length) out.push(p.code);
+          }
+          if (key.startsWith('__reactFiber$')) {
+            let node = el2[key];
+            for (let i = 0; i < 15 && node; i++) {
+              const props = node.memoizedProps || node.pendingProps;
+              if (props && typeof props.code === 'string' && props.code.length) out.push(props.code);
+              node = node.return;
+            }
+          }
+        }
+      }
+      return out;
+    };
+
+    window.__visibleBlocks = function() {
+      return Array.from(document.querySelectorAll('pre')).filter(el => {
+        const r = el.getBoundingClientRect();
+        return r.width > 0 && r.height > 0 && el.innerText.trim().length > 0;
+      });
+    };
+
+    window.__blockText = function(el) {
+      const rendered = el.innerText.trim();
+      // Several ancestors carry a `code` prop and they are not all this block's -
+      // after switching language or mode, a stale sibling's source is reachable too.
+      // Accept a candidate only when the rendered text is its beginning, which is
+      // true for the block we are looking at and false for any other.
+      const norm = s => s.replace(/\s+/g, ' ').trim();
+      const r = norm(rendered);
+      for (const cand of window.__blockSources(el)) {
+        const c = norm(cand);
+        if (c === r || c.startsWith(r)) return cand.trim();
+      }
+      return rendered || null;
     };
 
     window.__parseSection = function(headerText) {
@@ -381,11 +429,8 @@ const MODES = [
 async function scrapeExamples(page, modes) {
   const examples = {};
   const responseSample = await page.evaluate(() => {
-    const visible = Array.from(document.querySelectorAll('pre')).filter(el => {
-      const r = el.getBoundingClientRect();
-      return r.width > 0 && r.height > 0 && el.innerText.trim().length > 0;
-    });
-    return visible.find(el => el.innerText.trim().startsWith('{'))?.innerText.trim() || null;
+    const el = window.__visibleBlocks().find(e => e.innerText.trim().startsWith('{'));
+    return el ? window.__blockText(el) : null;
   });
 
   // Determine if a mode switch is present on the page
@@ -409,12 +454,10 @@ async function scrapeExamples(page, modes) {
       } catch (_) { continue; }
 
       const code = await page.evaluate(() => {
-        const visible = Array.from(document.querySelectorAll('pre')).filter(el => {
-          const r = el.getBoundingClientRect();
-          return r.width > 0 && r.height > 0 && el.innerText.trim().length > 0;
-        });
+        const visible = window.__visibleBlocks();
         // The request example is typically the first visible pre that isn't a JSON response
-        return (visible.find(el => !el.innerText.trim().startsWith('{')) ?? visible[0])?.innerText.trim() || null;
+        const el = visible.find(e => !e.innerText.trim().startsWith('{')) ?? visible[0];
+        return el ? window.__blockText(el) : null;
       });
       if (code) examples[mode.key][lang.key] = code;
     }
@@ -587,6 +630,7 @@ mkdirSync(outDir, { recursive: true });
 if (!singleMode) rmSync(`${outDir}/_failed.txt`, { force: true });
 
 const failed = [];
+const malformed = [];
 let done = 0;
 
 for (const { href, text } of links) {
@@ -605,6 +649,19 @@ for (const { href, text } of links) {
     continue;
   }
   writeFileSync(outPath, JSON.stringify(data, null, 2));
+  // A sample that does not parse means the block was captured from the rendering
+  // rather than from its source, and was therefore clipped. Worth saying out loud:
+  // the server hands it to a consumer as "raw JSON exactly as the documentation
+  // shows it".
+  if (data.responseSample && data.responseSample.trim().startsWith('{')) {
+    try {
+      JSON.parse(data.responseSample);
+    } catch (_) {
+      malformed.push(slug);
+      console.log('✓ (response sample is not valid JSON)');
+      continue;
+    }
+  }
   console.log('✓');
 
   if (singleMode) {
@@ -621,6 +678,11 @@ if (!singleMode) {
     scrapedAt: new Date().toISOString(),
     pageCount: links.length,
   }, null, 2));
+}
+
+if (malformed.length) {
+  console.log(`\n⚠ ${malformed.length} response sample(s) are not valid JSON:`);
+  malformed.forEach(s => console.log(`  - ${s}`));
 }
 
 if (failed.length) {
