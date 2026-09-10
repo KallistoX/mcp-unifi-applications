@@ -9,6 +9,20 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Search scored the query against a token *set*, which made extra words free:
+  `update camera`, `update light` and `update banana` returned the identical ranking,
+  and `create voucher` put `DELETE network/deletevoucher` first while never surfacing
+  `network/createvouchers` — titled *Generate Vouchers* — at all. Scoring is now per
+  query token, combining the mean with the minimum so a word that matches nothing drags
+  the result down, with substring matching so `voucher` reaches `createvouchers`, and a
+  tie-break toward the title the query fits most closely. Every weight was chosen by
+  measuring against the whole corpus rather than by feel: all 196 titles as queries,
+  the queries the review found broken, nonsense, and typos. `create voucher` now ranks
+  the create endpoint first, `update camera` moves from absent to third, adding a
+  nonsense word to a common one drops the result from ten hits to none, and typos that
+  previously matched nothing — `frewall`, `devcies` — now find their endpoints. The
+  title benchmark is unchanged at 185 of 196 ranking first, the other eleven being
+  genuine cross-application collisions.
 - `get_guide` guarded against ambiguous slugs but not ambiguous titles, and titles
   collide just as often — three guides are titled `Introduction`, two `Installation`,
   two `Error Handling`. Those score identically, so `scored[0]` let sort order decide
