@@ -63,6 +63,15 @@ answering a different question than the one asked.
   `protect/get-v1sensorsid`: 20 glued tokens became 20 readable ones.
 - Six guides shipped with a null title and displayed their slug instead, because
   those pages render no `<h1>`. The nav link text is used as a fallback.
+- Enums were stored as discriminated unions with empty variants. The docs viewer
+  renders both in the same radio group, so `protocol.name` — 48 IP protocols of
+  which only `ICMP` carries an extra field — became 48 variants, 47 of them with
+  nothing inside. The server printed them as bracketed labels with no contents,
+  which reads as variants whose fields went missing rather than as the allowed
+  values of a string. Options are now listed in `enum` and only those that
+  actually reveal fields stay variants, marked as additive. That one field drops
+  from 52 rendered lines to 6, without losing a single value; across the corpus
+  110 fields and 458 values are affected and 4726 real variants are untouched.
 
 ### Changed
 

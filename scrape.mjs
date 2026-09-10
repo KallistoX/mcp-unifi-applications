@@ -12,6 +12,7 @@ import { chromium } from 'playwright';
 import {
   buildVersionsFromHrefs,
   buildVersionsFromItems,
+  collapseEnums,
   normalizeSchemaTypes,
   resolveVersion,
   selectNavLinks,
@@ -466,10 +467,16 @@ async function scrapePage(page, url, navTitle = null) {
     resp.fields = await enrichSchema(page, resp.fields, RESPONSE_SECTION);
   }
 
+  // After enrichment, so a radio group whose options all revealed nothing can be
+  // recognised as an enum rather than a union with missing variants.
   for (const section of [base.pathParameters, base.queryParameters, base.requestBody]) {
     normalizeSchemaTypes(section);
+    collapseEnums(section);
   }
-  for (const resp of base.responses) normalizeSchemaTypes(resp.fields);
+  for (const resp of base.responses) {
+    normalizeSchemaTypes(resp.fields);
+    collapseEnums(resp.fields);
+  }
 
   if (!base.h1 && navTitle) base.h1 = navTitle;
 

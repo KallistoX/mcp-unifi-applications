@@ -166,7 +166,12 @@ def _find_field(fields: list[dict], name: str, path: str = "") -> list[tuple[str
     return results
 
 
-def _summarise_fields(fields: list[dict], depth: int = 0, max_depth: int = 2) -> list[str]:
+MAX_ENUM_INLINE = 12
+
+
+def _summarise_fields(
+    fields: list[dict], depth: int = 0, max_depth: int = 2, full_enums: bool = False
+) -> list[str]:
     """Build a compact text summary of a field tree."""
     lines = []
     indent = "  " * depth
@@ -176,13 +181,30 @@ def _summarise_fields(fields: list[dict], depth: int = 0, max_depth: int = 2) ->
         desc = f" — {f['description']}" if f.get("description") else ""
         lines.append(f"{indent}- {f['name']}: {typ}{req}{desc}")
 
+        values = f.get("enum") or []
+        if values:
+            if full_enums or len(values) <= MAX_ENUM_INLINE:
+                lines.append(f"{indent}  one of: {', '.join(values)}")
+            else:
+                shown = ", ".join(values[:MAX_ENUM_INLINE])
+                lines.append(
+                    f"{indent}  one of: {shown}, +{len(values) - MAX_ENUM_INLINE} more "
+                    f"(get_field_schema for the full list)"
+                )
+
         if f.get("discriminator") and depth < max_depth:
+            # When the allowed values are already listed above, the bracketed
+            # entries are the subset that carries extra fields - say so, rather
+            # than letting them read as the complete set of options.
+            label = " adds" if values else ""
             for disc in f["discriminator"]:
-                lines.append(f"{indent}  [{disc['value']}]:")
-                lines.extend(_summarise_fields(disc.get("schema") or [], depth + 2, max_depth))
+                lines.append(f"{indent}  [{disc['value']}]{label}:")
+                lines.extend(
+                    _summarise_fields(disc.get("schema") or [], depth + 2, max_depth, full_enums)
+                )
 
         if f.get("children") and depth < max_depth:
-            lines.extend(_summarise_fields(f["children"], depth + 1, max_depth))
+            lines.extend(_summarise_fields(f["children"], depth + 1, max_depth, full_enums))
     return lines
 
 
@@ -569,18 +591,28 @@ def get_field_schema(slug: str, field_path: str) -> str:
         result = _resolve_path(ep.get(section_key) or [], parts)
         if result:
             lines = [f"# {field_path} (in {section_key})"]
-            lines.extend(_summarise_fields([result], max_depth=10))
+            lines.extend(_summarise_fields([result], max_depth=10, full_enums=True))
             if result.get("discriminator"):
-                lines.append(f"\nVariants: {', '.join(d['value'] for d in result['discriminator'])}")
+                lines.append(
+                    f"\nVariants with extra fields: "
+                    f"{', '.join(d['value'] for d in result['discriminator'])}"
+                    if result.get("enum")
+                    else f"\nVariants: {', '.join(d['value'] for d in result['discriminator'])}"
+                )
             return "\n".join(lines)
 
     for resp in ep.get("responses") or []:
         result = _resolve_path(resp.get("fields") or [], parts)
         if result:
             lines = [f"# {field_path} (in response)"]
-            lines.extend(_summarise_fields([result], max_depth=10))
+            lines.extend(_summarise_fields([result], max_depth=10, full_enums=True))
             if result.get("discriminator"):
-                lines.append(f"\nVariants: {', '.join(d['value'] for d in result['discriminator'])}")
+                lines.append(
+                    f"\nVariants with extra fields: "
+                    f"{', '.join(d['value'] for d in result['discriminator'])}"
+                    if result.get("enum")
+                    else f"\nVariants: {', '.join(d['value'] for d in result['discriminator'])}"
+                )
             return "\n".join(lines)
 
     # Try find_field as fallback to suggest the right path

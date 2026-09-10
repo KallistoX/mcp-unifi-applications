@@ -7,6 +7,7 @@ import { describe, it } from 'node:test';
 
 import {
   buildVersionsFromHrefs,
+  collapseEnums,
   buildVersionsFromItems,
   normalizeSchemaTypes,
   normalizeType,
@@ -244,5 +245,58 @@ describe('normalizeSchemaTypes', () => {
   it('tolerates missing branches', () => {
     assert.deepEqual(normalizeSchemaTypes(undefined), undefined);
     assert.deepEqual(normalizeSchemaTypes([{ name: 'a' }]), [{ name: 'a' }]);
+  });
+});
+
+describe('collapseEnums', () => {
+  const group = (name, opts) => ({
+    name, type: 'string', children: [],
+    discriminator: opts.map(([value, n]) => ({
+      value, schema: Array.from({ length: n }, (_, i) => ({ name: `f${i}`, children: [] })),
+    })),
+  });
+
+  it('turns a group where nothing reveals fields into a plain enum', () => {
+    // metadata.origin: three values, no structure behind any of them.
+    const f = group('origin', [['ORCHESTRATED', 0], ['SYSTEM_DEFINED', 0], ['USER_DEFINED', 0]]);
+    collapseEnums([f]);
+    assert.deepEqual(f.enum, ['ORCHESTRATED', 'SYSTEM_DEFINED', 'USER_DEFINED']);
+    assert.equal(f.discriminator, undefined);
+  });
+
+  it('keeps only the options that add fields, and lists them all as values', () => {
+    // protocol.name: 48 protocols, only ICMP carries typenameFilter.
+    const f = group('name', [['AH', 0], ['ICMP', 1], ['TCP', 0]]);
+    collapseEnums([f]);
+    assert.deepEqual(f.enum, ['AH', 'ICMP', 'TCP']);
+    assert.deepEqual(f.discriminator.map(d => d.value), ['ICMP']);
+  });
+
+  it('leaves a real union alone', () => {
+    const f = group('management', [['GATEWAY', 7], ['SWITCH', 5], ['UNMANAGED', 3]]);
+    collapseEnums([f]);
+    assert.equal(f.enum, undefined);
+    assert.deepEqual(f.discriminator.map(d => d.value), ['GATEWAY', 'SWITCH', 'UNMANAGED']);
+  });
+
+  it('recurses into surviving variants and children', () => {
+    const inner = group('origin', [['A', 0], ['B', 0]]);
+    const outer = {
+      name: 'management', type: 'string',
+      children: [group('mode', [['X', 0], ['Y', 0]])],
+      discriminator: [{ value: 'GATEWAY', schema: [inner] }],
+    };
+    collapseEnums([outer]);
+    assert.equal(outer.enum, undefined, 'the outer union has a structural variant');
+    assert.deepEqual(inner.enum, ['A', 'B']);
+    assert.deepEqual(outer.children[0].enum, ['X', 'Y']);
+  });
+
+  it('tolerates missing and empty input', () => {
+    assert.deepEqual(collapseEnums(undefined), undefined);
+    assert.deepEqual(collapseEnums([{ name: 'a' }]), [{ name: 'a' }]);
+    const noOpts = { name: 'a', discriminator: [] };
+    collapseEnums([noOpts]);
+    assert.equal(noOpts.enum, undefined);
   });
 });

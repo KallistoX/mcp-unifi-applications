@@ -537,3 +537,57 @@ class TestHonestOutput:
 
         pyproject = tomllib.loads((Path(__file__).parent.parent / "pyproject.toml").read_text())
         assert m.mcp.version == pyproject["project"]["version"]
+
+
+# --- enum rendering ---
+
+
+class TestEnumRendering:
+    """Enums reach the server as an `enum` list once the scraper stops storing
+    them as variants with nothing inside (issue #36)."""
+
+    @staticmethod
+    def _field(values, discriminator=None):
+        f = {"name": "protocol", "type": "string", "children": [], "enum": values}
+        if discriminator:
+            f["discriminator"] = discriminator
+        return f
+
+    def test_short_enum_is_listed_in_full(self):
+        out = "\n".join(m._summarise_fields([self._field(["TCP", "UDP", "ICMP"])]))
+        assert "one of: TCP, UDP, ICMP" in out
+        assert "more" not in out
+
+    def test_long_enum_is_truncated_with_a_pointer(self):
+        values = [f"P{i}" for i in range(40)]
+        out = "\n".join(m._summarise_fields([self._field(values)]))
+        assert f"+{40 - m.MAX_ENUM_INLINE} more" in out
+        assert "get_field_schema" in out
+        assert "P0" in out and "P39" not in out
+
+    def test_full_enums_shows_every_value(self):
+        values = [f"P{i}" for i in range(40)]
+        out = "\n".join(m._summarise_fields([self._field(values)], full_enums=True))
+        assert "P39" in out
+        assert "more" not in out
+
+    def test_variants_alongside_an_enum_are_marked_as_additive(self):
+        # 47 protocols carry nothing; ICMP adds a field. Without the label the
+        # single bracketed entry reads as the only allowed value.
+        f = self._field(
+            ["AH", "ICMP", "TCP"],
+            [{"value": "ICMP", "schema": [{"name": "typenameFilter", "type": "string", "children": []}]}],
+        )
+        out = "\n".join(m._summarise_fields([f]))
+        assert "one of: AH, ICMP, TCP" in out
+        assert "[ICMP] adds:" in out
+        assert "typenameFilter" in out
+
+    def test_a_plain_union_is_unchanged(self):
+        f = {
+            "name": "management", "type": "string", "children": [],
+            "discriminator": [{"value": "GATEWAY", "schema": [{"name": "zoneId", "type": "string", "children": []}]}],
+        }
+        out = "\n".join(m._summarise_fields([f]))
+        assert "[GATEWAY]:" in out
+        assert "one of:" not in out
