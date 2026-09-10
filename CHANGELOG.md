@@ -9,6 +9,18 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- Response samples and code examples were captured from the rendering rather than
+  from their source, and the docs site clips code blocks to the height of their
+  container: samples stopped at 58 lines, leaving seven of the 125 as invalid JSON,
+  and Go examples stopped at 66 lines mid-statement — the latter not previously
+  reported. The block component keeps the full string in its props; the scraper now
+  reads that, accepting it only when the rendered text is its beginning, so a stale
+  sibling's source can never be substituted for the block being read. Verified against
+  `protect/get-v1sensorsid`, whose sample goes from 58 truncated lines to 113 that
+  parse, and `protect/post-v1liveviews`, whose Go example gains its closing brace.
+  Examples also lose the spurious blank lines the rendering inserted; content is
+  identical once whitespace is normalised. The scraper now reports any sample that
+  does not parse. Takes effect after a re-scrape.
 - Search scored the query against a token *set*, which made extra words free:
   `update camera`, `update light` and `update banana` returned the identical ranking,
   and `create voucher` put `DELETE network/deletevoucher` first while never surfacing
