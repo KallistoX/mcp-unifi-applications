@@ -143,24 +143,12 @@
                   "required": true,
                   "type": "string",
                   "description": null,
-                  "discriminator": [
-                    {
-                      "value": "DERIVED",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
-                      "value": "ORCHESTRATED",
-                      "selected": false,
-                      "schema": []
-                    },
-                    {
-                      "value": "USER_DEFINED",
-                      "selected": false,
-                      "schema": []
-                    }
-                  ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "DERIVED",
+                    "ORCHESTRATED",
+                    "USER_DEFINED"
+                  ]
                 }
               ]
             },
@@ -186,11 +174,6 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "NATIVE",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
                       "value": "SPECIFIC",
                       "selected": false,
                       "schema": [
@@ -205,7 +188,11 @@
                       ]
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "NATIVE",
+                    "SPECIFIC"
+                  ]
                 }
               ]
             },
@@ -223,16 +210,6 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "OPEN",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
-                      "value": "WPA2_ENTERPRISE",
-                      "selected": false,
-                      "schema": []
-                    },
-                    {
                       "value": "WPA2_PERSONAL",
                       "selected": false,
                       "schema": [
@@ -245,29 +222,18 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "value": "WPA2_WPA3_ENTERPRISE",
-                      "selected": false,
-                      "schema": []
-                    },
-                    {
-                      "value": "WPA2_WPA3_PERSONAL",
-                      "selected": false,
-                      "schema": []
-                    },
-                    {
-                      "value": "WPA3_ENTERPRISE",
-                      "selected": false,
-                      "schema": []
-                    },
-                    {
-                      "value": "WPA3_PERSONAL",
-                      "selected": false,
-                      "schema": []
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "OPEN",
+                    "WPA2_ENTERPRISE",
+                    "WPA2_PERSONAL",
+                    "WPA2_WPA3_ENTERPRISE",
+                    "WPA2_WPA3_PERSONAL",
+                    "WPA3_ENTERPRISE",
+                    "WPA3_PERSONAL"
+                  ]
                 }
               ]
             },
@@ -363,24 +329,12 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DERIVED",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "ORCHESTRATED",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "ORCHESTRATED",
+                            "USER_DEFINED"
+                          ]
                         }
                       ]
                     },
@@ -406,11 +360,6 @@
                           "description": null,
                           "discriminator": [
                             {
-                              "value": "NATIVE",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
                               "value": "SPECIFIC",
                               "selected": false,
                               "schema": [
@@ -425,7 +374,11 @@
                               ]
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "NATIVE",
+                            "SPECIFIC"
+                          ]
                         }
                       ]
                     },
@@ -443,16 +396,6 @@
                           "description": null,
                           "discriminator": [
                             {
-                              "value": "OPEN",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "WPA2_ENTERPRISE",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
                               "value": "WPA2_PERSONAL",
                               "selected": false,
                               "schema": [
@@ -465,29 +408,18 @@
                                   "children": []
                                 }
                               ]
-                            },
-                            {
-                              "value": "WPA2_WPA3_ENTERPRISE",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "WPA2_WPA3_PERSONAL",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "WPA3_ENTERPRISE",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "WPA3_PERSONAL",
-                              "selected": false,
-                              "schema": []
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "OPEN",
+                            "WPA2_ENTERPRISE",
+                            "WPA2_PERSONAL",
+                            "WPA2_WPA3_ENTERPRISE",
+                            "WPA2_WPA3_PERSONAL",
+                            "WPA3_ENTERPRISE",
+                            "WPA3_PERSONAL"
+                          ]
                         }
                       ]
                     }
@@ -579,24 +511,12 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DERIVED",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "ORCHESTRATED",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "ORCHESTRATED",
+                            "USER_DEFINED"
+                          ]
                         }
                       ]
                     },
@@ -622,11 +542,6 @@
                           "description": null,
                           "discriminator": [
                             {
-                              "value": "NATIVE",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
                               "value": "SPECIFIC",
                               "selected": false,
                               "schema": [
@@ -641,7 +556,11 @@
                               ]
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "NATIVE",
+                            "SPECIFIC"
+                          ]
                         }
                       ]
                     },
@@ -659,16 +578,6 @@
                           "description": null,
                           "discriminator": [
                             {
-                              "value": "OPEN",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "WPA2_ENTERPRISE",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
                               "value": "WPA2_PERSONAL",
                               "selected": false,
                               "schema": [
@@ -681,29 +590,18 @@
                                   "children": []
                                 }
                               ]
-                            },
-                            {
-                              "value": "WPA2_WPA3_ENTERPRISE",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "WPA2_WPA3_PERSONAL",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "WPA3_ENTERPRISE",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "WPA3_PERSONAL",
-                              "selected": false,
-                              "schema": []
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "OPEN",
+                            "WPA2_ENTERPRISE",
+                            "WPA2_PERSONAL",
+                            "WPA2_WPA3_ENTERPRISE",
+                            "WPA2_WPA3_PERSONAL",
+                            "WPA3_ENTERPRISE",
+                            "WPA3_PERSONAL"
+                          ]
                         }
                       ]
                     },

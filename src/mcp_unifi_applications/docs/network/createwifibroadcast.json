@@ -261,11 +261,6 @@
           "description": null,
           "discriminator": [
             {
-              "value": "AUTO",
-              "selected": true,
-              "schema": []
-            },
-            {
               "value": "CUSTOM",
               "selected": false,
               "schema": [
@@ -482,7 +477,11 @@
               ]
             }
           ],
-          "children": []
+          "children": [],
+          "enum": [
+            "AUTO",
+            "CUSTOM"
+          ]
         }
       ]
     },
@@ -512,14 +511,13 @@
                   "children": []
                 }
               ]
-            },
-            {
-              "value": "BLOCK",
-              "selected": false,
-              "schema": []
             }
           ],
-          "children": []
+          "children": [],
+          "enum": [
+            "ALLOW",
+            "BLOCK"
+          ]
         },
         {
           "name": "sourceMacAddressFilter",
@@ -561,11 +559,6 @@
           "description": null,
           "discriminator": [
             {
-              "value": "NATIVE",
-              "selected": true,
-              "schema": []
-            },
-            {
               "value": "SPECIFIC",
               "selected": false,
               "schema": [
@@ -580,7 +573,11 @@
               ]
             }
           ],
-          "children": []
+          "children": [],
+          "enum": [
+            "NATIVE",
+            "SPECIFIC"
+          ]
         }
       ]
     },
@@ -1895,11 +1892,6 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "AUTO",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
                       "value": "CUSTOM",
                       "selected": false,
                       "schema": [
@@ -2116,7 +2108,11 @@
                       ]
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "AUTO",
+                    "CUSTOM"
+                  ]
                 }
               ]
             },
@@ -2146,14 +2142,13 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "value": "BLOCK",
-                      "selected": false,
-                      "schema": []
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "ALLOW",
+                    "BLOCK"
+                  ]
                 },
                 {
                   "name": "sourceMacAddressFilter",
@@ -2195,11 +2190,6 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "NATIVE",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
                       "value": "SPECIFIC",
                       "selected": false,
                       "schema": [
@@ -2214,7 +2204,11 @@
                       ]
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "NATIVE",
+                    "SPECIFIC"
+                  ]
                 }
               ]
             },
@@ -3533,11 +3527,6 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "AUTO",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
                       "value": "CUSTOM",
                       "selected": false,
                       "schema": [
@@ -3754,7 +3743,11 @@
                       ]
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "AUTO",
+                    "CUSTOM"
+                  ]
                 }
               ]
             },
@@ -3784,14 +3777,13 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "value": "BLOCK",
-                      "selected": false,
-                      "schema": []
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "ALLOW",
+                    "BLOCK"
+                  ]
                 },
                 {
                   "name": "sourceMacAddressFilter",
@@ -3833,11 +3825,6 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "NATIVE",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
                       "value": "SPECIFIC",
                       "selected": false,
                       "schema": [
@@ -3852,7 +3839,11 @@
                       ]
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "NATIVE",
+                    "SPECIFIC"
+                  ]
                 }
               ]
             },
@@ -4973,11 +4964,6 @@
                   "description": null,
                   "discriminator": [
                     {
-                      "value": "AUTO",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
                       "value": "MANUAL",
                       "selected": false,
                       "schema": [
@@ -4992,7 +4978,11 @@
                       ]
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "AUTO",
+                    "MANUAL"
+                  ]
                 }
               ]
             },
@@ -5066,19 +5056,11 @@
                   "required": true,
                   "type": "string",
                   "description": null,
-                  "discriminator": [
-                    {
-                      "value": "CAPTIVE_PORTAL",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
-                      "value": "PASSPOINT",
-                      "selected": false,
-                      "schema": []
-                    }
-                  ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "CAPTIVE_PORTAL",
+                    "PASSPOINT"
+                  ]
                 }
               ]
             },
@@ -5364,11 +5346,6 @@
               "description": null,
               "discriminator": [
                 {
-                  "value": "AUTO",
-                  "selected": true,
-                  "schema": []
-                },
-                {
                   "value": "CUSTOM",
                   "selected": false,
                   "schema": [
@@ -5585,7 +5562,11 @@
                   ]
                 }
               ],
-              "children": []
+              "children": [],
+              "enum": [
+                "AUTO",
+                "CUSTOM"
+              ]
             }
           ]
         },
@@ -5601,24 +5582,12 @@
               "required": true,
               "type": "string",
               "description": null,
-              "discriminator": [
-                {
-                  "value": "DERIVED",
-                  "selected": true,
-                  "schema": []
-                },
-                {
-                  "value": "ORCHESTRATED",
-                  "selected": false,
-                  "schema": []
-                },
-                {
-                  "value": "USER_DEFINED",
-                  "selected": false,
-                  "schema": []
-                }
-              ],
-              "children": []
+              "children": [],
+              "enum": [
+                "DERIVED",
+                "ORCHESTRATED",
+                "USER_DEFINED"
+              ]
             }
           ]
         },
@@ -5648,14 +5617,13 @@
                       "children": []
                     }
                   ]
-                },
-                {
-                  "value": "BLOCK",
-                  "selected": false,
-                  "schema": []
                 }
               ],
-              "children": []
+              "children": [],
+              "enum": [
+                "ALLOW",
+                "BLOCK"
+              ]
             },
             {
               "name": "sourceMacAddressFilter",
@@ -5697,11 +5665,6 @@
               "description": null,
               "discriminator": [
                 {
-                  "value": "NATIVE",
-                  "selected": true,
-                  "schema": []
-                },
-                {
                   "value": "SPECIFIC",
                   "selected": false,
                   "schema": [
@@ -5716,7 +5679,11 @@
                   ]
                 }
               ],
-              "children": []
+              "children": [],
+              "enum": [
+                "NATIVE",
+                "SPECIFIC"
+              ]
             }
           ]
         },
@@ -7039,11 +7006,6 @@
                       "description": null,
                       "discriminator": [
                         {
-                          "value": "AUTO",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
                           "value": "CUSTOM",
                           "selected": false,
                           "schema": [
@@ -7260,7 +7222,11 @@
                           ]
                         }
                       ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "AUTO",
+                        "CUSTOM"
+                      ]
                     }
                   ]
                 },
@@ -7276,24 +7242,12 @@
                       "required": true,
                       "type": "string",
                       "description": null,
-                      "discriminator": [
-                        {
-                          "value": "DERIVED",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
-                          "value": "ORCHESTRATED",
-                          "selected": false,
-                          "schema": []
-                        },
-                        {
-                          "value": "USER_DEFINED",
-                          "selected": false,
-                          "schema": []
-                        }
-                      ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "DERIVED",
+                        "ORCHESTRATED",
+                        "USER_DEFINED"
+                      ]
                     }
                   ]
                 },
@@ -7323,14 +7277,13 @@
                               "children": []
                             }
                           ]
-                        },
-                        {
-                          "value": "BLOCK",
-                          "selected": false,
-                          "schema": []
                         }
                       ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "ALLOW",
+                        "BLOCK"
+                      ]
                     },
                     {
                       "name": "sourceMacAddressFilter",
@@ -7372,11 +7325,6 @@
                       "description": null,
                       "discriminator": [
                         {
-                          "value": "NATIVE",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
                           "value": "SPECIFIC",
                           "selected": false,
                           "schema": [
@@ -7391,7 +7339,11 @@
                           ]
                         }
                       ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "NATIVE",
+                        "SPECIFIC"
+                      ]
                     }
                   ]
                 },
@@ -8718,11 +8670,6 @@
                       "description": null,
                       "discriminator": [
                         {
-                          "value": "AUTO",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
                           "value": "CUSTOM",
                           "selected": false,
                           "schema": [
@@ -8939,7 +8886,11 @@
                           ]
                         }
                       ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "AUTO",
+                        "CUSTOM"
+                      ]
                     }
                   ]
                 },
@@ -8955,24 +8906,12 @@
                       "required": true,
                       "type": "string",
                       "description": null,
-                      "discriminator": [
-                        {
-                          "value": "DERIVED",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
-                          "value": "ORCHESTRATED",
-                          "selected": false,
-                          "schema": []
-                        },
-                        {
-                          "value": "USER_DEFINED",
-                          "selected": false,
-                          "schema": []
-                        }
-                      ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "DERIVED",
+                        "ORCHESTRATED",
+                        "USER_DEFINED"
+                      ]
                     }
                   ]
                 },
@@ -9002,14 +8941,13 @@
                               "children": []
                             }
                           ]
-                        },
-                        {
-                          "value": "BLOCK",
-                          "selected": false,
-                          "schema": []
                         }
                       ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "ALLOW",
+                        "BLOCK"
+                      ]
                     },
                     {
                       "name": "sourceMacAddressFilter",
@@ -9051,11 +8989,6 @@
                       "description": null,
                       "discriminator": [
                         {
-                          "value": "NATIVE",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
                           "value": "SPECIFIC",
                           "selected": false,
                           "schema": [
@@ -9070,7 +9003,11 @@
                           ]
                         }
                       ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "NATIVE",
+                        "SPECIFIC"
+                      ]
                     }
                   ]
                 },
@@ -10191,11 +10128,6 @@
                       "description": null,
                       "discriminator": [
                         {
-                          "value": "AUTO",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
                           "value": "MANUAL",
                           "selected": false,
                           "schema": [
@@ -10210,7 +10142,11 @@
                           ]
                         }
                       ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "AUTO",
+                        "MANUAL"
+                      ]
                     }
                   ]
                 },
@@ -10284,19 +10220,11 @@
                       "required": true,
                       "type": "string",
                       "description": null,
-                      "discriminator": [
-                        {
-                          "value": "CAPTIVE_PORTAL",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
-                          "value": "PASSPOINT",
-                          "selected": false,
-                          "schema": []
-                        }
-                      ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "CAPTIVE_PORTAL",
+                        "PASSPOINT"
+                      ]
                     }
                   ]
                 },

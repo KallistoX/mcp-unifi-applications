@@ -1963,24 +1963,12 @@
                       "required": true,
                       "type": "string",
                       "description": null,
-                      "discriminator": [
-                        {
-                          "value": "ORCHESTRATED",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
-                          "value": "SYSTEM_DEFINED",
-                          "selected": false,
-                          "schema": []
-                        },
-                        {
-                          "value": "USER_DEFINED",
-                          "selected": false,
-                          "schema": []
-                        }
-                      ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "ORCHESTRATED",
+                        "SYSTEM_DEFINED",
+                        "USER_DEFINED"
+                      ]
                     }
                   ]
                 },
@@ -2794,24 +2782,12 @@
                       "required": true,
                       "type": "string",
                       "description": null,
-                      "discriminator": [
-                        {
-                          "value": "ORCHESTRATED",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
-                          "value": "SYSTEM_DEFINED",
-                          "selected": false,
-                          "schema": []
-                        },
-                        {
-                          "value": "USER_DEFINED",
-                          "selected": false,
-                          "schema": []
-                        }
-                      ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "ORCHESTRATED",
+                        "SYSTEM_DEFINED",
+                        "USER_DEFINED"
+                      ]
                     }
                   ]
                 },
@@ -3058,24 +3034,12 @@
                       "required": true,
                       "type": "string",
                       "description": null,
-                      "discriminator": [
-                        {
-                          "value": "ORCHESTRATED",
-                          "selected": true,
-                          "schema": []
-                        },
-                        {
-                          "value": "SYSTEM_DEFINED",
-                          "selected": false,
-                          "schema": []
-                        },
-                        {
-                          "value": "USER_DEFINED",
-                          "selected": false,
-                          "schema": []
-                        }
-                      ],
-                      "children": []
+                      "children": [],
+                      "enum": [
+                        "ORCHESTRATED",
+                        "SYSTEM_DEFINED",
+                        "USER_DEFINED"
+                      ]
                     }
                   ]
                 },
@@ -3112,24 +3076,12 @@
               "required": true,
               "type": "string",
               "description": null,
-              "discriminator": [
-                {
-                  "value": "ORCHESTRATED",
-                  "selected": true,
-                  "schema": []
-                },
-                {
-                  "value": "SYSTEM_DEFINED",
-                  "selected": false,
-                  "schema": []
-                },
-                {
-                  "value": "USER_DEFINED",
-                  "selected": false,
-                  "schema": []
-                }
-              ],
-              "children": []
+              "children": [],
+              "enum": [
+                "ORCHESTRATED",
+                "SYSTEM_DEFINED",
+                "USER_DEFINED"
+              ]
             }
           ]
         },

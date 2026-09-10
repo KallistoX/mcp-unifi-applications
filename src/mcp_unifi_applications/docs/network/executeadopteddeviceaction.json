@@ -28,14 +28,10 @@
       "required": true,
       "type": "string",
       "description": null,
-      "discriminator": [
-        {
-          "value": "RESTART",
-          "selected": true,
-          "schema": []
-        }
-      ],
-      "children": []
+      "children": [],
+      "enum": [
+        "RESTART"
+      ]
     }
   ],
   "responses": [
