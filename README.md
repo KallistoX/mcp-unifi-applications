@@ -281,6 +281,7 @@ mcp-unifi-applications/
 ├── pyproject.toml      # Python project config
 ├── server.json         # MCP registry manifest
 ├── CHANGELOG.md        # Keep a Changelog
+├── ROADMAP.md          # What is planned, what is not, and why
 ├── glama.json          # Glama maintainer declaration
 ├── src/
 │   └── mcp_unifi_applications/
