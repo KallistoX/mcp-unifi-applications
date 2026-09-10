@@ -774,7 +774,16 @@ def get_guide(topic: str | None = None, app: str | None = None) -> str:
               for s, g in guides.items()]
     scored.sort(reverse=True)
     if scored and scored[0][0] > 50:
-        return _render(scored[0][1])
+        # Titles collide as often as slugs do - three guides are titled
+        # "Introduction", two "Installation", two "Error Handling" - and they score
+        # identically. Taking scored[0] let sort order decide which application the
+        # reader got.
+        best = scored[0][0]
+        tied = [s for score, s in scored if score == best]
+        if len(tied) == 1:
+            return _render(tied[0])
+        return (f"'{topic}' matches {len(tied)} guides equally well: "
+                f"{', '.join(sorted(tied))}. Pass app= to choose one.")
 
     available = ", ".join(sorted(guides.keys()))
     return f"No guide found for '{topic}'. Available: {available}"
