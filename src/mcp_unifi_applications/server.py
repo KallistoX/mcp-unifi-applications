@@ -420,6 +420,10 @@ def get_endpoint(slug: str, summary: bool = True) -> str:
         lines.append("\n## Path Parameters")
         lines.extend(_summarise_fields(ep["pathParameters"], max_depth=1))
 
+    if ep.get("queryParameters"):
+        lines.append("\n## Query Parameters")
+        lines.extend(_summarise_fields(ep["queryParameters"], max_depth=1))
+
     if ep.get("requestBody"):
         lines.append("\n## Request Body")
         lines.extend(_summarise_fields(ep["requestBody"], max_depth=3))
