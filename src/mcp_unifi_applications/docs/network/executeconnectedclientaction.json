@@ -123,12 +123,308 @@
             {
               "value": "AUTHORIZE_GUEST_ACCESS",
               "selected": true,
-              "schema": null
+              "schema": [
+                {
+                  "name": "grantedAuthorization",
+                  "required": false,
+                  "type": "object",
+                  "description": "Granted guest authorization",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "authorizationMethod",
+                      "required": true,
+                      "type": "string",
+                      "description": "Guest authorization method (API, Voucher etc)",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "authorizedAt",
+                      "required": true,
+                      "type": "string",
+                      "description": "Timestamp when the guest has been authorized",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "dataUsageLimitMBytes",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) data usage limit in megabytes",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "expiresAt",
+                      "required": true,
+                      "type": "string",
+                      "description": "Timestamp when the guest will get automatically unauthorized",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "rxRateLimitKbps",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) download rate limit in kilobits per second",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "txRateLimitKbps",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) upload rate limit in kilobits per second",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "usage",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "bytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "durationSec",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "rxBytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "txBytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "revokedAuthorization",
+                  "required": false,
+                  "type": "object",
+                  "description": "(Optional) Revoked authorization in case the guest was already authorized at the time of this request",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "authorizationMethod",
+                      "required": true,
+                      "type": "string",
+                      "description": "Guest authorization method (API, Voucher etc)",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "authorizedAt",
+                      "required": true,
+                      "type": "string",
+                      "description": "Timestamp when the guest has been authorized",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "dataUsageLimitMBytes",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) data usage limit in megabytes",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "expiresAt",
+                      "required": true,
+                      "type": "string",
+                      "description": "Timestamp when the guest will get automatically unauthorized",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "rxRateLimitKbps",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) download rate limit in kilobits per second",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "txRateLimitKbps",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) upload rate limit in kilobits per second",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "usage",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "bytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "durationSec",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "rxBytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "txBytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "value": "UNAUTHORIZE_GUEST_ACCESS",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "revokedAuthorization",
+                  "required": false,
+                  "type": "object",
+                  "description": "Revoked guest authorization",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "authorizationMethod",
+                      "required": true,
+                      "type": "string",
+                      "description": "Guest authorization method (API, Voucher etc)",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "authorizedAt",
+                      "required": true,
+                      "type": "string",
+                      "description": "Timestamp when the guest has been authorized",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "dataUsageLimitMBytes",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) data usage limit in megabytes",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "expiresAt",
+                      "required": true,
+                      "type": "string",
+                      "description": "Timestamp when the guest will get automatically unauthorized",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "rxRateLimitKbps",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) download rate limit in kilobits per second",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "txRateLimitKbps",
+                      "required": false,
+                      "type": "integer",
+                      "description": "(Optional) upload rate limit in kilobits per second",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "usage",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "bytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "durationSec",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "rxBytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "txBytes",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "children": []

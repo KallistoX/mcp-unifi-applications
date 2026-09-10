@@ -45,7 +45,7 @@
                 {
                   "value": "DEFAULT",
                   "selected": true,
-                  "schema": null
+                  "schema": []
                 }
               ],
               "children": []

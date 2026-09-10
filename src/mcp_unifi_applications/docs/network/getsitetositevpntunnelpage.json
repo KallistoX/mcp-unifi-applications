@@ -85,12 +85,21 @@
                     {
                       "value": "DERIVED",
                       "selected": true,
-                      "schema": null
+                      "schema": [
+                        {
+                          "name": "source",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "value": "USER_DEFINED",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     }
                   ],
                   "children": []
@@ -122,17 +131,203 @@
                 {
                   "value": "IPSEC",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "metadata",
+                      "required": true,
+                      "type": "object (Site-to-site VPN tunnel metadata)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "origin",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DERIVED",
+                              "selected": true,
+                              "schema": [
+                                {
+                                  "name": "source",
+                                  "required": false,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "value": "USER_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        },
+                        {
+                          "name": "source",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "OPENVPN",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "metadata",
+                      "required": true,
+                      "type": "object (Site-to-site VPN tunnel metadata)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "origin",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DERIVED",
+                              "selected": true,
+                              "schema": [
+                                {
+                                  "name": "source",
+                                  "required": false,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "value": "USER_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        },
+                        {
+                          "name": "source",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "WIREGUARD",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "metadata",
+                      "required": true,
+                      "type": "object (Site-to-site VPN tunnel metadata)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "origin",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DERIVED",
+                              "selected": true,
+                              "schema": [
+                                {
+                                  "name": "source",
+                                  "required": false,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "value": "USER_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        },
+                        {
+                          "name": "source",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []

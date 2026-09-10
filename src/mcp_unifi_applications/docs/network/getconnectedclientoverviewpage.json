@@ -77,7 +77,7 @@
                     {
                       "value": "DEFAULT",
                       "selected": true,
-                      "schema": null
+                      "schema": []
                     }
                   ],
                   "children": []
@@ -125,22 +125,306 @@
                 {
                   "value": "TELEPORT",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "access",
+                      "required": true,
+                      "type": "object (Teleport client access overview)",
+                      "description": "Represents the type of network access and/or any applicable authorization status the client is using. - **Wired clients** may have direct access without additional authorization. - **Wireless clients** can be connected via a protected network or an open network that may require additional authorization (e.g., a guest portal). - **VPN clients** may have different authorization mechanisms. Currently, the only two supported access types are `GUEST` (used for wired and wireless guest clients) and `DEFAULT` (a placeholder, which might be refined in the future releases, used for all other clients). Filtering is possible by `access.type`, for example `access.type.eq('GUEST')` to list guest clients.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DEFAULT",
+                              "selected": true,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "connectedAt",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "ipAddress",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "VPN",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "access",
+                      "required": true,
+                      "type": "object (VPN client access overview)",
+                      "description": "Represents the type of network access and/or any applicable authorization status the client is using. - **Wired clients** may have direct access without additional authorization. - **Wireless clients** can be connected via a protected network or an open network that may require additional authorization (e.g., a guest portal). - **VPN clients** may have different authorization mechanisms. Currently, the only two supported access types are `GUEST` (used for wired and wireless guest clients) and `DEFAULT` (a placeholder, which might be refined in the future releases, used for all other clients). Filtering is possible by `access.type`, for example `access.type.eq('GUEST')` to list guest clients.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DEFAULT",
+                              "selected": true,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "connectedAt",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "ipAddress",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "WIRED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "access",
+                      "required": true,
+                      "type": "object (Local client access overview)",
+                      "description": "Represents the type of network access and/or any applicable authorization status the client is using. - **Wired clients** may have direct access without additional authorization. - **Wireless clients** can be connected via a protected network or an open network that may require additional authorization (e.g., a guest portal). - **VPN clients** may have different authorization mechanisms. Currently, the only two supported access types are `GUEST` (used for wired and wireless guest clients) and `DEFAULT` (a placeholder, which might be refined in the future releases, used for all other clients). Filtering is possible by `access.type`, for example `access.type.eq('GUEST')` to list guest clients.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DEFAULT",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "GUEST",
+                              "selected": false,
+                              "schema": [
+                                {
+                                  "name": "authorized",
+                                  "required": false,
+                                  "type": "boolean",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "connectedAt",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "ipAddress",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "macAddress",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "uplinkDeviceId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "WIRELESS",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "access",
+                      "required": true,
+                      "type": "object (Local client access overview)",
+                      "description": "Represents the type of network access and/or any applicable authorization status the client is using. - **Wired clients** may have direct access without additional authorization. - **Wireless clients** can be connected via a protected network or an open network that may require additional authorization (e.g., a guest portal). - **VPN clients** may have different authorization mechanisms. Currently, the only two supported access types are `GUEST` (used for wired and wireless guest clients) and `DEFAULT` (a placeholder, which might be refined in the future releases, used for all other clients). Filtering is possible by `access.type`, for example `access.type.eq('GUEST')` to list guest clients.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DEFAULT",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "GUEST",
+                              "selected": false,
+                              "schema": [
+                                {
+                                  "name": "authorized",
+                                  "required": false,
+                                  "type": "boolean",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "connectedAt",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "ipAddress",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "macAddress",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "uplinkDeviceId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []

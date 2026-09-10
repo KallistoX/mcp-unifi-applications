@@ -78,22 +78,58 @@
                 {
                   "value": "DERIVED",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "ORCHESTRATED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "SYSTEM_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "USER_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -107,12 +143,30 @@
                 {
                   "value": "SYSTEM_DEFINED",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "USER_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -126,12 +180,30 @@
                 {
                   "value": "DERIVED",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "USER_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -145,17 +217,44 @@
                 {
                   "value": "ORCHESTRATED",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "SYSTEM_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "USER_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -169,12 +268,30 @@
                 {
                   "value": "ORCHESTRATED",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "USER_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -188,17 +305,44 @@
                 {
                   "value": "DERIVED",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "ORCHESTRATED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "USER_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -212,12 +356,30 @@
                 {
                   "value": "DERIVED",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "USER_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -241,17 +403,1131 @@
             {
               "value": "LOCAL",
               "selected": true,
-              "schema": null
+              "schema": [
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "members",
+                  "required": true,
+                  "type": "Array of object (IntegrationLagMemberDto)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "deviceId",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "portIdxs",
+                      "required": true,
+                      "type": "Array of integer",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "metadata",
+                  "required": true,
+                  "type": "object (User defined entity metadata)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
             },
             {
               "value": "MULTI_CHASSIS",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "members",
+                  "required": true,
+                  "type": "Array of object (IntegrationLagMemberDto)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "deviceId",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "portIdxs",
+                      "required": true,
+                      "type": "Array of integer",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "metadata",
+                  "required": true,
+                  "type": "object (User defined entity metadata)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "mcLagDomainId",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
             },
             {
               "value": "SWITCH_STACK",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "members",
+                  "required": true,
+                  "type": "Array of object (IntegrationLagMemberDto)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "deviceId",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "portIdxs",
+                      "required": true,
+                      "type": "Array of integer",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "metadata",
+                  "required": true,
+                  "type": "object (User defined entity metadata)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "SYSTEM_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "ORCHESTRATED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "source",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "switchStackId",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
             }
           ],
           "children": []

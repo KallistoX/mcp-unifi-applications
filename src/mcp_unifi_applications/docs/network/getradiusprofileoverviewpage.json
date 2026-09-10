@@ -85,17 +85,17 @@
                     {
                       "value": "DERIVED",
                       "selected": true,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "SYSTEM_DEFINED",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "USER_DEFINED",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     }
                   ],
                   "children": []
