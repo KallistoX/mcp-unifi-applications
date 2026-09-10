@@ -9,6 +9,9 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- The corpus now guards itself: every shipped response sample must parse as JSON, and
+  no example may be empty. Both walk all 196 endpoints, so a scraper regression cannot
+  ship quietly the way this one did for four releases.
 - Response samples and code examples were captured from the rendering rather than
   from their source, and the docs site clips code blocks to the height of their
   container: samples stopped at 58 lines, leaving seven of the 125 as invalid JSON,
