@@ -121,6 +121,42 @@ class TestListEndpoints:
 
 
 class TestGetEndpoint:
+    def test_every_documented_section_is_rendered(self):
+        """The summary must not silently drop a section the data carries.
+
+        get_endpoint shipped for four releases without rendering queryParameters,
+        while its own description promised them — so this walks the corpus rather
+        than checking one endpoint.
+        """
+        sections = {
+            "pathParameters": "## Path Parameters",
+            "queryParameters": "## Query Parameters",
+            "requestBody": "## Request Body",
+        }
+        checked = dict.fromkeys(sections, 0)
+        for slug, ep in m._endpoints.items():
+            out = None
+            for key, heading in sections.items():
+                if not ep.get(key):
+                    continue
+                out = out if out is not None else m.get_endpoint(slug)
+                assert heading in out, f"{slug}: {key} present in data, {heading!r} missing from output"
+                checked[key] += 1
+        for key, count in checked.items():
+            assert count > 0, f"corpus has no endpoint with {key} — test proves nothing"
+
+    def test_query_parameter_names_reach_the_output(self):
+        for slug, ep in m._endpoints.items():
+            params = ep.get("queryParameters") or []
+            if not params:
+                continue
+            out = m.get_endpoint(slug)
+            for f in params:
+                assert f["name"] in out, f"{slug}: query parameter {f['name']!r} missing"
+            return
+        pytest.skip("corpus has no query parameters")
+
+
     def test_valid_slug(self):
         slug = _find_slug("createnetwork")
         assert slug, "createnetwork not found"

@@ -7,6 +7,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- `get_endpoint` never rendered query parameters. 42 endpoints carry them in the
+  shipped data — 103 parameters — and the summary emitted no `## Query Parameters`
+  section for any of them, while the tool's own description promised "path and query
+  parameters". A model therefore never learned that list endpoints are paginated, that
+  `filter` exists, or that `deletenetwork` takes a `force` flag; the Network Filtering
+  guide documents the `filter` syntax at length for a parameter the endpoint
+  documentation never mentioned. `summary=false` had the data all along. Found by a
+  black-box review of the published 0.3.1 package.
+
 ## [0.3.1] - 2026-09-10
 
 ### Changed
