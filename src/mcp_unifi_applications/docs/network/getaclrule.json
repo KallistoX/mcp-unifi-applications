@@ -77,7 +77,16 @@
                 {
                   "value": "DEVICES",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "deviceIds",
+                      "required": false,
+                      "type": "Array of string",
+                      "description": "List of Switch capable device IDs to which the ACL rule will be provisioned.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -124,12 +133,12 @@
                 {
                   "value": "DERIVED",
                   "selected": true,
-                  "schema": null
+                  "schema": []
                 },
                 {
                   "value": "USER_DEFINED",
                   "selected": false,
-                  "schema": null
+                  "schema": []
                 }
               ],
               "children": []
@@ -161,12 +170,294 @@
             {
               "value": "IPV4",
               "selected": true,
-              "schema": null
+              "schema": [
+                {
+                  "name": "action",
+                  "required": true,
+                  "type": "string",
+                  "description": "ACL rule action",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "description",
+                  "required": false,
+                  "type": "string",
+                  "description": "ACL rule description",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "destinationFilter",
+                  "required": false,
+                  "type": "any",
+                  "description": "Traffic destination filter",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "enabled",
+                  "required": true,
+                  "type": "boolean",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "enforcingDeviceFilter",
+                  "required": false,
+                  "type": "object (ACL rule device filter)",
+                  "description": "IDs of the Switch-capable devices used to enforce the ACL rule. When null, the rule will be provisioned to all switches on the site.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DEVICES",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "deviceIds",
+                              "required": false,
+                              "type": "Array of string",
+                              "description": "List of Switch capable device IDs to which the ACL rule will be provisioned.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "deviceIds",
+                      "required": false,
+                      "type": "Array of string",
+                      "description": "List of Switch capable device IDs to which the ACL rule will be provisioned.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "index",
+                  "required": true,
+                  "type": "integer",
+                  "description": "ACL rule index. Lower index has higher priority",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "metadata",
+                  "required": true,
+                  "type": "object (User defined or derived entity metadata)",
+                  "description": "Only user-defined rules can be deleted or modified",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": []
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": []
+                        }
+                      ],
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "name",
+                  "required": true,
+                  "type": "string",
+                  "description": "ACL rule name",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "sourceFilter",
+                  "required": false,
+                  "type": "any",
+                  "description": "Traffic source filter",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "protocolFilter",
+                  "required": false,
+                  "type": "Array of string",
+                  "description": "Protocols this ACL rule will be applied to. When null, the rule will be applied to all protocols.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
             },
             {
               "value": "MAC",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "action",
+                  "required": true,
+                  "type": "string",
+                  "description": "ACL rule action",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "description",
+                  "required": false,
+                  "type": "string",
+                  "description": "ACL rule description",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "destinationFilter",
+                  "required": false,
+                  "type": "any",
+                  "description": "Traffic destination filter",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "enabled",
+                  "required": true,
+                  "type": "boolean",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "enforcingDeviceFilter",
+                  "required": false,
+                  "type": "object (ACL rule device filter)",
+                  "description": "IDs of the Switch-capable devices used to enforce the ACL rule. When null, the rule will be provisioned to all switches on the site.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DEVICES",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "deviceIds",
+                              "required": false,
+                              "type": "Array of string",
+                              "description": "List of Switch capable device IDs to which the ACL rule will be provisioned.",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "deviceIds",
+                      "required": false,
+                      "type": "Array of string",
+                      "description": "List of Switch capable device IDs to which the ACL rule will be provisioned.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "index",
+                  "required": true,
+                  "type": "integer",
+                  "description": "ACL rule index. Lower index has higher priority",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "metadata",
+                  "required": true,
+                  "type": "object (User defined or derived entity metadata)",
+                  "description": "Only user-defined rules can be deleted or modified",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "origin",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "DERIVED",
+                          "selected": true,
+                          "schema": []
+                        },
+                        {
+                          "value": "USER_DEFINED",
+                          "selected": false,
+                          "schema": []
+                        }
+                      ],
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "name": "name",
+                  "required": true,
+                  "type": "string",
+                  "description": "ACL rule name",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "sourceFilter",
+                  "required": false,
+                  "type": "any",
+                  "description": "Traffic source filter",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "networkIdFilter",
+                  "required": false,
+                  "type": "string",
+                  "description": "Network ID to which this ACL rule applies",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
             }
           ],
           "children": []

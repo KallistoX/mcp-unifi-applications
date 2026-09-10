@@ -77,12 +77,30 @@
                     {
                       "value": "DEVICES",
                       "selected": true,
-                      "schema": null
+                      "schema": [
+                        {
+                          "name": "deviceIds",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "List of Access Point capable device IDs to which the WiFi broadcast applies.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "value": "DEVICE_TAGS",
                       "selected": false,
-                      "schema": null
+                      "schema": [
+                        {
+                          "name": "deviceTagIds",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
                     }
                   ],
                   "children": []
@@ -129,17 +147,17 @@
                     {
                       "value": "DERIVED",
                       "selected": true,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "ORCHESTRATED",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "USER_DEFINED",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     }
                   ],
                   "children": []
@@ -170,12 +188,21 @@
                     {
                       "value": "NATIVE",
                       "selected": true,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "SPECIFIC",
                       "selected": false,
-                      "schema": null
+                      "schema": [
+                        {
+                          "name": "networkId",
+                          "required": false,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
                     }
                   ],
                   "children": []
@@ -198,37 +225,46 @@
                     {
                       "value": "OPEN",
                       "selected": true,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "WPA2_ENTERPRISE",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "WPA2_PERSONAL",
                       "selected": false,
-                      "schema": null
+                      "schema": [
+                        {
+                          "name": "presharedKeyNetworkIds",
+                          "required": false,
+                          "type": "Array of object (Wifi network reference)",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
                     },
                     {
                       "value": "WPA2_WPA3_ENTERPRISE",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "WPA2_WPA3_PERSONAL",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "WPA3_ENTERPRISE",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "WPA3_PERSONAL",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     }
                   ],
                   "children": []
@@ -244,12 +280,459 @@
                 {
                   "value": "IOT_OPTIMIZED",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "broadcastingDeviceFilter",
+                      "required": false,
+                      "type": "object (Broadcasting device filter)",
+                      "description": "Defines the custom scope of devices that will broadcast this WiFi network. If null, the WiFi network will be broadcast by all Access Point capable devices.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DEVICES",
+                              "selected": true,
+                              "schema": [
+                                {
+                                  "name": "deviceIds",
+                                  "required": false,
+                                  "type": "Array of string",
+                                  "description": "List of Access Point capable device IDs to which the WiFi broadcast applies.",
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "value": "DEVICE_TAGS",
+                              "selected": false,
+                              "schema": [
+                                {
+                                  "name": "deviceTagIds",
+                                  "required": false,
+                                  "type": "Array of string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ],
+                          "children": []
+                        },
+                        {
+                          "name": "deviceIds",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "List of Access Point capable device IDs to which the WiFi broadcast applies.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "enabled",
+                      "required": true,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "metadata",
+                      "required": true,
+                      "type": "object (User or derived or orchestrated entity metadata)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "origin",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DERIVED",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "ORCHESTRATED",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "USER_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "network",
+                      "required": false,
+                      "type": "object (Wifi network reference)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "NATIVE",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "SPECIFIC",
+                              "selected": false,
+                              "schema": [
+                                {
+                                  "name": "networkId",
+                                  "required": false,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "securityConfiguration",
+                      "required": true,
+                      "type": "object (Wifi security configuration overview)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "OPEN",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA2_ENTERPRISE",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA2_PERSONAL",
+                              "selected": false,
+                              "schema": [
+                                {
+                                  "name": "presharedKeyNetworkIds",
+                                  "required": false,
+                                  "type": "Array of object (Wifi network reference)",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "value": "WPA2_WPA3_ENTERPRISE",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA2_WPA3_PERSONAL",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA3_ENTERPRISE",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA3_PERSONAL",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
                 },
                 {
                   "value": "STANDARD",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "broadcastingDeviceFilter",
+                      "required": false,
+                      "type": "object (Broadcasting device filter)",
+                      "description": "Defines the custom scope of devices that will broadcast this WiFi network. If null, the WiFi network will be broadcast by all Access Point capable devices.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DEVICES",
+                              "selected": true,
+                              "schema": [
+                                {
+                                  "name": "deviceIds",
+                                  "required": false,
+                                  "type": "Array of string",
+                                  "description": "List of Access Point capable device IDs to which the WiFi broadcast applies.",
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "value": "DEVICE_TAGS",
+                              "selected": false,
+                              "schema": [
+                                {
+                                  "name": "deviceTagIds",
+                                  "required": false,
+                                  "type": "Array of string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ],
+                          "children": []
+                        },
+                        {
+                          "name": "deviceIds",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "List of Access Point capable device IDs to which the WiFi broadcast applies.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "enabled",
+                      "required": true,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "metadata",
+                      "required": true,
+                      "type": "object (User or derived or orchestrated entity metadata)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "origin",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "DERIVED",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "ORCHESTRATED",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "USER_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "network",
+                      "required": false,
+                      "type": "object (Wifi network reference)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "NATIVE",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "SPECIFIC",
+                              "selected": false,
+                              "schema": [
+                                {
+                                  "name": "networkId",
+                                  "required": false,
+                                  "type": "string",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "securityConfiguration",
+                      "required": true,
+                      "type": "object (Wifi security configuration overview)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "OPEN",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA2_ENTERPRISE",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA2_PERSONAL",
+                              "selected": false,
+                              "schema": [
+                                {
+                                  "name": "presharedKeyNetworkIds",
+                                  "required": false,
+                                  "type": "Array of object (Wifi network reference)",
+                                  "description": null,
+                                  "discriminator": null,
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "value": "WPA2_WPA3_ENTERPRISE",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA2_WPA3_PERSONAL",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA3_ENTERPRISE",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "WPA3_PERSONAL",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "broadcastingFrequenciesGHz",
+                      "required": false,
+                      "type": "Array of number",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "hotspotConfiguration",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "type",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
                 }
               ],
               "children": []

@@ -94,17 +94,255 @@
                 {
                   "value": "GATEWAY",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "default",
+                      "required": true,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "enabled",
+                      "required": true,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "metadata",
+                      "required": true,
+                      "type": "object (User or system defined or orchestrated entity metadata)",
+                      "description": "Orchestrated or System-defined configurable network support",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "origin",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "ORCHESTRATED",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "SYSTEM_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "USER_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "vlanId",
+                      "required": true,
+                      "type": "integer",
+                      "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "zoneId",
+                      "required": false,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "SWITCH",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "default",
+                      "required": true,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "enabled",
+                      "required": true,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "metadata",
+                      "required": true,
+                      "type": "object (User or system defined or orchestrated entity metadata)",
+                      "description": "Orchestrated or System-defined configurable network support",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "origin",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "ORCHESTRATED",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "SYSTEM_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "USER_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "vlanId",
+                      "required": true,
+                      "type": "integer",
+                      "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "deviceId",
+                      "required": false,
+                      "type": "string",
+                      "description": "ID of the switch this Network is managed by.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "UNMANAGED",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "default",
+                      "required": true,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "enabled",
+                      "required": true,
+                      "type": "boolean",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "metadata",
+                      "required": true,
+                      "type": "object (User or system defined or orchestrated entity metadata)",
+                      "description": "Orchestrated or System-defined configurable network support",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "origin",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": [
+                            {
+                              "value": "ORCHESTRATED",
+                              "selected": true,
+                              "schema": []
+                            },
+                            {
+                              "value": "SYSTEM_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            },
+                            {
+                              "value": "USER_DEFINED",
+                              "selected": false,
+                              "schema": []
+                            }
+                          ],
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "vlanId",
+                      "required": true,
+                      "type": "integer",
+                      "description": "VLAN ID. Must be 1 for the default network and >= 2 for additional networks.",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []
@@ -125,17 +363,17 @@
                     {
                       "value": "ORCHESTRATED",
                       "selected": true,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "SYSTEM_DEFINED",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     },
                     {
                       "value": "USER_DEFINED",
                       "selected": false,
-                      "schema": null
+                      "schema": []
                     }
                   ],
                   "children": []

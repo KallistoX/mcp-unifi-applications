@@ -54,17 +54,260 @@
             {
               "value": "IPV4_ADDRESSES",
               "selected": true,
-              "schema": null
+              "schema": [
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "name",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "items",
+                  "required": false,
+                  "type": "Array of object (IPv4 matching)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "IP_ADDRESS",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "value",
+                              "required": false,
+                              "type": "string",
+                              "description": "IPv4 address",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "IP_ADDRESS_RANGE",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "start",
+                              "required": false,
+                              "type": "string",
+                              "description": "IPv4 start address",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "stop",
+                              "required": false,
+                              "type": "string",
+                              "description": "IPv4 stop address",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "SUBNET",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "value",
+                              "required": false,
+                              "type": "string",
+                              "description": "IPv4 subnet in CIDR notation",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "value",
+                      "required": false,
+                      "type": "string",
+                      "description": "IPv4 address",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
             },
             {
               "value": "IPV6_ADDRESSES",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "name",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "items",
+                  "required": false,
+                  "type": "Array of object (IPv6 matching)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "IP_ADDRESS",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "value",
+                              "required": false,
+                              "type": "string",
+                              "description": "IPv6 address",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "SUBNET",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "value",
+                              "required": false,
+                              "type": "string",
+                              "description": "IPv6 subnet in CIDR notation",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "value",
+                      "required": false,
+                      "type": "string",
+                      "description": "IPv6 address",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
             },
             {
               "value": "PORTS",
               "selected": false,
-              "schema": null
+              "schema": [
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "name",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "items",
+                  "required": false,
+                  "type": "Array of object (Port matching)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": [
+                        {
+                          "value": "PORT_NUMBER",
+                          "selected": true,
+                          "schema": [
+                            {
+                              "name": "value",
+                              "required": false,
+                              "type": "integer",
+                              "description": "Port number",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        },
+                        {
+                          "value": "PORT_NUMBER_RANGE",
+                          "selected": false,
+                          "schema": [
+                            {
+                              "name": "start",
+                              "required": false,
+                              "type": "integer",
+                              "description": "Start port number",
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "stop",
+                              "required": false,
+                              "type": "integer",
+                              "description": "Stop port number",
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ],
+                      "children": []
+                    },
+                    {
+                      "name": "value",
+                      "required": false,
+                      "type": "integer",
+                      "description": "Port number",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
             }
           ],
           "children": []
@@ -85,17 +328,52 @@
                 {
                   "value": "IP_ADDRESS",
                   "selected": true,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "value",
+                      "required": false,
+                      "type": "string",
+                      "description": "IPv4 address",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "IP_ADDRESS_RANGE",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "start",
+                      "required": false,
+                      "type": "string",
+                      "description": "IPv4 start address",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "stop",
+                      "required": false,
+                      "type": "string",
+                      "description": "IPv4 stop address",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 },
                 {
                   "value": "SUBNET",
                   "selected": false,
-                  "schema": null
+                  "schema": [
+                    {
+                      "name": "value",
+                      "required": false,
+                      "type": "string",
+                      "description": "IPv4 subnet in CIDR notation",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
                 }
               ],
               "children": []

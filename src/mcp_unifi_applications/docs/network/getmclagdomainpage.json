@@ -125,22 +125,58 @@
                         {
                           "value": "DERIVED",
                           "selected": true,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "ORCHESTRATED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "SYSTEM_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "USER_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         }
                       ],
                       "children": []
@@ -154,12 +190,30 @@
                         {
                           "value": "SYSTEM_DEFINED",
                           "selected": true,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "USER_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         }
                       ],
                       "children": []
@@ -173,12 +227,30 @@
                         {
                           "value": "DERIVED",
                           "selected": true,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "USER_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         }
                       ],
                       "children": []
@@ -192,17 +264,44 @@
                         {
                           "value": "ORCHESTRATED",
                           "selected": true,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "SYSTEM_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "USER_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         }
                       ],
                       "children": []
@@ -216,12 +315,30 @@
                         {
                           "value": "ORCHESTRATED",
                           "selected": true,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "USER_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         }
                       ],
                       "children": []
@@ -235,17 +352,44 @@
                         {
                           "value": "DERIVED",
                           "selected": true,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "ORCHESTRATED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "USER_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         }
                       ],
                       "children": []
@@ -259,12 +403,30 @@
                         {
                           "value": "DERIVED",
                           "selected": true,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         },
                         {
                           "value": "USER_DEFINED",
                           "selected": false,
-                          "schema": null
+                          "schema": [
+                            {
+                              "name": "source",
+                              "required": false,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
                         }
                       ],
                       "children": []
