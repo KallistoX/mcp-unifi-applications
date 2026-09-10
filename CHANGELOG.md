@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-09-10
+
 ### Changed
 
 - Every tool now carries MCP annotations — `readOnlyHint`, `destructiveHint: false`,
@@ -149,7 +151,8 @@ answering a different question than the one asked.
 - Initial release: Network, Protect and Site Manager documentation served over stdio
   through ten MCP tools, with a Playwright scraper and a weekly refresh workflow.
 
-[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.3.1
 [0.3.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.3.0
 [0.2.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.2.0
 [0.1.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.1.0
