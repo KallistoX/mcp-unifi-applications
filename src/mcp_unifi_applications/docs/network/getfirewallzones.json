@@ -81,19 +81,11 @@
                   "required": true,
                   "type": "string",
                   "description": null,
-                  "discriminator": [
-                    {
-                      "value": "SYSTEM_DEFINED",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
-                      "value": "USER_DEFINED",
-                      "selected": false,
-                      "schema": []
-                    }
-                  ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "SYSTEM_DEFINED",
+                    "USER_DEFINED"
+                  ]
                 }
               ]
             },

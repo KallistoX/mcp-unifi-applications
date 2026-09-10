@@ -41,14 +41,10 @@
               "required": true,
               "type": "string",
               "description": null,
-              "discriminator": [
-                {
-                  "value": "DEFAULT",
-                  "selected": true,
-                  "schema": []
-                }
-              ],
-              "children": []
+              "children": [],
+              "enum": [
+                "DEFAULT"
+              ]
             }
           ]
         },

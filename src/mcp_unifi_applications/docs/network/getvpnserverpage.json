@@ -89,19 +89,11 @@
                   "required": true,
                   "type": "string",
                   "description": null,
-                  "discriminator": [
-                    {
-                      "value": "DERIVED",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
-                      "value": "USER_DEFINED",
-                      "selected": false,
-                      "schema": []
-                    }
-                  ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "DERIVED",
+                    "USER_DEFINED"
+                  ]
                 }
               ]
             },
@@ -151,19 +143,11 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DERIVED",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "USER_DEFINED"
+                          ]
                         }
                       ]
                     },
@@ -209,19 +193,11 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DERIVED",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "USER_DEFINED"
+                          ]
                         }
                       ]
                     },
@@ -267,19 +243,11 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DERIVED",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "USER_DEFINED"
+                          ]
                         }
                       ]
                     },
@@ -325,19 +293,11 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DERIVED",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "USER_DEFINED"
+                          ]
                         }
                       ]
                     },
@@ -383,19 +343,11 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DERIVED",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "USER_DEFINED"
+                          ]
                         }
                       ]
                     },

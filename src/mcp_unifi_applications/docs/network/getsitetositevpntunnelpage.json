@@ -95,14 +95,13 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "value": "USER_DEFINED",
-                      "selected": false,
-                      "schema": []
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "DERIVED",
+                    "USER_DEFINED"
+                  ]
                 },
                 {
                   "name": "source",
@@ -166,14 +165,13 @@
                                   "children": []
                                 }
                               ]
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "USER_DEFINED"
+                          ]
                         },
                         {
                           "name": "source",
@@ -233,14 +231,13 @@
                                   "children": []
                                 }
                               ]
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "USER_DEFINED"
+                          ]
                         },
                         {
                           "name": "source",
@@ -300,14 +297,13 @@
                                   "children": []
                                 }
                               ]
-                            },
-                            {
-                              "value": "USER_DEFINED",
-                              "selected": false,
-                              "schema": []
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DERIVED",
+                            "USER_DEFINED"
+                          ]
                         },
                         {
                           "name": "source",

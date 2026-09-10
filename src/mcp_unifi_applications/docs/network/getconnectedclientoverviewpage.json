@@ -73,14 +73,10 @@
                   "required": true,
                   "type": "string",
                   "description": null,
-                  "discriminator": [
-                    {
-                      "value": "DEFAULT",
-                      "selected": true,
-                      "schema": []
-                    }
-                  ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "DEFAULT"
+                  ]
                 }
               ]
             },
@@ -138,14 +134,10 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DEFAULT",
-                              "selected": true,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DEFAULT"
+                          ]
                         }
                       ]
                     },
@@ -199,14 +191,10 @@
                           "required": true,
                           "type": "string",
                           "description": null,
-                          "discriminator": [
-                            {
-                              "value": "DEFAULT",
-                              "selected": true,
-                              "schema": []
-                            }
-                          ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DEFAULT"
+                          ]
                         }
                       ]
                     },
@@ -262,11 +250,6 @@
                           "description": null,
                           "discriminator": [
                             {
-                              "value": "DEFAULT",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
                               "value": "GUEST",
                               "selected": false,
                               "schema": [
@@ -281,7 +264,11 @@
                               ]
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DEFAULT",
+                            "GUEST"
+                          ]
                         }
                       ]
                     },
@@ -353,11 +340,6 @@
                           "description": null,
                           "discriminator": [
                             {
-                              "value": "DEFAULT",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
                               "value": "GUEST",
                               "selected": false,
                               "schema": [
@@ -372,7 +354,11 @@
                               ]
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "DEFAULT",
+                            "GUEST"
+                          ]
                         }
                       ]
                     },

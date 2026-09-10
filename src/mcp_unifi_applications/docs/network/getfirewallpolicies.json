@@ -87,19 +87,14 @@
                           "children": []
                         }
                       ]
-                    },
-                    {
-                      "value": "BLOCK",
-                      "selected": false,
-                      "schema": []
-                    },
-                    {
-                      "value": "REJECT",
-                      "selected": false,
-                      "schema": []
                     }
                   ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "ALLOW",
+                    "BLOCK",
+                    "REJECT"
+                  ]
                 },
                 {
                   "name": "allowReturnTraffic",
@@ -2746,76 +2741,6 @@
                                           "description": null,
                                           "discriminator": [
                                             {
-                                              "value": "AH",
-                                              "selected": true,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "AX_25",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "DCCP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "DDP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "EGP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "EIGRP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ENCAP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ESP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ETHERIP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "FC",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "GGP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "GRE",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "HIP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "HMP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
                                               "value": "ICMP",
                                               "selected": false,
                                               "schema": [
@@ -2828,174 +2753,59 @@
                                                   "children": []
                                                 }
                                               ]
-                                            },
-                                            {
-                                              "value": "IDPR_CMTP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IDRP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IGMP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IGP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPCOMP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPENCAP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPIP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ISIS",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ISO_TP4",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "L2TP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MANET",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MOBILITY_HEADER",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MPLS_IN_IP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "OSPF",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "PIM",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "PUP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "RDP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ROHC",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "RSPF",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "RSVP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "SCTP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "SHIM6",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "SKIP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ST",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "TCP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "UDP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "UDPLITE",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "VMTP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "VRRP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "WESP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "XNS_IDP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "XTP",
-                                              "selected": false,
-                                              "schema": []
                                             }
                                           ],
-                                          "children": []
+                                          "children": [],
+                                          "enum": [
+                                            "AH",
+                                            "AX_25",
+                                            "DCCP",
+                                            "DDP",
+                                            "EGP",
+                                            "EIGRP",
+                                            "ENCAP",
+                                            "ESP",
+                                            "ETHERIP",
+                                            "FC",
+                                            "GGP",
+                                            "GRE",
+                                            "HIP",
+                                            "HMP",
+                                            "ICMP",
+                                            "IDPR_CMTP",
+                                            "IDRP",
+                                            "IGMP",
+                                            "IGP",
+                                            "IP",
+                                            "IPCOMP",
+                                            "IPENCAP",
+                                            "IPIP",
+                                            "ISIS",
+                                            "ISO_TP4",
+                                            "L2TP",
+                                            "MANET",
+                                            "MOBILITY_HEADER",
+                                            "MPLS_IN_IP",
+                                            "OSPF",
+                                            "PIM",
+                                            "PUP",
+                                            "RDP",
+                                            "ROHC",
+                                            "RSPF",
+                                            "RSVP",
+                                            "SCTP",
+                                            "SHIM6",
+                                            "SKIP",
+                                            "ST",
+                                            "TCP",
+                                            "UDP",
+                                            "UDPLITE",
+                                            "VMTP",
+                                            "VRRP",
+                                            "WESP",
+                                            "XNS_IDP",
+                                            "XTP"
+                                          ]
                                         }
                                       ]
                                     }
@@ -3017,14 +2827,10 @@
                                           "required": true,
                                           "type": "string",
                                           "description": null,
-                                          "discriminator": [
-                                            {
-                                              "value": "TCP_UDP",
-                                              "selected": true,
-                                              "schema": []
-                                            }
-                                          ],
-                                          "children": []
+                                          "children": [],
+                                          "enum": [
+                                            "TCP_UDP"
+                                          ]
                                         }
                                       ]
                                     }
@@ -3077,76 +2883,6 @@
                                   "description": null,
                                   "discriminator": [
                                     {
-                                      "value": "AH",
-                                      "selected": true,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "AX_25",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "DCCP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "DDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "EGP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "EIGRP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ENCAP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ESP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ETHERIP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "FC",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "GGP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "GRE",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "HIP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "HMP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
                                       "value": "ICMP",
                                       "selected": false,
                                       "schema": [
@@ -3159,174 +2895,59 @@
                                           "children": []
                                         }
                                       ]
-                                    },
-                                    {
-                                      "value": "IDPR_CMTP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IDRP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IGMP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IGP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPCOMP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPENCAP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPIP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ISIS",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ISO_TP4",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "L2TP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MANET",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MOBILITY_HEADER",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MPLS_IN_IP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "OSPF",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "PIM",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "PUP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "RDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ROHC",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "RSPF",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "RSVP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SCTP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SHIM6",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SKIP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ST",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "TCP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "UDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "UDPLITE",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "VMTP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "VRRP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "WESP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "XNS_IDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "XTP",
-                                      "selected": false,
-                                      "schema": []
                                     }
                                   ],
-                                  "children": []
+                                  "children": [],
+                                  "enum": [
+                                    "AH",
+                                    "AX_25",
+                                    "DCCP",
+                                    "DDP",
+                                    "EGP",
+                                    "EIGRP",
+                                    "ENCAP",
+                                    "ESP",
+                                    "ETHERIP",
+                                    "FC",
+                                    "GGP",
+                                    "GRE",
+                                    "HIP",
+                                    "HMP",
+                                    "ICMP",
+                                    "IDPR_CMTP",
+                                    "IDRP",
+                                    "IGMP",
+                                    "IGP",
+                                    "IP",
+                                    "IPCOMP",
+                                    "IPENCAP",
+                                    "IPIP",
+                                    "ISIS",
+                                    "ISO_TP4",
+                                    "L2TP",
+                                    "MANET",
+                                    "MOBILITY_HEADER",
+                                    "MPLS_IN_IP",
+                                    "OSPF",
+                                    "PIM",
+                                    "PUP",
+                                    "RDP",
+                                    "ROHC",
+                                    "RSPF",
+                                    "RSVP",
+                                    "SCTP",
+                                    "SHIM6",
+                                    "SKIP",
+                                    "ST",
+                                    "TCP",
+                                    "UDP",
+                                    "UDPLITE",
+                                    "VMTP",
+                                    "VRRP",
+                                    "WESP",
+                                    "XNS_IDP",
+                                    "XTP"
+                                  ]
                                 }
                               ]
                             }
@@ -3375,104 +2996,28 @@
                                           "required": true,
                                           "type": "string",
                                           "description": null,
-                                          "discriminator": [
-                                            {
-                                              "value": "AH",
-                                              "selected": true,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "DCCP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "EIGRP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ESP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "GRE",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPCOMP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ISIS",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "L2TP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MANET",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MOBILITY_HEADER",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MPLS_IN_IP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "OSPF",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "PIM",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "RSVP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "SCTP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "SHIM6",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "TCP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "UDP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "VRRP",
-                                              "selected": false,
-                                              "schema": []
-                                            }
-                                          ],
-                                          "children": []
+                                          "children": [],
+                                          "enum": [
+                                            "AH",
+                                            "DCCP",
+                                            "EIGRP",
+                                            "ESP",
+                                            "GRE",
+                                            "IPCOMP",
+                                            "ISIS",
+                                            "L2TP",
+                                            "MANET",
+                                            "MOBILITY_HEADER",
+                                            "MPLS_IN_IP",
+                                            "OSPF",
+                                            "PIM",
+                                            "RSVP",
+                                            "SCTP",
+                                            "SHIM6",
+                                            "TCP",
+                                            "UDP",
+                                            "VRRP"
+                                          ]
                                         }
                                       ]
                                     }
@@ -3494,14 +3039,10 @@
                                           "required": true,
                                           "type": "string",
                                           "description": null,
-                                          "discriminator": [
-                                            {
-                                              "value": "TCP_UDP",
-                                              "selected": true,
-                                              "schema": []
-                                            }
-                                          ],
-                                          "children": []
+                                          "children": [],
+                                          "enum": [
+                                            "TCP_UDP"
+                                          ]
                                         }
                                       ]
                                     }
@@ -3552,104 +3093,28 @@
                                   "required": true,
                                   "type": "string",
                                   "description": null,
-                                  "discriminator": [
-                                    {
-                                      "value": "AH",
-                                      "selected": true,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "DCCP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "EIGRP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ESP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "GRE",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPCOMP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ISIS",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "L2TP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MANET",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MOBILITY_HEADER",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MPLS_IN_IP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "OSPF",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "PIM",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "RSVP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SCTP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SHIM6",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "TCP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "UDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "VRRP",
-                                      "selected": false,
-                                      "schema": []
-                                    }
-                                  ],
-                                  "children": []
+                                  "children": [],
+                                  "enum": [
+                                    "AH",
+                                    "DCCP",
+                                    "EIGRP",
+                                    "ESP",
+                                    "GRE",
+                                    "IPCOMP",
+                                    "ISIS",
+                                    "L2TP",
+                                    "MANET",
+                                    "MOBILITY_HEADER",
+                                    "MPLS_IN_IP",
+                                    "OSPF",
+                                    "PIM",
+                                    "RSVP",
+                                    "SCTP",
+                                    "SHIM6",
+                                    "TCP",
+                                    "UDP",
+                                    "VRRP"
+                                  ]
                                 }
                               ]
                             }
@@ -3700,31 +3165,6 @@
                                           "description": null,
                                           "discriminator": [
                                             {
-                                              "value": "AH",
-                                              "selected": true,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "DCCP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "EIGRP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ESP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "GRE",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
                                               "value": "ICMPV6",
                                               "selected": false,
                                               "schema": [
@@ -3737,104 +3177,36 @@
                                                   "children": []
                                                 }
                                               ]
-                                            },
-                                            {
-                                              "value": "IPCOMP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPV6",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPV6_FRAG",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPV6_NONXT",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPV6_OPTS",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "IPV6_ROUTE",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "ISIS",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "L2TP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MANET",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MOBILITY_HEADER",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "MPLS_IN_IP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "OSPF",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "PIM",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "RSVP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "SCTP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "SHIM6",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "TCP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "UDP",
-                                              "selected": false,
-                                              "schema": []
-                                            },
-                                            {
-                                              "value": "VRRP",
-                                              "selected": false,
-                                              "schema": []
                                             }
                                           ],
-                                          "children": []
+                                          "children": [],
+                                          "enum": [
+                                            "AH",
+                                            "DCCP",
+                                            "EIGRP",
+                                            "ESP",
+                                            "GRE",
+                                            "ICMPV6",
+                                            "IPCOMP",
+                                            "IPV6",
+                                            "IPV6_FRAG",
+                                            "IPV6_NONXT",
+                                            "IPV6_OPTS",
+                                            "IPV6_ROUTE",
+                                            "ISIS",
+                                            "L2TP",
+                                            "MANET",
+                                            "MOBILITY_HEADER",
+                                            "MPLS_IN_IP",
+                                            "OSPF",
+                                            "PIM",
+                                            "RSVP",
+                                            "SCTP",
+                                            "SHIM6",
+                                            "TCP",
+                                            "UDP",
+                                            "VRRP"
+                                          ]
                                         }
                                       ]
                                     }
@@ -3856,14 +3228,10 @@
                                           "required": true,
                                           "type": "string",
                                           "description": null,
-                                          "discriminator": [
-                                            {
-                                              "value": "TCP_UDP",
-                                              "selected": true,
-                                              "schema": []
-                                            }
-                                          ],
-                                          "children": []
+                                          "children": [],
+                                          "enum": [
+                                            "TCP_UDP"
+                                          ]
                                         }
                                       ]
                                     }
@@ -3916,31 +3284,6 @@
                                   "description": null,
                                   "discriminator": [
                                     {
-                                      "value": "AH",
-                                      "selected": true,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "DCCP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "EIGRP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ESP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "GRE",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
                                       "value": "ICMPV6",
                                       "selected": false,
                                       "schema": [
@@ -3953,104 +3296,36 @@
                                           "children": []
                                         }
                                       ]
-                                    },
-                                    {
-                                      "value": "IPCOMP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPV6",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPV6_FRAG",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPV6_NONXT",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPV6_OPTS",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPV6_ROUTE",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ISIS",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "L2TP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MANET",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MOBILITY_HEADER",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MPLS_IN_IP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "OSPF",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "PIM",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "RSVP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SCTP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SHIM6",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "TCP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "UDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "VRRP",
-                                      "selected": false,
-                                      "schema": []
                                     }
                                   ],
-                                  "children": []
+                                  "children": [],
+                                  "enum": [
+                                    "AH",
+                                    "DCCP",
+                                    "EIGRP",
+                                    "ESP",
+                                    "GRE",
+                                    "ICMPV6",
+                                    "IPCOMP",
+                                    "IPV6",
+                                    "IPV6_FRAG",
+                                    "IPV6_NONXT",
+                                    "IPV6_OPTS",
+                                    "IPV6_ROUTE",
+                                    "ISIS",
+                                    "L2TP",
+                                    "MANET",
+                                    "MOBILITY_HEADER",
+                                    "MPLS_IN_IP",
+                                    "OSPF",
+                                    "PIM",
+                                    "RSVP",
+                                    "SCTP",
+                                    "SHIM6",
+                                    "TCP",
+                                    "UDP",
+                                    "VRRP"
+                                  ]
                                 }
                               ]
                             }
@@ -4100,76 +3375,6 @@
                                   "description": null,
                                   "discriminator": [
                                     {
-                                      "value": "AH",
-                                      "selected": true,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "AX_25",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "DCCP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "DDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "EGP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "EIGRP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ENCAP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ESP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ETHERIP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "FC",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "GGP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "GRE",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "HIP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "HMP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
                                       "value": "ICMP",
                                       "selected": false,
                                       "schema": [
@@ -4182,174 +3387,59 @@
                                           "children": []
                                         }
                                       ]
-                                    },
-                                    {
-                                      "value": "IDPR_CMTP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IDRP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IGMP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IGP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPCOMP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPENCAP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "IPIP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ISIS",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ISO_TP4",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "L2TP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MANET",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MOBILITY_HEADER",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "MPLS_IN_IP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "OSPF",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "PIM",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "PUP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "RDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ROHC",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "RSPF",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "RSVP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SCTP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SHIM6",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "SKIP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "ST",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "TCP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "UDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "UDPLITE",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "VMTP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "VRRP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "WESP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "XNS_IDP",
-                                      "selected": false,
-                                      "schema": []
-                                    },
-                                    {
-                                      "value": "XTP",
-                                      "selected": false,
-                                      "schema": []
                                     }
                                   ],
-                                  "children": []
+                                  "children": [],
+                                  "enum": [
+                                    "AH",
+                                    "AX_25",
+                                    "DCCP",
+                                    "DDP",
+                                    "EGP",
+                                    "EIGRP",
+                                    "ENCAP",
+                                    "ESP",
+                                    "ETHERIP",
+                                    "FC",
+                                    "GGP",
+                                    "GRE",
+                                    "HIP",
+                                    "HMP",
+                                    "ICMP",
+                                    "IDPR_CMTP",
+                                    "IDRP",
+                                    "IGMP",
+                                    "IGP",
+                                    "IP",
+                                    "IPCOMP",
+                                    "IPENCAP",
+                                    "IPIP",
+                                    "ISIS",
+                                    "ISO_TP4",
+                                    "L2TP",
+                                    "MANET",
+                                    "MOBILITY_HEADER",
+                                    "MPLS_IN_IP",
+                                    "OSPF",
+                                    "PIM",
+                                    "PUP",
+                                    "RDP",
+                                    "ROHC",
+                                    "RSPF",
+                                    "RSVP",
+                                    "SCTP",
+                                    "SHIM6",
+                                    "SKIP",
+                                    "ST",
+                                    "TCP",
+                                    "UDP",
+                                    "UDPLITE",
+                                    "VMTP",
+                                    "VRRP",
+                                    "WESP",
+                                    "XNS_IDP",
+                                    "XTP"
+                                  ]
                                 }
                               ]
                             }
@@ -4371,14 +3461,10 @@
                                   "required": true,
                                   "type": "string",
                                   "description": null,
-                                  "discriminator": [
-                                    {
-                                      "value": "TCP_UDP",
-                                      "selected": true,
-                                      "schema": []
-                                    }
-                                  ],
-                                  "children": []
+                                  "children": [],
+                                  "enum": [
+                                    "TCP_UDP"
+                                  ]
                                 }
                               ]
                             }
@@ -4431,76 +3517,6 @@
                           "description": null,
                           "discriminator": [
                             {
-                              "value": "AH",
-                              "selected": true,
-                              "schema": []
-                            },
-                            {
-                              "value": "AX_25",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "DCCP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "DDP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "EGP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "EIGRP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "ENCAP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "ESP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "ETHERIP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "FC",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "GGP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "GRE",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "HIP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "HMP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
                               "value": "ICMP",
                               "selected": false,
                               "schema": [
@@ -4513,174 +3529,59 @@
                                   "children": []
                                 }
                               ]
-                            },
-                            {
-                              "value": "IDPR_CMTP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "IDRP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "IGMP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "IGP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "IP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "IPCOMP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "IPENCAP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "IPIP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "ISIS",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "ISO_TP4",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "L2TP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "MANET",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "MOBILITY_HEADER",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "MPLS_IN_IP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "OSPF",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "PIM",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "PUP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "RDP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "ROHC",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "RSPF",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "RSVP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "SCTP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "SHIM6",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "SKIP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "ST",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "TCP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "UDP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "UDPLITE",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "VMTP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "VRRP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "WESP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "XNS_IDP",
-                              "selected": false,
-                              "schema": []
-                            },
-                            {
-                              "value": "XTP",
-                              "selected": false,
-                              "schema": []
                             }
                           ],
-                          "children": []
+                          "children": [],
+                          "enum": [
+                            "AH",
+                            "AX_25",
+                            "DCCP",
+                            "DDP",
+                            "EGP",
+                            "EIGRP",
+                            "ENCAP",
+                            "ESP",
+                            "ETHERIP",
+                            "FC",
+                            "GGP",
+                            "GRE",
+                            "HIP",
+                            "HMP",
+                            "ICMP",
+                            "IDPR_CMTP",
+                            "IDRP",
+                            "IGMP",
+                            "IGP",
+                            "IP",
+                            "IPCOMP",
+                            "IPENCAP",
+                            "IPIP",
+                            "ISIS",
+                            "ISO_TP4",
+                            "L2TP",
+                            "MANET",
+                            "MOBILITY_HEADER",
+                            "MPLS_IN_IP",
+                            "OSPF",
+                            "PIM",
+                            "PUP",
+                            "RDP",
+                            "ROHC",
+                            "RSPF",
+                            "RSVP",
+                            "SCTP",
+                            "SHIM6",
+                            "SKIP",
+                            "ST",
+                            "TCP",
+                            "UDP",
+                            "UDPLITE",
+                            "VMTP",
+                            "VRRP",
+                            "WESP",
+                            "XNS_IDP",
+                            "XTP"
+                          ]
                         }
                       ]
                     }
@@ -4716,24 +3617,12 @@
                   "required": true,
                   "type": "string",
                   "description": null,
-                  "discriminator": [
-                    {
-                      "value": "DERIVED",
-                      "selected": true,
-                      "schema": []
-                    },
-                    {
-                      "value": "SYSTEM_DEFINED",
-                      "selected": false,
-                      "schema": []
-                    },
-                    {
-                      "value": "USER_DEFINED",
-                      "selected": false,
-                      "schema": []
-                    }
-                  ],
-                  "children": []
+                  "children": [],
+                  "enum": [
+                    "DERIVED",
+                    "SYSTEM_DEFINED",
+                    "USER_DEFINED"
+                  ]
                 }
               ]
             },

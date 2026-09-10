@@ -66,14 +66,13 @@
               "children": []
             }
           ]
-        },
-        {
-          "value": "UNAUTHORIZE_GUEST_ACCESS",
-          "selected": false,
-          "schema": []
         }
       ],
-      "children": []
+      "children": [],
+      "enum": [
+        "AUTHORIZE_GUEST_ACCESS",
+        "UNAUTHORIZE_GUEST_ACCESS"
+      ]
     },
     {
       "name": "dataUsageLimitMBytes",

@@ -36,14 +36,10 @@
       "required": true,
       "type": "string",
       "description": null,
-      "discriminator": [
-        {
-          "value": "POWER_CYCLE",
-          "selected": true,
-          "schema": []
-        }
-      ],
-      "children": []
+      "children": [],
+      "enum": [
+        "POWER_CYCLE"
+      ]
     }
   ],
   "responses": [
