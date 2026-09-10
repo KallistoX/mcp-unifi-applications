@@ -64,6 +64,12 @@ If Ubiquiti adds a new developer docs application at `developer.ui.com/<app-name
 - Add or update tests for any new functionality
 - Run `pytest tests/ -v` and make sure all tests pass before submitting
 
+## Writing a test client
+
+Tool failures come back as `result.isError: true` with the message in
+`result.content[].text` — **not** as a JSON-RPC `error`. A driver that only checks for
+`error` reads every failure as a success. This has caught two people out; check both.
+
 ## Changelog
 
 `CHANGELOG.md` follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
