@@ -10,6 +10,7 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
 from fastmcp import FastMCP
+from mcp.types import ToolAnnotations
 from rapidfuzz import fuzz
 
 DOCS_DIR = Path(os.environ.get("DOCS_DIR", Path(__file__).parent / "docs"))
@@ -168,6 +169,16 @@ def _find_field(fields: list[dict], name: str, path: str = "") -> list[tuple[str
 
 MAX_ENUM_INLINE = 12
 
+# Every tool reads bundled JSON and nothing else: no network, no credentials, no
+# writes. Stating it in annotations rather than only in prose lets a client know
+# without parsing a description.
+READ_ONLY = ToolAnnotations(
+    read_only_hint=True,
+    destructive_hint=False,
+    idempotent_hint=True,
+    open_world_hint=False,
+)
+
 
 def _summarise_fields(
     fields: list[dict], depth: int = 0, max_depth: int = 2, full_enums: bool = False
@@ -211,9 +222,15 @@ def _summarise_fields(
 # --- Tools ---
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def list_endpoints(method: str | None = None, app: str | None = None) -> str:
-    """List all available UniFi API endpoints with their HTTP method and path.
+    """Browse the endpoint catalogue: one line per endpoint with method, path, slug
+    and title.
+
+    Returns at most 200 lines; beyond that the reply says how many were withheld and
+    which filters would narrow it. For finding a specific endpoint, search_endpoints
+    ranks by relevance instead. Unknown filter values are rejected by name rather
+    than returned as an empty result.
 
     Args:
         method: Optional HTTP method filter (GET, POST, PUT, DELETE, PATCH).
@@ -310,12 +327,15 @@ def _resolve_slug(slug: str) -> tuple[str | None, str]:
     return None, f"Endpoint '{slug}' not found.{_suggest_slugs(slug)}"
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def search_endpoints(query: str, method: str | None = None, app: str | None = None) -> str:
-    """Search UniFi API endpoints by name, path, method, or description.
+    """Find endpoints by name, path fragment, method or description.
 
-    Returns the top matching endpoints ranked by relevance.
-    Use the slug from results with get_endpoint for full details.
+    Returns up to ten matches ranked by relevance, each as a slug, method, path,
+    title and a one-line description. Matching is fuzzy but floored: a query that
+    resembles nothing returns no matches rather than the least-bad guess. Pass a
+    result's slug to get_endpoint for the full schema. Unknown filter values are
+    rejected by name.
 
     Args:
         query: Search term (endpoint name, path fragment, or keyword).
@@ -360,15 +380,24 @@ def search_endpoints(query: str, method: str | None = None, app: str | None = No
     return "\n".join(lines) if lines else "No matching endpoints found."
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def get_endpoint(slug: str, summary: bool = True) -> str:
-    """Get the full schema for a UniFi API endpoint.
+    """Get everything documented about one endpoint: method, path, description,
+    path and query parameters, request body and response fields.
+
+    Returns readable text: a nested field list with types, required markers and
+    descriptions, discriminator variants in brackets and enum values inline, folded
+    at three levels deep. Large endpoints run to tens of thousands of characters —
+    when you already know which field you need, get_field_schema returns that
+    subtree alone. An unknown slug returns close matches rather than an error.
 
     Args:
         slug: Endpoint identifier, app-qualified ('network/createnetwork') or bare
-              ('createnetwork') when only one app has it. Use list_endpoints or
-              search_endpoints to find slugs.
-        summary: If True, return a compact field summary. If False, return raw JSON.
+              ('createnetwork') when only one application has it. Use
+              search_endpoints or list_endpoints to find one.
+        summary: True (default) returns the folded text above. False returns the raw
+                 scraped JSON — complete and unfolded to every depth, several times
+                 larger, and only worth it when the folding hides something you need.
     """
     slug, err = _resolve_slug(slug)
     if err:
@@ -404,16 +433,26 @@ def get_endpoint(slug: str, summary: bool = True) -> str:
     return "\n".join(lines)
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def get_example(slug: str, language: str = "curl", mode: str | None = None) -> str:
-    """Get a code example for a specific UniFi API endpoint.
+    """Get a runnable request for one endpoint, in one language, as published by
+    Ubiquiti.
+
+    Returns a heading naming the endpoint, language and mode, followed by a single
+    code block. The request shape is authoritative; host addresses, site ids and API
+    keys are placeholders to fill in. Bodies show the schema's default values, not a
+    worked example — combine with get_endpoint or get_field_schema when the payload
+    matters. If the requested language and mode pair does not exist, the reply lists
+    the pairs that do instead of failing.
 
     Args:
-        slug: Endpoint identifier (e.g. 'network/createnetwork').
-        language: Programming language — one of: curl, go, nodejs, python, ansible.
-        mode: 'local' (direct console access) or 'remote' (via cloud API).
-              Defaults to 'local'; remote-only apps (site-manager, mobility,
-              carrier-fabric) default to 'remote'.
+        slug: Endpoint identifier, app-qualified or bare when unambiguous.
+        language: One of curl, go, nodejs, python, ansible.
+        mode: 'local' addresses the console directly (https://<console-ip>/proxy/…);
+              'remote' goes through the UniFi cloud API (api.ui.com). Defaults to
+              'local', except for the cloud-only applications — site-manager,
+              mobility and carrier-fabric — which have no local form and default to
+              'remote'.
     """
     slug, err = _resolve_slug(slug)
     if err:
@@ -451,9 +490,14 @@ def get_example(slug: str, language: str = "curl", mode: str | None = None) -> s
     return f"No examples available for '{slug}'."
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def get_response_sample(slug: str) -> str:
-    """Get the example JSON response for a specific UniFi API endpoint.
+    """Get the sample response body published for one endpoint.
+
+    Returns raw JSON exactly as the documentation shows it, with placeholder values.
+    About two thirds of endpoints have one; the rest say so plainly. This is the
+    shape of a successful reply — for the field-by-field schema including types and
+    which fields are optional, use get_endpoint.
 
     Args:
         slug: Endpoint identifier (e.g. 'network/getnetworksoverviewpage').
@@ -468,12 +512,17 @@ def get_response_sample(slug: str) -> str:
     return sample
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def find_field(field_name: str, slug: str | None = None) -> str:
-    """Find where a field appears across endpoint schemas.
+    """Locate a field by name across every endpoint, including inside discriminator
+    variants.
 
-    Searches through request bodies, path parameters, and responses
-    including inside discriminator variants. Uses a pre-built index for speed.
+    Returns one line per occurrence: endpoint slug, dotted path, and which schema
+    section it sits in (request body, parameters, or response). Common names appear
+    hundreds of times; the reply is capped at 50 and states the true total and how
+    many endpoints are involved, so a short list is never mistaken for a complete
+    one. Paths from here can be passed straight to get_field_schema. A name that
+    matches nothing returns close alternatives.
 
     Args:
         field_name: The field name to search for (case-insensitive).
@@ -563,7 +612,7 @@ def _resolve_path(fields: list[dict], path_parts: list[str]) -> dict | None:
     return None
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def get_field_schema(slug: str, field_path: str) -> str:
     """Drill into a specific field's schema within an endpoint.
 
@@ -627,12 +676,14 @@ def get_field_schema(slug: str, field_path: str) -> str:
     return f"Field path '{field_path}' not found in endpoint '{slug}'."
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def get_endpoint_group(resource: str) -> str:
-    """Get all CRUD operations for a resource (e.g. 'networks', 'firewall', 'wifi').
+    """See every operation on one resource at once, grouped by API path.
 
-    Returns a summary of every endpoint that operates on the same resource path,
-    so you can see all available operations at once.
+    Returns each matching resource path with its endpoints beneath it — method, slug,
+    title and a one-line description — so the available verbs on a resource are
+    visible together rather than found one at a time. Matching is a substring of the
+    path, so 'networks' also finds nested paths, and one query can span applications.
 
     Args:
         resource: Resource name or path fragment (e.g. 'networks', 'acl-rules', 'wifi/broadcasts').
@@ -661,9 +712,16 @@ def get_endpoint_group(resource: str) -> str:
     return "\n".join(lines)
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def get_guide(topic: str | None = None, app: str | None = None) -> str:
-    """Get a UniFi API guide page (e.g. filtering syntax, error handling, getting started).
+    """Read a prose guide page: filtering syntax, error handling, getting started,
+    response formats.
+
+    Returns the page as markdown with its title and source URL. Omit the topic to
+    list what is available. Topics resolve by slug first, then by title; when the
+    same slug exists in several applications the reply lists them and asks for an
+    app rather than picking one. These pages carry the conventions that endpoint
+    schemas assume but do not repeat.
 
     Args:
         topic: Guide slug or search term. Omit to list all available guides.
@@ -718,9 +776,14 @@ def get_guide(topic: str | None = None, app: str | None = None) -> str:
     return f"No guide found for '{topic}'. Available: {available}"
 
 
-@mcp.tool()
+@mcp.tool(annotations=READ_ONLY)
 def get_docs_info() -> str:
-    """Show which UniFi API docs are loaded: API version, scrape date, endpoint and guide counts per app."""
+    """Report what documentation this server is serving.
+
+    Returns one line per application: API version, when it was scraped, and how many
+    endpoints and guides it holds. Worth checking before trusting an answer about a
+    recent API change — the documentation is a point-in-time copy, not a live view.
+    """
     if not _loaded_apps:
         return "No docs loaded. Check DOCS_DIR."
     lines = []

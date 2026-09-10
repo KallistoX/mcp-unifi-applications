@@ -7,6 +7,20 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Every tool now carries MCP annotations — `readOnlyHint`, `destructiveHint: false`,
+  `idempotentHint`, `openWorldHint: false`. All ten read bundled JSON and nothing
+  else: no network, no credentials, no writes. A client had no way to know that
+  without reading prose.
+- Tool descriptions rewritten to say what comes back, how large it tends to be, and
+  what happens when a lookup fails, rather than only what the tool is for. Glama's
+  tool-definition scoring put the server at an average of 3.8/5 with behavioural
+  transparency the weakest dimension across all ten tools, and its server-level
+  score weights the worst tool at 40 % — `get_endpoint` sat at 3.2/5 with
+  "the description only says 'Get the full schema'". Each description now also
+  points at the sibling tool that is a better fit for the neighbouring question.
+
 ## [0.3.0] - 2026-09-10
 
 ### Fixed
