@@ -71,6 +71,52 @@ class TestDataLoading:
 # --- Search ---
 
 
+class TestSearchScoring:
+    """Scoring the query against a token set made extra tokens free: 'update camera',
+    'update light' and 'update banana' returned identical rankings."""
+
+    @staticmethod
+    def _rows(out: str) -> list[str]:
+        return [line for line in out.splitlines() if line.startswith("[")]
+
+    def test_an_extra_nonsense_token_narrows_the_result(self):
+        for base in ("update", "camera", "list", "firewall"):
+            wide = self._rows(m.search_endpoints(base))
+            narrow = self._rows(m.search_endpoints(f"{base} zzzzqqqnothing"))
+            assert wide, f"{base!r} should match something"
+            assert narrow != wide, f"{base!r} and {base!r} + nonsense returned the same rows"
+            assert len(narrow) < len(wide), f"{base!r}: nonsense token widened the result"
+
+    def test_nonsense_alone_matches_nothing(self):
+        for q in ("zzzzznotathing", "asdfghjkl", "qqqqwwww", "<script>alert(1)</script>"):
+            assert m.search_endpoints(q) == "No matching endpoints found.", q
+
+    def test_uniquely_titled_endpoints_rank_first_for_their_title(self):
+        import collections
+
+        titles = collections.Counter(title.strip().lower() for _, title, *_ in m._search_index)
+        checked = 0
+        misses = []
+        for slug, title, *_ in m._search_index:
+            if titles[title.strip().lower()] > 1:
+                continue  # genuine cross-application collision, unresolvable without app=
+            rows = self._rows(m.search_endpoints(title))
+            checked += 1
+            if not rows or f"[{slug}]" not in rows[0]:
+                misses.append((title, slug))
+        assert checked > 100, "corpus unexpectedly small"
+        assert not misses, f"{len(misses)} uniquely titled endpoints not ranked first: {misses[:5]}"
+
+    def test_a_create_query_does_not_lead_with_a_delete(self):
+        # "create voucher" ranked DELETE first and never surfaced the create
+        # endpoint, which is titled "Generate Vouchers".
+        for q in ("create voucher", "create vouchers", "new voucher", "generate vouchers"):
+            rows = self._rows(m.search_endpoints(q))
+            assert rows, q
+            assert "DELETE" not in rows[0], f"{q!r} led with a delete endpoint"
+            assert any("createvouchers" in r for r in rows), f"{q!r} did not surface the create endpoint"
+
+
 class TestSearch:
     def test_search_network(self):
         result = m.search_endpoints("network")

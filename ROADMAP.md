@@ -11,13 +11,14 @@ protocol violations. Five substantive findings, three of them high:
 
 - ~~**`get_endpoint` never renders query parameters.**~~ Fixed in #43 — 42 endpoints,
   103 parameters, none of which reached a consumer through the default summary.
-- **Search scores a maximum over tokens rather than a conjunction.** `update camera`,
-  `update light` and `update banana` return the identical ranking; the discriminating
-  token contributes nothing once a common one scores highly. The relevance floor added
-  in 0.3.0 catches standalone nonsense but not nonsense paired with a common verb.
-- **`create voucher` ranks a DELETE endpoint first** and never surfaces
-  `network/createvouchers` in the top ten, because that endpoint is titled *Generate
-  Vouchers*. A create intent pointing at a destructive operation deserves its own entry.
+- ~~**Search scores a maximum over tokens rather than a conjunction.**~~ Fixed in #45 —
+  scoring is now per token, so a word that matches nothing drags the result down.
+- ~~**`create voucher` ranks a DELETE endpoint first.**~~ Fixed in #45.
+- **Vocabulary gaps remain.** Scoring cannot bridge synonyms: `issue voucher` does not
+  reach *Generate Vouchers*, and `update camera` ranks Protect's *Patch camera settings*
+  third because Protect titles its mutations `Patch`. A small synonym map over the verbs
+  the corpus actually uses — create/generate/issue, update/patch/modify, delete/remove —
+  would close it, and is worth doing only if real queries keep missing.
 - **Response samples are truncated at 58 lines.** A hard cap in the scraper leaves seven
   samples as invalid JSON, presented as "raw JSON exactly as the documentation shows
   it". Needs a scraper change and a re-scrape; the server could also detect unbalanced

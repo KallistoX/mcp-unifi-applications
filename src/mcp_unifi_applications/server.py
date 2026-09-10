@@ -6,6 +6,7 @@ as queryable tools for use in Claude Desktop or any MCP-compatible client.
 
 import json
 import os
+import re
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
@@ -297,7 +298,59 @@ def _truncate(text: str, max_len: int = 120) -> str:
 # field reads as "this is probably what you wanted", which for garbage input is
 # a lie - and for 'listnetworks' it pointed at deletenetwork.
 MIN_SUGGEST_SCORE = 60
-MIN_SEARCH_SCORE = 60
+
+# Search scoring. Every weight below was chosen by measuring a candidate against
+# the whole corpus: all 196 endpoint titles as queries (185 must still rank
+# first), the queries a review found broken, nonsense, and typos.
+MIN_SEARCH_SCORE = 70
+DESC_WEIGHT = 0.15      # descriptions inform, but a title match should win
+TIGHT_WEIGHT = 0.10     # tie-break toward the title the query fits most closely
+EXACT_TITLE_BONUS = 8.0  # an exact title is an unambiguous signal
+
+_TOKENS = re.compile(r"[^a-z0-9]+")
+
+
+def _tokens(text: str) -> list[str]:
+    return [t for t in _TOKENS.split(text) if t]
+
+
+def _token_scores(q_tokens: list[str], haystack: str) -> list[float]:
+    """How well each query token is matched, independently.
+
+    Scoring the query as a whole against a token *set* made extra tokens free:
+    'update camera', 'update light' and 'update banana' all scored on 'update'
+    alone and returned identical rankings. Scoring per token means a token that
+    matches nothing drags the result down, so a second word can narrow a search
+    rather than only widen it.
+    """
+    hay_tokens = _tokens(haystack)
+    scores = []
+    for qt in q_tokens:
+        if qt in haystack:
+            # Substring, so compound identifiers count: 'voucher' matches
+            # 'createvouchers', which token equality never would.
+            scores.append(100.0)
+            continue
+        best = max((fuzz.ratio(qt, ht) for ht in hay_tokens), default=0.0)
+        scores.append(max(best, fuzz.partial_ratio(qt, haystack) * 0.85))
+    return scores
+
+
+def _search_score(q: str, slug: str, title: str, method: str, path: str, desc: str) -> float:
+    q_tokens = _tokens(q)
+    if not q_tokens:
+        return 0.0
+    core = f"{slug} {title} {method} {path}".lower()
+    per = _token_scores(q_tokens, core)
+    # The mean rewards breadth, the minimum punishes a token that found nothing.
+    score = 0.6 * (sum(per) / len(per)) + 0.4 * min(per)
+    if desc:
+        d = _token_scores(q_tokens, desc.lower())
+        score = score * (1 - DESC_WEIGHT) + (sum(d) / len(d)) * DESC_WEIGHT
+    score += TIGHT_WEIGHT * fuzz.ratio(q, title.lower())
+    if q == title.strip().lower():
+        score += EXACT_TITLE_BONUS
+    return score
 
 
 def _suggest_slugs(slug: str, n: int = 3) -> str:
@@ -357,13 +410,7 @@ def search_endpoints(query: str, method: str | None = None, app: str | None = No
             continue
         if app_filter and ep_app != app_filter:
             continue
-        # Weight title/slug/path much higher than description
-        core = f"{slug} {title} {m} {path}".lower()
-        core_score = fuzz.token_set_ratio(q, core)
-        desc_score = fuzz.token_set_ratio(q, desc.lower()) * 0.3 if desc else 0
-        # Exact substring in core fields gets a big bonus
-        bonus = 60 if q in core else (20 if q in desc.lower() else 0)
-        score = core_score + desc_score + bonus
+        score = _search_score(q, slug, title, m, path, desc)
         scored.append((score, slug, title, m, path, desc, ep_app))
 
     scored.sort(key=lambda x: x[0], reverse=True)
