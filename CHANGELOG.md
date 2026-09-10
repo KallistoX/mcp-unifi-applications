@@ -9,6 +9,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Fixed
 
+- `get_guide` guarded against ambiguous slugs but not ambiguous titles, and titles
+  collide just as often — three guides are titled `Introduction`, two `Installation`,
+  two `Error Handling`. Those score identically, so `scored[0]` let sort order decide
+  which application the reader got: someone working on Network asking for
+  "error handling" received Carrier Fabric's guide. Equal top scores are now listed
+  with a request for `app=`, the same as for slugs. A title that matches one guide
+  best still resolves, so `filtering` and `Response Format` are unaffected.
 - `get_endpoint` never rendered query parameters. 42 endpoints carry them in the
   shipped data — 103 parameters — and the summary emitted no `## Query Parameters`
   section for any of them, while the tool's own description promised "path and query

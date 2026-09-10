@@ -309,6 +309,52 @@ class TestGetEndpointGroup:
 
 
 class TestGetGuide:
+    def test_colliding_titles_are_never_resolved_silently(self):
+        """Slug collisions were guarded; title collisions were not.
+
+        Three guides are titled "Introduction", two "Installation", two "Error
+        Handling", and they score identically — so sort order decided which
+        application the reader got.
+        """
+        import collections
+
+        by_title = collections.defaultdict(list)
+        for slug, g in m._guides.items():
+            if g.get("h1"):
+                by_title[g["h1"]].append(slug)
+        collisions = {title: slugs for title, slugs in by_title.items() if len(slugs) > 1}
+        assert collisions, "corpus has no colliding guide titles — test proves nothing"
+        for title, slugs in collisions.items():
+            out = m.get_guide(topic=title)
+            assert not out.startswith("# "), f"{title!r} silently resolved to one guide"
+            for slug in slugs:
+                assert slug in out, f"{title!r}: candidate {slug} not named"
+
+    def test_a_collision_resolves_once_an_app_is_given(self):
+        for slug, g in m._guides.items():
+            title = g.get("h1")
+            if not title:
+                continue
+            if sum(1 for x in m._guides.values() if x.get("h1") == title) > 1:
+                app = slug.split("/", 1)[0]
+                out = m.get_guide(topic=title, app=app)
+                assert out.startswith("# "), f"{title!r} + app={app} did not resolve"
+                assert app in out.splitlines()[0]
+                return
+        pytest.skip("corpus has no colliding guide titles")
+
+    def test_a_unique_title_still_resolves(self):
+        for slug, g in m._guides.items():
+            title = g.get("h1")
+            if not title:
+                continue
+            if sum(1 for x in m._guides.values() if x.get("h1") == title) == 1:
+                out = m.get_guide(topic=title)
+                assert out.startswith("# "), f"unique title {title!r} did not resolve"
+                return
+        pytest.skip("corpus has no unique guide titles")
+
+
     def test_list_guides(self):
         result = m.get_guide()
         if not m._guides:

@@ -9,12 +9,8 @@ The published 0.3.1 package was audited black-box by a reviewer with no knowledg
 implementation ([`docs/acceptance-0.3.1.md`](docs/acceptance-0.3.1.md)). No crashes, no
 protocol violations. Five substantive findings, three of them high:
 
-- **`get_endpoint` never renders query parameters.** 42 endpoints have them in the
-  shipped data; the summary path emits zero `## Query Parameters` sections. A model
-  therefore never learns that list endpoints are paginated, that `filter` exists, or
-  that `deletenetwork` takes a `force` flag — while the Filtering guide documents the
-  `filter` syntax at length. The tool's own description promises query parameters, so
-  the server currently contradicts itself.
+- ~~**`get_endpoint` never renders query parameters.**~~ Fixed in #43 — 42 endpoints,
+  103 parameters, none of which reached a consumer through the default summary.
 - **Search scores a maximum over tokens rather than a conjunction.** `update camera`,
   `update light` and `update banana` return the identical ranking; the discriminating
   token contributes nothing once a common one scores highly. The relevance floor added
@@ -26,9 +22,9 @@ protocol violations. Five substantive findings, three of them high:
   samples as invalid JSON, presented as "raw JSON exactly as the documentation shows
   it". Needs a scraper change and a re-scrape; the server could also detect unbalanced
   JSON and say so.
-- **`get_guide` title lookup bypasses the ambiguity guard.** Slug resolution refuses to
-  guess between applications; title resolution silently picks one. Three guides are
-  titled `Introduction`, two `Installation`, two `Error Handling`.
+- ~~**`get_guide` title lookup bypasses the ambiguity guard.**~~ Fixed in #44 —
+  colliding titles score identically, so sort order decided which application the
+  reader got.
 
 Plus the minor observations in the report: empty `## Response [200]` headings that read
 like truncation, input casing echoed into headings, a `method` description naming five
