@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-10
+
 ### Fixed
 
 Output that a model reading it would be misled by, found in an acceptance review of
@@ -50,10 +52,11 @@ answering a different question than the one asked.
   variants across 46 endpoints. Two causes. `enrichSchema` only ever ran against
   the request body, and the option it clicked to reveal a variant was the `<label>`,
   which carries a `for` attribute pointing at an id nothing resolves to — clicking
-  it does nothing. Clicking the `input` inside it works, which also explains why
-  request-body variants were only about half populated. Verified against
+  it does nothing. Clicking the `input` inside it works. Verified against
   `network/createnetwork`: response variants went from 0/12 to 21/33 populated, the
-  remaining twelve being enum variants that genuinely carry no fields.
+  remaining twelve being enum values that carry no fields — see the enum entry
+  below, which turned out to be the real reason request-body variants also looked
+  half populated.
 - Where variant fields followed an empty stub they read as siblings of the
   discriminator rather than as members of a variant, so `dhcpServerIpAddresses`
   appeared to be always present rather than `[RELAY]`-only.
@@ -70,8 +73,10 @@ answering a different question than the one asked.
   which reads as variants whose fields went missing rather than as the allowed
   values of a string. Options are now listed in `enum` and only those that
   actually reveal fields stay variants, marked as additive. That one field drops
-  from 52 rendered lines to 6, without losing a single value; across the corpus
-  110 fields and 458 values are affected and 4726 real variants are untouched.
+  from 52 rendered lines to 6, without losing a single value. Across `network`,
+  222 fields and 2314 values are affected; the 2202 empty variants become enum
+  values and all 2977 variants that carry fields are preserved exactly. The other
+  five applications have no enums.
 
 ### Changed
 
@@ -130,6 +135,7 @@ answering a different question than the one asked.
 - Initial release: Network, Protect and Site Manager documentation served over stdio
   through ten MCP tools, with a Playwright scraper and a weekly refresh workflow.
 
-[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.3.0
 [0.2.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.2.0
 [0.1.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.1.0
