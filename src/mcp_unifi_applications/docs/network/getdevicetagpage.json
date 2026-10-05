@@ -33,10 +33,85 @@
     {
       "name": "filter",
       "required": false,
-      "type": "string",
+      "type": "object",
       "description": null,
       "discriminator": null,
-      "children": []
+      "children": [
+        {
+          "name": "entity",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "name",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "nestedEntities",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "path",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "depth",
+                  "required": false,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "name",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "names",
+                  "required": false,
+                  "type": "Array of string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "parent",
+                  "required": false,
+                  "type": "any",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "properties",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            }
+          ]
+        }
+      ]
     }
   ],
   "requestBody": [],
@@ -151,5 +226,5 @@
     }
   },
   "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"deviceIds\": [\n        \"00000000-0000-0000-0000-000000000000\"\n      ],\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"name\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getdevicetagpage"
+  "sourceUrl": "https://developer.ui.com/network/v10.6.106/getdevicetagpage"
 }
