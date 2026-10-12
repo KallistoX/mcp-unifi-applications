@@ -644,5 +644,5 @@
     }
   },
   "responseSample": "{\n  \"action\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.4.57/executeconnectedclientaction"
+  "sourceUrl": "https://developer.ui.com/network/v10.6.106/executeconnectedclientaction"
 }

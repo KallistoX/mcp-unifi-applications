@@ -5206,5 +5206,5 @@
     }
   },
   "responseSample": "{\n  \"basicDataRateKbpsByFrequencyGHz\": {\n    \"5\": 0,\n    \"2.4\": 0\n  },\n  \"blackoutScheduleConfiguration\": {\n    \"days\": [\n      {\n        \"day\": \"SUN\",\n        \"type\": \"string\"\n      }\n    ]\n  },\n  \"broadcastingDeviceFilter\": {\n    \"type\": \"string\"\n  },\n  \"channel2gLockedTo6\": true,\n  \"clientFilteringPolicy\": {\n    \"action\": \"ALLOW\",\n    \"macAddressFilter\": [\n      \"string\"\n    ]\n  },\n  \"clientIsolationEnabled\": true,\n  \"dtimPeriod2gLockedTo3\": true,\n  \"enabled\": true,\n  \"hideName\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"mdnsProxyConfiguration\": {\n    \"mode\": \"string\"\n  },\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"multicastFilteringPolicy\": {\n    \"action\": \"string\"\n  },\n  \"multicastToUnicastConversionEnabled\": true,\n  \"name\": \"string\",\n  \"network\": {\n    \"type\": \"string\"\n  },\n  \"securityConfiguration\": {\n    \"radiusConfiguration\": null,\n    \"type\": \"string\"\n  },\n  \"type\": \"string\",\n  \"uapsdEnabled\": true\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getwifibroadcastdetails"
+  "sourceUrl": "https://developer.ui.com/network/v10.6.106/getwifibroadcastdetails"
 }

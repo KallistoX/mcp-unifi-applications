@@ -70,31 +70,6 @@
               "children": []
             },
             {
-              "name": "members",
-              "required": true,
-              "type": "Array of object (IntegrationLagMemberDto)",
-              "description": null,
-              "discriminator": null,
-              "children": [
-                {
-                  "name": "deviceId",
-                  "required": true,
-                  "type": "string",
-                  "description": null,
-                  "discriminator": null,
-                  "children": []
-                },
-                {
-                  "name": "portIdxs",
-                  "required": true,
-                  "type": "Array of integer",
-                  "description": null,
-                  "discriminator": null,
-                  "children": []
-                }
-              ]
-            },
-            {
               "name": "metadata",
               "required": true,
               "type": "object (User defined entity metadata)",
@@ -445,31 +420,6 @@
                       "children": []
                     },
                     {
-                      "name": "members",
-                      "required": true,
-                      "type": "Array of object (IntegrationLagMemberDto)",
-                      "description": null,
-                      "discriminator": null,
-                      "children": [
-                        {
-                          "name": "deviceId",
-                          "required": true,
-                          "type": "string",
-                          "description": null,
-                          "discriminator": null,
-                          "children": []
-                        },
-                        {
-                          "name": "portIdxs",
-                          "required": true,
-                          "type": "Array of integer",
-                          "description": null,
-                          "discriminator": null,
-                          "children": []
-                        }
-                      ]
-                    },
-                    {
                       "name": "metadata",
                       "required": true,
                       "type": "object (User defined entity metadata)",
@@ -800,24 +750,10 @@
                           "children": []
                         }
                       ]
-                    }
-                  ]
-                },
-                {
-                  "value": "MULTI_CHASSIS",
-                  "selected": false,
-                  "schema": [
-                    {
-                      "name": "id",
-                      "required": true,
-                      "type": "string",
-                      "description": null,
-                      "discriminator": null,
-                      "children": []
                     },
                     {
                       "name": "members",
-                      "required": true,
+                      "required": false,
                       "type": "Array of object (IntegrationLagMemberDto)",
                       "description": null,
                       "discriminator": null,
@@ -839,6 +775,20 @@
                           "children": []
                         }
                       ]
+                    }
+                  ]
+                },
+                {
+                  "value": "MULTI_CHASSIS",
+                  "selected": false,
+                  "schema": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
                     },
                     {
                       "name": "metadata",
@@ -1179,24 +1129,10 @@
                       "description": null,
                       "discriminator": null,
                       "children": []
-                    }
-                  ]
-                },
-                {
-                  "value": "SWITCH_STACK",
-                  "selected": false,
-                  "schema": [
-                    {
-                      "name": "id",
-                      "required": true,
-                      "type": "string",
-                      "description": null,
-                      "discriminator": null,
-                      "children": []
                     },
                     {
                       "name": "members",
-                      "required": true,
+                      "required": false,
                       "type": "Array of object (IntegrationLagMemberDto)",
                       "description": null,
                       "discriminator": null,
@@ -1218,6 +1154,20 @@
                           "children": []
                         }
                       ]
+                    }
+                  ]
+                },
+                {
+                  "value": "SWITCH_STACK",
+                  "selected": false,
+                  "schema": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
                     },
                     {
                       "name": "metadata",
@@ -1552,6 +1502,39 @@
                       ]
                     },
                     {
+                      "name": "members",
+                      "required": false,
+                      "type": "Array of object (IntegrationSwitchStackLagMemberDto)",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "portIdxs",
+                          "required": true,
+                          "type": "Array of integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "unitId",
+                          "required": true,
+                          "type": "integer",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "unitMacAddress",
+                          "required": true,
+                          "type": "string",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
                       "name": "switchStackId",
                       "required": false,
                       "type": "string",
@@ -1563,6 +1546,31 @@
                 }
               ],
               "children": []
+            },
+            {
+              "name": "members",
+              "required": false,
+              "type": "Array of object (IntegrationLagMemberDto)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "deviceId",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "portIdxs",
+                  "required": true,
+                  "type": "Array of integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
             }
           ]
         },
@@ -1609,6 +1617,6 @@
       "ansible": "- name: List LAGs\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/switching/lags\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"members\": [\n        {\n          \"deviceId\": \"00000000-0000-0000-0000-000000000000\",\n          \"portIdxs\": [\n            0\n          ]\n        }\n      ],\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"type\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getlagpage"
+  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"type\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.6.106/getlagpage"
 }
