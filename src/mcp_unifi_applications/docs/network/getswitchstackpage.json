@@ -62,6 +62,14 @@
           "discriminator": null,
           "children": [
             {
+              "name": "deviceId",
+              "required": false,
+              "type": "string",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
               "name": "id",
               "required": true,
               "type": "string",
@@ -87,22 +95,30 @@
                 {
                   "name": "members",
                   "required": true,
-                  "type": "Array of object (IntegrationLagMemberDto)",
+                  "type": "Array of object (IntegrationSwitchStackLagMemberDto)",
                   "description": null,
                   "discriminator": null,
                   "children": [
                     {
-                      "name": "deviceId",
+                      "name": "portIdxs",
                       "required": true,
-                      "type": "string",
+                      "type": "Array of integer",
                       "description": null,
                       "discriminator": null,
                       "children": []
                     },
                     {
-                      "name": "portIdxs",
+                      "name": "unitId",
                       "required": true,
-                      "type": "Array of integer",
+                      "type": "integer",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "unitMacAddress",
+                      "required": true,
+                      "type": "string",
                       "description": null,
                       "discriminator": null,
                       "children": []
@@ -444,23 +460,6 @@
               ]
             },
             {
-              "name": "members",
-              "required": true,
-              "type": "Array of object (IntegrationSwitchStackMemberDto)",
-              "description": null,
-              "discriminator": null,
-              "children": [
-                {
-                  "name": "deviceId",
-                  "required": true,
-                  "type": "string",
-                  "description": null,
-                  "discriminator": null,
-                  "children": []
-                }
-              ]
-            },
-            {
               "name": "metadata",
               "required": true,
               "type": "object (User defined entity metadata)",
@@ -475,6 +474,47 @@
               "description": null,
               "discriminator": null,
               "children": []
+            },
+            {
+              "name": "units",
+              "required": true,
+              "type": "Array of object (IntegrationSwitchStackUnitDto)",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "id",
+                  "required": true,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "macAddress",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "order",
+                  "required": false,
+                  "type": "integer",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "role",
+                  "required": false,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
             }
           ]
         },
@@ -521,6 +561,6 @@
       "ansible": "- name: List Switch Stacks\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/switching/switch-stacks\"\n    method: GET\n    query:\n      offset: \"{offset}\"\n      limit: \"{limit}\"\n      filter: \"{filter}\"\n  register: result\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"lags\": [\n        {\n          \"id\": \"00000000-0000-0000-0000-000000000000\",\n          \"members\": [\n            {\n              \"deviceId\": \"00000000-0000-0000-0000-000000000000\",\n              \"portIdxs\": [\n                0\n              ]\n            }\n          ],\n          \"metadata\": {\n            \"origin\": \"string\"\n          }\n        }\n      ],\n      \"members\": [\n        {\n          \"deviceId\": \"00000000-0000-0000-0000-000000000000\"\n        }\n      ],\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"name\": \"string\"\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.4.57/getswitchstackpage"
+  "responseSample": "{\n  \"count\": 0,\n  \"data\": [\n    {\n      \"deviceId\": \"00000000-0000-0000-0000-000000000000\",\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"lags\": [\n        {\n          \"id\": \"00000000-0000-0000-0000-000000000000\",\n          \"members\": [\n            {\n              \"portIdxs\": [\n                0\n              ],\n              \"unitId\": 0,\n              \"unitMacAddress\": \"string\"\n            }\n          ],\n          \"metadata\": {\n            \"origin\": \"string\"\n          }\n        }\n      ],\n      \"metadata\": {\n        \"origin\": \"string\"\n      },\n      \"name\": \"string\",\n      \"units\": [\n        {\n          \"id\": 0,\n          \"macAddress\": \"string\",\n          \"order\": 0,\n          \"role\": \"ACTIVE_CONTROLLER\"\n        }\n      ]\n    }\n  ],\n  \"limit\": 0,\n  \"offset\": 0,\n  \"totalCount\": 0\n}",
+  "sourceUrl": "https://developer.ui.com/network/v10.6.106/getswitchstackpage"
 }
