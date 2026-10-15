@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Regenerate the docs-versions table in README.md from docs/<app>/_meta.json.
 
-Run by the weekly update-docs workflow after a scrape, so the README never
-drifts from the committed docs. Safe to run locally: python3 scripts/update_readme_versions.py
+Run on main by sync-readme-table.yml after a docs merge, and by release_docs.py
+as part of a release, so the README never drifts from the committed docs. Safe
+to run locally: python3 scripts/update_readme_versions.py
 """
 
 import json
@@ -30,7 +31,7 @@ DISPLAY_NAMES = {
 }
 
 
-def build_table() -> str:
+def build_table(docs: Path = DOCS) -> str:
     order = list(DISPLAY_NAMES)
 
     def sort_key(meta_file: Path) -> tuple[int, str]:
@@ -38,7 +39,7 @@ def build_table() -> str:
         return (order.index(app) if app in order else len(order), app)
 
     rows = []
-    for meta_file in sorted(DOCS.glob("*/_meta.json"), key=sort_key):
+    for meta_file in sorted(docs.glob("*/_meta.json"), key=sort_key):
         meta = json.loads(meta_file.read_text())
         app = meta.get("app") or meta_file.parent.name
         name = DISPLAY_NAMES.get(app, app)
@@ -50,9 +51,9 @@ def build_table() -> str:
     return "\n".join(header + rows)
 
 
-def main() -> int:
-    text = README.read_text()
-    block = f"{START}\n{build_table()}\n{END}"
+def main(readme: Path = README, docs: Path = DOCS) -> int:
+    text = readme.read_text()
+    block = f"{START}\n{build_table(docs)}\n{END}"
     new_text, n = re.subn(
         re.escape(START) + r".*?" + re.escape(END),
         lambda _: block,
@@ -64,7 +65,7 @@ def main() -> int:
     if new_text == text:
         print("README version table already up to date.")
         return 0
-    README.write_text(new_text)
+    readme.write_text(new_text)
     print("README version table updated.")
     return 0
 

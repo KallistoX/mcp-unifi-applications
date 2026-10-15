@@ -1,0 +1,73 @@
+name: Release
+
+# Cuts a patch release when the only unreleased package change on main is
+# scraped docs. update-docs calls it after merging its PRs; it is also safe to
+# dispatch by hand, and does nothing when there is nothing to release.
+#
+# Anything else unreleased that ships in the package (server code,
+# pyproject.toml) stops it with an error: that release needs a person to pick
+# the version and write the changelog. scripts/release_docs.py makes the call.
+on:
+  workflow_call:
+    inputs:
+      dry_run:
+        type: boolean
+        default: false
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Show the release commit without pushing, tagging or publishing
+        type: boolean
+        default: false
+
+permissions:
+  contents: write  # push the release commit, create the tag and the release
+  actions: write   # dispatch publish.yml
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: release
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          # Always main: when update-docs calls this, its own commit predates the
+          # merges it just made.
+          ref: main
+          # The last tag and everything since it.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Prepare the release
+        id: prep
+        run: python3 scripts/release_docs.py --notes "$RUNNER_TEMP/notes.md"
+
+      - name: Show the release commit
+        if: steps.prep.outputs.release == 'true'
+        run: git diff -- pyproject.toml server.json CHANGELOG.md README.md
+
+      - name: Commit, tag, release and publish
+        if: steps.prep.outputs.release == 'true' && !inputs.dry_run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.prep.outputs.tag }}
+          VERSION: ${{ steps.prep.outputs.version }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -qam "chore: release ${VERSION}"
+          # Fails if main moved since the checkout; the next run picks it up.
+          git push origin HEAD:main
+          gh release create "$TAG" --target "$(git rev-parse HEAD)" --title "$TAG" \
+            --notes-file "$RUNNER_TEMP/notes.md"
+          # A release created with GITHUB_TOKEN does not fire the release event,
+          # so publish.yml would never start on its own. workflow_dispatch is
+          # the event GITHUB_TOKEN is allowed to trigger.
+          gh workflow run publish.yml --ref "$TAG"
+          echo "Released ${TAG}; publish.yml dispatched." >> "$GITHUB_STEP_SUMMARY"
