@@ -1,5 +1,8 @@
 name: Publish
 
+# A release made by hand fires the release event. release.yml cannot: its
+# GITHUB_TOKEN-created release fires nothing, so it dispatches this workflow on
+# the new tag instead. Either way the checkout below is the tag.
 on:
   release:
     types: [published]
@@ -36,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: pypi
     permissions:
-      id-token: write  # Trusted Publishing — no API token stored in the repo
+      id-token: write  # Trusted Publishing, no API token stored in the repo
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -44,3 +47,46 @@ jobs:
           path: dist/
 
       - uses: pypa/gh-action-pypi-publish@release/v1
+
+  # The official MCP registry listing. Used to be a manual `mcp-publisher
+  # publish` from a browser login after every release; the run's OIDC token
+  # proves the io.github.KallistoX namespace instead.
+  registry:
+    needs: pypi
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      MCP_PUBLISHER_VERSION: v1.8.1
+      MCP_PUBLISHER_SHA256: a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc
+    steps:
+      - uses: actions/checkout@v5
+
+      # The registry verifies the package against PyPI's JSON API, which can lag
+      # the upload. Publishing before PyPI serves the version is rejected.
+      - name: Wait until PyPI serves the version
+        run: |
+          set -euo pipefail
+          version=$(python3 -c "import json; print(json.load(open('server.json'))['version'])")
+          for _ in $(seq 1 30); do
+            if curl -fsS -o /dev/null "https://pypi.org/pypi/mcp-unifi-applications/${version}/json"; then
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::PyPI does not serve ${version} after 5 minutes"
+          exit 1
+
+      - name: Install mcp-publisher
+        run: |
+          set -euo pipefail
+          curl -fsSLo mcp-publisher.tar.gz \
+            "https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}/mcp-publisher_linux_amd64.tar.gz"
+          echo "${MCP_PUBLISHER_SHA256}  mcp-publisher.tar.gz" | sha256sum -c -
+          tar xzf mcp-publisher.tar.gz mcp-publisher
+
+      - name: Publish to the MCP registry
+        run: |
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish

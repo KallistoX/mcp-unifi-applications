@@ -7,6 +7,14 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Docs refreshes now reach PyPI on their own. The weekly workflow merges its PRs
+  once the scrape has passed its tests, and cuts a patch release whenever scraped
+  documentation is the only unreleased change in the package; the MCP registry
+  listing is published with it. Until now every refresh waited for a manual
+  release, and Protect v7.3.56 sat merged but unpublished for three weeks.
+
 ## [0.4.0] - 2026-09-10
 
 ### Fixed

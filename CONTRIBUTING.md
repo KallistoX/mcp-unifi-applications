@@ -75,7 +75,7 @@ Tool failures come back as `result.isError: true` with the message in
 `CHANGELOG.md` follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Add your entry under `## [Unreleased]` in the same PR as the change, rather than
 reconstructing it at release time. On release, rename that heading to the version
-and open a fresh `Unreleased` section — the same text goes into the GitHub release
+and open a fresh `Unreleased` section. The same text goes into the GitHub release
 notes and into Glama's changelog field, which has to be filled in by hand.
 
 ## The README version table
@@ -86,20 +86,41 @@ The table in the Quick Start is generated from the committed
 
 Do not edit it by hand, and do not regenerate it inside a docs PR. The weekly
 `update-docs` workflow opens one PR per outdated app, and each would rewrite the
-same block from its own branch — so the first merge leaves the rest conflicting.
-`sync-readme-table.yml` regenerates it on `main` after the merge instead. Run the
-script locally if you want to preview the result.
+same block from its own branch, so the first merge would leave the rest
+conflicting. `sync-readme-table.yml` regenerates it on `main` after a merge
+instead, and because a merge made by the workflow itself may not start it,
+`scripts/release_docs.py` regenerates it in every automatic release as well. Run
+the script locally if you want to preview the result.
 
-## Publishing to the MCP Registry
+## Releases
 
-`server.json` is the manifest for the [official MCP registry](https://registry.modelcontextprotocol.io).
-Bump its `version` in the same commit as `pyproject.toml`'s, then publish with the
-[`mcp-publisher`](https://github.com/modelcontextprotocol/registry/tree/main/cmd/publisher) CLI:
+**Docs refreshes release themselves.** The weekly `update-docs` workflow merges
+each docs PR once the scrape has passed ruff and pytest, then calls `release.yml`.
+That runs `scripts/release_docs.py`, which compares `main` with the last tag. When
+scraped docs are the only change that ships in the package, it bumps the patch
+version in `pyproject.toml` and `server.json`, adds a dated changelog section that
+names each application's old and new API version, commits, tags, creates the
+GitHub release and dispatches `publish.yml`. Dispatch `release.yml` by hand to
+release docs that reached `main` some other way; `dry_run` shows the release
+commit without pushing anything.
+
+**Everything else is released by hand**, and the automatic release refuses to run
+while such a change is unreleased: anything under `src/` outside the scraped docs,
+or `pyproject.toml`. Bump the version in `pyproject.toml` and `server.json` in the
+same commit (a test checks that they agree), move the `Unreleased` entries under
+the new version, merge, and publish a GitHub release tagged `v<version>`.
+
+Either way, `publish.yml` builds and checks the wheel, uploads it to PyPI through
+Trusted Publishing, and publishes `server.json` to the
+[official MCP registry](https://registry.modelcontextprotocol.io) with
+`mcp-publisher login github-oidc`. There is no manual `mcp-publisher publish` step
+any more. Should the registry job fail, fix the cause and re-run that job; the
+workstation route still works as a fallback:
 
 ```bash
 mcp-publisher login github    # opens a browser; namespace io.github.KallistoX is proven by the login
 mcp-publisher publish
 ```
 
-The manifest currently carries repository metadata only. Once the package is on PyPI, add a
-`packages` entry (`registryType: "pypi"`) so clients can install it without cloning.
+Glama's changelog field is not covered. Glama has no write API, so it stays a
+manual step after either kind of release.

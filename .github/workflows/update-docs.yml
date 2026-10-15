@@ -146,14 +146,14 @@ jobs:
             echo "deleted=${deleted}"
           } >> "$GITHUB_OUTPUT"
 
-      # NOTE: PRs created with GITHUB_TOKEN do not trigger ci.yml (GitHub suppresses
-      # workflow events for Actions-created PRs). The merge gate for these PRs is the
-      # check job's ruff+pytest gate plus the pytest step above, which re-validates
-      # against the fresh docs before the PR opens.
+      # One branch per app, not per version: when upstream publishes again before
+      # a PR is merged, the action updates that PR instead of opening a second
+      # one next to it.
       - name: Open PR
+        id: cpr
         uses: peter-evans/create-pull-request@v7
         with:
-          branch: update-docs/${{ matrix.app }}-v${{ steps.stats.outputs.version }}
+          branch: update-docs/${{ matrix.app }}
           title: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
           commit-message: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
           # Deliberately does NOT include README.md. Every app's job would
@@ -168,3 +168,40 @@ jobs:
             - Scrape had no failed pages; pytest passed against the fresh docs (ruff + pytest also gated pre-scrape).
 
             Weekly `update-docs` workflow.
+
+      # The gate is the review: ruff and pytest before the scrape, pytest again
+      # against the fresh docs. ci.yml does start on these PRs, but every run
+      # waits for a maintainer to approve it, so waiting for it here would leave
+      # each docs PR open until someone clicks. release.yml (below) ships what
+      # lands on main.
+      - name: Merge the PR
+        if: steps.cpr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.cpr.outputs.pull-request-number }}
+          BRANCH: update-docs/${{ matrix.app }}
+        run: |
+          set -euo pipefail
+          # Matrix legs merge concurrently. The apps touch disjoint directories,
+          # so a refusal because another leg moved main first succeeds on retry.
+          for attempt in 1 2 3; do
+            gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --rebase && break
+            [ "$(gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json state --jq .state)" = MERGED ] && break
+            if [ "$attempt" -eq 3 ]; then
+              echo "::error::Could not merge #$PR"
+              exit 1
+            fi
+            sleep $((attempt * 15))
+          done
+          gh api -X DELETE "repos/$GITHUB_REPOSITORY/git/refs/heads/$BRANCH" || true
+
+  release:
+    needs: [check, scrape]
+    # Also when no app was outdated or one app's scrape failed: it releases
+    # whatever docs reached main since the last tag, so a merge that was never
+    # released goes out the following Monday.
+    if: ${{ !cancelled() && needs.check.result == 'success' }}
+    permissions:
+      contents: write
+      actions: write
+    uses: ./.github/workflows/release.yml

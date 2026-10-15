@@ -31,23 +31,33 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Regenerate the table
-        run: python3 scripts/update_readme_versions.py
-
-      - name: Commit if it changed
+      - name: Regenerate the table on the newest main and push it
         run: |
           set -euo pipefail
-          if git diff --quiet -- README.md; then
-            echo "Table already matches the committed _meta.json files."
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          # [skip ci] keeps a README-only commit from spending a full test matrix.
-          git commit -m "docs: sync README version table [skip ci]"
-          # Another docs PR may have landed while this ran; rebase rather than
-          # force, which the branch ruleset forbids on main anyway.
-          git pull --rebase origin main
-          git push
-          echo "Version table updated."
+          # Regenerate on top of the newest main instead of rebasing a commit
+          # made on an older one. Two docs merges seconds apart start two runs
+          # that both rewrite the same lines, so the second one's rebase
+          # conflicted (2026-10-15). The table is a pure function of the
+          # committed _meta.json files, so regenerating is always right.
+          for attempt in 1 2 3; do
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            python3 scripts/update_readme_versions.py
+            if git diff --quiet -- README.md; then
+              echo "Table already matches the committed _meta.json files."
+              exit 0
+            fi
+            git add README.md
+            # [skip ci] keeps a README-only commit from spending a full test matrix.
+            git commit -qm "docs: sync README version table [skip ci]"
+            # A plain push: the branch ruleset forbids force pushes on main.
+            if git push -q origin HEAD:main; then
+              echo "Version table updated."
+              exit 0
+            fi
+            echo "main moved during the push, regenerating (attempt ${attempt})."
+          done
+          echo "::error::Could not push the README table after 3 attempts"
+          exit 1
