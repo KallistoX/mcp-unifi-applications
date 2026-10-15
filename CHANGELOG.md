@@ -7,8 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-10-15
+
 ### Changed
 
+- Network API documentation updated from v10.4.57 to v10.6.106.
+- Protect API documentation updated from v7.3.47 to v7.3.70.
 - Docs refreshes now reach PyPI on their own. The weekly workflow merges its PRs
   once the scrape has passed its tests, and cuts a patch release whenever scraped
   documentation is the only unreleased change in the package; the MCP registry
@@ -208,7 +212,8 @@ answering a different question than the one asked.
 - Initial release: Network, Protect and Site Manager documentation served over stdio
   through ten MCP tools, with a Playwright scraper and a weekly refresh workflow.
 
-[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.4.1...HEAD
+[0.4.1]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.4.1
 [0.4.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.4.0
 [0.3.1]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.3.1
 [0.3.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.3.0
