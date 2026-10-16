@@ -122,5 +122,10 @@ mcp-publisher login github    # opens a browser; namespace io.github.KallistoX i
 mcp-publisher publish
 ```
 
-Glama's changelog field is not covered. Glama has no write API, so it stays a
-manual step after either kind of release.
+**Glama needs one click after every release.** Its listing auto-builds and releases
+the new version, but only once it has synced from GitHub, and nothing triggers that
+sync: press *Sync Server* on the listing's settings page. Without it the hosted
+deployment stays on the previous version; on 2026-10-16 it still served 0.4.0 the
+day after 0.4.1 shipped, then built and released 0.4.1 by itself once synced by
+hand. Glama has no write API, so neither the sync nor its changelog field can be
+automated.
