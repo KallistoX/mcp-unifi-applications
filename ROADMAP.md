@@ -117,3 +117,12 @@ bundled files.
 exist — see the related servers on
 [Glama](https://glama.ai/mcp/servers/KallistoX/mcp-unifi-applications). This server is
 useful precisely because it needs no credentials and touches nothing.
+
+**A check for Glama listing drift.** Specified in #55 and closed unbuilt. Glama's API
+exposes no version for a listing, so the spec compared the tool surface instead:
+names, descriptions, input schemas. That surface is identical in 0.3.1, 0.4.0 and
+0.4.1, so the check would have missed the very incident that motivated it (Glama
+serving 0.3.1 after 0.4.0), and every docs-only release after it. Making it sensitive
+would mean writing a version into a tool description purely for monitoring. The real
+gap was elsewhere anyway: Glama builds on its own, but only after its metadata has been
+synced from GitHub, and that sync is a button. See *Releases* in `CONTRIBUTING.md`.
