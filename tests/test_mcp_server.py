@@ -801,3 +801,31 @@ class TestToolMetadata:
             for name, schema in (tool.parameters or {}).get("properties", {}).items():
                 desc = (schema.get("description") or "").strip()
                 assert len(desc) > 15, f"{tool.name}.{name}: description is {len(desc)} chars"
+
+    def test_optional_parameters_are_plain_strings(self):
+        # `str | None` reaches clients as anyOf [string, null], which some render
+        # as a choice between two branches rather than an input field.
+        for tool in self._tools():
+            for name, schema in (tool.parameters or {}).get("properties", {}).items():
+                assert "anyOf" not in schema, f"{tool.name}.{name}: {schema}"
+
+    def test_explicit_null_still_means_absent(self):
+        # Dropping the null branch from the schema must not start rejecting the
+        # clients that send null for an unset parameter.
+        import asyncio
+
+        from fastmcp import Client
+
+        async def call(name, args):
+            async with Client(m.mcp) as client:
+                return await client.call_tool(name, args, raise_on_error=False)
+
+        for name, args, absent in [
+            ("list_endpoints", {"app": None, "method": None}, {}),
+            ("get_guide", {"topic": None, "app": None}, {}),
+            ("find_field", {"field_name": "siteId", "slug": None}, {"field_name": "siteId"}),
+        ]:
+            with_null = asyncio.run(call(name, args))
+            omitted = asyncio.run(call(name, absent))
+            assert not with_null.is_error, f"{name}: {with_null.content[0].text}"
+            assert with_null.content[0].text == omitted.content[0].text, name

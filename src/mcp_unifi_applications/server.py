@@ -9,9 +9,11 @@ import os
 import re
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
+from typing import Annotated
 
 from fastmcp import FastMCP
 from mcp.types import ToolAnnotations
+from pydantic import BeforeValidator
 from rapidfuzz import fuzz
 
 DOCS_DIR = Path(os.environ.get("DOCS_DIR", Path(__file__).parent / "docs"))
@@ -33,6 +35,13 @@ VALID_MODES = ("local", "remote")
 REMOTE_ONLY_APPS = frozenset({"site-manager", "mobility", "carrier-fabric"})
 MAX_LIST_LINES = 200
 MAX_FIELD_HITS = 50
+
+# An optional tool parameter. `str | None` becomes `anyOf: [string, null]` in the
+# input schema, which some clients render as a choice between two branches
+# instead of a text field. Plain `str` gives `type: string`, and the validator
+# keeps accepting an explicit null from clients that send one for "unset".
+# Every tool already treats "" as absent.
+OptionalStr = Annotated[str, BeforeValidator(lambda v: "" if v is None else v)]
 
 
 def _index_fields(fields: list[dict], slug: str, section: str, path: str = ""):
@@ -224,7 +233,7 @@ def _summarise_fields(
 
 
 @mcp.tool(annotations=READ_ONLY)
-def list_endpoints(method: str | None = None, app: str | None = None) -> str:
+def list_endpoints(method: OptionalStr = "", app: OptionalStr = "") -> str:
     """Browse the endpoint catalogue: one line per endpoint with method, path, slug
     and title.
 
@@ -381,7 +390,7 @@ def _resolve_slug(slug: str) -> tuple[str | None, str]:
 
 
 @mcp.tool(annotations=READ_ONLY)
-def search_endpoints(query: str, method: str | None = None, app: str | None = None) -> str:
+def search_endpoints(query: str, method: OptionalStr = "", app: OptionalStr = "") -> str:
     """Find endpoints by name, path fragment, method or description.
 
     Returns up to ten matches ranked by relevance, each as a slug, method, path,
@@ -485,7 +494,7 @@ def get_endpoint(slug: str, summary: bool = True) -> str:
 
 
 @mcp.tool(annotations=READ_ONLY)
-def get_example(slug: str, language: str = "curl", mode: str | None = None) -> str:
+def get_example(slug: str, language: str = "curl", mode: OptionalStr = "") -> str:
     """Get a runnable request for one endpoint, in one language, as published by
     Ubiquiti.
 
@@ -564,7 +573,7 @@ def get_response_sample(slug: str) -> str:
 
 
 @mcp.tool(annotations=READ_ONLY)
-def find_field(field_name: str, slug: str | None = None) -> str:
+def find_field(field_name: str, slug: OptionalStr = "") -> str:
     """Locate a field by name across every endpoint, including inside discriminator
     variants.
 
@@ -764,7 +773,7 @@ def get_endpoint_group(resource: str) -> str:
 
 
 @mcp.tool(annotations=READ_ONLY)
-def get_guide(topic: str | None = None, app: str | None = None) -> str:
+def get_guide(topic: OptionalStr = "", app: OptionalStr = "") -> str:
     """Read a prose guide page: filtering syntax, error handling, getting started,
     response formats.
 
