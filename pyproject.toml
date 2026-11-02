@@ -31,7 +31,8 @@ classifiers = [
     "Topic :: System :: Systems Administration",
 ]
 dependencies = [
-    "fastmcp>=3.4",
+    "fastmcp>=4.1",
+    "pydantic>=2.0",
     "rapidfuzz>=3.14.5",
 ]
 
