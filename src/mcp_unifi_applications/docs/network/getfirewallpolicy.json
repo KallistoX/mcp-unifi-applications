@@ -3603,6 +3603,14 @@
           "children": []
         },
         {
+          "name": "reportFlowEnabled",
+          "required": true,
+          "type": "boolean",
+          "description": "Report traffic matched by this policy in Insights Flows. Always false for the predefined Allow Return Traffic policies and the predefined policies allowing only multicast or IPv6 neighbor discovery traffic, which are never reported.",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "schedule",
           "required": false,
           "type": "object (Firewall schedule)",
@@ -5969,6 +5977,6 @@
       "ansible": "- name: Get Firewall Policy\n  ubiquiti.unifi_api.network:\n    path: \"/v1/sites/{siteId}/firewall/policies/{firewallPolicyId}\"\n    method: GET\n  register: result\n\n- debug:\n    var: result.data"
     }
   },
-  "responseSample": "{\n  \"action\": {\n    \"type\": \"string\"\n  },\n  \"connectionStateFilter\": [\n    \"NEW\"\n  ],\n  \"description\": \"string\",\n  \"destination\": {\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    },\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\"\n  },\n  \"enabled\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"index\": 0,\n  \"ipProtocolScope\": {\n    \"ipVersion\": \"string\"\n  },\n  \"ipsecFilter\": \"MATCH_ENCRYPTED\",\n  \"loggingEnabled\": true,\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"name\": \"string\",\n  \"schedule\": {\n    \"mode\": \"string\"\n  },\n  \"source\": {\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    },\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.6.106/getfirewallpolicy"
+  "responseSample": "{\n  \"action\": {\n    \"type\": \"string\"\n  },\n  \"connectionStateFilter\": [\n    \"NEW\"\n  ],\n  \"description\": \"string\",\n  \"destination\": {\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    },\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\"\n  },\n  \"enabled\": true,\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"index\": 0,\n  \"ipProtocolScope\": {\n    \"ipVersion\": \"string\"\n  },\n  \"ipsecFilter\": \"MATCH_ENCRYPTED\",\n  \"loggingEnabled\": true,\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"name\": \"string\",\n  \"reportFlowEnabled\": true,\n  \"schedule\": {\n    \"mode\": \"string\"\n  },\n  \"source\": {\n    \"trafficFilter\": {\n      \"type\": \"string\"\n    },\n    \"zoneId\": \"00000000-0000-0000-0000-000000000000\"\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/network/v11.0.97/getfirewallpolicy"
 }

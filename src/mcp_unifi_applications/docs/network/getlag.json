@@ -1560,5 +1560,5 @@
     }
   },
   "responseSample": "{\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"type\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.6.106/getlag"
+  "sourceUrl": "https://developer.ui.com/network/v11.0.97/getlag"
 }
