@@ -14,8 +14,8 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -e '.[dev]'
 
-# Node (scraper) — or use Docker
-npm install
+# Node (scraper, pinned in package.json) - or use Docker
+npm ci
 ```
 
 ## Running Tests
@@ -42,12 +42,115 @@ docker run --rm -v "$(pwd)/src/mcp_unifi_applications/docs:/output" unifi-scrape
 To run locally without Docker, install Playwright and its browser dependencies:
 
 ```bash
-npm install
+npm ci
 npx playwright install chromium
 node scrape.mjs --app network
 ```
 
 Note: when running locally, output goes to `/output` by default (the Docker mount point). Override by editing the `OUTPUT` constant or symlinking. Scraped docs belong in `src/mcp_unifi_applications/docs/<app>/` — they ship inside the package, so the server finds them after `pip install`.
+
+### Scraper CLI
+
+```
+node scrape.mjs [options] [slug...]
+
+Options:
+  --app <name>      Application: network (default), protect, site-manager, innerspace, mobility, carrier-fabric.
+  --version <ver>   API version to scrape (e.g. v10.1.84). Default: latest.
+  --list-versions   Print available versions and exit.
+  --force           Re-scrape even if output file exists.
+
+Arguments:
+  [slug...]         Scrape only these pages. Omit to scrape all pages.
+```
+
+The slug is the last path segment of the docs URL:
+`https://developer.ui.com/network/v10.1.84/createnetwork` -> `createnetwork`
+
+Output is written to `<output>/<app>/` — mount the package's docs directory (`src/mcp_unifi_applications/docs/`) so a scrape lands where the server reads it.
+
+The full scan is resumable - already-scraped pages are skipped. Use `--force` to re-scrape.
+
+The Docker image takes the same arguments, e.g.
+`docker run --rm unifi-scraper node scrape.mjs --app protect --list-versions`.
+
+Playwright is pinned twice and the two must agree: the version in `package.json`
+(locked in `package-lock.json`) and the tag of the `mcr.microsoft.com/playwright` base
+image in the `Dockerfile`, which ships the matching browsers.
+
+### Supported applications
+
+| Application | URL | Local/Remote | Notes |
+|---|---|---|---|
+| Network | `developer.ui.com/network` | Both | Default app |
+| Protect | `developer.ui.com/protect` | Both | |
+| Site Manager | `developer.ui.com/site-manager` | Remote only | No local/remote switch |
+| InnerSpace | `developer.ui.com/innerspace` | Both | Early Access; version label reads `v1.3.23 (EA)` |
+| Mobility | `developer.ui.com/mobility` | Remote only | Sidebar links out to `mobility.ui.com` |
+| Carrier Fabric | `developer.ui.com/carrier-fabric` | Remote only | Subscriber API |
+
+All applications share the same docs SPA structure with version dropdowns, endpoint pages, and guide pages, so adding one is a single entry in the `APPS` object in `scrape.mjs` — the server discovers new app directories on its own.
+
+### Serving a fresh scrape
+
+The server reads `src/mcp_unifi_applications/docs/` inside the installed package. Set
+`DOCS_DIR` to point it at another directory with one subdirectory per application
+(`network/`, `protect/`, ...), for example a checkout's freshly scraped output.
+
+### Output format
+
+What the scraper writes, and what the server reads.
+
+#### Endpoint pages
+
+```json
+{
+  "h1": "Create Network",
+  "method": "POST",
+  "path": "/v1/sites/{siteId}/networks",
+  "description": "Create a new network on a site.",
+  "pathParameters": [ "...fields" ],
+  "requestBody": [ "...fields" ],
+  "responses": [{ "statuses": ["201"], "fields": [ "...fields" ] }],
+  "examples": {
+    "local": { "curl": "...", "go": "...", "nodejs": "...", "python": "...", "ansible": "..." },
+    "remote": { "curl": "...", "go": "...", "nodejs": "...", "python": "...", "ansible": "..." }
+  },
+  "responseSample": "{ ... }",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/createnetwork"
+}
+```
+
+#### Guide pages
+
+```json
+{
+  "h1": "Filtering",
+  "type": "guide",
+  "content": "Markdown content...",
+  "sourceUrl": "https://developer.ui.com/network/v10.1.84/filtering"
+}
+```
+
+#### Field objects (recursive)
+
+```json
+{
+  "name": "management",
+  "required": true,
+  "type": "string",
+  "description": null,
+  "discriminator": [
+    { "value": "UNMANAGED", "selected": true, "schema": [ "...sibling fields" ] },
+    { "value": "GATEWAY", "selected": false, "schema": [ "...sibling fields" ] }
+  ],
+  "children": [ "...child fields for object types" ]
+}
+```
+
+- `discriminator.schema` contains sibling fields visible when that option is active (not the discriminator field itself)
+- Nesting is recursive - discriminators within variants are fully expanded
+- `children` captures statically expanded object fields
 
 ## Adding a New Application
 
@@ -57,6 +160,38 @@ If Ubiquiti adds a new developer docs application at `developer.ui.com/<app-name
 2. Run the scraper: `node scrape.mjs --app <app-name>`
 3. Add it to the version-check loop in `.github/workflows/update-docs.yml`
 4. The MCP server auto-discovers new app subdirectories under `src/mcp_unifi_applications/docs/` — no server changes needed
+
+## Project Structure
+
+```
+mcp-unifi-applications/
+├── scrape.mjs          # Playwright scraper (runs in Docker)
+├── lib/
+│   └── parse.mjs       # Scraper parsing logic, kept out of the browser so it is testable
+├── Dockerfile          # Scraper container image
+├── package.json        # Scraper dependencies (Playwright), locked in package-lock.json
+├── Dockerfile.mcp      # The MCP server as a container image
+├── pyproject.toml      # Python project config
+├── server.json         # MCP registry manifest
+├── CHANGELOG.md        # Keep a Changelog
+├── ROADMAP.md          # What is planned, what is not, and why
+├── glama.json          # Glama maintainer declaration
+├── src/
+│   └── mcp_unifi_applications/
+│       ├── server.py   # MCP server (Python, stdio transport)
+│       └── docs/       # Scraped JSON, shipped with the package
+│           ├── network/
+│           ├── protect/
+│           ├── site-manager/
+│           ├── innerspace/
+│           ├── mobility/
+│           └── carrier-fabric/
+├── scripts/
+│   └── update_readme_versions.py   # Regenerates the README version table (run on main by CI)
+└── tests/
+    ├── test_mcp_server.py    # pytest
+    └── scrape-parse.test.mjs # node --test
+```
 
 ## Pull Requests
 
@@ -80,7 +215,7 @@ notes and into Glama's changelog field, which has to be filled in by hand.
 
 ## The README version table
 
-The table in the Quick Start is generated from the committed
+The table under *Install* in the README is generated from the committed
 `src/mcp_unifi_applications/docs/<app>/_meta.json` files by
 `scripts/update_readme_versions.py`, between the `<!-- docs-versions -->` markers.
 

@@ -7,6 +7,23 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Optional tool parameters are plain strings in the input schema rather than
+  `anyOf: [string, null]`, which some clients rendered as a choice between two
+  branches instead of a text field. An explicit `null` is still accepted and still
+  means "not given".
+- Requires fastmcp 4.1 or later. The old floor of 3.4 was never tested; CI only
+  ever ran against the newest release.
+- The README is shorter and leads with installation through `uvx` and a
+  `claude mcp add` one-liner, so the server no longer has to be on the client's
+  `PATH`. Scraper and contributor material moved to `CONTRIBUTING.md`.
+- The scraper image pins Playwright: base image and npm package are both 1.64.1,
+  locked in `package-lock.json`. Until now the image was 1.58.2 while `npm install`
+  pulled whatever Playwright was newest, plus an unused package.
+- GitHub Actions moved to their current major versions; Dependabot keeps them,
+  the scraper's npm dependencies and its base image current.
+
 ## [0.4.2] - 2026-11-02
 
 ### Changed
