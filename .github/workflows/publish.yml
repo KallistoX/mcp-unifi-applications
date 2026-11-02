@@ -15,9 +15,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -29,7 +29,7 @@ jobs:
       - name: Verify the wheel ships the server and its docs
         run: python scripts/check_wheel.py
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
@@ -41,7 +41,7 @@ jobs:
     permissions:
       id-token: write  # Trusted Publishing, no API token stored in the repo
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           name: dist
           path: dist/
@@ -61,7 +61,7 @@ jobs:
       MCP_PUBLISHER_VERSION: v1.8.1
       MCP_PUBLISHER_SHA256: a06c9096dcb9727c13555b6be26c7effa707b01f06a4c561ba7a3635443cf2cc
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       # The registry verifies the package against PyPI's JSON API, which can lag
       # the upload. Publishing before PyPI serves the version is rejected.
