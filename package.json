@@ -1,0 +1,9 @@
+{
+  "name": "unifi-docs-scraper",
+  "private": true,
+  "description": "Playwright scraper for developer.ui.com. Not published; the MCP server is the Python package.",
+  "type": "module",
+  "dependencies": {
+    "playwright": "1.64.1"
+  }
+}

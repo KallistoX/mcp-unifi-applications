@@ -31,7 +31,7 @@ jobs:
       group: release
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           # Always main: when update-docs calls this, its own commit predates the
           # merges it just made.
@@ -39,7 +39,7 @@ jobs:
           # The last tag and everything since it.
           fetch-depth: 0
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 

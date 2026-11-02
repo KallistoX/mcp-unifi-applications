@@ -1,0 +1,28 @@
+# Python dependencies are deliberately absent: pyproject.toml carries lower
+# bounds, not pins, CI always tests the newest releases, and a floor bump is a
+# package change that blocks the automatic docs release until a manual one.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  # The scraper: playwright in package.json and the Playwright base image in
+  # the Dockerfile ship together. The Dockerfile survives the two drifting
+  # apart, but merge both PRs so they match again.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: monthly
+    ignore:
+      # Dockerfile.mcp's python:3.12-slim tracks the Python the workflows use.
+      - dependency-name: python

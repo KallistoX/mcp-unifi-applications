@@ -27,9 +27,9 @@ jobs:
     outputs:
       apps: ${{ steps.compare.outputs.apps }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -96,7 +96,7 @@ jobs:
       matrix:
         app: ${{ fromJSON(needs.check.outputs.apps) }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Build scraper image
         run: docker build -t unifi-scraper .
@@ -121,7 +121,7 @@ jobs:
             exit 1
           fi
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
@@ -151,7 +151,7 @@ jobs:
       # one next to it.
       - name: Open PR
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: update-docs/${{ matrix.app }}
           title: "docs(${{ matrix.app }}): update scraped docs to v${{ steps.stats.outputs.version }}"
