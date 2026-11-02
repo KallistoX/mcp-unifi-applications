@@ -7,6 +7,8 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-02
+
 ### Changed
 
 - Optional tool parameters are plain strings in the input schema rather than
@@ -236,7 +238,8 @@ answering a different question than the one asked.
 - Initial release: Network, Protect and Site Manager documentation served over stdio
   through ten MCP tools, with a Playwright scraper and a weekly refresh workflow.
 
-[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.4.2...HEAD
+[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.5.0
 [0.4.2]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.4.2
 [0.4.1]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.4.1
 [0.4.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.4.0
