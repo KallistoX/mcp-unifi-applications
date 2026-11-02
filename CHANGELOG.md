@@ -7,6 +7,13 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-11-02
+
+### Changed
+
+- Network API documentation updated from v10.6.106 to v11.0.97.
+- Protect API documentation updated from v7.3.70 to v7.3.74.
+
 ## [0.4.1] - 2026-10-15
 
 ### Changed
@@ -212,7 +219,8 @@ answering a different question than the one asked.
 - Initial release: Network, Protect and Site Manager documentation served over stdio
   through ten MCP tools, with a Playwright scraper and a weekly refresh workflow.
 
-[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/KallistoX/mcp-unifi-applications/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.4.2
 [0.4.1]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.4.1
 [0.4.0]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.4.0
 [0.3.1]: https://github.com/KallistoX/mcp-unifi-applications/releases/tag/v0.3.1

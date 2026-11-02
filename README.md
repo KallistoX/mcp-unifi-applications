@@ -84,8 +84,8 @@ API key to configure. What you get:
 <!-- docs-versions:start -->
 | Application | API version | Scraped | Pages |
 |---|---|---|---|
-| Network | v10.6.106 | 2026-10-12 | 82 |
-| Protect | v7.3.70 | 2026-10-12 | 81 |
+| Network | v11.0.97 | 2026-11-02 | 82 |
+| Protect | v7.3.74 | 2026-11-02 | 81 |
 | Site Manager | v1.0.0 | 2026-09-10 | 12 |
 | InnerSpace | v1.3.23 | 2026-09-10 | 12 |
 | Mobility | v1.0.0 | 2026-09-10 | 9 |
