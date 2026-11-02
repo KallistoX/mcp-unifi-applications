@@ -80,25 +80,13 @@ of its 463 variants replays the full click path from the root. The weekly job on
 scrapes applications whose upstream version changed, so this is rarely felt — worth
 doing when it starts to hurt, not before.
 
-## Smaller things worth doing
-
-- Optional parameters are typed `str | None`, which JSON Schema encodes as
-  `anyOf: [string, null]`. Some clients render that as a choice between two branches
-  rather than an input field. Since every optional parameter already treats an empty
-  string as absent, plain string types would be equivalent in behaviour and simpler for
-  clients and models to consume.
-- `CONTRIBUTING` should note that tool failures come back as `result.isError: true` with
-  the message in `result.content[].text`, not as a JSON-RPC `error`. A test driver that
-  only checks for `error` reads every failure as a success — this has now cost two
-  people time.
-
 ## Not planned
 
-**The 2026-07-28 specification features.** The server negotiates up to `2025-11-25`, the
-maximum FastMCP 4.0.3 supports, and correctly negotiates down when a client offers
-something newer. When FastMCP adopts the revision it will arrive with a dependency
-update. Adopting its features deliberately is a different question, and the answer is
-no:
+**The 2026-07-28 specification features.** The server negotiates up to `2025-11-25`:
+FastMCP 4.1.5 still answers an `initialize` that offers `2026-07-28` with
+`2025-11-25`, and negotiates down correctly for anything newer. When FastMCP adopts
+the revision it will arrive with a dependency update. Adopting its features
+deliberately is a different question, and the answer is no:
 
 | Feature | Applies here? |
 |---|---|
