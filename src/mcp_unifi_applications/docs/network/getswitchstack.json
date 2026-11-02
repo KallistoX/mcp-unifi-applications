@@ -504,5 +504,5 @@
     }
   },
   "responseSample": "{\n  \"deviceId\": \"00000000-0000-0000-0000-000000000000\",\n  \"id\": \"00000000-0000-0000-0000-000000000000\",\n  \"lags\": [\n    {\n      \"id\": \"00000000-0000-0000-0000-000000000000\",\n      \"members\": [\n        {\n          \"portIdxs\": [\n            0\n          ],\n          \"unitId\": 0,\n          \"unitMacAddress\": \"string\"\n        }\n      ],\n      \"metadata\": {\n        \"origin\": \"string\"\n      }\n    }\n  ],\n  \"metadata\": {\n    \"origin\": \"string\"\n  },\n  \"name\": \"string\",\n  \"units\": [\n    {\n      \"id\": 0,\n      \"macAddress\": \"string\",\n      \"order\": 0,\n      \"role\": \"ACTIVE_CONTROLLER\"\n    }\n  ]\n}",
-  "sourceUrl": "https://developer.ui.com/network/v10.6.106/getswitchstack"
+  "sourceUrl": "https://developer.ui.com/network/v11.0.97/getswitchstack"
 }
