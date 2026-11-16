@@ -80,6 +80,11 @@
     "file": "get-v1subscribeevents.json"
   },
   {
+    "slug": "get-v1subscribeupdates",
+    "title": "Get update messages for selected models",
+    "file": "get-v1subscribeupdates.json"
+  },
+  {
     "slug": "post-v1camerasidptzpatrolstartslot",
     "title": "Start a camera PTZ patrol",
     "file": "post-v1camerasidptzpatrolstartslot.json"
@@ -133,6 +138,41 @@
     "slug": "post-v1arm-profilesdisable",
     "title": "Disable arm alarm",
     "file": "post-v1arm-profilesdisable.json"
+  },
+  {
+    "slug": "get-v1externalarm-profiles",
+    "title": "Get external arm profiles",
+    "file": "get-v1externalarm-profiles.json"
+  },
+  {
+    "slug": "post-v1externalarm-profiles",
+    "title": "Create an external arm profile",
+    "file": "post-v1externalarm-profiles.json"
+  },
+  {
+    "slug": "get-v1externalarm-profilesid",
+    "title": "Get an external arm profile",
+    "file": "get-v1externalarm-profilesid.json"
+  },
+  {
+    "slug": "patch-v1externalarm-profilesid",
+    "title": "Update an external arm profile",
+    "file": "patch-v1externalarm-profilesid.json"
+  },
+  {
+    "slug": "delete-v1externalarm-profilesid",
+    "title": "Delete an external arm profile",
+    "file": "delete-v1externalarm-profilesid.json"
+  },
+  {
+    "slug": "post-v1externalarm-profilesidactionsarm",
+    "title": "Arm an external arm profile",
+    "file": "post-v1externalarm-profilesidactionsarm.json"
+  },
+  {
+    "slug": "post-v1externalarm-profilesidactionsdisarm",
+    "title": "Disarm an external arm profile",
+    "file": "post-v1externalarm-profilesidactionsdisarm.json"
   },
   {
     "slug": "get-v1lightsid",
@@ -293,6 +333,11 @@
     "slug": "post-v1speakersidtest-sound",
     "title": "Test speaker sound",
     "file": "post-v1speakersidtest-sound.json"
+  },
+  {
+    "slug": "post-v1speakersidstop-siren",
+    "title": "Stop speaker siren",
+    "file": "post-v1speakersidstop-siren.json"
   },
   {
     "slug": "get-v1bridgesid",

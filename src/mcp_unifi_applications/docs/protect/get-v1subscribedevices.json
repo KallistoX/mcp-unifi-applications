@@ -78,6 +78,23 @@
                       "children": []
                     },
                     {
+                      "name": "featureFlags",
+                      "required": true,
+                      "type": "object",
+                      "description": "Feature flags.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "useExternalAlarmManager",
+                          "required": true,
+                          "type": "boolean",
+                          "description": "Whether UniFi OS runs the external Alarm Manager instead of Protect. When false, Protect runs the local Alarm Manager; when true, UniFi OS runs the external Alarm Manager.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
                       "name": "doorbellSettings",
                       "required": true,
                       "type": "object",
@@ -139,14 +156,14 @@
                       "name": "armMode",
                       "required": true,
                       "type": "object",
-                      "description": null,
+                      "description": "Local Alarm Manager profile arm state. Use this when `nvr.featureFlags.useExternalAlarmManager` is false. When it is true, retrieve External Alarm Manager profile state from `GET /integration/v1/external/arm-profiles`.",
                       "discriminator": null,
                       "children": [
                         {
                           "name": "status",
                           "required": true,
                           "type": "string",
-                          "description": null,
+                          "description": "Current arm status: armed, arming, breach, or disabled.",
                           "discriminator": null,
                           "children": []
                         },
@@ -154,7 +171,7 @@
                           "name": "armProfileId",
                           "required": true,
                           "type": "string | null",
-                          "description": null,
+                          "description": "Which arm profile is currently selected.",
                           "discriminator": null,
                           "children": []
                         },
@@ -162,7 +179,7 @@
                           "name": "armedAt",
                           "required": true,
                           "type": "number | null",
-                          "description": null,
+                          "description": "Unix timestamp in milliseconds when the profile became armed.",
                           "discriminator": null,
                           "children": []
                         },
@@ -170,7 +187,7 @@
                           "name": "willBeArmedAt",
                           "required": true,
                           "type": "number | null",
-                          "description": null,
+                          "description": "Unix timestamp in milliseconds when an arming profile will become armed.",
                           "discriminator": null,
                           "children": []
                         },
@@ -178,7 +195,7 @@
                           "name": "breachDetectedAt",
                           "required": true,
                           "type": "number | null",
-                          "description": null,
+                          "description": "Unix timestamp in milliseconds when a breach was detected.",
                           "discriminator": null,
                           "children": []
                         },
@@ -186,7 +203,7 @@
                           "name": "breachEventCount",
                           "required": true,
                           "type": "number",
-                          "description": null,
+                          "description": "Number of breach events detected.",
                           "discriminator": null,
                           "children": []
                         },
@@ -194,7 +211,7 @@
                           "name": "breachTriggerEventId",
                           "required": true,
                           "type": "string | null",
-                          "description": null,
+                          "description": "Event ID of the breach trigger.",
                           "discriminator": null,
                           "children": []
                         },
@@ -202,7 +219,7 @@
                           "name": "breachEventId",
                           "required": true,
                           "type": "string | null",
-                          "description": null,
+                          "description": "Event ID of the breach.",
                           "discriminator": null,
                           "children": []
                         }
@@ -272,6 +289,23 @@
                       "children": []
                     },
                     {
+                      "name": "featureFlags",
+                      "required": false,
+                      "type": "object",
+                      "description": "Feature flags.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "useExternalAlarmManager",
+                          "required": true,
+                          "type": "boolean",
+                          "description": "Whether UniFi OS runs the external Alarm Manager instead of Protect. When false, Protect runs the local Alarm Manager; when true, UniFi OS runs the external Alarm Manager.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
                       "name": "doorbellSettings",
                       "required": false,
                       "type": "object",
@@ -333,14 +367,14 @@
                       "name": "armMode",
                       "required": false,
                       "type": "object",
-                      "description": null,
+                      "description": "Local Alarm Manager profile arm state. Use this when `nvr.featureFlags.useExternalAlarmManager` is false. When it is true, retrieve External Alarm Manager profile state from `GET /integration/v1/external/arm-profiles`.",
                       "discriminator": null,
                       "children": [
                         {
                           "name": "status",
                           "required": true,
                           "type": "string",
-                          "description": null,
+                          "description": "Current arm status: armed, arming, breach, or disabled.",
                           "discriminator": null,
                           "children": []
                         },
@@ -348,7 +382,7 @@
                           "name": "armProfileId",
                           "required": true,
                           "type": "string | null",
-                          "description": null,
+                          "description": "Which arm profile is currently selected.",
                           "discriminator": null,
                           "children": []
                         },
@@ -356,7 +390,7 @@
                           "name": "armedAt",
                           "required": true,
                           "type": "number | null",
-                          "description": null,
+                          "description": "Unix timestamp in milliseconds when the profile became armed.",
                           "discriminator": null,
                           "children": []
                         },
@@ -364,7 +398,7 @@
                           "name": "willBeArmedAt",
                           "required": true,
                           "type": "number | null",
-                          "description": null,
+                          "description": "Unix timestamp in milliseconds when an arming profile will become armed.",
                           "discriminator": null,
                           "children": []
                         },
@@ -372,7 +406,7 @@
                           "name": "breachDetectedAt",
                           "required": true,
                           "type": "number | null",
-                          "description": null,
+                          "description": "Unix timestamp in milliseconds when a breach was detected.",
                           "discriminator": null,
                           "children": []
                         },
@@ -380,7 +414,7 @@
                           "name": "breachEventCount",
                           "required": true,
                           "type": "number",
-                          "description": null,
+                          "description": "Number of breach events detected.",
                           "discriminator": null,
                           "children": []
                         },
@@ -388,7 +422,7 @@
                           "name": "breachTriggerEventId",
                           "required": true,
                           "type": "string | null",
-                          "description": null,
+                          "description": "Event ID of the breach trigger.",
                           "discriminator": null,
                           "children": []
                         },
@@ -396,7 +430,7 @@
                           "name": "breachEventId",
                           "required": true,
                           "type": "string | null",
-                          "description": null,
+                          "description": "Event ID of the breach.",
                           "discriminator": null,
                           "children": []
                         }
@@ -496,6 +530,23 @@
               "children": []
             },
             {
+              "name": "featureFlags",
+              "required": true,
+              "type": "object",
+              "description": "Feature flags.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "useExternalAlarmManager",
+                  "required": true,
+                  "type": "boolean",
+                  "description": "Whether UniFi OS runs the external Alarm Manager instead of Protect. When false, Protect runs the local Alarm Manager; when true, UniFi OS runs the external Alarm Manager.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
               "name": "doorbellSettings",
               "required": true,
               "type": "object",
@@ -557,14 +608,14 @@
               "name": "armMode",
               "required": true,
               "type": "object",
-              "description": null,
+              "description": "Local Alarm Manager profile arm state. Use this when `nvr.featureFlags.useExternalAlarmManager` is false. When it is true, retrieve External Alarm Manager profile state from `GET /integration/v1/external/arm-profiles`.",
               "discriminator": null,
               "children": [
                 {
                   "name": "status",
                   "required": true,
                   "type": "string",
-                  "description": null,
+                  "description": "Current arm status: armed, arming, breach, or disabled.",
                   "discriminator": null,
                   "children": []
                 },
@@ -572,7 +623,7 @@
                   "name": "armProfileId",
                   "required": true,
                   "type": "string | null",
-                  "description": null,
+                  "description": "Which arm profile is currently selected.",
                   "discriminator": null,
                   "children": []
                 },
@@ -580,7 +631,7 @@
                   "name": "armedAt",
                   "required": true,
                   "type": "number | null",
-                  "description": null,
+                  "description": "Unix timestamp in milliseconds when the profile became armed.",
                   "discriminator": null,
                   "children": []
                 },
@@ -588,7 +639,7 @@
                   "name": "willBeArmedAt",
                   "required": true,
                   "type": "number | null",
-                  "description": null,
+                  "description": "Unix timestamp in milliseconds when an arming profile will become armed.",
                   "discriminator": null,
                   "children": []
                 },
@@ -596,7 +647,7 @@
                   "name": "breachDetectedAt",
                   "required": true,
                   "type": "number | null",
-                  "description": null,
+                  "description": "Unix timestamp in milliseconds when a breach was detected.",
                   "discriminator": null,
                   "children": []
                 },
@@ -604,7 +655,7 @@
                   "name": "breachEventCount",
                   "required": true,
                   "type": "number",
-                  "description": null,
+                  "description": "Number of breach events detected.",
                   "discriminator": null,
                   "children": []
                 },
@@ -612,7 +663,7 @@
                   "name": "breachTriggerEventId",
                   "required": true,
                   "type": "string | null",
-                  "description": null,
+                  "description": "Event ID of the breach trigger.",
                   "discriminator": null,
                   "children": []
                 },
@@ -620,7 +671,7 @@
                   "name": "breachEventId",
                   "required": true,
                   "type": "string | null",
-                  "description": null,
+                  "description": "Event ID of the breach.",
                   "discriminator": null,
                   "children": []
                 }
@@ -643,6 +694,6 @@
       "python": "import asyncio\nimport websockets\n\n\nasync def main():\n    url = \"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/devices\"\n    headers = {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n    }\n    async with websockets.connect(url, additional_headers=headers) as ws:\n        async for message in ws:\n            print(message)\n\n\nasyncio.run(main())"
     }
   },
-  "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\",\n    \"guid\": null,\n    \"mac\": \"string\",\n    \"doorbellSettings\": {\n      \"defaultMessageText\": \"string\",\n      \"defaultMessageResetTimeoutMs\": 0,\n      \"customMessages\": [\n        \"string\"\n      ],\n      \"customImages\": [\n        {\n          \"preview\": \"string\",\n          \"sprite\": \"string\"\n        }\n      ]\n    },\n    \"armMode\": {\n      \"status\": \"arming\",\n      \"armProfileId\": null,\n      \"armedAt\": null,\n      \"willBeArmedAt\": null,\n      \"breachDetectedAt\": null,\n      \"breachEventCount\": 0,\n      \"breachTriggerEventId\": null,\n      \"breachEventId\": null\n    }\n  }\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.3.74/get-v1subscribedevices"
+  "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\",\n    \"guid\": null,\n    \"mac\": \"string\",\n    \"featureFlags\": {\n      \"useExternalAlarmManager\": true\n    },\n    \"doorbellSettings\": {\n      \"defaultMessageText\": \"string\",\n      \"defaultMessageResetTimeoutMs\": 0,\n      \"customMessages\": [\n        \"string\"\n      ],\n      \"customImages\": [\n        {\n          \"preview\": \"string\",\n          \"sprite\": \"string\"\n        }\n      ]\n    },\n    \"armMode\": {\n      \"status\": \"arming\",\n      \"armProfileId\": null,\n      \"armedAt\": null,\n      \"willBeArmedAt\": null,\n      \"breachDetectedAt\": null,\n      \"breachEventCount\": 0,\n      \"breachTriggerEventId\": null,\n      \"breachEventId\": null\n    }\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.4.99/get-v1subscribedevices"
 }

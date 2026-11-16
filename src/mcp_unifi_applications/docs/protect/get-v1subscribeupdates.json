@@ -1,0 +1,708 @@
+{
+  "h1": "Get update messages for selected models",
+  "method": "WS",
+  "path": "/v1/subscribe/updates",
+  "description": "A WebSocket subscription for changes to models selected by model key. Messages describe models being created, updated or removed and may include multiple model IDs. Event messages describe creations and updates only; event removals are not sent.",
+  "pathParameters": [],
+  "queryParameters": [
+    {
+      "name": "modelKeys",
+      "required": true,
+      "type": "string",
+      "description": "Model keys to subscribe to, comma-separated or supplied as repeated query parameters: nvr, camera, chime, light, viewer, speaker, bridge, sensor, siren, fob, relay, aiProcessor, aiPort, linkStation, event, externalArmProfile.",
+      "discriminator": null,
+      "children": []
+    }
+  ],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "type",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": [
+            {
+              "value": "add",
+              "selected": true,
+              "schema": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "type": "object (device)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "modelKey",
+                      "required": true,
+                      "type": "string",
+                      "description": "The model key of the nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "type",
+                      "required": true,
+                      "type": "string",
+                      "description": "The NVR model name.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "guid",
+                      "required": true,
+                      "type": "string | null",
+                      "description": "GUID of the NVR",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "mac",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary MAC address of the device.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "featureFlags",
+                      "required": true,
+                      "type": "object",
+                      "description": "Feature flags.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "useExternalAlarmManager",
+                          "required": true,
+                          "type": "boolean",
+                          "description": "Whether UniFi OS runs the external Alarm Manager instead of Protect. When false, Protect runs the local Alarm Manager; when true, UniFi OS runs the external Alarm Manager.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "doorbellSettings",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "defaultMessageText",
+                          "required": false,
+                          "type": "string",
+                          "description": "Default text to display on the LCD screen.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "defaultMessageResetTimeoutMs",
+                          "required": false,
+                          "type": "number",
+                          "description": "Default timeout for resetting LCD screen to the default message.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "customMessages",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "A list of custom doorbell messages.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "customImages",
+                          "required": false,
+                          "type": "Array of object",
+                          "description": "A list of custom doorbell images for client preview.",
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "preview",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "sprite",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "armMode",
+                      "required": true,
+                      "type": "object",
+                      "description": "Local Alarm Manager profile arm state. Use this when `nvr.featureFlags.useExternalAlarmManager` is false. When it is true, retrieve External Alarm Manager profile state from `GET /integration/v1/external/arm-profiles`.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "status",
+                          "required": true,
+                          "type": "string",
+                          "description": "Current arm status: armed, arming, breach, or disabled.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "armProfileId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": "Which arm profile is currently selected.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "armedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": "Unix timestamp in milliseconds when the profile became armed.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "willBeArmedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": "Unix timestamp in milliseconds when an arming profile will become armed.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachDetectedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": "Unix timestamp in milliseconds when a breach was detected.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachEventCount",
+                          "required": true,
+                          "type": "number",
+                          "description": "Number of breach events detected.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachTriggerEventId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": "Event ID of the breach trigger.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachEventId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": "Event ID of the breach.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "update",
+              "selected": false,
+              "schema": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "type": "object (devicePartialWithReference)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "modelKey",
+                      "required": true,
+                      "type": "string",
+                      "description": "The model key of the nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "name",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "type",
+                      "required": false,
+                      "type": "string",
+                      "description": "The NVR model name.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "guid",
+                      "required": false,
+                      "type": "string | null",
+                      "description": "GUID of the NVR",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "mac",
+                      "required": false,
+                      "type": "string",
+                      "description": "The primary MAC address of the device.",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "featureFlags",
+                      "required": false,
+                      "type": "object",
+                      "description": "Feature flags.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "useExternalAlarmManager",
+                          "required": true,
+                          "type": "boolean",
+                          "description": "Whether UniFi OS runs the external Alarm Manager instead of Protect. When false, Protect runs the local Alarm Manager; when true, UniFi OS runs the external Alarm Manager.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "doorbellSettings",
+                      "required": false,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "defaultMessageText",
+                          "required": false,
+                          "type": "string",
+                          "description": "Default text to display on the LCD screen.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "defaultMessageResetTimeoutMs",
+                          "required": false,
+                          "type": "number",
+                          "description": "Default timeout for resetting LCD screen to the default message.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "customMessages",
+                          "required": false,
+                          "type": "Array of string",
+                          "description": "A list of custom doorbell messages.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "customImages",
+                          "required": false,
+                          "type": "Array of object",
+                          "description": "A list of custom doorbell images for client preview.",
+                          "discriminator": null,
+                          "children": [
+                            {
+                              "name": "preview",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            },
+                            {
+                              "name": "sprite",
+                              "required": true,
+                              "type": "string",
+                              "description": null,
+                              "discriminator": null,
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "name": "armMode",
+                      "required": false,
+                      "type": "object",
+                      "description": "Local Alarm Manager profile arm state. Use this when `nvr.featureFlags.useExternalAlarmManager` is false. When it is true, retrieve External Alarm Manager profile state from `GET /integration/v1/external/arm-profiles`.",
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "status",
+                          "required": true,
+                          "type": "string",
+                          "description": "Current arm status: armed, arming, breach, or disabled.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "armProfileId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": "Which arm profile is currently selected.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "armedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": "Unix timestamp in milliseconds when the profile became armed.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "willBeArmedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": "Unix timestamp in milliseconds when an arming profile will become armed.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachDetectedAt",
+                          "required": true,
+                          "type": "number | null",
+                          "description": "Unix timestamp in milliseconds when a breach was detected.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachEventCount",
+                          "required": true,
+                          "type": "number",
+                          "description": "Number of breach events detected.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachTriggerEventId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": "Event ID of the breach trigger.",
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "breachEventId",
+                          "required": true,
+                          "type": "string | null",
+                          "description": "Event ID of the breach.",
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "value": "remove",
+              "selected": false,
+              "schema": [
+                {
+                  "name": "item",
+                  "required": true,
+                  "type": "object (deviceReference)",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "id",
+                      "required": true,
+                      "type": "string",
+                      "description": "The primary key of nvr",
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "modelKey",
+                      "required": true,
+                      "type": "string",
+                      "description": "The model key of the nvr",
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "children": []
+        },
+        {
+          "name": "item",
+          "required": true,
+          "type": "object (device)",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "id",
+              "required": true,
+              "type": "string",
+              "description": "The primary key of nvr",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "modelKey",
+              "required": true,
+              "type": "string",
+              "description": "The model key of the nvr",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "name",
+              "required": true,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "type",
+              "required": true,
+              "type": "string",
+              "description": "The NVR model name.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "guid",
+              "required": true,
+              "type": "string | null",
+              "description": "GUID of the NVR",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "mac",
+              "required": true,
+              "type": "string",
+              "description": "The primary MAC address of the device.",
+              "discriminator": null,
+              "children": []
+            },
+            {
+              "name": "featureFlags",
+              "required": true,
+              "type": "object",
+              "description": "Feature flags.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "useExternalAlarmManager",
+                  "required": true,
+                  "type": "boolean",
+                  "description": "Whether UniFi OS runs the external Alarm Manager instead of Protect. When false, Protect runs the local Alarm Manager; when true, UniFi OS runs the external Alarm Manager.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "name": "doorbellSettings",
+              "required": true,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "defaultMessageText",
+                  "required": false,
+                  "type": "string",
+                  "description": "Default text to display on the LCD screen.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "defaultMessageResetTimeoutMs",
+                  "required": false,
+                  "type": "number",
+                  "description": "Default timeout for resetting LCD screen to the default message.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "customMessages",
+                  "required": false,
+                  "type": "Array of string",
+                  "description": "A list of custom doorbell messages.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "customImages",
+                  "required": false,
+                  "type": "Array of object",
+                  "description": "A list of custom doorbell images for client preview.",
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "preview",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    },
+                    {
+                      "name": "sprite",
+                      "required": true,
+                      "type": "string",
+                      "description": null,
+                      "discriminator": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "armMode",
+              "required": true,
+              "type": "object",
+              "description": "Local Alarm Manager profile arm state. Use this when `nvr.featureFlags.useExternalAlarmManager` is false. When it is true, retrieve External Alarm Manager profile state from `GET /integration/v1/external/arm-profiles`.",
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "status",
+                  "required": true,
+                  "type": "string",
+                  "description": "Current arm status: armed, arming, breach, or disabled.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "armProfileId",
+                  "required": true,
+                  "type": "string | null",
+                  "description": "Which arm profile is currently selected.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "armedAt",
+                  "required": true,
+                  "type": "number | null",
+                  "description": "Unix timestamp in milliseconds when the profile became armed.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "willBeArmedAt",
+                  "required": true,
+                  "type": "number | null",
+                  "description": "Unix timestamp in milliseconds when an arming profile will become armed.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "breachDetectedAt",
+                  "required": true,
+                  "type": "number | null",
+                  "description": "Unix timestamp in milliseconds when a breach was detected.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "breachEventCount",
+                  "required": true,
+                  "type": "number",
+                  "description": "Number of breach events detected.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "breachTriggerEventId",
+                  "required": true,
+                  "type": "string | null",
+                  "description": "Event ID of the breach trigger.",
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "breachEventId",
+                  "required": true,
+                  "type": "string | null",
+                  "description": "Event ID of the breach.",
+                  "discriminator": null,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "go": "package main\n\nimport (\n\t\"log\"\n\t\"net/http\"\n\n\t\"github.com/gorilla/websocket\"\n)\n\nfunc main() {\n\theader := http.Header{}\n\theader.Set(\"Accept\", \"application/json\")\n\theader.Set(\"X-API-Key\", \"<X-API-Key>\")\n\n\tconn, _, err := websocket.DefaultDialer.Dial(\"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/updates?modelKeys=%7BmodelKeys%7D\", header)\n\tif err != nil {\n\t\tlog.Fatal(\"dial:\", err)\n\t}\n\tdefer conn.Close()\n\n\tfor {\n\t\t_, message, err := conn.ReadMessage()\n\t\tif err != nil {\n\t\t\tlog.Println(\"read:\", err)\n\t\t\treturn\n\t\t}\n\t\tlog.Printf(\"recv: %s\", message)\n\t}\n}",
+      "nodejs": "const WebSocket = require(\"ws\");\n\n\nconst ws = new WebSocket(\"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/updates?modelKeys=%7BmodelKeys%7D\", {\n  headers: {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n  },\n});\n\n\nws.on(\"open\", () => console.log(\"connected\"));\nws.on(\"message\", (data) => console.log(data.toString()));\nws.on(\"close\", () => console.log(\"disconnected\"));\nws.on(\"error\", (err) => console.error(err));",
+      "python": "import asyncio\nimport websockets\n\nasync def main():\n    url = \"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/updates?modelKeys=%7BmodelKeys%7D\"\n    headers = {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n    }\n    async with websockets.connect(url, additional_headers=headers) as ws:\n        async for message in ws:\n            print(message)\n\nasyncio.run(main())"
+    },
+    "remote": {
+      "go": "package main\n\nimport (\n\t\"log\"\n\t\"net/http\"\n\n\t\"github.com/gorilla/websocket\"\n)\n\nfunc main() {\n\theader := http.Header{}\n\theader.Set(\"Accept\", \"application/json\")\n\theader.Set(\"X-API-Key\", \"<X-API-Key>\")\n\n\tconn, _, err := websocket.DefaultDialer.Dial(\"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/updates?modelKeys=%7BmodelKeys%7D\", header)\n\tif err != nil {\n\t\tlog.Fatal(\"dial:\", err)\n\t}\n\tdefer conn.Close()\n\n\tfor {\n\t\t_, message, err := conn.ReadMessage()\n\t\tif err != nil {\n\t\t\tlog.Println(\"read:\", err)\n\t\t\treturn\n\t\t}\n\t\tlog.Printf(\"recv: %s\", message)\n\t}\n}",
+      "nodejs": "const WebSocket = require(\"ws\");\n\nconst ws = new WebSocket(\"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/updates?modelKeys=%7BmodelKeys%7D\", {\n  headers: {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n  },\n});\n\nws.on(\"open\", () => console.log(\"connected\"));\nws.on(\"message\", (data) => console.log(data.toString()));\nws.on(\"close\", () => console.log(\"disconnected\"));\nws.on(\"error\", (err) => console.error(err));",
+      "python": "import asyncio\nimport websockets\n\n\nasync def main():\n    url = \"wss://192.168.0.1/proxy/protect/integration/v1/subscribe/updates?modelKeys=%7BmodelKeys%7D\"\n    headers = {\n    \"Accept\": \"application/json\",\n    \"X-API-Key\": \"<X-API-Key>\",\n    }\n    async with websockets.connect(url, additional_headers=headers) as ws:\n        async for message in ws:\n            print(message)\n\n\nasyncio.run(main())"
+    }
+  },
+  "responseSample": "{\n  \"type\": \"string\",\n  \"item\": {\n    \"id\": \"string\",\n    \"modelKey\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"string\",\n    \"guid\": null,\n    \"mac\": \"string\",\n    \"featureFlags\": {\n      \"useExternalAlarmManager\": true\n    },\n    \"doorbellSettings\": {\n      \"defaultMessageText\": \"string\",\n      \"defaultMessageResetTimeoutMs\": 0,\n      \"customMessages\": [\n        \"string\"\n      ],\n      \"customImages\": [\n        {\n          \"preview\": \"string\",\n          \"sprite\": \"string\"\n        }\n      ]\n    },\n    \"armMode\": {\n      \"status\": \"arming\",\n      \"armProfileId\": null,\n      \"armedAt\": null,\n      \"willBeArmedAt\": null,\n      \"breachDetectedAt\": null,\n      \"breachEventCount\": 0,\n      \"breachTriggerEventId\": null,\n      \"breachEventId\": null\n    }\n  }\n}",
+  "sourceUrl": "https://developer.ui.com/protect/v7.4.99/get-v1subscribeupdates"
+}
