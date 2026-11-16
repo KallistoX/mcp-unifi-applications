@@ -1,0 +1,689 @@
+{
+  "h1": "Get external arm profiles",
+  "method": "GET",
+  "path": "/v1/external/arm-profiles",
+  "description": "Get arm profiles from the external alarm manager. Only available when using external alarm manager.",
+  "pathParameters": [],
+  "queryParameters": [],
+  "requestBody": [],
+  "responses": [
+    {
+      "statuses": [
+        "200"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "title",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "alarm_ids",
+          "required": true,
+          "type": "Array of string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "created_at",
+          "required": true,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state",
+          "required": true,
+          "type": "any",
+          "description": "External Alarm Manager profile arm state. Use this when `nvr.featureFlags.useExternalAlarmManager` is true. When it is false, see `nvr.armMode` for Local Alarm Manager profile arm state.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state_set_at",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "state_promotion_due_at",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "schedule",
+          "required": false,
+          "type": "object",
+          "description": null,
+          "discriminator": null,
+          "children": [
+            {
+              "name": "sun",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "entries",
+                  "required": true,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "end",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "mon",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "entries",
+                  "required": true,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "end",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "tue",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "entries",
+                  "required": true,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "end",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "wed",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "entries",
+                  "required": true,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "end",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "thu",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "entries",
+                  "required": true,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "end",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "fri",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "entries",
+                  "required": true,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "end",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "sat",
+              "required": false,
+              "type": "object",
+              "description": null,
+              "discriminator": null,
+              "children": [
+                {
+                  "name": "type",
+                  "required": true,
+                  "type": "string",
+                  "description": null,
+                  "discriminator": null,
+                  "children": []
+                },
+                {
+                  "name": "entries",
+                  "required": true,
+                  "type": "Array of object",
+                  "description": null,
+                  "discriminator": null,
+                  "children": [
+                    {
+                      "name": "start",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "name": "end",
+                      "required": true,
+                      "type": "object",
+                      "description": null,
+                      "discriminator": null,
+                      "children": [
+                        {
+                          "name": "hour",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        },
+                        {
+                          "name": "minute",
+                          "required": true,
+                          "type": "number",
+                          "description": null,
+                          "discriminator": null,
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "updated_at",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "created_by",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "updated_by",
+          "required": false,
+          "type": "string",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "active_breach_id",
+          "required": false,
+          "type": "number",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "has_pin",
+          "required": false,
+          "type": "boolean",
+          "description": null,
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "activation_delay",
+          "required": false,
+          "type": "number",
+          "description": "Delay in seconds.",
+          "discriminator": null,
+          "children": []
+        },
+        {
+          "name": "deactivation_delay",
+          "required": false,
+          "type": "number",
+          "description": "Delay in seconds.",
+          "discriminator": null,
+          "children": []
+        }
+      ]
+    }
+  ],
+  "examples": {
+    "local": {
+      "curl": "curl -L \"https://192.168.0.1/proxy/protect/integration/v1/external/arm-profiles\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\nfunc main() {\n\n  url := \"https://192.168.0.1/proxy/protect/integration/v1/external/arm-profiles\"\n  method := \"GET\"\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://192.168.0.1/proxy/protect/integration/v1/external/arm-profiles',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"192.168.0.1\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/proxy/protect/integration/v1/external/arm-profiles\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get external arm profiles\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/external/arm-profiles\"\n    method: GET\n  register: result\n\n- debug:\n    var: result.data"
+    },
+    "remote": {
+      "curl": "curl -L -g \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/external/arm-profiles\" \\\n-H \"Accept: application/json\" \\\n-H \"X-API-Key: <X-API-Key>\"",
+      "go": "package main\n\nimport (\n  \"fmt\"\n  \"net/http\"\n  \"io\"\n)\n\nfunc main() {\n\n  url := \"https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/external/arm-profiles\"\n  method := \"GET\"\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, nil)\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Accept\", \"application/json\")\n  req.Header.Add(\"X-API-Key\", \"<X-API-Key>\")\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n  body, err := io.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+      "nodejs": "const axios = require('axios');\n\nlet config = {\n  method: 'get',\n  maxBodyLength: Infinity,\n  url: 'https://api.ui.com/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/external/arm-profiles',\n  headers: { \n    'Accept': 'application/json', \n    'X-API-Key': '<X-API-Key>'\n  }\n};\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});",
+      "python": "import http.client\n\n\nconn = http.client.HTTPSConnection(\"api.ui.com\")\npayload = ''\nheaders = {\n  'Accept': 'application/json',\n  'X-API-Key': '<X-API-Key>'\n}\nconn.request(\"GET\", \"/v1/connector/consoles/{consoleId}/proxy/protect/integration/v1/external/arm-profiles\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+      "ansible": "- name: Get external arm profiles\n  ubiquiti.unifi_api.protect:\n    path: \"/v1/external/arm-profiles\"\n    method: GET\n  register: result\n\n- debug:\n    var: result.data"
+    }
+  },
+  "responseSample": null,
+  "sourceUrl": "https://developer.ui.com/protect/v7.4.99/get-v1externalarm-profiles"
+}

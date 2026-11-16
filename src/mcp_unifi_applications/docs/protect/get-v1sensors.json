@@ -650,6 +650,14 @@
           "children": []
         },
         {
+          "name": "isMountedIncorrectly",
+          "required": true,
+          "type": "boolean | null",
+          "description": "Whether the sensor reports an incorrect mounting orientation (e.g. upside down), null if the sensor doesn't support orientation reporting or hasn't reported yet.",
+          "discriminator": null,
+          "children": []
+        },
+        {
           "name": "wirelessConnectionState",
           "required": true,
           "type": "object",
@@ -736,5 +744,5 @@
     }
   },
   "responseSample": null,
-  "sourceUrl": "https://developer.ui.com/protect/v7.3.74/get-v1sensors"
+  "sourceUrl": "https://developer.ui.com/protect/v7.4.99/get-v1sensors"
 }
