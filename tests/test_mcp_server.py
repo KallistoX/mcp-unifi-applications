@@ -146,9 +146,16 @@ class TestSearch:
 
 class TestListEndpoints:
     def test_list_all(self):
+        # The real catalogue can sit on either side of the cap, and a fresh scrape
+        # can push it over; TestListEndpointsCap pins both branches with fake data.
         result = m.list_endpoints()
         lines = result.strip().split("\n")
-        assert len(lines) == len(m._endpoints)
+        total = len(m._endpoints)
+        if total <= m.MAX_LIST_LINES:
+            assert len(lines) == total
+        else:
+            assert len(lines) == m.MAX_LIST_LINES + 1
+            assert f"showing {m.MAX_LIST_LINES} of {total} endpoints" in lines[-1]
 
     def test_list_filter_method(self):
         result = m.list_endpoints(method="DELETE")
