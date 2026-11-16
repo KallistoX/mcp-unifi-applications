@@ -5,6 +5,13 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+    # update-docs.yml opens its PRs with add-paths limited to the scraped docs,
+    # gates them with ruff + pytest itself and merges within seconds. A CI run
+    # on such a PR never ran a job: it waited for approval as a bot run, and
+    # since the auto-merge it fails with zero jobs on the already-merged PR.
+    # A PR that touches only scraped docs therefore starts no run here.
+    paths-ignore:
+      - "src/mcp_unifi_applications/docs/**"
 
 jobs:
   test:
