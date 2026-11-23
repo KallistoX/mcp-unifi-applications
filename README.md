@@ -65,7 +65,7 @@ What ships in the current release:
 | Application | API version | Scraped | Pages |
 |---|---|---|---|
 | Network | v11.0.97 | 2026-11-02 | 82 |
-| Protect | v7.4.99 | 2026-11-16 | 90 |
+| Protect | v7.4.102 | 2026-11-23 | 90 |
 | Site Manager | v1.0.0 | 2026-09-10 | 12 |
 | InnerSpace | v1.3.23 | 2026-09-10 | 12 |
 | Mobility | v1.0.0 | 2026-09-10 | 9 |
