@@ -74,5 +74,5 @@
     }
   },
   "responseSample": "{\n  \"url\": \"https://example.com\",\n  \"codec\": \"string\",\n  \"samplingRate\": 0,\n  \"bitsPerSample\": 0\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.4.99/post-v1camerasidtalkback-session"
+  "sourceUrl": "https://developer.ui.com/protect/v7.4.102/post-v1camerasidtalkback-session"
 }

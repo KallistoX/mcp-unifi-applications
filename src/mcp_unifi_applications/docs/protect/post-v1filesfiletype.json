@@ -73,5 +73,5 @@
     }
   },
   "responseSample": "{\n  \"name\": \"string\",\n  \"type\": \"animations\",\n  \"originalName\": \"string\",\n  \"path\": \"string\"\n}",
-  "sourceUrl": "https://developer.ui.com/protect/v7.4.99/post-v1filesfiletype"
+  "sourceUrl": "https://developer.ui.com/protect/v7.4.102/post-v1filesfiletype"
 }
