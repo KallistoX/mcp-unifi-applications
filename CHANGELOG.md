@@ -7,6 +7,12 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- The README's install section has a copy-paste prompt for clients that have a
+  coding agent but no install command: it carries the full server entry, so the agent
+  fetches nothing, writes one config file and runs no command.
+
 ## [0.5.2] - 2026-11-23
 
 ### Changed
