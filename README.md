@@ -49,7 +49,9 @@ shell's `PATH`), put the output of `which uvx` in `command` instead.
 
 **Any other client with a coding agent**: if you don't know where its config lives,
 hand the agent this prompt. It holds the whole entry, so the agent fetches nothing,
-and it writes one file and runs nothing:
+and it writes one file and runs nothing. Like the entries above it uses `uvx`, so uv
+has to be installed; without uv, edit the config by hand as described under
+"Without uv" below.
 
 ```text
 Add one MCP server to the MCP configuration of the client you are running in:
@@ -57,8 +59,8 @@ a stdio server named "unifi-docs", command "uvx", args ["mcp-unifi-applications"
 Write it into that client's MCP config file in the client's own format, and leave
 every other entry in the file unchanged. Do not run any command, install anything
 or start the server. If you are not sure which file your client reads, say so and
-stop instead of guessing. When done, tell me the file you changed and whether the
-client needs a restart.
+stop instead of guessing. When done, tell me the file you changed, whether the
+client needs a restart, and that the entry only works with uv installed.
 ```
 
 <details>
